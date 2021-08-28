@@ -1,2 +1,12 @@
-# BandTec-3ADSA-2021-2-Grupo-05
-Repositório dedicado ao projeto de Pesquisa e Inovação, terceiro semestre, faculdade BandTec.
+
+# 
+
+<p align="center">
+    <img src="https://media.discordapp.net/attachments/875512266991206410/881210298453852210/4.png?width=1440&height=412">
+</p>  
+
+<p align="center">
+  A Vegan House é um Marketplace dedicado a pequenos produtores e microempreendedores do seguimento vegan, possuindo como um de seus objetivos principais proporcionar um ambiente   de compras confiável e acolhedor ao consumidor vegano.  
+</p>
+
+#
