@@ -1,0 +1,168 @@
+create database vegan_house;
+use vegan_house;
+
+create table user_ (
+	iduser int primary key auto_increment,
+	name_user varchar(50), 
+	email_user varchar(50), 
+	login_user varchar(50), 
+	password_user varchar(30), 
+	phone varchar(20), 
+	rg varchar(10), 
+	cpf char(11), 
+	is_seller char(1) -- esse campo pode ser alterado por um boolean, quando implementarmos na azure
+);
+
+create table seller (
+	idseller int primary key auto_increment, 
+	fkuser int, 
+	foreign key (fkuser) references user_ (iduser), 
+	name_empresa varchar(50), 
+	cnpj char(14)
+);
+
+create table seals(
+	idseals int primary key auto_increment, 
+	name_seals varchar(50), 
+	url varchar(150)
+); 
+
+
+create table seals_seller (
+	fkseals int, 
+	fkseller int, 
+	foreign key (fkseals) references seals (idseals),
+	foreign key (fkseller) references seller (idseller)
+);
+
+create table order_ (
+	idorder int primary key auto_increment, 
+	amount double, 
+	date_order datetime, 
+	fkuser int, 
+	foreign key (fkuser) references user_ (iduser)
+);
+
+create table category (
+	idcategory int primary key auto_increment, 
+	name_category varchar(25)
+);
+
+create table product (
+	idproduct int primary key auto_increment, 
+	name_product varchar(50), 
+	price_product double, 
+	description_product varchar(250), 
+	fkcategory int, 
+	fkseller int,
+	foreign key (fkcategory) references category (idcategory),
+	foreign key (fkseller) references seller (idseller)
+);
+
+create table basket (
+	fkorder int, 
+	fkproduct int, 
+	foreign key (fkorder) references order_ (idorder),
+	foreign key (fkproduct) references product (idproduct)
+);
+
+create table sub_category (
+	idsub_category int primary key auto_increment, 
+	name_sub_category varchar(25), 
+	fkcategory int, 
+	foreign key (fkcategory) references category (idcategory)
+);
+
+
+create table evaluation (
+	idevalution int primary key auto_increment, 
+	note int, 
+	fkuser int, 
+	fkproduct int,
+	foreign key(fkuser) references user_ (iduser), 
+	foreign key(fkproduct) references product (idproduct)
+);
+
+-- lojistas
+insert user_ values 
+	(null, "Kerai Dino", "kerai-dino@gmail.com", "kerai-alek", "123", "11 99120-1291", "201017814", "10808308212", "s"),
+		(null, "Gabriel Alves", "gabi-outlook.com", "gabriel-alves", "456", "11 96352-1284", "735145834", "071532145", "s");
+
+
+-- user comum 
+insert user_ values 
+	 (null,"Pamela Souza", "pa@gmail.com", "pam-souza", "789", "11 97322-9721", "836543610", "01752100639", "n"),
+		(null,"Vanessa Soares", "vanessa@hotmail.com", "vanessa-soares", "456", "11 97262-1212", "975244429", "97001632401", "n");
+
+-- Lojas
+insert seller values
+	(null, 1, "Kerai Dino Produtos Veganos", "00826315627107"), 
+		(null, 3, "Mundo Verde", "93469173452081"); 
+
+
+-- categorias 
+insert into category values 
+	(null, "Alimento"), 
+		(null, "Vestuario");
+
+
+-- Produtos 
+insert into product values 
+	(null, "Sapato", 179.20, "Sapatos de fibra de garrafa pet", 2, 1),
+		(null, "Porta retrato", 82.20, "Porta retrato de papelão reciclado", 2, 1),
+			(null, "Macarrão", 29.99, "Macarrão de massa de mandioca", 1, 2),
+				(null, "Leite de Soja", 9.98, "Leite de Soja", 1, 2);
+
+
+-- sub categorias
+insert into sub_category values 
+	(null, "Sapatos", 2), 
+		(null, "Massas prontas", 1);
+
+
+-- Selos do lojista 
+insert into seals values 
+	(null, "100% artesanal", "www.produtosartesanais.com/lojas"),
+		(null, "não contem produtos de origem animal", "www.origemanimal.com/lojas");
+        
+     
+-- Associativa entre seals e seller
+insert into seals_seller values 
+	(1, 2), 
+		(2, 2);
+        
+        
+-- Pedidos doss usuarios         
+insert into order_ values 
+	(null, 200.0, "2021-08-31 14:21:00", 4),
+		(null, 150.0, "2021-08-31 13:10:00", 2),
+			(null, 90.0, "2021-08-30 10:08:00", 4);
+	
+    
+ -- Itens de cada pedido   
+insert into basket values
+	(1, 1),
+		(2, 3), 
+			(3, 3);
+            
+            
+-- query que traz as vendas de cada lojista 
+select * from 
+	order_ innner 
+		join basket on idorder = fkorder 
+			inner join product on idproduct = fkproduct
+				 join seller on
+					fkseller = idseller
+						 where idseller = 2;
+
+SELECT * FROM user_;
+SELECT * FROM seller;
+SELECT * FROM category;
+SELECT * FROM product;
+SELECT * FROM sub_category;
+SELECT * FROM seals;
+SELECT * FROM seals_seller;
+SELECT * FROM order_;
+SELECT * FROM basket;
+
+ -- drop database vegan_house;
