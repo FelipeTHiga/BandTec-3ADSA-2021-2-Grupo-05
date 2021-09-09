@@ -3,9 +3,12 @@ package section.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import section.model.Product;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("payamentCard")
+@RequestMapping("paymentCard")
 public class CardController extends PaymentController{
     private String cardNumber;
 
@@ -23,6 +26,7 @@ public class CardController extends PaymentController{
         for (CartController c : order.getCart()){
             amount+=c.getAmount();
         }
+
         return amount + (amount * 0.01);
     }
 }
