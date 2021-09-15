@@ -21,7 +21,8 @@ public class OrderController {
         this.status = status;
         this.dateRequest = LocalDateTime.now();
         cart = new ArrayList<CartController>(List.of(new CartController
-                (new User("Ana", "ana321@gmail.com","ana321", "senha12")
+                (new User("Ana", "50700745-X", "400.900.110-30", "(11)93883-9787",
+                          "ana321@gmail.com", "ana321", "senha12")
                 )));
     }
 
