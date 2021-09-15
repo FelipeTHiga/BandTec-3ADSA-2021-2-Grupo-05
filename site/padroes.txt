@@ -1,0 +1,13 @@
+ CSS
+* Nomes de classes css são snake-case
+
+Arquivos e Pastas
+* Nomes de arquivos e pastas são snake-case
+
+JS
+Nomes de variáveis e funções, seguem o mesmo padrão do java, ou seja, camelCase 
+
+Link para consulta dos padrões 
+https://pbs.twimg.com/media/EPrbS_-WoAA0NsG.jpg
+
+
