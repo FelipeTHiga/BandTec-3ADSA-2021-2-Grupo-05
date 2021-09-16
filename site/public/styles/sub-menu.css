@@ -1,0 +1,22 @@
+.sub-menu{
+    background-color: #FEC2C0;
+    width: 100%;
+    height: 60px;
+}
+.sub-menu ul {
+    width: 100%;
+    height: 100%;
+}
+.sub-menu ul li {
+    width: 20%;
+    list-style: none;
+}
+
+.sub-menu ul li a{
+    text-decoration: none;
+    color: #fff;
+    padding: 10px;
+}
+.sub-menu i{
+    color: #fff;
+}

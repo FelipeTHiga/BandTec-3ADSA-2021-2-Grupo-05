@@ -1,0 +1,48 @@
+/* inicio banner principal  */
+.container-main-banner{
+    height: 500px;
+    width: 100%;
+  
+}
+
+.container-main-banner .container-img-banner{
+    width: 50%;
+    height: 100%;
+    background: url("/public/images/banner.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container-main-phrase {
+    width: 50%;
+    height: 100%;
+    justify-content: end !important;
+    background: #FFF1E4;
+}
+.container-main-banner .container-phrase{
+    width: 85%;
+    height: 100%;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    /* background-color: red; */
+}
+
+.container-main-banner .container-phrase h1 {
+    font-size: 40px;
+    font-weight: 400;
+    padding: 40px 0;
+    
+}
+
+.container-main-banner .container-phrase button {
+    cursor: pointer;
+    width: 150px;
+    height: 40px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #C9E891;
+    font-size: 20px;
+    font-weight: 400;
+}
+/* fim banner principal  */
