@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/public/styles/icons/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="/public/styles/all.css">
     <link rel="stylesheet" href="/public/styles/catalog.css">
+    <script src="/public/scripts/catalog.js"></script>
 </head>
 
 <body>
@@ -104,11 +105,14 @@
                     </div>
 
                     <div class="filters">
-                        <button class="btn-filter btn-selected">Menor preço</button>
-                        <button class="btn-filter">Maior preço</button>
-                        <button class="btn-filter">Nome</button>
+                        <button id="btn-filter-1" class="btn-filter select" 
+                        onclick="toggleClass('btn-filter-1', 'active')">Menor preço</button>
+                       <button id="btn-filter-2" class="btn-filter"
+                        onclick="toggleClass('btn-filter-2', 'active')">Maior preço</button>
+                      <button id="btn-filter-3" class="btn-filter"
+                      onclick="toggleClass('btn-filter-3', 'active')">Nome</button>
                     </div>
-
+                    <!-- btn-selected onclick="toggleClass('btn-filter-1', 'active')" -->   
                 </div>
             </div>
         </div>
@@ -118,15 +122,20 @@
 
             <div class="left-column">
                 <div class="container-categories">
-                    <h4 class="category-title">Categorias</h4>
+                    <h3 class="category-title">Categorias</h3>
                     <ul class="category-list">
-                        <li class="category-itens 
-                    item-selected">Todos ($())</li>
-                        <li class="category-itens">Acessórios ($())</li>
-                        <li class="category-itens">Alimentos ($())</li>
-                        <li class="category-itens">Cosméticos ($())</li>
-                        <li class="category-itens">Saúde ($())</li>
-                        <li class="category-itens">Vestimenta ($())</li>
+                        <li  id="item-0" class="category-itens" 
+                        onclick="toggleClass('item-0', 'iten-active')">Todos ($())</li>
+                        <li id="item-1" class="category-itens"
+                        onclick="toggleClass('item-1', 'iten-active')">Acessórios ($())</li>
+                        <li  id="item-2" class="category-itens"
+                        onclick="toggleClass('item-2', 'iten-active')">Alimentos ($())</li>
+                        <li  id="item-3" class="category-itens"
+                        onclick="toggleClass('item-3', 'iten-active')">Cosméticos ($())</li>
+                        <li  id="item-4" class="category-itens"
+                        onclick="toggleClass('item-4', 'iten-active')">Saúde ($())</li>
+                        <li  id="item-5" class="category-itens"
+                        onclick="toggleClass('item-5', 'iten-active')">Vestimenta ($())</li>
                     </ul>
                 </div>
             </div>
@@ -134,17 +143,19 @@
             <div class="container-products-and-arrow line-up right-column">
 
                 <div class="container-cards-products line-up">
-
-
                 </div>
 
             </div>
 
-
         </div>
 
 
-
+        <div class="fourth-section right-column">
+            <div class="container-pages">
+                <h3 class="page-number">${}</h3>
+                <i class="fas fa-caret-right arrow"></i>
+            </div>
+        </div>
 
 
 
