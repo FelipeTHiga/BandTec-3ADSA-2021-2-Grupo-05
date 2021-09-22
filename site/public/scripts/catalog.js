@@ -1,16 +1,17 @@
-function toggleClass(id, classe) {
-    var elemento = document.getElementById(id);
-    var classes = elemento.className.split(' ');
-    var getIndex = classes.indexOf(classe);
+var list = [];
 
-    if (getIndex === -1) {
-        classes.push(classe);
-        elemento.className = classes.join(' ');
-    } else if (getIndex > -1) {
-        classes.splice(getIndex, 1);
+function toggleClass(id, classe) {
+
+    if(!list.isEmpty) {
+        for(i = 0; i < list.length; i++) {
+            list[i].classList.remove(classe);
+        }
     }
 
-    elemento.className = classes.join(' ');
+    var element = document.getElementById(id);
+    element.classList.toggle(classe);
+    list.push(element)
+
 }
 
 
@@ -19,3 +20,15 @@ function toggleClass(id, classe) {
 //      	elementos.classList[elementos.className.indexOf('active') === -1 ? 'add' : 'remove']('active')
 //     }
 // )});
+
+    // var elemento = document.getElementById(id);
+    // var classes = elemento.className.split(' ');
+    // var getIndex = classes.indexOf(classe);
+
+    // if (getIndex === -1) {
+    //     classes.push(classe);
+    // } else if (getIndex > -1) {
+    //     classes.splice(getIndex, 1);
+    // }
+
+    // elemento.className = classes.join(' ');

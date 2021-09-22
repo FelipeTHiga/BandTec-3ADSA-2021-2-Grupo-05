@@ -135,4 +135,12 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin: 100px 0;
+}
+
+
+.new-style {
+    width: auto;
+    height: auto;
+    margin-left: -43px;
 }
