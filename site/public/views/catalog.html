@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/public/styles/icons/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="/public/styles/all.css">
     <link rel="stylesheet" href="/public/styles/catalog.css">
-    <script src="/public/scripts/catalog.js"></script>
+
 </head>
 
 <body>
@@ -94,7 +94,9 @@
             <div class="left-column">
                 <!-- // container-total-results -->
                 <div class="total-results">
-                    <h3 class="result-title">${} resultado(s)</h3>
+                    <h3 class="result-title">
+                        <div class="result-number"></div>resultado(s)
+                    </h3>
                 </div>
             </div>
 
@@ -105,14 +107,14 @@
                     </div>
 
                     <div class="filters">
-                        <button id="btn-filter-1" class="btn-filter" 
-                        onclick="toggleClass('btn-filter-1', 'active')">Menor preço</button>
-                       <button id="btn-filter-2" class="btn-filter"
-                        onclick="toggleClass('btn-filter-2', 'active')">Maior preço</button>
-                      <button id="btn-filter-3" class="btn-filter"
-                      onclick="toggleClass('btn-filter-3', 'active')">Nome</button>
+                        <button id="btn-filter-1" class="btn-filter"
+                            onclick="toggleClass('btn-filter-1', 'active')">Menor preço</button>
+                        <button id="btn-filter-2" class="btn-filter"
+                            onclick="toggleClass('btn-filter-2', 'active')">Maior preço</button>
+                        <button id="btn-filter-3" class="btn-filter"
+                            onclick="toggleClass('btn-filter-3', 'active')">Nome</button>
                     </div>
-                    <!-- btn-selected onclick="toggleClass('btn-filter-1', 'active')" -->   
+
                 </div>
             </div>
         </div>
@@ -124,29 +126,30 @@
                 <div class="container-categories">
                     <h3 class="category-title">Categorias</h3>
                     <ul class="category-list">
-                        <li  id="item-0" class="category-itens" 
-                        onclick="toggleClass('item-0', 'iten-active')">Todos ($())</li>
-                        <li id="item-1" class="category-itens"
-                        onclick="toggleClass('item-1', 'iten-active')">Acessórios ($())</li>
-                        <li  id="item-2" class="category-itens"
-                        onclick="toggleClass('item-2', 'iten-active')">Alimentos ($())</li>
-                        <li  id="item-3" class="category-itens"
-                        onclick="toggleClass('item-3', 'iten-active')">Cosméticos ($())</li>
-                        <li  id="item-4" class="category-itens"
-                        onclick="toggleClass('item-4', 'iten-active')">Saúde ($())</li>
-                        <li  id="item-5" class="category-itens"
-                        onclick="toggleClass('item-5', 'iten-active')">Vestimenta ($())</li>
+                        <li id="item-0" class="category-itens" onclick="toggleClass('item-0', 'iten-active')">Todos()</li>
+                        <div class="result-number"></div>
+                        <li id="item-1" class="category-itens" onclick="toggleClass('item-1', 'iten-active')">Acessórios
+                            ($())</li>
+                        <li id="item-2" class="category-itens" onclick="toggleClass('item-2', 'iten-active')">Alimentos
+                            ($())</li>
+                        <li id="item-3" class="category-itens" onclick="toggleClass('item-3', 'iten-active')">Cosméticos
+                            ($())</li>
+                        <li id="item-4" class="category-itens" onclick="toggleClass('item-4', 'iten-active')">Saúde
+                            ($())</li>
+                        <li id="item-5" class="category-itens" onclick="toggleClass('item-5', 'iten-active')">Vestimenta
+                            ($())</li>
                     </ul>
                 </div>
             </div>
 
-            <div class="container-products-and-arrow line-up new-style">
+            <div class="container-products">
+                <div class="container-products-and-arrow line-up new-style">
 
-                <div class="container-cards-products line-up">
+                    <div class="container-cards-products line-up">
+                    </div>
+
                 </div>
-
             </div>
-
         </div>
 
 
@@ -163,63 +166,84 @@
 
     <!-- inicio footer -->
     <section class="container-footer line-up">
-            <div class="container-info-footer">
-                <div class="container-line-great-footer line-up">
-                    <div class="line-great-footer line-up"></div>
-                </div>    
-    
-                    <div class="container-info-footer-2">
-                        <div class="container-logo-footer">
-                            <div class="container-title-footer">
-                                <img src="/public/images/logo.png" alt="">
-                                <p>O lar do produtor vegano</p>        
-                            </div>
-                        </div>
-    
-                        <div class="container-menu-footer">
-    
-                            <ul>
-                                <li>A Vegan House</li>
-                                <li>Quem somos</li>
-                                <li>Acesso lojistas</li>
-                                <li>Seja nosso lojista</li>
-                            </ul>
-    
-                            <ul>
-                                <li>Redes Sociais</li>
-                                <li>
-                                    <i class="fab fa-instagram-square"></i> 
-                                            Instagram
-                                </li>
-                                <li>
-                                    <i class="fab fa-facebook-square"></i>
-                                            Facebook
-                                </li>   
-                                <li>
-                                    <i class="fab fa-whatsapp-square"></i>
-                                            Whatsapp
-                                </li>
-                            </ul>
-    
-                            <ul>
-                                <li>Atendimento</li>
-                                <li>
-                                    <i class="fas fa-phone-square-alt"></i>
-                                            0800 579 0000
-                                </li>
-                                <li>
-                                            sac@veganhouse.com
-                                </li>
-                            </ul>
-    
-                        </div>    
-                    </div>
+        <div class="container-info-footer">
+            <div class="container-line-great-footer line-up">
+                <div class="line-great-footer line-up"></div>
             </div>
-        </section>
+
+            <div class="container-info-footer-2">
+                <div class="container-logo-footer">
+                    <div class="container-title-footer">
+                        <img src="/public/images/logo.png" alt="">
+                        <p>O lar do produtor vegano</p>
+                    </div>
+                </div>
+
+                <div class="container-menu-footer">
+
+                    <ul>
+                        <li>A Vegan House</li>
+                        <li>Quem somos</li>
+                        <li>Acesso lojistas</li>
+                        <li>Seja nosso lojista</li>
+                    </ul>
+
+                    <ul>
+                        <li>Redes Sociais</li>
+                        <li>
+                            <i class="fab fa-instagram-square"></i>
+                            Instagram
+                        </li>
+                        <li>
+                            <i class="fab fa-facebook-square"></i>
+                            Facebook
+                        </li>
+                        <li>
+                            <i class="fab fa-whatsapp-square"></i>
+                            Whatsapp
+                        </li>
+                    </ul>
+
+                    <ul>
+                        <li>Atendimento</li>
+                        <li>
+                            <i class="fas fa-phone-square-alt"></i>
+                            0800 579 0000
+                        </li>
+                        <li>
+                            sac@veganhouse.com
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- fim footer -->
 
 </body>
 
 </html>
 
+<script>
+
+    var list = [];
+
+    function toggleClass(id, classe) {
+
+    if(!list.isEmpty) {
+        for(i = 0; i < list.length; i++) {
+            list[i].classList.remove(classe);
+        }
+    }
+
+    var element = document.getElementById(id);
+    element.classList.toggle(classe);
+    list.push(element)
+
+}
+</script>
+
+
 <script type="module" src="/public/scripts/all.js"></script>
+<script type="module" src="/public/scripts/catalog.js"></script>

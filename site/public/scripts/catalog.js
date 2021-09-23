@@ -1,18 +1,39 @@
-var list = [];
+import {newsProducts}  from  "./vetor.js";
 
-function toggleClass(id, classe) {
 
-    if(!list.isEmpty) {
-        for(i = 0; i < list.length; i++) {
-            list[i].classList.remove(classe);
+
+  var result_number = document.querySelector(".result-number");
+  result_number.innerHTML = newsProducts.length;
+
+
+  function filterBy(category) {
+    
+    var int count = 0; 
+        
+        for(i = 0; i < newsProducts.length; i++) {
+            
+            if(newsProducts[i].category.equals(category)) {
+                count++;
+            }
         }
-    }
 
-    var element = document.getElementById(id);
-    element.classList.toggle(classe);
-    list.push(element)
 
-}
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //  document.getElementById("toggle").addEventListener('click', function() {

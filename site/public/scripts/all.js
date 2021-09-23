@@ -1,6 +1,6 @@
 import  {creatCardProduct, creatCardSeller}  from  "./element-html.js";
 import  {newsProducts, sellersPop}  from  "./vetor.js";
- 
+
    newsProducts.forEach((newProduct) => {
       const card = new creatCardProduct(newProduct, ".container-cards-products");
       card.cardProduct();
@@ -15,7 +15,6 @@ import  {newsProducts, sellersPop}  from  "./vetor.js";
       const cardSeller = new creatCardSeller(sellerPop);
       cardSeller.card();
    })
-
 
 
 
