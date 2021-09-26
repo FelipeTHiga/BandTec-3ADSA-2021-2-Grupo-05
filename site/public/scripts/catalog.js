@@ -8,7 +8,7 @@ import {newsProducts}  from  "./vetor.js";
 
   function filterBy(category) {
     
-    var int count = 0; 
+    var count = 0; 
         
         for(i = 0; i < newsProducts.length; i++) {
             

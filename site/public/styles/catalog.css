@@ -96,7 +96,7 @@
 
 .container-categories {
     width: 167px;
-    height: auto;
+    height: 272px;
     padding: 26px 30px;
     border: solid 0.5px #888383;
     border-radius: 10px;
@@ -144,16 +144,23 @@
 .new-style {
     width: auto;
     height: auto;
-    margin-left: -43px;
 }
 
 
-.container-produtcs {
-    display: flex;
-    flex-wrap: wrap;
-    width: 80%;
+.container-products {
+    width: 63%;
 }
 
 .result-number {
     margin-right: 5px;
 }
+
+
+.teste {
+    display: flex;
+    /* flex-wrap: wrap; */
+    /* justify-content: flex-start; */
+    /* width: auto; */
+    width: 100%;
+}
+
