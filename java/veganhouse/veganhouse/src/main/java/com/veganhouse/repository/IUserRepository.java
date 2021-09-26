@@ -8,6 +8,4 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Collection;
 
 public interface IUserRepository extends JpaRepository<User,Integer> {
-    @Query("SELECT * FROM User WHERE email = {email}" )
-    Collection<User> findAllActiveUsers(String email);
 }

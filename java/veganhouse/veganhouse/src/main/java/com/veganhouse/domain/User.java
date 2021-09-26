@@ -10,14 +10,14 @@ public class User {
     //region Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String name;
-    private String surName;
-    private String cpf;
-    private String email;
-    private String password;
-    private boolean isSeller;
-    private Adress adress;
+    protected int id;
+    protected String nameUser;
+    protected String surName;
+    protected String cpf;
+    protected String email;
+    protected String passwordUser;
+    protected char isSeller;
+    //protected Adress adress;
     //endregion
 
     //region Getters and Setters
@@ -29,12 +29,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNameUser() {
+        return nameUser;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
     }
 
     public String getSurName() {
@@ -61,29 +61,28 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordUser() {
+        return passwordUser;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordUser(String passwordUser) {
+        this.passwordUser = passwordUser;
     }
 
-    public boolean isSeller() {
+    public char isSeller() {
         return isSeller;
     }
 
-    public void setSeller(boolean seller) {
-        isSeller = seller;
+    public void setSeller(char isSeller) {
+        this.isSeller = isSeller;
     }
 
-    public Adress getAdress() {
+    /*public Adress getAdress() {
         return adress;
     }
 
     public void setAdress(Adress adress) {
-        this.adress = adress;
-    }
+       this.adress = adress;
+    }*/
     //endregion
-
 }
