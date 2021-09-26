@@ -1,12 +1,50 @@
-import {newsProducts}  from  "./vetor.js";
+// import {newsProducts}  from  "./vetor.js";
 
 
 
-  var result_number = document.querySelector(".result-number");
-  result_number.innerHTML = newsProducts.length;
+export function searchResult(newsProducts) {
+    var result_number = document.querySelector(".result-number");
+    result_number.innerHTML = newsProducts.length;
+
+    var countAcessories = 0
+    var countFood = 0
+    var countCosmeticos = 0
+    var countHealth = 0
+    var countVestimenta = 0
+
+    for(i = 0; i < newsProducts.length; i++) {
+     
+        switch (newsProducts.category) {
+
+            case "acessorios":
+                countAcessories++;
+                break;
+            case "alimentos":
+                countFood++;
+                break;
+            case "cosmeticos":
+                countCosmeticos++;
+                break;
+            case "saude":
+                countHealth++;
+                break;
+            case "vestimenta":
+                countVestimenta++;
+                break;
+
+        }
+    }
+
+    var result_acessories = document.querySelector(".result-acessories");
+    result_acessories.innerHTML = countAcessories;
+
+    var result_food = document.querySelector(".result-food");
+    result_food.innerHTML = countFood;
+}
 
 
-  function filterBy(category) {
+
+export function filterBy(category) {
     
     var count = 0; 
         
@@ -16,7 +54,6 @@ import {newsProducts}  from  "./vetor.js";
                 count++;
             }
         }
-
 
    }
 
