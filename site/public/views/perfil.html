@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="/public/styles/icons/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/public/styles/all.css">
+</head>
+<body>
+
+      <!-- Inicio header -->
+      <header class="header">
+        <div class="container-header">
+                <div class="title-site line-up"><img src="/public/images/logo.png" alt=""></div>
+
+                <section class="container-search-bar line-up">
+                    <input placeholder="Busque seus produtos aqui" type="text">
+                    <div class="container-search-icon">
+                        <button><i class="fas fa-search"></i></button>
+                        
+                    </div>
+                </section>
+
+                <section class="nav-bar">
+                    <ul class="line-up">
+                        <li class="basket">
+                            <i class="fas fa-shopping-cart"></i>
+                            <a href="#"> Carrinho</a>
+                        </li>
+                        <li class="registration">
+                            <i class="fas fa-user"></i>
+                            <a href="#">Perfil</a>
+                        </li>
+                        <li class="logoff">
+                            <i class="fas fa-door-open"></i>
+                            <a href="#">Sair</a> 
+                        </li>
+                      
+                    </ul>
+                </section>
+        </div>
+    </header>
+    <!-- fim header -->
+
+    <!-- Inicio sub-menu -->
+    <section class="sub-menu line-up">
+        <ul class="line-up">
+            <li class="foods ">
+                <i class=" fas fa-utensils"></i>
+               <a href="#">Alimentos</a>
+               <i class="fas fa-sort-down"></i>
+            </li>
+            <li class="cosmetics ">
+                <i class="fas fa-air-freshener"></i>
+                <a href="#">Cosméticos</a>
+                <i class="fas fa-sort-down"></i>
+            </li>
+            <li class="health ">
+                <i class="fas fa-first-aid"></i>
+                <a href="#">Saúde</a>
+                <i class="fas fa-sort-down"></i>
+            </li>
+            <li class="accessories ">
+                <i class="fas fa-suitcase"></i>
+              <a href="#">Acessórios</a>
+              <i class="fas fa-sort-down"></i>
+            </li>
+            <li class="dress ">
+                <i class="fas fa-tshirt"></i>
+                <a href="#">Vestimento</a>
+                <i class="fas fa-sort-down"></i>
+            </li>
+        </ul>
+    </section>
+    <!-- fim sub-menu -->
+
+    <!-- inicio nome usuario -->
+    <div class="container-name-user line-up">
+        <div class="line-up">
+            <div class="name-user">João Silva</div>
+            <p>
+                Sua conta pessoal & comercial
+            </p>
+        </div>
+    </div>
+      <!-- fim nome usuario -->
+
+    <!-- inicio titulo perfil -->
+    <div class="container-title-perfil line-up">
+        <div class="line-up">
+            <p>Seu pefil</p>
+        </div>
+    </div>
+     <!-- fim titulo perfil -->
+
+
+    <!-- inicio container menu e dados do usuario -->
+    <div class="container-menu-and-data-user line-up">
+
+       <!-- inicio container que alinha card do menu e dados do usuario -->
+        <div class="line-up">
+
+             <!-- inicio menu pefil usuario   -->
+            <div class="container-menu-perfil">
+                <section>
+                    <ul>
+                        <li class="radius-top-left-right">
+                        <a href="#">Minha conta</a> 
+                        </li>
+                        <li>
+                        <a href="#">Dados pessoais</a>
+                        </li>
+                        <li>
+                            <a href="#">Segurança</a>
+                        </li>
+                        <li>
+                        <a href="#">Pedidos</a> 
+                        </li>
+                        <li class="radius-bottom-left-right">
+                            <a href="#">Trabalhe conosco</a>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            <!-- fim menu pefil usuario   -->
+            
+            <!-- inicio container de dados do usuario -->
+            <div class="container-data-user">
+
+                <!-- inicio formulario de dados pessoais do usuario -->
+                <div class="title-data-user">Dados pessoais</div>
+                <form action="" method="PUT">
+                    <div class="container-input">
+                        <label for="name">Nome</label>
+                            <div>
+                                <i class="fas fa-user line-up icon-left-input"></i>
+                                <input class="input-default no-alter" type="text" placeholder="" name="" id="name">
+                                <i class="fas fa-lock line-up lock"></i>
+                            </div>
+                        <p>Dado não alterável</p>
+                    </div>
+                    <div class="container-input">
+                        <label for="sobreNome">Sobrenome</label>
+                            <div>
+                                <i class="fas fa-user line-up icon-left-input"></i>
+                                <input class="input-default no-alter" type="text" placeholder="" name="" id="sobreNome">
+                                <i class="fas fa-lock line-up lock"></i>
+                            </div>
+                        <p>Dado não alterável</p>
+                    </div>
+                    <div class="container-input">
+                        <label for="cpf">CPF</label>
+                            <div>
+                                <i class="far fa-id-card line-up icon-left-input"></i>
+                                <input class="input-default no-alter" type="text" placeholder="" name="" id="cpf">
+                                <i class="fas fa-lock line-up lock"></i>
+                            </div>
+                        <p>Dado não alterável</p>
+                    </div>
+                    <div class="container-input">
+                        <label for="email">E-mail</label>
+                            <div>
+                                <i class="far fa-envelope line-up icon-email"></i>
+                                <input class="input-default " type="text" placeholder="" name="" id="email">
+                                <i class="fas fa-lock line-up lock"></i>
+                            </div>
+                    </div>
+
+
+                </form>
+                 <!-- fim formulario de dados pessoais do usuario -->
+
+                <!-- inicio formulario de endereço do usuario -->
+                <div  class="title-data-user">Endereço</div>
+                <form action="" method="PUT">
+
+                    <div class="container-input">
+                        <label for="cep">CEP</label>
+                            <div>
+                                <input class="input-default input-address" type="text" placeholder="" name="" id="cep">
+                            </div>
+                    </div>
+                    <div class="container-input">
+                        <label for="state">Estado</label>
+                            <div>
+                                <select name="" id="">
+                                    <option value="">-- Selecione --</option>
+                                    <option value="">São Paulo</option>
+                                    <option value="">Rio de Janeiro</option>
+                                </select>
+                                <input class="input-state" type="text" placeholder="" name="" id="state">
+                            </div>
+                    </div>
+                    <div class="container-input">
+                        <label for="district">Bairro</label>
+                            <div>
+                                <input class="input-default input-address" type="text" placeholder="" name="" id="district">
+                            </div>
+                    </div>
+                    <div class="container-input">
+                        <label for="road">Rua</label>
+                            <div>
+                                <input class="input-default input-address" type="text" placeholder="" name="" id="road">
+                            </div>
+                    </div>
+                    <div class="container-input">
+                        <label for="numberHouse">Número</label>
+                            <div>
+                                <input class="input-default input-address" type="text" placeholder="" name="" id="numberHouse">
+                            </div>
+                    </div>
+                    <div class="container-input">
+                        <label for="complement">Complemento</label>
+                            <div>
+                                <input class="input-default input-address" type="text" placeholder="" name="" id="complement">
+                            </div>
+                    </div>
+
+                 
+                </form>
+                <div class="container-button-update-user line-up">
+                    <button>Atualizar</button>
+                </div>
+                 <!-- fim formulario de endereço do usuario -->
+
+            </div>
+            <!-- fim container de dados do usuario -->
+
+        </div>
+       <!-- fim container que alinha card do menu e dados do usuario -->
+
+    </div>
+    <!-- fim container menu e dados do usuario -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- inicio footer -->
+<section class="container-footer line-up">
+    <div class="container-info-footer">
+        <div class="container-line-great-footer line-up">
+            <div class="line-great-footer line-up"></div>
+        </div>    
+
+            <div class="container-info-footer-2">
+                <div class="container-logo-footer">
+                    <div class="container-title-footer">
+                        <img src="/public/images/logo.png" alt="">
+                        <p>O lar do produtor vegano</p>        
+                    </div>
+                </div>
+
+                <div class="container-menu-footer">
+
+                    <ul>
+                        <li>A Vegan House</li>
+                        <li>Quem somos</li>
+                        <li>Acesso lojistas</li>
+                        <li>Seja nosso lojista</li>
+                    </ul>
+
+                    <ul>
+                        <li>Redes Sociais</li>
+                        <li>
+                            <i class="fab fa-instagram-square"></i> 
+                                    Instagram
+                        </li>
+                        <li>
+                            <i class="fab fa-facebook-square"></i>
+                                    Facebook
+                        </li>   
+                        <li>
+                            <i class="fab fa-whatsapp-square"></i>
+                                    Whatsapp
+                        </li>
+                    </ul>
+
+                    <ul>
+                        <li>Atendimento</li>
+                        <li>
+                            <i class="fas fa-phone-square-alt"></i>
+                                    0800 579 0000
+                        </li>
+                        <li>
+                                    sac@veganhouse.com
+                        </li>
+                    </ul>
+
+                </div>    
+            </div>
+    </div>
+</section>
+<!-- fim footer -->
+    
+</body>
+</html>

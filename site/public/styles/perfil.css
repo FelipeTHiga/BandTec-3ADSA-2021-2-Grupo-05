@@ -1,0 +1,217 @@
+ /* inicio nome usuario  */
+.container-name-user{
+    width: 100%;
+    height: 200px;
+}
+
+.container-name-user > div{
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 90%;
+    height: 100px;
+}
+
+.container-name-user .name-user{
+    font-size: 25px;
+}
+
+
+.container-name-user  p{
+    padding: 3px 0;
+}
+
+/*  fim nome usuario  */
+
+
+/*  inicio titulo perfil  */
+.container-title-perfil{
+    width: 100%;
+    height: 100px;
+}
+
+.container-title-perfil > div {
+    width: 90%;
+    height: 100%;
+    background-color: #FFE0DE;
+    border-radius: 10px;
+}
+.container-title-perfil p{
+    color: #604D4D;
+    font-size: 40px;
+    font-weight: 700;
+}
+/*  fim titulo perfil  */
+
+
+/* inicio container geral com menu e dados do perfil */
+.container-menu-and-data-user{
+    width: 100%;
+    height: 1300px;
+}
+
+.container-menu-and-data-user > div{
+    width: 90%;
+    align-items: flex-start !important;
+}
+
+/* fim container geral com menu e dados do perfil */
+
+
+/* inicio menu do perfil */
+.container-menu-perfil {
+    width: 20%;
+    height: 300px;
+    margin: 0 5% 0 0;
+    border-radius: 10px;
+}
+
+.container-menu-perfil ul {
+    list-style: none;
+}
+
+.container-menu-perfil ul li {
+    width: 100%;
+    height: 60px;
+    border: #C8C7C7 solid 1px;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+.container-menu-perfil ul .radius-top-left-right{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.container-menu-perfil ul .radius-bottom-left-right{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.container-menu-perfil ul li a{
+    text-decoration: none;
+    font-size: 18px;
+    color: #604D4D;
+}
+
+/* fim menu do perfil */
+
+
+
+/* inicio card dados do perfil */
+
+.container-data-user {
+    width: 70%;
+    margin: 0 0 0 5%;
+    padding: 40px;
+    border-radius: 10px;
+    height: 1200px;
+    border: #C8C7C7 solid 1px;
+    background: #FFFFFF;
+}
+
+.container-data-user .title-data-user{
+    width: 100%;
+    height: 50px;
+    color: #604D4D;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    border-bottom: solid 1px #C4C4C4;
+    margin: 2% 0%;
+}
+
+.container-data-user label{
+    font-size: 20px;
+}
+
+.container-input{
+    width: 100%;
+    height: 100px;
+}
+
+
+.container-input .input-default {
+    width: 100%;
+    height: 45px;
+    border: none;
+    box-sizing: border-box;
+    border: solid 1px #AEABAB;
+}
+
+.container-input .no-alter {
+    background: #AEABAB;
+}
+
+
+.container-input > div {
+    display: flex;
+}
+
+.container-input i {
+    height: 45px;
+    width: 50px;
+    font-size: 20px;
+    background: #AEABAB;
+    color: #FFFFFF;
+}
+
+.container-input .lock {
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    color: #604D4D;
+}
+
+.container-input .icon-left-input {
+    margin: 0 2px 0 0;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.container-input .icon-email{
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.container-input p{
+    color: #604D4D;
+}
+
+.container-input .input-address {
+    border-radius: 10px;
+}
+.container-data-user .container-button-update-user {
+    width: 100%;
+}
+.container-data-user button {
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 6px;
+    width: 180px;
+    height: 50px;
+    color: #604D4D;
+    background: #C9E891;
+    border: none;
+}
+
+.container-data-user .input-state{
+    width: 50%;
+    height: 45px;
+    border: none;
+    box-sizing: border-box;
+    border: solid 1px #AEABAB;
+    margin: 0 0 0 5%;
+    border-radius: 10px;
+}
+
+.container-data-user select{
+    width: 40%;
+    height: 45px;
+    margin: 0 5% 0 0;
+    border: none;
+    box-sizing: border-box;
+    border: solid 1px #AEABAB;
+    border-radius: 10px;
+}
+
+/* fim card dados do perfil */
+

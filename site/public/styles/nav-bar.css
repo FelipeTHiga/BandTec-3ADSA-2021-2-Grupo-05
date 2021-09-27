@@ -8,7 +8,7 @@
 
 .container-header {
     display: flex;
-    width: 70%;
+    width: 90%;
     height: 100%;
 }
 
@@ -17,6 +17,7 @@
 }
 
 .title-site {
+    justify-content: start !important;
     width: 20%;
     height: 100%;
 }
@@ -63,6 +64,7 @@
 
 .nav-bar i{
     color: #fff;
+    padding: 0 0 5px;
 }
 
 .nav-bar ul{
@@ -83,5 +85,6 @@
 .nav-bar ul li a{
     color: #fff;
     text-decoration: none;
+    padding: 5px 0 0;
 }
 
