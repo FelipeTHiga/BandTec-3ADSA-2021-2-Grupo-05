@@ -116,6 +116,7 @@
 .category-itens {
     margin: 10px 0;
     cursor: pointer;
+    display: flex;
 }
 
 .iten-active {
@@ -163,4 +164,7 @@
     /* width: auto; */
     width: 100%;
 }
-
+/* 
+i {
+    text-decoration: none;
+} */

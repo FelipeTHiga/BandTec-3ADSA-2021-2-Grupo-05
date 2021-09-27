@@ -1,20 +1,22 @@
-// import {newsProducts}  from  "./vetor.js";
+import {newsProducts}  from  "./vetor.js";
 
 
+// export 
+function searchResult(newsProducts) {
+}
 
-export function searchResult(newsProducts) {
     var result_number = document.querySelector(".result-number");
     result_number.innerHTML = newsProducts.length;
 
     var countAcessories = 0
     var countFood = 0
-    var countCosmeticos = 0
+    var countCosmetics = 0
     var countHealth = 0
-    var countVestimenta = 0
+    var countClothing = 0
 
-    for(i = 0; i < newsProducts.length; i++) {
+    for(var i = 0; i < newsProducts.length; i++) {
      
-        switch (newsProducts.category) {
+        switch (newsProducts[i].category) {
 
             case "acessorios":
                 countAcessories++;
@@ -23,45 +25,53 @@ export function searchResult(newsProducts) {
                 countFood++;
                 break;
             case "cosmeticos":
-                countCosmeticos++;
+                countCosmetics++;
                 break;
             case "saude":
                 countHealth++;
                 break;
             case "vestimenta":
-                countVestimenta++;
+                countClothing++;
                 break;
 
         }
     }
+
+    var result_number2 = document.querySelector(".result-number-2");
+    result_number2.innerHTML = newsProducts.length;
 
     var result_acessories = document.querySelector(".result-acessories");
     result_acessories.innerHTML = countAcessories;
 
     var result_food = document.querySelector(".result-food");
     result_food.innerHTML = countFood;
-}
+
+    var result_cosmetics = document.querySelector(".result-cosmetics");
+    result_cosmetics.innerHTML = countCosmetics;
+
+    var result_health = document.querySelector(".result-health");
+    result_health.innerHTML = countHealth;
+
+    var result_clothing = document.querySelector(".result-clothing");
+    result_clothing.innerHTML = countClothing;
 
 
+// export 
 
-export function filterBy(category) {
-    
-    var count = 0; 
-        
-        for(i = 0; i < newsProducts.length; i++) {
+        for(var i = 0; i < newsProducts.length; i++) {
             
-            if(newsProducts[i].category.equals(category)) {
-                count++;
-            }
+            orderedList = newsProducts.stream().sorted(Comparator.comparing(newsProducts[i].category === category));
+            console.log(orderedList);
+            // if(newsProducts[i].category.equals(category)) {
+
+            // }
         }
-
-   }
-
-
+//     function filterBy(category) {
+//    }
 
 
 
-
+//stream().sorted(Comparator.comparing(Pokemon::getNome)).collect(Collectors.toList());
 
 
 
@@ -78,15 +88,3 @@ export function filterBy(category) {
 //      	elementos.classList[elementos.className.indexOf('active') === -1 ? 'add' : 'remove']('active')
 //     }
 // )});
-
-    // var elemento = document.getElementById(id);
-    // var classes = elemento.className.split(' ');
-    // var getIndex = classes.indexOf(classe);
-
-    // if (getIndex === -1) {
-    //     classes.push(classe);
-    // } else if (getIndex > -1) {
-    //     classes.splice(getIndex, 1);
-    // }
-
-    // elemento.className = classes.join(' ');
