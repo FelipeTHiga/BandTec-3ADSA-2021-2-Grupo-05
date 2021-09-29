@@ -39,27 +39,29 @@
     font-weight: 500; 
 }
 
-
-.container-search-bar i {
-    font-size: 20px;
-}
 .container-search-bar .container-search-icon button {
     border: none;
     height: 40px;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     width: 60px;
-    background-color: #C9E891;
     color: #604D4D;
-    cursor: pointer;
- 
+    background-color: #C9E891;
+    cursor: pointer;    
+}
+
+
+.container-search-bar a {
+    color: #604D4D;
+}
+
+.container-search-bar i {
+    font-size: 20px;
 }
 
 .nav-bar {
     width: 27%;
     height: 100%;
-
-   
 }
 
 .nav-bar i{
