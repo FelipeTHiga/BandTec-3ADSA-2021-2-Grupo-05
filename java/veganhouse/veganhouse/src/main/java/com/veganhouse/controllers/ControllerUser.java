@@ -5,6 +5,7 @@ import com.veganhouse.domain.User;
 import com.veganhouse.repository.ISellerRepository;
 import com.veganhouse.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 // Classe responsável pelos endpoints de criação e edição de usuários
@@ -13,19 +14,17 @@ import org.springframework.web.bind.annotation.*;
 public class ControllerUser {
     @Autowired
     private IUserRepository userRepository;
-    @Autowired
     private ISellerRepository sellerRepository;
-    private ControllerSession session;
 
     @PostMapping
-    public String createUser(@RequestBody User newUser){
+    public ResponseEntity createUser(@RequestBody User newUser){
         userRepository.save(newUser);
-        return "Usuário cadastrado com sucesso";
+        return ResponseEntity.status(201).build();
     }
 
     @PostMapping("seller")
-    public String createSeller(@RequestBody User newSeller){
-        userRepository.save(newSeller);
-        return "Usuário cadastrado com sucesso";
+    public ResponseEntity createSeller(@RequestBody Seller newSeller){
+        sellerRepository.save(newSeller);
+        return ResponseEntity.status(201).build();
     }
 }

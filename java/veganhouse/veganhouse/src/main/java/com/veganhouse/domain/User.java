@@ -16,8 +16,7 @@ public class User {
     protected String cpf;
     protected String email;
     protected String passwordUser;
-    protected char isSeller;
-    //protected Adress adress;
+    protected Boolean isSeller;
     //endregion
 
     //region Getters and Setters
@@ -69,11 +68,11 @@ public class User {
         this.passwordUser = passwordUser;
     }
 
-    public char isSeller() {
+    public Boolean isSeller() {
         return isSeller;
     }
 
-    public void setSeller(char isSeller) {
+    public void setSeller(Boolean isSeller) {
         this.isSeller = isSeller;
     }
 

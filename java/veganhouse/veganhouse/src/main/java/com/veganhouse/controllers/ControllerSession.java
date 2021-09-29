@@ -3,7 +3,7 @@ package com.veganhouse.controllers;
 import com.veganhouse.domain.User;
 import com.veganhouse.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class ControllerSession {
     @Autowired
     private IUserRepository userRepository;
 
-    private ControllerSession() {
+    public ControllerSession() {
         this.user = null;
     }
 
@@ -27,7 +27,7 @@ public class ControllerSession {
     }
 
     public static ControllerSession getSession(User u){
-        if (session.getUser() == null){
+        if (session == null){
             session = new ControllerSession(u);
             return session;
         }
@@ -37,24 +37,26 @@ public class ControllerSession {
     }
 
     @PostMapping("login")
-    public String login(@RequestBody User user){
-        List<User> users = userRepository.findAll();
-        for (User u : users){
-            if (user.getEmail().equals(u.getEmail()) && user.getPasswordUser().equals(u.getPasswordUser())){
-                session.getSession(u);
-                return "Login efetuado com sucesso";
-            }
+    public ResponseEntity login(@RequestBody User user){
+        User userBD;
+        userBD = userRepository.findByEmail(user.getEmail());
+
+        if (userBD != null && userBD.getPasswordUser().equals(user.getPasswordUser())){
+            ControllerSession.getSession(userBD);
+            return ResponseEntity.status(200).build();
         }
-        return "O usuário informado não foi encontrado";
+
+        return ResponseEntity.status(204).build();
     }
 
     @DeleteMapping("logout")
-    public String logout(@RequestBody User user){
+    public ResponseEntity logout(@RequestBody User user){
         if (session.getUser().equals(user)){
             session = null;
+            return ResponseEntity.status(200).build();
         }
 
-        return "O usuário não está logado";
+        return ResponseEntity.status(204).build();
     }
 
     @GetMapping
