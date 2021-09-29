@@ -100,17 +100,20 @@
     <div class="container-menu-and-data-user line-up">
 
        <!-- inicio container que alinha card do menu e dados do usuario -->
-        <div class="line-up">
+        <div class="line-up ">
 
              <!-- inicio menu pefil usuario   -->
             <div class="container-menu-perfil">
                 <section>
                     <ul>
                         <li class="radius-top-left-right">
-                        <a href="#">Minha conta</a> 
+                        <p class="line-up">Minha conta</p> 
+                        </li>
+                        <li class="active">
+                        <a href="#">Dados pessoais</a>
                         </li>
                         <li>
-                        <a href="#">Dados pessoais</a>
+                            <a href="#">Endereço</a>
                         </li>
                         <li>
                             <a href="#">Segurança</a>
@@ -182,16 +185,22 @@
                                 <input class="input-default input-address" type="text" placeholder="" name="" id="cep">
                             </div>
                     </div>
-                    <div class="container-input">
-                        <label for="state">Estado</label>
-                            <div>
-                                <select name="" id="">
-                                    <option value="">-- Selecione --</option>
-                                    <option value="">São Paulo</option>
-                                    <option value="">Rio de Janeiro</option>
-                                </select>
-                                <input class="input-state" type="text" placeholder="" name="" id="state">
-                            </div>
+                    <div class="container-city">
+                        <div class="container-state">
+                            <label for="state">Estado</label>
+                            <select name="" id="state">
+                                <option value="">-- Selecione --</option>
+                                <option value="">São Paulo</option>
+                                <option value="">Rio de Janeiro</option>
+                                <i class="fas fa-arrow-down"></i>
+                            </select>
+                            
+                        </div>
+                        <div class="container-city-2">
+                            <label for="city">Cidade</label>
+                            <input class="input-city" type="text" placeholder="" name="" id="city">
+                        </div>
+                            
                     </div>
                     <div class="container-input">
                         <label for="district">Bairro</label>
