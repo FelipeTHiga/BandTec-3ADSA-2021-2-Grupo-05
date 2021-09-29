@@ -12,8 +12,8 @@ import  {newsProducts, sellersPop}  from  "./vetor.js";
       card.cardProduct();
    })
 
-   sellersPop.forEach((sellerPop)=>{
-      const cardSeller = new creatCardSeller(sellerPop);
+   sellersPop.forEach((newSellerPop)=>{
+      const cardSeller = new creatCardSeller(newSellerPop);
       cardSeller.card();
    })
 
