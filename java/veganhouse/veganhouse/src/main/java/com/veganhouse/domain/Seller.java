@@ -1,16 +1,11 @@
 package com.veganhouse.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity
 public class Seller extends User{
     //region Attributes
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idSeller;
+    private int idSeller;
     private String nameSeller;
     private String cnpj;
     private String descriptionSeller;
@@ -18,20 +13,13 @@ public class Seller extends User{
     //endregion
 
     //region Getters and Setters
-    public Integer getIdSeller() {
+
+    public int getIdSeller() {
         return idSeller;
     }
 
-    public void setIdSeller(Integer idSeller) {
+    public void setIdSeller(int idSeller) {
         this.idSeller = idSeller;
-    }
-
-    public Integer getFkUser() {
-        return fkUser;
-    }
-
-    public void setFkUser(Integer fkUser) {
-        this.fkUser = fkUser;
     }
 
     public String getNameSeller() {
@@ -57,5 +45,14 @@ public class Seller extends User{
     public void setDescriptionSeller(String descriptionSeller) {
         this.descriptionSeller = descriptionSeller;
     }
+
+    public Integer getFkUser() {
+        return fkUser;
+    }
+
+    public void setFkUser(Integer fkUser) {
+        this.fkUser = fkUser;
+    }
+
     //endregion
 }

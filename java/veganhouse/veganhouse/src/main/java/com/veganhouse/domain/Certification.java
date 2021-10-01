@@ -10,19 +10,16 @@ public class Certification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idCertification;
+    private int idCertification;
     private String name;
 
-    public Certification(String name) {
-        this.name = name;
-    }
-
     //region Getters and Setters
-    public Integer getIdCertification() {
+
+    public int getIdCertification() {
         return idCertification;
     }
 
-    public void setIdCertification(Integer idCertification) {
+    public void setIdCertification(int idCertification) {
         this.idCertification = idCertification;
     }
 
@@ -33,5 +30,6 @@ public class Certification {
     public void setName(String name) {
         this.name = name;
     }
+
     //endregion
 }
