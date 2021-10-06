@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 public class ControllerUser {
     @Autowired
     private IUserRepository userRepository;
-    private ISellerRepository sellerRepository;
 
     @PostMapping
     public ResponseEntity createUser(@RequestBody User newUser){
@@ -24,7 +23,7 @@ public class ControllerUser {
 
     @PostMapping("seller")
     public ResponseEntity createSeller(@RequestBody Seller newSeller){
-        sellerRepository.save(newSeller);
+        //sellerRepository.save(newSeller);
         return ResponseEntity.status(201).build();
     }
 }

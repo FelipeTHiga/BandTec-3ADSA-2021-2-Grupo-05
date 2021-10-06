@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import '../styles/navbar.scss'
 import logo from '../assets/images/logo.png';
+
 interface NavbarProps {
     isLogged: boolean;
 }
@@ -9,7 +10,11 @@ export function Navbar({ isLogged }: NavbarProps) {
     return (
         <header className="header">
             <div className="container-header">
-                <div className="title-site line-up"><img src={logo} alt="Logo Vegan House" /></div>
+                <div className="title-site line-up">
+                    <Link to="/home">
+                        <img src={logo} alt="Logo Vegan House" />
+                    </Link>
+                </div>
 
                 <section className="container-search-bar line-up">
                     <input placeholder="Busque seus produtos aqui" type="text" />
@@ -24,11 +29,11 @@ export function Navbar({ isLogged }: NavbarProps) {
                         {isLogged ? (
                             <>
                                 <li>
-                                    <i className="fas fa-user-plus"></i>
+                                    <Link to="/cadastro"><i className="fas fa-user-plus"></i></Link>
                                     <Link to="/cadastro">Cadastro</Link>
                                 </li>
                                 <li>
-                                    <i className="fas fa-sign-in-alt"></i>
+                                    <Link to="/login"><i className="fas fa-sign-in-alt"></i></Link>
                                     <Link to="/login">Entrar</Link>
                                 </li>
                                 <li>
@@ -39,11 +44,11 @@ export function Navbar({ isLogged }: NavbarProps) {
                         ) : (
                             <>
                                 <li>
-                                    <i className="fas fa-user-plus"></i>
+                                    <Link to="/cadastro"><i className="fas fa-user-plus"></i></Link>
                                     <Link to="/cadastro">Cadastro</Link>
                                 </li>
                                 <li>
-                                    <i className="fas fa-sign-in-alt"></i>
+                                    <Link to="/login"><i className="fas fa-sign-in-alt"></i></Link>
                                     <Link to="/login">Entrar</Link>
                                 </li>
                                 <li>

@@ -2,19 +2,20 @@
     display: flex;
     justify-content: center;
     background: #F9F9F9;
-    height: 120vh;
+    height: 156vh;
     width: 100%;
 }
 
 .container-register {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
+    align-items: center;
     width: 85%;
 }
 
 .register-content {
-    width: 100%;
+    width: 80%;
     height: 80%;
     display: flex;
     flex-direction: column;
@@ -64,20 +65,7 @@
             width: 100%;
             border: 1px solid #AEABAB;
         }
-        button {
-            font-family: Roboto;
-            font-style: normal;
-            font-weight: bold;
-            font-size: 16px;
-            line-height: 26px;
-            text-align: center;
-            color: #604D4D;
-            background-color: #C9E891;
-            padding: 5px 36px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
+    
     }
 }
 

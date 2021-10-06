@@ -1,0 +1,80 @@
+.container-main-banner{
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    height: 500px;
+    width: 100%;
+    .container-img-banner{
+        width: 50%;
+        height: 100%;
+        background: url("../assets/images/banner.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .container-main-phrase {
+        display: flex;
+        align-items: center;
+        width: 50%;
+        height: 100%;
+        justify-content: center;
+        background: #FFF1E4;
+        .container-phrase{
+            width: 70%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            h1 {
+                font-size: 40px;
+                font-weight: 600;
+            }
+            p{
+                padding: 20px 0;
+            }
+        }
+    } 
+ 
+}
+
+
+.container-pattern {
+    width: 100%;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .arrow {
+        font-size: 70px;
+        color: #C9E891;
+        cursor: pointer;
+    }
+}
+
+.container-title-pattern p {
+    font-size: 30px;
+    color: #8F8F8F;
+    padding: 0 25px;
+}
+
+.line-average{
+    width: 200px;
+    height: 1px;
+    background-color: #8F8F8F;
+}
+
+.line-great{
+    width: 1000px;
+    height: 1px;
+    background-color: #8F8F8F;
+}
+.container-cards-products {
+    width: 90%;
+    height: 100%;
+}
+.container-products-and-arrow{
+    width: 70%;
+    height: 400px;
+}
+
+
+

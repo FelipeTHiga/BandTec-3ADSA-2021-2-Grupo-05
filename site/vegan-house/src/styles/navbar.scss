@@ -4,6 +4,9 @@
     background-color: #F6A588;
     display: flex;
     justify-content: center;
+    img {
+        width: 80%;
+    }
 }
 
 .title-site {
@@ -19,9 +22,6 @@
     height: 100%;
 }
 
-.header img {
-    width: 80%;
-}
 
 .title-site {
     width: 20%;
@@ -33,34 +33,33 @@
     align-items: center;
     width: 40%;
     height: 100%;
+    input {
+        width: 90%;
+        height: 40%;
+        color: #A6A4A4;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        border: none;
+        border-style: none;
+        padding: 0 10px;
+        font-weight: 500;
+    }
+    i {
+        font-size: 20px;
+    }
+    .container-search-icon button {
+        border: none;
+        height: 40px;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        width: 60px;
+        background-color: #C9E891;
+        color: #604D4D;
+        cursor: pointer;
+    }
 }
+ 
 
-.container-search-bar input {
-    width: 90%;
-    height: 40%;
-    color: #A6A4A4;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-    border: none;
-    border-style: none;
-    padding: 0 10px;
-    font-weight: 500;
-}
-
-.container-search-bar i {
-    font-size: 20px;
-}
-
-.container-search-bar .container-search-icon button {
-    border: none;
-    height: 40px;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    width: 60px;
-    background-color: #C9E891;
-    color: #604D4D;
-    cursor: pointer;
-}
 
 .nav-bar {
     width: 37%;
@@ -68,31 +67,29 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    i {
+        color: #fff;
+    }
+    ul {
+        list-style: none;
+        height: 100%;
+        width: 55%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    li {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 30%;
+        height: 100%;
+        cursor: pointer;
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+    }
 }
 
-.nav-bar i {
-    color: #fff;
-}
-
-.nav-bar ul {
-    list-style: none;
-    height: 100%;
-    width: 55%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-.nav-bar ul li {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 30%;
-    height: 100%;
-}
-
-.nav-bar ul li a {
-    color: #fff;
-    text-decoration: none;
-}
