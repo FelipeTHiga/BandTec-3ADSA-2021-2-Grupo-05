@@ -10,7 +10,7 @@ public class Adress {
     //region Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int idAdress;
     private String logradouro;
     private Integer number;
     private String state;
@@ -22,12 +22,13 @@ public class Adress {
     //endregion
 
     //region Getters and Setters
-    public Integer getId() {
-        return id;
+
+    public int getIdAdress() {
+        return idAdress;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdAdress(int idAdress) {
+        this.idAdress = idAdress;
     }
 
     public String getLogradouro() {
@@ -93,5 +94,6 @@ public class Adress {
     public void setFkUser(Integer fkUser) {
         this.fkUser = fkUser;
     }
+
     //endregion
 }
