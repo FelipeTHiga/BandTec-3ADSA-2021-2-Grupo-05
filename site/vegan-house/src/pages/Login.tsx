@@ -2,22 +2,22 @@ import { Title } from '../components/Title';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
+import { Button } from '../components/Button';
 import '../styles/login.scss';
 import '../styles/global.scss';
 
 
 export function Login() {
     return (
-        <>
+            <>
             <Navbar isLogged={false} />
             <Submenu />
             <section className="login-section">
-                <div className="container-login">
+            <div className="container-login">
                     <Title title="Login" />
-
-
                     <div className="login-content">
                         <h2>Olá, digite o seu e-mail e a <br /> senha utilizados no cadastro</h2>
+                        
                         <form>
                             <div className="email">
                                 <label>E-mail</label>
@@ -33,16 +33,17 @@ export function Login() {
                                     <i className="fas fa-lock"></i>
                                     <input type="password" />
                                 </div>
+                                <label><u>Esqueceu sua senha?</u></label>
                             </div>
 
-                            <button>Enviar</button>
+                            <Button text="Enviar"/>
                         </form>
+
                     </div>
                 </div>
             </section>
             <Footer />
+    
         </>
-
-
     )
 }

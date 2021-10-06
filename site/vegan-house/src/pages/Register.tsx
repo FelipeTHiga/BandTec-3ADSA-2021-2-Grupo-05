@@ -2,8 +2,10 @@ import { Title } from '../components/Title';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
+import { Button } from '../components/Button';
 import '../styles/register.scss';
 import '../styles/global.scss';
+
 
 
 export function Register() {
@@ -73,7 +75,7 @@ export function Register() {
                                     <p>*</p>
                                 </div>
                             </div>
-                            <button>Enviar</button>
+                            <Button text="Enviar"/>
                         </form>
                     </div>
                 </div>

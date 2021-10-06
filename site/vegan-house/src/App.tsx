@@ -1,7 +1,6 @@
-import React from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Home } from './pages/Home';
 import { Login } from './pages/Login';
-
 import { Register } from "./pages/Register";
 
 
@@ -12,6 +11,7 @@ function App() {
 
     <BrowserRouter>
       <Switch>
+        <Route path="/home" component={Home}/>
         <Route path="/cadastro" component={Register} />
         <Route path="/login" component={Login} />
       </Switch>
