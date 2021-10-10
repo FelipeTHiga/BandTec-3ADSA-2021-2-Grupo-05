@@ -2,11 +2,8 @@ import { Link } from 'react-router-dom';
 import '../styles/navbar.scss'
 import logo from '../assets/images/logo.png';
 
-interface NavbarProps {
-    isLogged: boolean;
-}
 
-export function Navbar({ isLogged }: NavbarProps) {
+export function Navbar(props) {
     return (
         <header className="header">
             <div className="container-header">
@@ -19,14 +16,14 @@ export function Navbar({ isLogged }: NavbarProps) {
                 <section className="container-search-bar line-up">
                     <input placeholder="Busque seus produtos aqui" type="text" />
                     <div className="container-search-icon">
-                        <button><i className="fas fa-search"></i></button>
+                        <button className="search-button"><i className="fas fa-search"></i></button>
 
                     </div>
                 </section>
 
                 <section className="nav-bar">
                     <ul className="line-up">
-                        {isLogged ? (
+                        {props.isLogged ? (
                             <>
                                 <li>
                                     <Link to="/cadastro"><i className="fas fa-user-plus"></i></Link>
