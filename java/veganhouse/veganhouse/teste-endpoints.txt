@@ -1,0 +1,21 @@
+USER
+ {
+    "nameUser":"Mario",
+    "surName":"Cortela",
+    "cpf": "912660001",
+    "email": "mario.cortela@filosofia.com.br",
+    "passwordUser": "123",
+    "isSeller":true
+}
+
+ADRESS
+ {
+    "logradouro":"Clara Nunes",
+    "number": 19,
+    "state": "São Paulo",
+    "city": "SP",
+    "complement": "N/A",
+    "cep":"02873000",
+    "district": "Não Faço Ideia",
+    "fkUser": 1
+}
