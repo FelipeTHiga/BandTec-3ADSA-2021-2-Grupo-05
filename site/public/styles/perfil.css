@@ -1,7 +1,7 @@
- /* inicio nome usuario  */
+/* inicio nome usuario  */
 .container-name-user{
     width: 100%;
-    height: 200px;
+    height: 140px;
 }
 
 .container-name-user > div{
@@ -46,7 +46,7 @@
 /* inicio container geral com menu e dados do perfil */
 .container-menu-and-data-user{
     width: 100%;
-    height: 1400px;
+    height: 700px;
 }
 
 .container-menu-and-data-user > div{
@@ -114,10 +114,9 @@
 
 .container-data-user {
     width: 70%;
-    margin: 0 0 0 5%;
     padding: 40px;
     border-radius: 10px;
-    height: 1200px;
+    height: 500px;
     border: #C8C7C7 solid 1px;
     background: #FFFFFF;
 }
@@ -130,7 +129,7 @@
     display: flex;
     align-items: center;
     border-bottom: solid 1px #C4C4C4;
-    margin: 2% 0%;
+    /* margin: 2% 0%; */
 }
 
 .container-data-user label{
@@ -266,3 +265,17 @@
 
 /* fim card dados do perfil */
 
+
+
+
+/* inicio container endereço  */
+
+.container-address {
+    height: 700px !important;
+}
+
+.container-menu-and-data-user-address {
+    height: 900px !important;
+}
+
+/* fim container endereço  */

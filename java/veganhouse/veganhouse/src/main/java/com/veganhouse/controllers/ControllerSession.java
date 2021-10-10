@@ -46,20 +46,27 @@ public class ControllerSession {
             return ResponseEntity.status(200).build();
         }
 
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(403).build();
     }
 
     @DeleteMapping("logout")
     public ResponseEntity logout(@RequestBody User user){
-        if (session.getUser().equals(user)){
+        if (session.getUser().getEmail().equals(user.getEmail())){
             session = null;
             return ResponseEntity.status(200).build();
         }
 
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(403).build();
     }
 
     @GetMapping
+    public ResponseEntity getUserAtivo(){
+        if (session != null){
+            return ResponseEntity.status(200).body(session.getUser());
+        }
+        return ResponseEntity.status(403).build();
+    }
+
     public User getUser() {
         return user;
     }

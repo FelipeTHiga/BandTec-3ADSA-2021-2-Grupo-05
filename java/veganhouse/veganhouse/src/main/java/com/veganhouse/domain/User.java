@@ -20,6 +20,7 @@ public class User {
     //endregion
 
     //region Getters and Setters
+
     public int getId() {
         return id;
     }
@@ -68,20 +69,13 @@ public class User {
         this.passwordUser = passwordUser;
     }
 
-    public Boolean isSeller() {
+    public Boolean getSeller() {
         return isSeller;
     }
 
-    public void setSeller(Boolean isSeller) {
-        this.isSeller = isSeller;
+    public void setSeller(Boolean seller) {
+        isSeller = seller;
     }
 
-    /*public Adress getAdress() {
-        return adress;
-    }
-
-    public void setAdress(Adress adress) {
-       this.adress = adress;
-    }*/
     //endregion
 }
