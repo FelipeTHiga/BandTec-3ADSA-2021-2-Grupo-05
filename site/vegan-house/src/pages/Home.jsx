@@ -2,6 +2,7 @@ import { Navbar } from "../components/Navbar";
 import { Submenu } from "../components/Submenu";
 import { Footer } from "../components/Footer";
 import { Button } from '../components/Button';
+import { Card } from "../components/Card";
 import '../styles/home.scss';
 
 export function Home() {
@@ -33,7 +34,7 @@ export function Home() {
             <div className="container-products-and-arrow line-up">
                 <i className="fas fa-caret-left arrow"></i>
                     <div className="container-cards-products line-up">
-                        
+                        <Card />
                     
                     </div>
                 <i className="fas fa-caret-right arrow"></i>

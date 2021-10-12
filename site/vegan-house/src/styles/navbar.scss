@@ -4,6 +4,7 @@
     background-color: #F6A588;
     display: flex;
     justify-content: center;
+    font-family: 'Roboto', sans-serif;
     img {
         width: 80%;
     }
@@ -47,7 +48,7 @@
     i {
         font-size: 20px;
     }
-    .container-search-icon button {
+    .search-button {
         border: none;
         height: 40px;
         border-top-right-radius: 8px;
