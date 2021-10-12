@@ -12,18 +12,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 public class ControllerUser {
+
     @Autowired
     private IUserRepository userRepository;
 
     @PostMapping
     public ResponseEntity createUser(@RequestBody User newUser){
+        newUser.setIsSeller(false);
         userRepository.save(newUser);
         return ResponseEntity.status(201).build();
     }
 
-    @PostMapping("seller")
-    public ResponseEntity createSeller(@RequestBody Seller newSeller){
-        //sellerRepository.save(newSeller);
-        return ResponseEntity.status(201).build();
-    }
 }
