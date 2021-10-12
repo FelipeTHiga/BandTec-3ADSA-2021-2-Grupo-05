@@ -1,0 +1,80 @@
+/* inicio container dados comerciais  */
+
+.container-menu-and-data-user-commercial{
+    height: 1800px;
+}
+
+
+
+.container-data-user-seller{
+    height: 1600px !important;
+}
+
+.container-data-user-seller input {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+/* inicio container dados comerciais  */
+
+
+
+/* inicio container certificações  */
+.container-input-certification{
+    width: 100%;
+    height: 90px;
+    margin: 3% 0;
+    display: flex;
+    align-items: center;
+    /* background-color: red; */
+}
+
+.container-label-certification {
+    display: flex;
+    align-items: center;
+    width: 75%;
+    height: 100%;;
+    /* background-color: aqua; */
+}
+
+.container-label-certification label{
+    margin-left: 4%;
+}
+
+.container-checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 100%;
+    /* background-color: blueviolet; */
+}
+
+
+.container-input-certification img{
+    width: 80px;
+}
+
+.container-title-certification {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    font-size: 23px;
+    font-weight: 500;
+}
+
+.container-input-certification input{
+    /* margin: 0 45% 0 0; */
+}
+
+.container-title-certification p:nth-child(1) {
+    margin-left: 11.2%;
+}
+
+.container-title-certification div:nth-child(2) {
+    width: 100%;
+    display: flex;
+    margin: 0 10%;
+    justify-content: flex-end;
+}
+/* fim container certificações  */
