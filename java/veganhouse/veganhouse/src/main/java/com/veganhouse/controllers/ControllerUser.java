@@ -24,6 +24,7 @@ public class ControllerUser {
 
     @PostMapping
     public ResponseEntity createUser(@RequestBody User newUser){
+        newUser.setIsSeller(false);
         userRepository.save(newUser);
         return ResponseEntity.status(201).build();
     }
@@ -73,15 +74,5 @@ public class ControllerUser {
         adressRepository.save(newAdress);
         return ResponseEntity.status(201).build();
     }
-
-
-    
-    
-    
-    
-    
-    
-
-
 
 }

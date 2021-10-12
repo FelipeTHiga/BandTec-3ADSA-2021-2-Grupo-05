@@ -14,7 +14,7 @@ import java.util.List;
 public class ControllerSession {
 
     private User user;
-    private static ControllerSession session;
+    public static ControllerSession session;
     @Autowired
     private IUserRepository userRepository;
 
@@ -36,7 +36,7 @@ public class ControllerSession {
         }
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity login(@RequestBody User user){
         User userBD;
         userBD = userRepository.findByEmail(user.getEmail());
@@ -49,7 +49,7 @@ public class ControllerSession {
         return ResponseEntity.status(403).build();
     }
 
-    @DeleteMapping("logout")
+    @DeleteMapping("/logout")
     public ResponseEntity logout(@RequestBody User user){
         if (session.getUser().getEmail().equals(user.getEmail())){
             session = null;
