@@ -59,11 +59,13 @@
 
 /* inicio menu do perfil */
 .container-menu-perfil {
-    width: 100%;
+    width: 20%;
     height: 300px;
     margin: 0 5% 0 0;
     border-radius: 10px;
 }
+
+
 
 .container-menu-perfil ul {
     list-style: none;
