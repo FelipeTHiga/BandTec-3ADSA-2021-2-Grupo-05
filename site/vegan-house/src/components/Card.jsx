@@ -1,6 +1,8 @@
 import shoe from '../assets/images/shoe.png'
 import star from '../assets/images/star.png'
 import '../styles/card.scss'
+import newsProducts from '../scripts/vetor.js';
+
 export function Card() {
     return (
         <div className="card-product line-up">
