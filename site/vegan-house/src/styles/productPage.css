@@ -1,0 +1,159 @@
+.section-title{
+    margin-top: 30px;
+}
+
+.title{
+    justify-content: flex-start;
+    background-color: #FFFFFF;
+    border: solid 1px #8D8181;
+    padding: 20px;
+}
+
+.title h1 {
+    font-size: 30px;
+}
+
+.section-product{
+    margin-top: 20px;
+}
+
+.div-products{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #FFFFFF;
+    border: solid 1px #8D8181;
+    border-radius: 10px;
+    padding: 35px;
+}
+
+.product-info{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 454px;
+}
+
+.div-images{
+    display: flex;
+    width: 61%;
+    justify-content: space-between;
+}
+
+.small-images{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.image{
+    width: 103px;
+    height: 131px;
+    border: solid 1px #AEABAB;
+    border-radius: 4px;
+}
+
+.big-image{
+    width: 480px;
+    height: 454px;
+    border: solid 1px #AEABAB;
+    border-radius: 5px;
+}
+
+.buy-card{
+    display: flex;
+    flex-direction: column;
+    width: 359px;
+    height: 454px;
+    padding: 35px;
+    background-color: #FFFFFF;
+    border: solid 1px #AEABAB;
+    border-radius: 10px;
+}
+
+.product-infos{
+    height: 40%;
+
+}
+
+.note h5 {
+    color: #5E6366;
+}
+
+.product-seller h4 {
+    color: #928F8F;
+}
+
+.buy-btn{
+    width: 286px;
+    height: 89px;
+    padding: 20px 30px;
+    display: flex;
+    align-items: flex-end;
+    background-color: #FFFFFF;
+    border: solid 1px #9DC2FF;
+    border-radius: 5px;
+
+}
+
+.buy-btn h2{
+    color: #2264D1;
+    font-size: 30px;
+}
+
+.product-description{
+    margin-top: 30px;
+    height: 354px;
+}
+
+.container-product-description{
+    display: flex;
+    flex-direction: column; 
+}
+
+.sub-title{
+    width: 100%;
+    height: 47px;
+    padding: 15px;
+    color: #604D4D;
+    background-color: #FFE0DE;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.text-description{
+    width: 95%;
+    padding: 30px;
+}
+
+.product-seller{
+    margin-top: 30px;
+}
+
+.container-product-seller{
+    padding: 0px 25px;
+}
+
+.container-contacts{
+    height: 254px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.social-midias{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.certifications{
+    display: flex;
+    flex-direction: column;
+}
+
+.certification{
+    display: flex;
+    align-items: center;
+}
