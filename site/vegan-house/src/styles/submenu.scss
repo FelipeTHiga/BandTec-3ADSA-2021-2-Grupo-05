@@ -1,11 +1,11 @@
 .sub-menu {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
     background-color: #FFE0DE;
     width: 100%;
     height: 60px;
     font-family: 'Roboto', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
     ul {
         display: flex;
@@ -16,11 +16,11 @@
     }
     
     li {
-        width: 17%;
+        width: 10%;
+        margin: 0 10px;
         list-style: none;
         display: flex;
-        justify-content: start;
-        align-items: center;
+        justify-content: center;
     }
     
     a {
@@ -34,5 +34,12 @@
     i {
         color: #604D4D;
     }
+
+    .foods {
+        margin: 0 0;
+    }
 }
+
+
+
 
