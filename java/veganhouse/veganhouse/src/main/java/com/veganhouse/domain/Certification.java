@@ -14,7 +14,6 @@ public class Certification {
     private String name;
 
     //region Getters and Setters
-
     public int getIdCertification() {
         return idCertification;
     }
@@ -30,6 +29,5 @@ public class Certification {
     public void setName(String name) {
         this.name = name;
     }
-
     //endregion
 }

@@ -43,10 +43,10 @@ public class ControllerSession {
 
         if (userBD != null && userBD.getPasswordUser().equals(user.getPasswordUser())){
             ControllerSession.getSession(userBD);
-            return ResponseEntity.status(200).build();
+            return ResponseEntity.status(200).body(userBD);
         }
 
-        return ResponseEntity.status(403).build();
+        return ResponseEntity.status(204).build();
     }
 
     @DeleteMapping("/logout")
@@ -56,15 +56,17 @@ public class ControllerSession {
             return ResponseEntity.status(200).build();
         }
 
-        return ResponseEntity.status(403).build();
+        return ResponseEntity.status(204).build();
     }
 
     @GetMapping
     public ResponseEntity getUserAtivo(){
+        User userAtivo;
         if (session != null){
-            return ResponseEntity.status(200).body(session.getUser());
+            userAtivo = session.getUser();
+            return ResponseEntity.status(200).body(userAtivo);
         }
-        return ResponseEntity.status(403).build();
+        return ResponseEntity.status(204).build();
     }
 
     public User getUser() {
