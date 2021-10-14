@@ -18,10 +18,6 @@ public class User {
     protected String email;
     protected String passwordUser;
     protected Boolean isSeller;
-
-
-
-
     //endregion
 
     //region Getters and Setters

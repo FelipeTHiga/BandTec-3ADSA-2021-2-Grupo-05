@@ -17,5 +17,15 @@ import  {newsProducts, sellersPop}  from  "./vetor.js";
       cardSeller.card();
    })
 
+
+   const [vetorProdutos, setVetorProdutos] = React.useState(vetor);
+
+   function criarCard(){
+      for (let i = 0; i < vetorProdutos.length; i++){
+        let preco = vetorProdutos[0].preco;
+
+      }
+   }
+
   // searchResult(newsProducts);
 

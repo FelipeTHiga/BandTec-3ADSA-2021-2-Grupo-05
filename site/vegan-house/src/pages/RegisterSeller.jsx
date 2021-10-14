@@ -5,13 +5,14 @@ import { Submenu } from '../components/Submenu';
 import { Button } from '../components/Button';
 import '../styles/register-seller.scss';
 import '../styles/global.scss';
+import { getUser } from '../scripts/crud-user';
 
 
 
 export function RegisterSeller() {
     return (
         <>
-            <Navbar isLogged={true} />
+            <Navbar isLogged={getUser} />
             <Submenu />
             <section className="register">
                 <div className="container-register">

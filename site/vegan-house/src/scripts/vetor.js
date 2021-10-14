@@ -23,7 +23,7 @@ const newsProducts = [
     {
         "imgProduct": "/public/images/shoe.png",
         "note": 2, 
-        "price": 100.50, 
+        "price": 900.50, 
         "description": "Calça de algodão marrom", 
         "category": "vestimenta",    
     },

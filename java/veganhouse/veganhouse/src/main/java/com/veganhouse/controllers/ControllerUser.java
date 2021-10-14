@@ -26,7 +26,7 @@ public class ControllerUser {
     public ResponseEntity createUser(@RequestBody User newUser){
         newUser.setIsSeller(false);
         userRepository.save(newUser);
-        return ResponseEntity.status(201).build();
+        return ResponseEntity.status(201).body(newUser);
     }
 
     @GetMapping("/{idUser}")
@@ -42,7 +42,7 @@ public class ControllerUser {
             userRepository.save(newUpdate);
             return ResponseEntity.status(200).build();
         } else {
-            return ResponseEntity.status(404).build();
+            return ResponseEntity.status(204).build();
         }
     }
 
@@ -65,7 +65,7 @@ public class ControllerUser {
             adressRepository.save(adressUpdate);
             return ResponseEntity.status(200).build();
         } else {
-            return ResponseEntity.status(404).build();
+            return ResponseEntity.status(204).build();
         }
     }
 
@@ -74,5 +74,4 @@ public class ControllerUser {
         adressRepository.save(newAdress);
         return ResponseEntity.status(201).build();
     }
-
 }
