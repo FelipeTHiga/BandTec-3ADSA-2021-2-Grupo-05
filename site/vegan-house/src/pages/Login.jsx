@@ -5,12 +5,12 @@ import { Submenu } from '../components/Submenu';
 import { Button } from '../components/Button';
 import '../styles/login.scss';
 import '../styles/global.scss';
-
+import { getUser, login } from '../scripts/crud-user';
 
 export function Login() {
     return (
             <>
-            <Navbar isLogged={false} />
+            <Navbar isLogged={getUser} />
             <Submenu />
             <section className="login-section">
             <div className="container-login">
@@ -23,7 +23,7 @@ export function Login() {
                                 <label>E-mail</label>
                                 <div className="email-content">
                                     <i className="far fa-envelope"></i>
-                                    <input type="email" placeholder="Ex. joao.silva@email.com" />
+                                    <input id="email_login" type="email" placeholder="Ex. joao.silva@email.com" />
                                 </div>
                             </div>
 
@@ -31,12 +31,12 @@ export function Login() {
                                 <label>Senha</label>
                                 <div className="password-content">
                                     <i className="fas fa-lock"></i>
-                                    <input type="password" />
+                                    <input id="password_login" type="password" />
                                 </div>
                                 <label><u>Esqueceu sua senha?</u></label>
                             </div>
 
-                            <Button text="Enviar"/>
+                            <Button function={login} text="Enviar"/>
                         </form>
 
                     </div>
