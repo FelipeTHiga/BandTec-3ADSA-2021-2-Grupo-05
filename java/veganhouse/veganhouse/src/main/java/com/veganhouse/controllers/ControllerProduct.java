@@ -1,6 +1,8 @@
 package com.veganhouse.controllers;
 
 import com.veganhouse.domain.Product;
+import com.veganhouse.observer.EventManagerRestock;
+import com.veganhouse.observer.IRestockNotificationRepository;
 import com.veganhouse.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class ControllerProduct {
     @Autowired
     private IProductRepository productRepository;
+
+    @Autowired
+    private IRestockNotificationRepository restockNotificationRepository;
+
+    EventManagerRestock eventManagerRestock = new EventManagerRestock();
 
     public ControllerProduct() {
     }
@@ -24,6 +31,9 @@ public class ControllerProduct {
     @PutMapping("{id}")
     public ResponseEntity putProduct(@PathVariable Integer id, @RequestBody Product product){
         if (productRepository.existsById(id)){
+            if(restockNotificationRepository.existsById(id) && product.getInventory()>0)
+                eventManagerRestock.notify(id);
+
             product.setId(id);
             productRepository.save(product);
             return ResponseEntity.status(200).build();
