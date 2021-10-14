@@ -1,7 +1,12 @@
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import { Submenu } from "../components/Submenu";
-import { Title } from "../components/Title";
+import { Title2 } from "../components/Title2";
+import { SectionTitle } from "../components/SectionTitle";
+import { SubTitle } from "../components/SubTitle";
+import { SmallImage } from "../components/SmallImage";
+import { SocialMidia } from "../components/SocialMidia";
+import { BuyCard } from "../components/BuyCard";
 import shoppingCart from "../assets/images/shopping-cart.png";
 import logoInstagram from "../assets/images/social-midias/logo-instagram.png";
 import logoFacebook from "../assets/images/social-midias/logo-facebook.png";
@@ -11,10 +16,18 @@ import selo2 from "../assets/images/certifications/Selo-2.png";
 import selo3 from "../assets/images/certifications/Selo-3.png";
 import selo4 from "../assets/images/certifications/Selo-4.png";
 import selo5 from "../assets/images/certifications/Selo-5.png";
+import image1 from "../assets/images/pants-1.png";
+import image2 from "../assets/images/pants-2.png";
+import image3 from "../assets/images/pants-3.png";
+import image4 from "../assets/images/pants-4.png";
+import stars from "../assets/images/stars.png";
 import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/productPage.css';
-import { SectionTitle } from "../components/SectionTitle";
+import { BigImage } from "../components/BigImage";
+import { Certification } from "../components/Certification";
+import { ProductTextDescription } from "../components/ProductTextDescription";
+
 
 
 export function ProductPage() {
@@ -25,135 +38,80 @@ export function ProductPage() {
 
             <section className="section-title">
                 <div className="line-up">
-                    <Title title="Todos os resultados /" />
+                    <Title2 title2="Todos os resultados /" />
                 </div>
             </section>
 
             <section className="section-product">
                 <div className=" line-up">
-                    <div className="div-products">
+                    <div className="container-products">
 
-                        <div className="product-info">
+                        <section className="section-product-info">
                             <div className="div-images">
                                 <div className="small-images">
-                                    <div className="image"><img src="" alt="" /></div>
-                                    <div className="image"><img src="" alt="" /></div>
-                                    <div className="image"><img src="" alt="" /></div>
+                                    <SmallImage src={image1} />
+                                    <SmallImage src={image2} />
+                                    <SmallImage src={image3} />
                                 </div>
-                                <div className="big-image">
-                                    <img src="" alt="" />
-                                </div>
+                                <BigImage src={image4} />
                             </div>
-                            <div className="buy-card">
-                                <div className="product-infos">
-                                    <div className="product-title">
-                                        <h1>props.description</h1>
-                                    </div>
-                                    <div className="product-note">
-                                        <div className="starts">
-                                            <img src="" alt="" />
-                                        </div>
-                                        <div className="note">
-                                            <h5>props.note</h5>
-                                        </div>
-                                        <div className="product-seller">
-                                            <h4>Vendido por props.seller</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr />
-                                <div className="product-price">
-                                    <h1>R$props.price</h1>
-                                </div>
-                                <div className="">
-                                    <button className="buy-btn" onclick="buy()">
-                                        {/* <i class="fas fa-shopping-cart"></i> */}
-                                        <img src={shoppingCart} alt="" />
-                                        <h2>Comprar</h2>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                            <BuyCard isAvailable={true} description="Calça de algodão marrom"
+                                src={stars}
+                                note="4.99"
+                                seller=" joaao"
+                                price="47,00" />
+                        </section>
 
-                        <div className="product-description">
+                        <section className="section-product-description">
                             <div className="container-product-description">
-                                <div className="sub-title">Descrição do produto</div>
-                                <div className="text-description">
-                                    <p>
-                                        A Calça de algodão é a escolha certa para criar looks com muito estilo! Confeccionada em jeans color, a calça apresenta modelagem paper bag, a queridinha do momento! Perfeita para ocasiões especiais, encontros com os amigos e com o crush, aposte!
-                                        <br />
-                                        <br />
-                                        Características: <br />
-                                        Modelo paper bag <br />
-                                        Cós elástico <br />
-                                        Cós com passantes <br />
-                                        Braguilha com zíper e botões <br />
-                                        Bolsos frontais tipo faca <br />
-                                        Bolsos posteriores <br />
-                                        Barra simples <br />
-                                        <br />
-                                        <br />
-                                        A cor do produto nas fotos reproduzidas com modelos, pode sofrer alteração em decorrência do uso do flash.
-                                    </p>
-                                </div>
+                                <SubTitle subTitle="Descrição do produto" />
+                                <ProductTextDescription text="
+                                    A Calça de algodão é a escolha certa para criar looks com muito estilo! Confeccionada em jeans color, a calça apresenta modelagem paper bag, a queridinha do momento! Perfeita para ocasiões especiais, encontros com os amigos e com o crush, aposte!
+                                    <br />
+                                    <br />
+                                    Características: <br />
+                                    Modelo paper bag <br />
+                                    Cós elástico <br />
+                                    Cós com passantes <br />
+                                    Braguilha com zíper e botões <br />
+                                    Bolsos frontais tipo faca <br />
+                                    Bolsos posteriores <br />
+                                    Barra simples <br />
+                                    <br />
+                                    <br />
+                                    A cor do produto nas fotos reproduzidas com modelos, pode sofrer alteração em decorrência do uso do flash." />
                             </div>
-                        </div>
-                        <div className="product-seller">
+                        </section>
+                        <section className="section-product-seller">
 
-                            <div className="sub-title">Sobre o vendedor</div>
+                            <SubTitle subTitle="Sobre o vendedor" />
                             <div className="container-product-seller">
 
                                 <div className="container-contacts">
 
                                     <SectionTitle text="Contato & Redes Sociais" />
-                                    <div className="social-midias">
-                                        <div className="instagram">
-                                            <img src={logoInstagram} alt="" />
-                                            <h4>@</h4>
-                                        </div>
-                                        <div className="facebook">
-                                            <img src={logoFacebook} alt="" />
-                                            <h4>@</h4>
-                                        </div>
-                                        <div className="whatsapp">
-                                            <img src={logoWhatsapp} alt="" />
-                                            <h4>()</h4>
-                                        </div>
+                                    <div className="container-social-midias">
+                                        <SocialMidia data="@joaaoRoupas" src={logoInstagram} />
+                                        <SocialMidia data="@joaaoRoupas" src={logoFacebook} />
+                                        <SocialMidia data="(11)95877-5674" src={logoWhatsapp} />
                                     </div>
                                 </div>
                                 <div className="container-certifications">
 
-                                        <SectionTitle text="Certificações" />
+                                    <SectionTitle text="Certificações" />
 
                                     <div className="certifications">
-                                        <div className="certification">
-                                            <img src={selo1} alt="" />
-                                            <h3>Selo 1</h3>
-                                        </div>
-                                        <div className="certification">
-                                            <img src={selo2} alt="" />
-                                            <h3>Selo 2</h3>
-                                        </div>
-                                        <div className="certification">
-                                            <img src={selo3} alt="" />
-                                            <h3>Selo 3</h3>
-                                        </div>
-
+                                        <Certification src={selo2} name="Selo da Sociedade Vegetariana Brasileira" />
+                                        <Certification src={selo3} name="Selo da Vegan Societ" />
+                                        <Certification src={selo5} name="Certificado Vegano da Organização Veganismo Brasil" />
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </section>
                     </div>
                 </div>
             </section>
-
-
-
-
-
-
-            {/* <Footer/> */}
+            <Footer />
         </>
-
     );
 }
