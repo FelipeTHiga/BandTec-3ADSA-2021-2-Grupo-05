@@ -7,10 +7,15 @@ import { SubTitle } from "../components/SubTitle";
 import { SmallImage } from "../components/SmallImage";
 import { SocialMidia } from "../components/SocialMidia";
 import { BuyCard } from "../components/BuyCard";
-import shoppingCart from "../assets/images/shopping-cart.png";
+import { BigImage } from "../components/BigImage";
+import { Certification } from "../components/Certification";
+import { ProductTextDescription } from "../components/ProductTextDescription";
 import logoInstagram from "../assets/images/social-midias/logo-instagram.png";
 import logoFacebook from "../assets/images/social-midias/logo-facebook.png";
 import logoWhatsapp from "../assets/images/social-midias/logo-whatsapp.png";
+import '../styles/global.scss';
+import '../styles/reset.css';
+import '../styles/productPage.css';
 import selo1 from "../assets/images/certifications/Selo-1.png";
 import selo2 from "../assets/images/certifications/Selo-2.png";
 import selo3 from "../assets/images/certifications/Selo-3.png";
@@ -21,13 +26,6 @@ import image2 from "../assets/images/pants-2.png";
 import image3 from "../assets/images/pants-3.png";
 import image4 from "../assets/images/pants-4.png";
 import stars from "../assets/images/stars.png";
-import '../styles/global.scss';
-import '../styles/reset.css';
-import '../styles/productPage.css';
-import { BigImage } from "../components/BigImage";
-import { Certification } from "../components/Certification";
-import { ProductTextDescription } from "../components/ProductTextDescription";
-
 
 
 export function ProductPage() {
@@ -55,11 +53,14 @@ export function ProductPage() {
                                 </div>
                                 <BigImage src={image4} />
                             </div>
-                            <BuyCard isAvailable={true} description="Calça de algodão marrom"
-                                src={stars}
-                                note="4.99"
-                                seller=" joaao"
-                                price="47,00" />
+                            <BuyCard 
+                                // isAvailable={true} 
+                                // description="Calça de algodão marrom"
+                                // src={stars}
+                                // score="4.99"
+                                // seller=" joaao"
+                                // price="47,00" 
+                                />
                         </section>
 
                         <section className="section-product-description">
@@ -115,3 +116,5 @@ export function ProductPage() {
         </>
     );
 }
+
+

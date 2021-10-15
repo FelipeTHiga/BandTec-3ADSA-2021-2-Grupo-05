@@ -1,30 +1,34 @@
 import '../styles/buyCard.scss';
 import shoppingCart from '../assets/images/shopping-cart.png';
+import { selectedProduct } from '../scripts/vetor2.js';
 
-export function BuyCard(props) {
+const creatProduct = (product) => {
+
+    var isAvailable = (product.inventory <= 0) ? false : true;
+
     return (
         <div className="container-buy-card">
 
             <div className="buy-card-info">
                 <div className="product-title">
-                    <h1>{props.description}</h1>
+                    <h1>{product.name}</h1>
                 </div>
                 <div className="product-note">
-                    <img src={props.src} alt="" />
-                    <h6>{props.note}</h6>
+                    <img src={product.scoreImage} alt="" />
+                    <h6>{product.score}</h6>
                 </div>
                 <div className="product-seller">
-                    <h4>Vendido por <u>{props.seller}</u></h4>
+                    <h4>Vendido por <u>{product.seller}</u></h4>
                 </div>
             </div>
             <hr />
             <div className="product-price">
-                <h1>R${props.price}</h1>
+                <h1>R${product.price}</h1>
             </div>
 
             <div className="btn">
                 {
-                    props.isAvailable ? (
+                    isAvailable ? (
                         <>
                             <div className="container-buy-btn">
                                 <button className="buy-btn" onclick="buy()">
@@ -47,5 +51,11 @@ export function BuyCard(props) {
                 }
             </div>
         </div>
+    );
+}
+
+export function BuyCard() {
+    return (
+        selectedProduct.map(creatProduct)
     );
 }
