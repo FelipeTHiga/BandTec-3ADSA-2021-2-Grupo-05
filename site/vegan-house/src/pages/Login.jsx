@@ -19,7 +19,7 @@ export function Login() {
                         <h2>Olá, digite o seu e-mail e a <br /> senha utilizados no cadastro</h2>
                         
                         <form>
-                            <div className="email">
+                            <div className="email-login">
                                 <label>E-mail</label>
                                 <div className="email-content">
                                     <i className="far fa-envelope"></i>
@@ -27,7 +27,7 @@ export function Login() {
                                 </div>
                             </div>
 
-                            <div className="password">
+                            <div className="password-login">
                                 <label>Senha</label>
                                 <div className="password-content">
                                     <i className="fas fa-lock"></i>

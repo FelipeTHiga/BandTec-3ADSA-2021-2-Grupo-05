@@ -1,0 +1,16 @@
+.products {
+    display: flex;
+    align-items: center;
+    width: 30%;
+
+    img {
+        border: 1px solid #AEABAB;
+        border-radius: 2px;
+        width: 50px;
+    }
+
+    h1{
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+    }
+}
