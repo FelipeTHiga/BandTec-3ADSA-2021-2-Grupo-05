@@ -5,13 +5,14 @@ import { Submenu } from '../components/Submenu';
 import { Button } from '../components/Button';
 import '../styles/register.scss';
 import '../styles/global.scss';
+import { getUser, submit } from '../scripts/crud-user';
 
 
 
 export function Register() {
     return (
         <>
-            <Navbar isLogged={false} />
+            <Navbar isLogged={getUser} />
             <Submenu />
             <section className="register">
                 <div className="container-register">
@@ -24,7 +25,7 @@ export function Register() {
                                 <label>Nome</label>
                                 <div className="name-content">
                                     <i className="fas fa-user"></i>
-                                    <input type="text" placeholder="Ex. João" />
+                                    <input id="name" type="text" placeholder="Ex. João" />
                                     <p>*</p>
                                 </div>
                             </div>
@@ -33,7 +34,7 @@ export function Register() {
                                 <label>Sobrenome</label>
                                 <div className="last-name-content">
                                     <i className="fas fa-user"></i>
-                                    <input type="text" placeholder="Ex. Silva" />
+                                    <input id="surname" type="text" placeholder="Ex. Silva" />
                                     <p>*</p>
                                 </div>
                             </div>
@@ -42,7 +43,7 @@ export function Register() {
                                 <label>CPF</label>
                                 <div className="cpf-content">
                                     <i className="fas fa-id-card"></i>
-                                    <input type="text" placeholder="Ex. 11122233344" />
+                                    <input id="cpf" type="text" placeholder="Ex. 11122233344" />
                                     <p>*</p>
                                 </div>
                                 <label className="instructions">Digite apenas números</label>
@@ -52,7 +53,7 @@ export function Register() {
                                 <label>E-mail</label>
                                 <div className="email-content">
                                     <i className="far fa-envelope"></i>
-                                    <input type="email" placeholder="Ex. joao.silva@email.com" />
+                                    <input id="email" type="email" placeholder="Ex. joao.silva@email.com" />
                                     <p>*</p>
                                 </div>
                             </div>
@@ -61,7 +62,7 @@ export function Register() {
                                 <label>Senha</label>
                                 <div className="password-content">
                                     <i className="fas fa-lock"></i>
-                                    <input type="password" />
+                                    <input id="password" type="password" />
                                     <p>*</p>
                                 </div>
                                 <label className="instructions">Use de 6 a 20 caracteres</label>
@@ -75,7 +76,7 @@ export function Register() {
                                     <p>*</p>
                                 </div>
                             </div>
-                            <Button text="Enviar"/>
+                            <Button function={submit} text="Enviar"/>
                         </form>
                     </div>
                 </div>

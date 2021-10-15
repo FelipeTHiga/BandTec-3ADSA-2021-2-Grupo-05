@@ -7,6 +7,7 @@ import javax.persistence.Id;
 
 @Entity
 public class User {
+
     //region Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,14 +18,9 @@ public class User {
     protected String email;
     protected String passwordUser;
     protected Boolean isSeller;
-
-
-
-
     //endregion
 
     //region Getters and Setters
-
     public int getId() {
         return id;
     }
@@ -73,13 +69,12 @@ public class User {
         this.passwordUser = passwordUser;
     }
 
-    public Boolean getSeller() {
+    public Boolean getIsSeller() {
         return isSeller;
     }
 
-    public void setSeller(Boolean seller) {
+    public void setIsSeller(Boolean seller) {
         isSeller = seller;
     }
-
     //endregion
 }

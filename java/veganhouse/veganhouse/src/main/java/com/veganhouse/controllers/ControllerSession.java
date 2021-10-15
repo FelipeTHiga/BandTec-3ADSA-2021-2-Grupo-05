@@ -14,7 +14,7 @@ import java.util.List;
 public class ControllerSession {
 
     private User user;
-    private static ControllerSession session;
+    public static ControllerSession session;
     @Autowired
     private IUserRepository userRepository;
 
@@ -36,35 +36,37 @@ public class ControllerSession {
         }
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity login(@RequestBody User user){
         User userBD;
         userBD = userRepository.findByEmail(user.getEmail());
 
         if (userBD != null && userBD.getPasswordUser().equals(user.getPasswordUser())){
             ControllerSession.getSession(userBD);
-            return ResponseEntity.status(200).build();
+            return ResponseEntity.status(200).body(userBD);
         }
 
-        return ResponseEntity.status(403).build();
+        return ResponseEntity.status(204).build();
     }
 
-    @DeleteMapping("logout")
+    @DeleteMapping("/logout")
     public ResponseEntity logout(@RequestBody User user){
         if (session.getUser().getEmail().equals(user.getEmail())){
             session = null;
             return ResponseEntity.status(200).build();
         }
 
-        return ResponseEntity.status(403).build();
+        return ResponseEntity.status(204).build();
     }
 
     @GetMapping
     public ResponseEntity getUserAtivo(){
+        User userAtivo;
         if (session != null){
-            return ResponseEntity.status(200).body(session.getUser());
+            userAtivo = session.getUser();
+            return ResponseEntity.status(200).body(userAtivo);
         }
-        return ResponseEntity.status(403).build();
+        return ResponseEntity.status(204).build();
     }
 
     public User getUser() {

@@ -4,16 +4,21 @@ import javax.persistence.Entity;
 
 @Entity
 public class Seller extends User{
+
     //region Attributes
     private int idSeller;
-    private String nameSeller;
+    private String commercialName;
     private String cnpj;
-    private String descriptionSeller;
+    private String commercialEmail;
+    private String whatsappNumber;
+    private String instagramAccount;
+    private String facebookAccount;
+    //private List<Certification> listCertifications;
+    //private String descriptionSeller;
     private Integer fkUser;
     //endregion
 
     //region Getters and Setters
-
     public int getIdSeller() {
         return idSeller;
     }
@@ -22,12 +27,12 @@ public class Seller extends User{
         this.idSeller = idSeller;
     }
 
-    public String getNameSeller() {
-        return nameSeller;
+    public String getCommercialName() {
+        return commercialName;
     }
 
-    public void setNameSeller(String nameSeller) {
-        this.nameSeller = nameSeller;
+    public void setCommercialName(String commercialName) {
+        this.commercialName = commercialName;
     }
 
     public String getCnpj() {
@@ -38,12 +43,36 @@ public class Seller extends User{
         this.cnpj = cnpj;
     }
 
-    public String getDescriptionSeller() {
-        return descriptionSeller;
+    public String getCommercialEmail() {
+        return commercialEmail;
     }
 
-    public void setDescriptionSeller(String descriptionSeller) {
-        this.descriptionSeller = descriptionSeller;
+    public void setCommercialEmail(String commercialEmail) {
+        this.commercialEmail = commercialEmail;
+    }
+
+    public String getWhatsappNumber() {
+        return whatsappNumber;
+    }
+
+    public void setWhatsappNumber(String whatsappNumber) {
+        this.whatsappNumber = whatsappNumber;
+    }
+
+    public String getInstagramAccount() {
+        return instagramAccount;
+    }
+
+    public void setInstagramAccount(String instagramAccount) {
+        this.instagramAccount = instagramAccount;
+    }
+
+    public String getFacebookAccount() {
+        return facebookAccount;
+    }
+
+    public void setFacebookAccount(String facebookAccount) {
+        this.facebookAccount = facebookAccount;
     }
 
     public Integer getFkUser() {
@@ -53,6 +82,5 @@ public class Seller extends User{
     public void setFkUser(Integer fkUser) {
         this.fkUser = fkUser;
     }
-
     //endregion
 }

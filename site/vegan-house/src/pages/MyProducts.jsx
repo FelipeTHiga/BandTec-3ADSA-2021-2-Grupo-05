@@ -11,11 +11,12 @@ import { UserGreeting } from '../components/UserGreeting';
 import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/myProducts.css';
+import { getUser } from '../scripts/crud-user';
 
 export function MyProducts() {
     return (
         <>
-            <Navbar isLogged={true} />
+            <Navbar isLogged={getUser} />
             <div className="page-container">
                 <UserGreeting username="João Teste" isSeller={false}/>
             </div>
