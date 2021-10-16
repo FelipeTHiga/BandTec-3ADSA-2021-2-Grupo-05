@@ -4,12 +4,12 @@ import { Footer } from "../components/Footer";
 import { Button } from '../components/Button';
 import { Card } from "../components/Card";
 import '../styles/home.scss';
-import { getUser } from "../scripts/crud-user";
+import { getUser, submit } from "../scripts/crud-user";
 
 export function Home() {
     return(
         <>
-        <Navbar isLogged={getUser()}/>
+        <Navbar isLogged={false}/>
         <Submenu/>
         <section className="container-main-banner line-up">
            
@@ -17,7 +17,7 @@ export function Home() {
                    <div className="container-phrase line-up">
                        <h1 className="title-banner">Seja bem vinde!</h1>
                            <p>Vegan house, o lar de produtos 100% veganos.</p>
-                           <Button text="Explorar"/>
+                           <Button function={getUser} text="Explorar"/>
                    </div>
            </div>
    

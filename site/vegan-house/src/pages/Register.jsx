@@ -8,7 +8,6 @@ import '../styles/global.scss';
 import { getUser, submit } from '../scripts/crud-user';
 
 
-
 export function Register() {
     return (
         <>
@@ -76,8 +75,8 @@ export function Register() {
                                     <p>*</p>
                                 </div>
                             </div>
-                            <Button function={submit} text="Enviar"/>
                         </form>
+                        <Button function={submit} text="Enviar"/>
                     </div>
                 </div>
 

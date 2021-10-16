@@ -35,10 +35,8 @@ export function Login() {
                                 </div>
                                 <label><u>Esqueceu sua senha?</u></label>
                             </div>
-
-                            <Button function={login} text="Enviar"/>
                         </form>
-
+                        <Button function={login} text="Enviar"/>
                     </div>
                 </div>
             </section>

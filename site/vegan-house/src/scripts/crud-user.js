@@ -1,8 +1,6 @@
-import { Link } from "react-router-dom";
 import api from "./api";
 
-function submit() {
-    debugger
+async function submit(props) {
     const user = {
         nameUser: document.getElementById("name").value,
         surName: document.getElementById("surname").value,
@@ -10,52 +8,62 @@ function submit() {
         email: document.getElementById("email").value,
         passwordUser: document.getElementById("password").value
     }
-
-    console.log(user);
-
-    api({
+    
+    await api({
         method: 'post',
         url: '/user',
         data: user,
-    }).then(function (response) {
-        console.log(response.data)
+    })
+    .then(function (response) {
+        console.log(response.status);
     });
 }
 
-function login(){
+async function login(){
     const user = {
         email: document.getElementById("email_login").value,
         passwordUser: document.getElementById("password_login").value
     }
 
-    console.log(user);
-
-    api({
+    await api({
         method: 'post',
         url: '/session/login',
         data: user,
-    }).finally(function (response) {
-        console.log(response.status)
-        if(response.status === 200){
-            return <Link to="/home"/>
-        }
+    })
+    .then(function (response) {
+        const status = response.status;
+        console.log(status);
     });
-    debugger
+
 }
 
-function getUser(){
-    
-    api({
+async function getUser(){
+    var user_logged = {
+        id: "",
+        nameUser: "",
+        surName: "",
+        cpf: "",
+        email: "",
+        isSeller: false
+    }
+    var statusRes;
+
+    await api({
         method: 'get',
         url: '/session',
-    }).then(function (response) {
-        debugger
-        console.log(response.data)
-        if (response.status !== 200){
-            return false;
-        }
-        return true;
+    })
+    .then(function (response) {
+        statusRes = response.status;
+        user_logged = response.data;
     });
+
+    if (statusRes === 200){
+        return user_logged;
+    }
+
+    console.log(user_logged);
+    return null;
 }
+
 
 export {submit, getUser, login};

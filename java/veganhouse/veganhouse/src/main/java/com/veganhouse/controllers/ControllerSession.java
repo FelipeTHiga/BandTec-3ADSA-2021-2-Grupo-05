@@ -43,10 +43,10 @@ public class ControllerSession {
 
         if (userBD != null && userBD.getPasswordUser().equals(user.getPasswordUser())){
             ControllerSession.getSession(userBD);
-            return ResponseEntity.status(200).body(userBD);
+            return ResponseEntity.status(200).build();
         }
 
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(403).build();
     }
 
     @DeleteMapping("/logout")
