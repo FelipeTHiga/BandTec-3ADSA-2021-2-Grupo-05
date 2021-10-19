@@ -21,18 +21,18 @@ export function RegisterSeller() {
                     <div className="register-content-seller">
                         <h2>Dados comerciais</h2>
                         <form>
-                            <div className="name">
+                            <div className="name-seller">
                                 <label>Nome comercial</label>
-                                <div className="name-content">
+                                <div className="name-content-seller">
                                     <i className="fas fa-user"></i>
                                     <input type="text" placeholder="Ex. Doces do João" />
                                     <p>*</p>
                                 </div>
                             </div>
 
-                            <div className="cnpj">
+                            <div className="cnpj-seller">
                                 <label>CNPJ</label>
-                                <div className="cnpj-content">
+                                <div className="cnpj-content-seller">
                                     <i className="fas fa-id-card"></i>
                                     <input type="text" placeholder="Ex. 11222333444455" />
                                     <p>*</p>
@@ -40,9 +40,9 @@ export function RegisterSeller() {
                                 <label className="instructions">Digite apenas números</label>
                             </div>
 
-                            <div className="email">
+                            <div className="email-seller">
                                 <label>E-mail comercial</label>
-                                <div className="email-content">
+                                <div className="email-content-seller">
                                     <i className="far fa-envelope"></i>
                                     <input type="email" placeholder="Ex. DocesJ@email.com" />
                                     <p>*</p>
