@@ -4,17 +4,20 @@ import com.veganhouse.controllers.ControllerSession;
 import com.veganhouse.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.Entity;
 import java.util.List;
 
-@Entity
+@RestController
 @RequestMapping("/restock-subscribe")
 public class EventManagerRestockController {
-    EventManagerRestock eventManagerRestock = new EventManagerRestock();
+   @Autowired
+    EventManagerRestock eventManagerRestock;
 
-    @Autowired IRestockNotificationRepository repository;
+    @Autowired
+    IRestockNotificationRepository repository;
 
     @PostMapping
     public ResponseEntity createSubscription(@RequestBody RestockNotification restockNotification){
@@ -29,6 +32,4 @@ public class EventManagerRestockController {
     public List<RestockNotification> getAllSubscriptions(){
         return repository.findAll();
     }
-
-
 }

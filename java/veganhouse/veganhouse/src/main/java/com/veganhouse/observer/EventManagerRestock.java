@@ -5,10 +5,15 @@ import com.veganhouse.domain.User;
 import com.veganhouse.repository.IProductRepository;
 import com.veganhouse.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class EventManagerRestock {
 
     @Autowired
@@ -31,7 +36,7 @@ public class EventManagerRestock {
     public void notify(int productId){
         List<RestockNotification> restockNotificationList = restockNotificationRepository.findAll();
         List<User> usersNotified = new ArrayList();
-        Product productUpdated = productRepository.getById(productId);
+        Product productUpdated = productRepository.findById(productId).get();
 
         for(RestockNotification r: restockNotificationList){
             if(r.getFkProduct() == productId)

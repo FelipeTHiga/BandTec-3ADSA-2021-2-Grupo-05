@@ -17,7 +17,8 @@ public class ControllerProduct {
     @Autowired
     private IRestockNotificationRepository restockNotificationRepository;
 
-    EventManagerRestock eventManagerRestock = new EventManagerRestock();
+    @Autowired
+    EventManagerRestock eventManagerRestock;
 
     public ControllerProduct() {
     }
@@ -31,7 +32,9 @@ public class ControllerProduct {
     @PutMapping("{id}")
     public ResponseEntity putProduct(@PathVariable Integer id, @RequestBody Product product){
         if (productRepository.existsById(id)){
-            if(restockNotificationRepository.existsById(id) && product.getInventory()>0)
+            if(restockNotificationRepository.existsByFkProduct(id)
+                    && product.getInventory()>0
+                    && productRepository.getById(id).getInventory()==0)
                 eventManagerRestock.notify(id);
 
             product.setId(id);
@@ -42,7 +45,7 @@ public class ControllerProduct {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity getProductById(@PathVariable Integer id){
+    public ResponseEntity getProductById(@PathVariable int id){
         if (productRepository.existsById(id)){
             return ResponseEntity.status(200).body(productRepository.findById(id).get());
         }
@@ -65,7 +68,7 @@ public class ControllerProduct {
         return ResponseEntity.status(204).build();
     }
 
-    @GetMapping("{category}")
+    @GetMapping("/  tag/{category}")
     public ResponseEntity getProductsByCategory(@PathVariable String category){
         if (productRepository.count() > 0){
             return ResponseEntity.status(200).body(productRepository.findByCategory(category));
