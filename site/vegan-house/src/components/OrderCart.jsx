@@ -17,6 +17,7 @@ export function OrderCart(props) {
             document.getElementById('button-amount').disabled = false;
         }
         setNumber(number + 1);
+        props.setTotal((prevState) => ({ ...prevState, total: prevState.total + props.price}));
         console.log(number);
              
     }
@@ -27,12 +28,16 @@ export function OrderCart(props) {
         } else {
             document.getElementById('button-amount').disabled = false;
             setNumber(number - 1);
+            props.setTotal((prevState) => ({ ...prevState, total: prevState.total - props.price}));
             console.log(number); 
         }
          
       
     }
  
+    React.useEffect(() => {
+        props.setTotal((prevState) => ({ ...prevState, total: prevState.total + props.price}));
+    }, []);
 
     return (
         <>

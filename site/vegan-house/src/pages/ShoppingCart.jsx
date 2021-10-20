@@ -9,18 +9,19 @@ export function ShoppingCart(props) {
 
 
 
-    let [totalAmount, setNumber] = React.useState(0);
+    let [totalAmount, setNumber] = React.useState({ total: 0 });
 
-    totalAmount = () => {
-        const totalLabel = document.querySelector(`#${totalLabel}`),
-            orderCart1 = document.querySelector(`#${orderCart1}`)
+  
+    // totalAmount = () => {
+    //     const totalLabel = document.querySelector(`#${totalLabel}`),
+    //         orderCart1 = document.querySelector(`#${orderCart1}`)
 
-        orderCart1.addEventListener("change", function () {
-            totalLabel.value = setNumber;
-        });
+    //     orderCart1.addEventListener("change", function () {
+    //         totalLabel.value = setNumber;
+    //     });
         
-        alert("");
-    }
+    //     alert("");
+    // }
 
     return (
         <>
@@ -40,11 +41,12 @@ export function ShoppingCart(props) {
                                 <h3>Remover</h3>
                             </div>
                         </div>
-                        <OrderCart price={20.00} cardId="orderCart1" />
+                        <OrderCart price={20.00} setTotal={setNumber} cardId="orderCart1" />
+                        <OrderCart price={20.00} setTotal={setNumber} cardId="orderCart1" />
 
                     </div>
                     <div className="cart-final">
-                        <h1>Total: <span id="totalLabel">R${totalAmount}</span></h1>
+                        <h1>Total: <span id="totalLabel">R${totalAmount.total.toFixed(2)}</span></h1>
                         <button>Continuar</button>
                     </div>
                 </div>
