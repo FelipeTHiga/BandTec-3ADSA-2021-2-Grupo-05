@@ -20,6 +20,10 @@ public class User {
     protected Boolean isSeller;
     //endregion
 
+    public void sendEmail(Product product){
+        System.out.printf("Email enviado para %s sobre a chegada de produtos %s", email, product.getName());
+    }
+
     //region Getters and Setters
     public int getId() {
         return id;
