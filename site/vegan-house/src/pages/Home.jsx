@@ -7,11 +7,12 @@ import { CardSeller } from "../components/CardSellers";
 import '../styles/carousel.scss'
 
 import '../styles/home.scss';
+import { getUser } from "../scripts/crud-user";
 
 export function Home() {
     return(
         <>
-        <Navbar isLogged={false}/>
+        <Navbar isLogged={getUser()}/>
         <Submenu/>
         <section className="container-main-banner line-up">
            
