@@ -75,8 +75,9 @@ export function Register() {
                                     <p>*</p>
                                 </div>
                             </div>
+                            <button onClick={submit}>Enviar</button>
+                            {/* <Button path="/home" text="Enviar" type="submit"/> */}
                         </form>
-                        <Button function={submit} text="Enviar"/>
                     </div>
                 </div>
 

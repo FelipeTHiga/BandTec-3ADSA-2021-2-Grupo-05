@@ -5,6 +5,7 @@ import { Button } from '../components/Button';
 import { Card } from "../components/Card";
 import '../styles/home.scss';
 import { getUser, submit } from "../scripts/crud-user";
+import React from 'react';
 
 export function Home() {
     return(
@@ -17,7 +18,7 @@ export function Home() {
                    <div className="container-phrase line-up">
                        <h1 className="title-banner">Seja bem vinde!</h1>
                            <p>Vegan house, o lar de produtos 100% veganos.</p>
-                           <Button function={getUser} text="Explorar"/>
+                           <Button text="Explorar"/>
                    </div>
            </div>
    

@@ -46,6 +46,14 @@ public class ControllerUser {
         }
     }
 
+    @GetMapping("/all")
+    public ResponseEntity getUsers(@PathVariable Integer idUser){
+        if (userRepository.count() > 0){
+            return ResponseEntity.status(200).body(userRepository.findAll());
+        }
+        return ResponseEntity.status(204).build();
+    }
+
     @PostMapping("seller")
     public ResponseEntity createSeller(@RequestBody Seller newSeller){
         //sellerRepository.save(newSeller);

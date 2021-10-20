@@ -64,7 +64,7 @@ public class ControllerProduct {
     public ResponseEntity deleteProduct(@PathVariable Integer id){
         if (productRepository.existsById(id)){
             productRepository.deleteById(id);
-            return ResponseEntity.status(200).body(productRepository.findById(id).get());
+            return ResponseEntity.status(200).build();
         }
         return ResponseEntity.status(204).build();
     }
@@ -78,7 +78,7 @@ public class ControllerProduct {
         return ResponseEntity.status(204).build();
     }
 
-    @GetMapping("{name}")
+    @GetMapping("/name/{name}")
     public ResponseEntity getProductsByName(@PathVariable String name){
         if (productRepository.count() > 0){
             return ResponseEntity.status(200).body(productRepository.findByName(name));

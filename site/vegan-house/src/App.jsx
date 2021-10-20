@@ -4,7 +4,7 @@ import { Login } from './pages/Login';
 import { MyProducts } from "./pages/MyProducts";
 import { Register } from "./pages/Register";
 import { RegisterSeller } from "./pages/RegisterSeller";
-
+import { getProducts } from "./scripts/crud-product";
 
 
 // import { NewRoom } from "./pages/NewRoom";

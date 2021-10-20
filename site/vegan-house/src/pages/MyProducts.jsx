@@ -5,22 +5,23 @@ import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { Button } from '../components/Button';
-import { ProductTableRow } from '../components/ProductTableRow';
 import { DragDropUpload } from '../components/DragDropUpload';
 import { UserGreeting } from '../components/UserGreeting';
 import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/myProducts.css';
 import { createProduct, getProductByName, getProducts } from '../scripts/crud-product';
-import { getUser} from '../scripts/crud-user';
-
-
+import { getUser, user_logged} from '../scripts/crud-user';
+import { ProductTableRow } from '../components/ProductTableRow';
+getProducts();
+    getUser();
+    console.log(user_logged);
 export function MyProducts() {
     return (
         <>
-            <Navbar isLogged={getUser()} />
+            <Navbar isLogged={true} />
             <div className="page-container">
-                <UserGreeting username="Joao" isSeller={true}/>
+                <UserGreeting username={user_logged.nameUser} isSeller={true}/>
             </div>
 
             <div className="line-up">
@@ -60,7 +61,17 @@ export function MyProducts() {
 
                                 <div className="product-option" >
                                     <label htmlFor="">Ordenar por</label>
-                                    <Button text="Cadastrar" />
+                                    <select name="" id="state">
+                                        <option value="">-- Subcategoria -- </option>
+                                        <option value="">Sobremesas</option>
+                                        <option value="">Calçados</option>
+                                        <i class="fas fa-arrow-down"></i>
+                                    </select>
+                                </div>
+
+                                <div className="product-option" >
+                                    <label htmlFor="">Exibir todos</label>
+                                    <a href="#" className="all-product" >Exibir</a>
                                 </div>
 
                             </div>
@@ -73,7 +84,7 @@ export function MyProducts() {
                             </div>
 
                             <div className="products-table-body">
-                                <ProductTableRow product="Calça de algodão" category="Vestimenta" subcategory="Calças" stock="10" />
+                                <ProductTableRow />
                             </div>
                         </div>
 
@@ -131,7 +142,7 @@ export function MyProducts() {
                                 </div>
 
                                 <div className="align-column margin-top-20 margin-bottom-25">
-                                    <Button function={createProduct} text="Cadastrar" />
+                                    <button className="create-product-btn" onClick={createProduct}>Cadastrar</button>
                                 </div>
                             </div>
                         </div>
@@ -139,13 +150,10 @@ export function MyProducts() {
                 </div>
             </div>
 
-            <div class="margin-top-25">
+            <div className="margin-top-25">
                 <Footer />
             </div>
-
-
         </>
 
     );
-
 }

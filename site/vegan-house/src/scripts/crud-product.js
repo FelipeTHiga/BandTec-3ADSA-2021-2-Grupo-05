@@ -1,6 +1,18 @@
 import api from "./api";
 import { getUser, user_logged} from '../scripts/crud-user';
+import { Redirect, Route, Router, __RouterContext } from "react-router";
 
+var list_products = [{
+        id: "",
+        name: "",
+        price: 0.0,
+        category: "",
+        subCategory: "",
+        description: "",
+        inventory: 0,
+        fkUser: 1
+}];
+getUser();
 
 async function createProduct(){
 
@@ -10,8 +22,8 @@ async function createProduct(){
         category: document.getElementById("category").value,
         subCategory: document.getElementById("sub_category").value,
         description: document.getElementById("description").value,
-        invetory: parseInt(document.getElementById("inventory").value),
-        fkUser: 1
+        inventory: parseInt(document.getElementById("inventory").value),
+        fkUser: user_logged.id
     }
 
     await api({
@@ -31,44 +43,52 @@ async function getProductByName(){
     await api({
         method: 'get',
         url: '/product',
-        params: name,
+        params: {
+            name: name,
+            id: user_logged.id
+        },
     })
     .then(function (response) {
         const status = response.status;
         console.log(status);
+        list_products = response.data;
     });
 }
 
 async function getProductByCategory(){
-    const category = "";
+    const category = document.getElementById("name_search").value;
 
     await api({
         method: 'get',
         url: '/product/tag',
-        params: category,
+        params: {
+            category: category,
+            id: user_logged.id
+        }
+        
     })
     .then(function (response) {
         const status = response.status;
         console.log(status);
+        list_products = response.data;
     });
 }
 
 async function getProducts(props){
-    var list = [{}];
     await api({
         method: 'get',
-        url: '/product/all'
+        url: '/product/all',
+        params: user_logged.id
     })
     .then(function (response) {
         console.log(response.data);
-        list = response.data;
+        list_products = response.data;
+        return response.data;
     });
-    return list;
 }
 
 
 async function deleteProducts(props){
-    
     await api({
         method: 'delete',
         url: '/product',
@@ -82,4 +102,4 @@ async function deleteProducts(props){
 
 
 
-export {createProduct, getProductByName, getProductByCategory, getProducts, deleteProducts};
+export {createProduct, getProductByName, getProductByCategory, getProducts, deleteProducts, list_products};

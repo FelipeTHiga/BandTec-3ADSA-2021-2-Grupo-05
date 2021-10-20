@@ -1,4 +1,13 @@
+import { faRandom } from "@fortawesome/free-solid-svg-icons";
+import { Redirect } from "react-router";
 import api from "./api";
+var user_logged = {
+    id: 0,
+    nameUser: "",
+    surName: "",
+    cpf: "",
+    email: ""
+};
 
 async function submit(props) {
     const user = {
@@ -24,46 +33,35 @@ async function login(){
         email: document.getElementById("email_login").value,
         passwordUser: document.getElementById("password_login").value
     }
-
+    var status;
     await api({
         method: 'post',
         url: '/session/login',
         data: user,
     })
     .then(function (response) {
-        const status = response.status;
-        console.log(status);
+        status = response.status;
     });
 
+    console.log(status);
 }
 
 async function getUser(){
-    var user_logged = {
-        id: "",
-        nameUser: "",
-        surName: "",
-        cpf: "",
-        email: "",
-        isSeller: false
-    }
-    var statusRes;
 
     await api({
         method: 'get',
         url: '/session',
     })
     .then(function (response) {
-        statusRes = response.status;
-        user_logged = response.data;
+        if (response.status === 200){
+            user_logged = response.data;
+            return response.data;
+
+        }
+        console.log(response.status)
     });
-
-    if (statusRes === 200){
-        return user_logged;
-    }
-
-    console.log(user_logged);
-    return null;
+    
 }
 
 
-export {submit, getUser, login};
+export {submit, getUser, login, user_logged};
