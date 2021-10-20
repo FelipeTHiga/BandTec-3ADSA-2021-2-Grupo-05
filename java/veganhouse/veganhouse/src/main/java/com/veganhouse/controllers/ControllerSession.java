@@ -39,20 +39,36 @@ public class ControllerSession {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody User user){
         User userBD;
+
+        if (!userRepository.existsByEmail(user.getEmail())){
+            return ResponseEntity.status(403).build();
+        }
+
         userBD = userRepository.findByEmail(user.getEmail());
 
         if (userBD != null && userBD.getPasswordUser().equals(user.getPasswordUser())){
             ControllerSession.getSession(userBD);
-            return ResponseEntity.status(200).body(userBD);
+            userBD.setAuthenticated(true);
+            userRepository.save(userBD);
+            return ResponseEntity.status(200).build();
         }
-
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(403).build();
     }
 
     @DeleteMapping("/logout")
     public ResponseEntity logout(@RequestBody User user){
+        User userBD;
+
+        if (!userRepository.existsByEmail(user.getEmail())){
+            return ResponseEntity.status(204).build();
+        }
+
+        userBD = userRepository.findByEmail(user.getEmail());
+
         if (session.getUser().getEmail().equals(user.getEmail())){
             session = null;
+            userBD.setAuthenticated(false);
+            userRepository.save(userBD);
             return ResponseEntity.status(200).build();
         }
 
@@ -62,9 +78,11 @@ public class ControllerSession {
     @GetMapping
     public ResponseEntity getUserAtivo(){
         User userAtivo;
+        User userBD;
         if (session != null){
             userAtivo = session.getUser();
-            return ResponseEntity.status(200).body(userAtivo);
+            userBD = userRepository.findByEmail(userAtivo.getEmail());
+            return ResponseEntity.status(200).body(userBD);
         }
         return ResponseEntity.status(204).build();
     }

@@ -1,8 +1,8 @@
 import "../styles/button.scss";
-
+import { Link } from 'react-router-dom';
 
 export function Button(props) {
     return(
-        <button onClick={props.function} className="button">{props.text}</button>
+        <button className="button" >{props.text}</button>
     );
 }

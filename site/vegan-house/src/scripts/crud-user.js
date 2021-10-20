@@ -1,8 +1,15 @@
-import { Link } from "react-router-dom";
+import { faRandom } from "@fortawesome/free-solid-svg-icons";
+import { Redirect } from "react-router";
 import api from "./api";
+var user_logged = {
+    id: 0,
+    nameUser: "",
+    surName: "",
+    cpf: "",
+    email: ""
+};
 
-function submit() {
-    debugger
+async function submit(props) {
     const user = {
         nameUser: document.getElementById("name").value,
         surName: document.getElementById("surname").value,
@@ -10,52 +17,51 @@ function submit() {
         email: document.getElementById("email").value,
         passwordUser: document.getElementById("password").value
     }
-
-    console.log(user);
-
-    api({
+    
+    await api({
         method: 'post',
         url: '/user',
         data: user,
-    }).then(function (response) {
-        console.log(response.data)
+    })
+    .then(function (response) {
+        console.log(response.status);
     });
 }
 
-function login(){
+async function login(){
     const user = {
         email: document.getElementById("email_login").value,
         passwordUser: document.getElementById("password_login").value
     }
-
-    console.log(user);
-
-    api({
+    var status;
+    await api({
         method: 'post',
         url: '/session/login',
         data: user,
-    }).finally(function (response) {
-        console.log(response.status)
-        if(response.status === 200){
-            return <Link to="/home"/>
-        }
+    })
+    .then(function (response) {
+        status = response.status;
     });
-    debugger
+
+    console.log(status);
 }
 
-function getUser(){
-    
-    api({
+async function getUser(){
+
+    await api({
         method: 'get',
         url: '/session',
-    }).then(function (response) {
-        debugger
-        console.log(response.data)
-        if (response.status !== 200){
-            return false;
+    })
+    .then(function (response) {
+        if (response.status === 200){
+            user_logged = response.data;
+            return response.data;
+
         }
-        return true;
+        console.log(response.status)
     });
+    
 }
 
-export {submit, getUser, login};
+
+export {submit, getUser, login, user_logged};

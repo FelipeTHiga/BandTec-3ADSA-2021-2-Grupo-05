@@ -5,20 +5,23 @@ import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { Button } from '../components/Button';
-import { ProductTableRow } from '../components/ProductTableRow';
 import { DragDropUpload } from '../components/DragDropUpload';
 import { UserGreeting } from '../components/UserGreeting';
 import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/myProducts.css';
-import { getUser } from '../scripts/crud-user';
-
+import { createProduct, getProductByName, getProducts } from '../scripts/crud-product';
+import { getUser, user_logged} from '../scripts/crud-user';
+import { ProductTableRow } from '../components/ProductTableRow';
+getProducts();
+    getUser();
+    console.log(user_logged);
 export function MyProducts() {
     return (
         <>
-            <Navbar isLogged={getUser} />
+            <Navbar isLogged={true} />
             <div className="page-container">
-                <UserGreeting username="João Teste" isSeller={false}/>
+                <UserGreeting username={user_logged.nameUser} isSeller={true}/>
             </div>
 
             <div className="line-up">
@@ -41,8 +44,8 @@ export function MyProducts() {
                                     <label htmlFor="">Buscar produto</label>
 
                                     <section className="search-bar line-up">
-                                        <input className="input" placeholder="Buscar" type="text" />
-                                        <button><i className="fas fa-search"></i></button>
+                                        <input id="name_search" className="input" placeholder="Buscar" type="text" />
+                                        <button ><i className="fas fa-search"></i></button>
                                     </section>
                                 </div>
 
@@ -58,8 +61,19 @@ export function MyProducts() {
 
                                 <div className="product-option" >
                                     <label htmlFor="">Ordenar por</label>
-                                    <Button text="Cadastrar" />
+                                    <select name="" id="state">
+                                        <option value="">-- Subcategoria -- </option>
+                                        <option value="">Sobremesas</option>
+                                        <option value="">Calçados</option>
+                                        <i class="fas fa-arrow-down"></i>
+                                    </select>
                                 </div>
+
+                                <div className="product-option" >
+                                    <label htmlFor="">Exibir todos</label>
+                                    <a href="#" className="all-product" >Exibir</a>
+                                </div>
+
                             </div>
 
                             <div className="products-table-header">
@@ -70,7 +84,7 @@ export function MyProducts() {
                             </div>
 
                             <div className="products-table-body">
-                                <ProductTableRow product="Calça de algodão" category="Vestimenta" subcategory="Calças" stock="10" />
+                                <ProductTableRow />
                             </div>
                         </div>
 
@@ -80,23 +94,25 @@ export function MyProducts() {
 
                                 <div className="product-edit-camp">
                                     <label>Nome</label>
-                                    <input className="input" type="text" placeholder="Ex. Sorverte de banana" />
+                                    <input id="name_product" className="input" type="text" placeholder="Ex. Sorverte de banana" />
                                 </div>
 
                                 <div className="line-up width-100">
                                     <div className="product-edit-camp margin-right-50">
                                         <label htmlFor="">Categoria</label>
-                                        <select name="" id="state">
-                                            <option value="">Alimentos</option>
-                                            <option value="">Vestimentas</option>
+                                        <select name="" id="category">
+                                            <option value="alimentos">Alimentos</option>
+                                            <option value="medicamentos">Medicamentos</option>
+                                            <option value="vestimentas">Vestimentas</option>
                                             <i class="fas fa-arrow-down"></i>
                                         </select>
                                     </div>
                                     <div className="product-edit-camp">
                                         <label htmlFor="">Subcategoria</label>
-                                        <select name="" id="state">
-                                            <option value="">Sobremesas</option>
-                                            <option value="">Vestimentas</option>
+                                        <select name="" id="sub_category">
+                                            <option value="sobremesas">Sobremesas</option>
+                                            <option value="calçados">Calçados</option>
+                                            <option value="blusas">Blusas</option>
                                             <i class="fas fa-arrow-down"></i>
                                         </select>
                                     </div>
@@ -105,12 +121,12 @@ export function MyProducts() {
                                 <div className="line-up width-100">
                                     <div className="product-edit-camp margin-right-50">
                                         <label htmlFor="">Preço</label>
-                                        <input className="input" type="text" placeholder="R$" />
+                                        <input id="price" className="input" type="text" placeholder="R$" />
                                     </div>
 
                                     <div className="product-edit-camp">
                                         <label htmlFor="">Qtd. estoque</label>
-                                        <input className="input" type="text" placeholder="100" />
+                                        <input id="inventory" className="input" type="text" placeholder="100" />
                                     </div>
                                 </div>
 
@@ -122,11 +138,11 @@ export function MyProducts() {
 
                                 <div className="product-edit-camp">
                                     <label htmlFor="">Descrição</label>
-                                    <textarea name="" id="" cols="30" rows="10"></textarea>
+                                    <textarea name="" id="description" cols="30" rows="10"></textarea>
                                 </div>
 
                                 <div className="align-column margin-top-20 margin-bottom-25">
-                                    <Button text="Cadastrar" />
+                                    <button className="create-product-btn" onClick={createProduct}>Cadastrar</button>
                                 </div>
                             </div>
                         </div>
@@ -134,13 +150,10 @@ export function MyProducts() {
                 </div>
             </div>
 
-            <div class="margin-top-25">
+            <div className="margin-top-25">
                 <Footer />
             </div>
-
-
         </>
 
     );
-
 }

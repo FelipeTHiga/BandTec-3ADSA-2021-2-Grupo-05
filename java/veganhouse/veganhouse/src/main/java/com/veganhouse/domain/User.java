@@ -18,6 +18,7 @@ public class User {
     protected String email;
     protected String passwordUser;
     protected Boolean isSeller;
+    protected Boolean authenticated;
     //endregion
 
     public void sendEmail(Product product){
@@ -79,6 +80,22 @@ public class User {
 
     public void setIsSeller(Boolean seller) {
         isSeller = seller;
+    }
+
+    public Boolean getSeller() {
+        return isSeller;
+    }
+
+    public void setSeller(Boolean seller) {
+        isSeller = seller;
+    }
+
+    public Boolean getAuthenticated() {
+        return authenticated;
+    }
+
+    public void setAuthenticated(Boolean authenticated) {
+        this.authenticated = authenticated;
     }
     //endregion
 }

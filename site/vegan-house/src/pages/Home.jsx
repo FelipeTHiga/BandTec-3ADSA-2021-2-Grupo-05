@@ -4,12 +4,13 @@ import { Footer } from "../components/Footer";
 import { Button } from '../components/Button';
 import { Card } from "../components/Card";
 import '../styles/home.scss';
-import { getUser } from "../scripts/crud-user";
+import { getUser, submit } from "../scripts/crud-user";
+import React from 'react';
 
 export function Home() {
     return(
         <>
-        <Navbar isLogged={getUser()}/>
+        <Navbar isLogged={false}/>
         <Submenu/>
         <section className="container-main-banner line-up">
            
