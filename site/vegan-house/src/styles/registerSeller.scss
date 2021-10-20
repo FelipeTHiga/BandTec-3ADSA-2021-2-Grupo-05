@@ -14,7 +14,7 @@
     width: 85%;
 }
 
-.register-content {
+.register-content-seller {
     width: 80%;
     height: 75%;
     display: flex;
@@ -37,18 +37,20 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-evenly;
         height: 85%;
         width: 100%;
+        
         label {
             width: 36%;
             font-family: 'Roboto', sans-serif;
         }
+        
         .instructions {
             width: 36%;
             font-family: 'Roboto', sans-serif;
             font-size: 14px;
         }
+        
         i {
             background-color: #AEABAB;
             color: white;
@@ -57,6 +59,7 @@
             border-top-left-radius: 2px;
             border-bottom-left-radius: 2px;
         }
+        
         input {
             padding-left: 6px;
             border-top-right-radius: 6px;
@@ -72,6 +75,7 @@
             width: 75%;
             align-items: center;
             font-family: 'Roboto', sans-serif;
+            margin-bottom: 25px;
             input {
                 width: 5%;
             }
@@ -88,6 +92,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    margin-bottom: 25px;
 }
 
 .name-content,

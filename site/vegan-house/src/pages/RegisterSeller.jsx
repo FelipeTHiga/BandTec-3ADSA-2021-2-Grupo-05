@@ -3,7 +3,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
 import { Button } from '../components/Button';
-import '../styles/register-seller.scss';
+import '../styles/registerSeller.scss';
 import '../styles/global.scss';
 import { getUser } from '../scripts/crud-user';
 
@@ -18,7 +18,7 @@ export function RegisterSeller() {
                 <div className="container-register">
                     <Title title="Cadastro" />
 
-                    <div className="register-content">
+                    <div className="register-content-seller">
                         <h2>Dados comerciais</h2>
                         <form>
                             <div className="name">

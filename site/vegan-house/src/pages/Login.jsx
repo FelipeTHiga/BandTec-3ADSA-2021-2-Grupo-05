@@ -21,7 +21,6 @@ export function Login() {
                 </div>
             </section>
             <Footer />
-    
         </>
     )
 }
