@@ -25,7 +25,7 @@ export function Home() {
                    <div className="container-img-banner"></div>
                    
        </section>
-       <section className="container-pattern container-products">
+       <section className="container-pattern container-products-home">
             <div className="container-title-pattern line-up">
                 <div className="line-average"></div>
                 <p>Novidades</p>

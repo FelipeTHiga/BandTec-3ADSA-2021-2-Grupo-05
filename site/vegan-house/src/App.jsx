@@ -6,9 +6,6 @@ import { Register } from "./pages/Register";
 import { RegisterSeller } from "./pages/RegisterSeller";
 import { getProducts } from "./scripts/crud-product";
 import { ProductPage } from "./pages/ProductPage";
-import { Register } from "./pages/Register";
-import { RegisterSeller } from "./pages/RegisterSeller";
-import { MyProducts } from "./pages/MyProducts";
 import { ShoppingCart } from "./pages/ShoppingCart";
 
 
@@ -19,13 +16,14 @@ function App() {
 
     <BrowserRouter>
       <Switch>
-        <Route path="/home" component={Home}/>
+        <Route path="/" exact={true} component={Home}/>
         <Route path="/cadastro" component={Register} />
         <Route path="/perfil/cadastro-seller" component={RegisterSeller} />
         <Route path="/login" component={Login} />
         {/* /todos os resultados/{props.categoria}/{props.subcategoria}/{props.nomeDoProduto} */}
         <Route path="/perfil/meus-produtos" component={MyProducts} />
         <Route path="/carrinho" component={ShoppingCart} />
+        <Route path="/produto" component={ProductPage} />
       </Switch>
     </BrowserRouter>
   );
