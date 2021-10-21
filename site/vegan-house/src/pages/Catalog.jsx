@@ -20,7 +20,7 @@ export function Catalog() {
 
                     <div className="container-categories">
                         <div className="results-title">
-                            <h3>resultado(s)</h3>
+                            <h3><div class="result-number-2"></div> resultado(s)</h3>
                         </div>
                         <div class="categories">
                             <h3 class="category-title">Categorias</h3>
@@ -40,6 +40,7 @@ export function Catalog() {
                             </ul>
                         </div>
                     </div>
+                    <div className="products-catalog">
                     <div class="container-filters">
                             <div class="order">
                                 <h3>Ordenar por:</h3>
@@ -53,6 +54,7 @@ export function Catalog() {
                                     onclick="toggleClass('btn-filter-3', 'active')">Nome</button>
                             </div>
 
+                        </div>
                         </div>
                 </div>
 
