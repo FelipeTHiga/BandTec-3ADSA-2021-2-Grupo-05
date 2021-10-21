@@ -22,7 +22,7 @@ public class User {
     //endregion
 
     public void sendEmail(Product product){
-        System.out.printf("Email enviado para %s sobre a chegada de produtos %s", email, product.getName());
+        System.out.printf("\nEmail enviado para %s sobre a chegada de produtos %s\n", email, product.getName());
     }
 
     //region Getters and Setters

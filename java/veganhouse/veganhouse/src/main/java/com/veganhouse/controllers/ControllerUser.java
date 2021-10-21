@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 // Classe responsável pelos endpoints de criação e edição de usuários
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class ControllerUser {
 
     @Autowired
@@ -47,7 +47,7 @@ public class ControllerUser {
     }
 
     @GetMapping("/all")
-    public ResponseEntity getUsers(@PathVariable Integer idUser){
+    public ResponseEntity getUsers(){
         if (userRepository.count() > 0){
             return ResponseEntity.status(200).body(userRepository.findAll());
         }

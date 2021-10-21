@@ -15,7 +15,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/products")
 public class ControllerProduct {
     @Autowired
     private IProductRepository productRepository;
