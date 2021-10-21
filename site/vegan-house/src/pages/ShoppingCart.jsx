@@ -9,7 +9,9 @@ export function ShoppingCart() {
         <Navbar isLogged={true} />
         <section className="shopping-cart-section">
             <div className="container-cart">
-            <Title2 title2="Meu carrinho" />
+            <div className="title-cart-main">
+            <h1>Meu carrinho</h1>
+            </div>
                 <div className="cart-content">
                     <div className="title-cart">
                         <div className="product-title">

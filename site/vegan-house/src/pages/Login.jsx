@@ -6,44 +6,21 @@ import { Button } from '../components/Button';
 import '../styles/login.scss';
 import '../styles/global.scss';
 import { getUser, login } from '../scripts/crud-user';
+import { Link, withRouter } from "react-router-dom";
+import {FormLogin} from '../components/FormLogin'
 
 export function Login() {
     return (
             <>
-            <Navbar isLogged={getUser} />
+            <Navbar isLogged={false} />
             <Submenu />
             <section className="login-section">
             <div className="container-login">
                     <Title title="Login" />
-                    <div className="login-content">
-                        <h2>Olá, digite o seu e-mail e a <br /> senha utilizados no cadastro</h2>
-                        
-                        <form>
-                            <div className="email-login">
-                                <label>E-mail</label>
-                                <div className="email-content">
-                                    <i className="far fa-envelope"></i>
-                                    <input id="email_login" type="email" placeholder="Ex. joao.silva@email.com" />
-                                </div>
-                            </div>
-
-                            <div className="password-login">
-                                <label>Senha</label>
-                                <div className="password-content">
-                                    <i className="fas fa-lock"></i>
-                                    <input id="password_login" type="password" />
-                                </div>
-                                <label><u>Esqueceu sua senha?</u></label>
-                            </div>
-
-                            <Button function={login} text="Enviar"/>
-                        </form>
-
-                    </div>
+                    <FormLogin/>
                 </div>
             </section>
             <Footer />
-    
         </>
     )
 }

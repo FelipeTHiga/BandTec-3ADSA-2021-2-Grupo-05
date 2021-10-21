@@ -2,10 +2,6 @@
     background-color: #FFE0DE;
     width: 100%;
     height: 60px;
-    font-family: 'Roboto', sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     
     ul {
         display: flex;
@@ -16,10 +12,10 @@
     }
     
     li {
-        width: 10%;
-        margin: 0 10px;
+        width: 20%;
         list-style: none;
         display: flex;
+        align-items: center;
         justify-content: center;
     }
     

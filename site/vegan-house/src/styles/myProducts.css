@@ -118,6 +118,23 @@
     color: #604D4D;
 }
 
+.all-product {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 26px;
+    text-align: center;
+    color: #604D4D;
+    background-color: #C9E891;
+    padding: 7px 36px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 140px;
+    text-decoration: none;
+}
+
 /* fim opções de pesquisa */
 
 /* inicio tabela de produtos */
@@ -215,4 +232,20 @@
 .product-edit-camp textarea{
     resize: none;
     padding: 10px;
+}
+
+.create-product-btn {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 26px;
+    text-align: center;
+    color: #604D4D;
+    background-color: #C9E891;
+    padding: 7px 36px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 150px;
 }

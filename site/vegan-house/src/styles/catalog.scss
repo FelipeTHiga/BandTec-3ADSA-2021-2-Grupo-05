@@ -46,7 +46,7 @@
 
     .categories {
         width: 90%;
-        height: 78%;
+        height: 225px;
         padding: 7px 30px;
         border: solid 0.5px #888383;
         border-radius: 10px;
@@ -60,6 +60,10 @@
         }
 
         .category-list {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 75%;
             margin-top: 10px;
             list-style: none;
             color: #604d4d;
