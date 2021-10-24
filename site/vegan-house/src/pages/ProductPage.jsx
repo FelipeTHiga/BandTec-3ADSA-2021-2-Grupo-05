@@ -42,7 +42,7 @@ export function ProductPage() {
 
             <section className="section-product">
                 <div className=" line-up">
-                    <div className="container-products">
+                    <div className="container-products-product-page">
 
                         <section className="section-product-info">
                             <div className="div-images">

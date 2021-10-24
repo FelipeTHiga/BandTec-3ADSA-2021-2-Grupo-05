@@ -18,6 +18,7 @@ public class Product {
     protected String subCategory;
     protected String description;
     protected Integer inventory;
+    protected Integer fkUser;
     //endregion
 
     //region Getters and Setters
@@ -75,6 +76,14 @@ public class Product {
 
     public void setInventory(Integer inventory) {
         this.inventory = inventory;
+    }
+
+    public Integer getFkUser() {
+        return fkUser;
+    }
+
+    public void setFkUser(Integer fkUser) {
+        this.fkUser = fkUser;
     }
     //endregion
 }
