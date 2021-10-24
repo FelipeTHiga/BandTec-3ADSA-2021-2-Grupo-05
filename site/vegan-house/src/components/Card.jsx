@@ -5,6 +5,7 @@ import tea from '../assets/images/tea.png'
 import star from '../assets/images/star.png'
 import halfStar from '../assets/images/half-star.png'
 import '../styles/card.scss'
+import { useRef } from 'react';
 
 import { newsProducts } from '../scripts/vetor.js';
 
@@ -99,30 +100,63 @@ function ShowStars(note){
 }
 
 
-const CreatCard = (card, index) => {
-    return (
-        <div className="card-product line-up" key={index}>
-        <img src={shoe} />
-        <div className="container-evaluation-card line-up">
-            <div className="container-stars line-up">
-                {ShowStars(card.note)}
-                <div className="container-note line-up">
-                    <div>{card.note}</div>
-                </div>
+
+function Card() {
+     const carousel = useRef(null);
+
+    
+      const handleLeftClick = (e)=>{
+        e.preventDefault();
+        console.log(carousel.current.offsetWidth);
+        carousel.current.scrollLeft -= carousel.current.offsetWidth;
+    
+      };
+    
+      const handleRigthClick = (e)=>{
+        e.preventDefault();
+        console.log(carousel.current.offsetWidth);
+        carousel.current.scrollLeft += carousel.current.offsetWidth;
+      };
+    
+    
+      return (
+          <>
+           <div className="container">
+
+            <div className="carousel" ref={carousel}>
+                {newsProducts.map((produto, index)=>{
+                    const {note, price, description, category} = produto;
+                    return (
+                        <div className="card-product line-up" key={index}>
+                           <img src={shoe} />
+                           <div className="container-evaluation-card line-up">
+                               <div className="container-stars line-up">
+                                   {ShowStars(note)}
+                                   <div className="container-note line-up">
+                                       <div>{note}</div>
+                                   </div>
+                               </div>
+                          </div>
+                          <div className="container-description-product">
+                               <p className="description">{description}</p>
+                               <p className="price">R${price}</p>
+                               <button><i className="fa fa-shopping-cart"></i>Comprar</button>
+                          </div>
+                       </div>
+                    )
+                })}
             </div>
-       </div>
-       <div className="container-description-product">
-            <p className="description">{card.description}</p>
-            <p className="price">R${card.price}</p>
-            <button><i className="fa fa-shopping-cart"></i>Comprar</button>
-       </div>
-    </div>
-    )
-}
+              <div className="buttons">
+                <button onClick={handleLeftClick}>
+                    <i class="arrow fas fa-arrow-left"></i>
+                </button>
+                <button onClick={handleRigthClick}>
+                    <i class="arrow fas fa-arrow-right"></i>
+                </button>
+              </div>
+          </div>
+          </>
+      );
+    }
 
-
- export function Card() {
-    return (
-        newsProducts.map(CreatCard)
-    )
-}
+    export { Card };

@@ -5,12 +5,13 @@ import { Button } from '../components/Button';
 import { Card } from "../components/Card";
 import { CardSeller } from "../components/CardSellers";
 import '../styles/carousel.scss'
+import '../styles/card.scss'
 
 import '../styles/home.scss';
 import { getUser, submit } from "../scripts/crud-user";
 import React from 'react';
 
-export function Home() {
+  function  Home() {
     return(
         <>
         <Navbar isLogged={false}/>
@@ -34,15 +35,10 @@ export function Home() {
                 <p>Novidades</p>
                 <div className="line-average"></div>
             </div>
-
-            
-            <div className="container-products-and-arrow line-up">
-                <i  className="fas fa-caret-left arrow"></i>
-                    <div  className="container-cards-products line-up">
-                        <Card />
-                        
-                    </div>
-                <i className="fas fa-caret-right arrow"></i>
+            <div className="container-products-and-arrow">
+                        <div  className="container-cards-products">
+                            <Card />
+                        </div>
             </div>
 
               <div className="line-great"></div>
@@ -73,19 +69,19 @@ export function Home() {
 
 
     {/* <!-- inicio container de produtos 2--> */}
-    <section class="container-pattern container-products line-up">
+    <section class="container-pattern container-products-home">
         <div class="container-title-pattern line-up">
             <div class="line-average"></div>
                 <p>Destaques</p>
             <div class="line-average"></div>
         </div>
 
-        <div class="container-products-and-arrow line-up">
-            <i class="fas fa-caret-left arrow"></i>
-                <div class="container-cards-products products-highlights line-up">
+        <div class="container-products-and-arrow">
+        
+                <div class="container-cards-products ">
                 <Card />
                 </div>
-            <i class="fas fa-caret-right arrow"><a href="./"></a></i>
+           
         </div>
 
               <div class="line-great"></div>
@@ -96,3 +92,9 @@ export function Home() {
         </>
     )
 }
+
+
+export { Home };
+
+
+

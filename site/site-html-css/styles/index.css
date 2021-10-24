@@ -51,6 +51,7 @@
 
 .container-pattern .arrow {
     font-size: 70px;
+    margin: 0 100px;
     color: #C9E891;
     cursor: pointer;
 }
