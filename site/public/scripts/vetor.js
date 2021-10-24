@@ -31,13 +31,13 @@ const newsProducts = [
 
 const sellersPop = [
     {
-        "img": "/public/images/logo-kerai.png",
+        "img": "logo-kerai.png",
     },
     {
-        "img": "/public/images/logo-donatotta.png",
+        "img": "logo-kerai.png",
     },
     {
-        "img": "/public/images/logo-biomare.png",
+        "img": "logo-kerai.png",
     }
 ];
 
