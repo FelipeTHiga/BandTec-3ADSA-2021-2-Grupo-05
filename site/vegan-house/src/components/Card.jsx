@@ -1,5 +1,5 @@
 import shoe from '../assets/images/shoe.png'
-import pants from '../assets/images/pants.png'
+import pants from '../assets/images/pants-1.png'
 import polish from '../assets/images/polish.png'
 import tea from '../assets/images/tea.png'
 import star from '../assets/images/star.png'

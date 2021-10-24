@@ -5,7 +5,6 @@ import { MyProducts } from "./pages/MyProducts";
 import { ProductPage } from "./pages/ProductPage";
 import { Register } from "./pages/Register";
 import { RegisterSeller } from "./pages/RegisterSeller";
-import { MyProducts } from "./pages/MyProducts";
 import { ShoppingCart } from "./pages/ShoppingCart";
 
 
