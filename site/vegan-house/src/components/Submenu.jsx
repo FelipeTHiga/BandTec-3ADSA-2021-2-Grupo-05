@@ -21,6 +21,8 @@ export function Submenu() {
                 </li>
                 <li className="dress ">
                     <i className="fas fa-tshirt"></i>
+                    <a href="#">Vestimentas</a>
+                    <i className="fas fa-sort-down"></i>
                     <a href="#">Vestimento</a>           
                 </li>
             </ul>

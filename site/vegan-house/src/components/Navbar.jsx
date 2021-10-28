@@ -38,8 +38,8 @@ export function Navbar(props) {
                                     <Link to="/login">Entrar</Link>
                                 </li>
                                 <li>
-                                    <i className="fas fa-shopping-cart"></i>
-                                    <a href="#"> Carrinho</a>
+                                <Link to="/carrinho"><i className="fas fa-shopping-cart"></i></Link>
+                                <Link to="/carrinho"><a href="#"> Carrinho</a></Link>
                                 </li>
                             </>
                         ) : (
@@ -53,8 +53,8 @@ export function Navbar(props) {
                                     <Link to="/login">Entrar</Link>
                                 </li>
                                 <li>
-                                    <i className="fas fa-shopping-cart"></i>
-                                    <a href="#"> Carrinho</a>
+                                <Link to="/carrinho"><i className="fas fa-shopping-cart"></i></Link>
+                                <Link to="/carrinho"><a href="#"> Carrinho</a></Link>
                                 </li>
                             </>
                         )}
