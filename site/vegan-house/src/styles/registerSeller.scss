@@ -64,6 +64,7 @@
             padding-left: 6px;
             border-top-right-radius: 6px;
             border-bottom-right-radius: 6px;
+            outline: none;
             height: 100%;
             width: 100%;
             border: 1px solid #AEABAB;
@@ -95,9 +96,9 @@
     margin-bottom: 25px;
 }
 
-.name-content,
-.cnpj-content, 
-.email-content {
+.name-content-seller,
+.cnpj-content-seller, 
+.email-content-seller {
     display: flex;   
     align-items: center;
     width: 36%;

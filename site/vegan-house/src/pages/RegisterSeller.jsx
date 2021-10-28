@@ -23,7 +23,7 @@ export function RegisterSeller() {
                         <form>
                             <div className="name-seller">
                                 <label>Nome comercial</label>
-                                <div className="name-content">
+                                <div className="name-content-seller">
                                     <i className="fas fa-user"></i>
                                     <input type="text" placeholder="Ex. Doces do João" />
                                     <p>*</p>
@@ -32,7 +32,7 @@ export function RegisterSeller() {
 
                             <div className="cnpj-seller">
                                 <label>CNPJ</label>
-                                <div className="cnpj-content">
+                                <div className="cnpj-content-seller">
                                     <i className="fas fa-id-card"></i>
                                     <input type="text" placeholder="Ex. 11222333444455" />
                                     <p>*</p>
@@ -42,7 +42,7 @@ export function RegisterSeller() {
 
                             <div className="email-seller">
                                 <label>E-mail comercial</label>
-                                <div className="email-content">
+                                <div className="email-content-seller">
                                     <i className="far fa-envelope"></i>
                                     <input type="email" placeholder="Ex. DocesJ@email.com" />
                                     <p>*</p>

@@ -21,8 +21,8 @@ class SignIn extends Component {
             try {
                 const response = await api.post("/session/login", { email, passwordUser });
                 // this.props.history.push("/home");
-                this.setState({ sucess: "Login feito com sucesso." , link: "/products"});
-                
+                this.setState({ sucess: "Login feito com sucesso.", link: "/products" });
+
             } catch (err) {
                 this.setState({
                     error:
@@ -60,9 +60,9 @@ class SignIn extends Component {
                             />
                         </div>
                         <label><u>Esqueceu sua senha?</u></label>
-                        
-                        <button type="submit">Entrar</button>
-                        
+                    </div>
+                    <div className="password-btn-container">
+                        <button type="submit">Entrar</button>   
                     </div>
                     {this.state.error && <p className="error">{this.state.error}</p>}
                     {this.state.sucess && <p className="sucess">{this.state.sucess}</p>}

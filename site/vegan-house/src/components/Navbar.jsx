@@ -8,7 +8,7 @@ export function Navbar(props) {
         <header className="header">
             <div className="container-header">
                 <div className="title-site line-up">
-                    <Link to="/home">
+                    <Link to="/">
                         <img src={logo} alt="Logo Vegan House" />
                     </Link>
                 </div>
@@ -16,7 +16,11 @@ export function Navbar(props) {
                 <section className="container-search-bar line-up">
                     <input placeholder="Busque seus produtos aqui" type="text" />
                     <div className="container-search-icon">
-                        <button className="search-button"><i className="fas fa-search"></i></button>
+                        <button className="search-button">
+                            <Link to="">
+                                <i className="fas fa-search"></i>
+                            </Link>
+                        </button>
 
                     </div>
                 </section>
@@ -34,8 +38,8 @@ export function Navbar(props) {
                                     <Link to="/login">Entrar</Link>
                                 </li>
                                 <li>
-                                    <i className="fas fa-shopping-cart"></i>
-                                    <a href="#"> Carrinho</a>
+                                <Link to="/carrinho"><i className="fas fa-shopping-cart"></i></Link>
+                                <Link to="/carrinho"><a href="#"> Carrinho</a></Link>
                                 </li>
                             </>
                         ) : (
@@ -49,8 +53,8 @@ export function Navbar(props) {
                                     <Link to="/login">Entrar</Link>
                                 </li>
                                 <li>
-                                    <i className="fas fa-shopping-cart"></i>
-                                    <a href="#"> Carrinho</a>
+                                <Link to="/carrinho"><i className="fas fa-shopping-cart"></i></Link>
+                                <Link to="/carrinho"><a href="#"> Carrinho</a></Link>
                                 </li>
                             </>
                         )}
