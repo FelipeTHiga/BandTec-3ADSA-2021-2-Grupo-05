@@ -7,6 +7,7 @@ import { RegisterSeller } from "./pages/RegisterSeller";
 import { getProducts } from "./scripts/crud-product";
 import { ProductPage } from "./pages/ProductPage";
 import { ShoppingCart } from "./pages/ShoppingCart";
+import { Catalog } from "./pages/Catalog";
 
 
 // import { NewRoom } from "./pages/NewRoom";

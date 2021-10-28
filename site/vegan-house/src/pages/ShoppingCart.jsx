@@ -25,21 +25,22 @@ export function ShoppingCart(props) {
 
     return (
         <>
-            <Navbar isLogged={true} />
-            <Submenu />
-            <section className="shopping-cart-section">
-                <div className="container-cart">
-                    <div className="cart-content">
-                        <div className="title-cart">
-                            <div className="product-title">
-                                <h3>Produto</h3>
-                            </div>
-                            <div className="title-order-props">
-                                <h3 className="title-amount">Quantidade</h3>
-                                <h3>Valor</h3>
-                                <h3>Subtotal</h3>
-                                <h3>Remover</h3>
-                            </div>
+        <Navbar isLogged={true} />
+        <section className="shopping-cart-section">
+            <div className="container-cart">
+            <div className="title-cart-main">
+            <h1>Meu carrinho</h1>
+            </div>
+                <div className="cart-content">
+                    <div className="title-cart">
+                        <div className="product-title">
+                        <h3>Produto</h3>
+                        </div>
+                        <div className="title-order-props">
+                        <h3 className="title-amount">Quantidade</h3>
+                        <h3>Valor</h3>
+                        <h3>Subtotal</h3>
+                        <h3>Remover</h3>
                         </div>
                         <OrderCart price={20.00} setTotal={setNumber} cardId="orderCart1" />
                         <OrderCart price={20.00} setTotal={setNumber} cardId="orderCart1" />
