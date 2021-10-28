@@ -77,7 +77,7 @@ async function getProductByCategory(){
 async function getProducts(props){
     await api({
         method: 'get',
-        url: '/product/all',
+        url: '/products/all',
         params: user_logged.id
     })
     .then(function (response) {
@@ -86,7 +86,6 @@ async function getProducts(props){
         return response.data;
     });
 }
-
 
 async function deleteProducts(props){
     await api({
