@@ -4,9 +4,9 @@ import '../styles/reset.css';
 export function UserGreeting(props) {
     return (
         <>
-            <div class="container-name-user line-up">
-                <div class="line-up">
-                    <div class="name-user">{props.username}</div>
+            <div className="container-name-user line-up">
+                <div className="line-up">
+                    <div className="name-user">{props.username}</div>
                     <p>
                         Sua conta pessoal{props.isSeller?(" e comercial."):(".")}
                     </p>

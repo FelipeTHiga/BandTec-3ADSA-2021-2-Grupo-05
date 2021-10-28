@@ -1,5 +1,5 @@
 import React from 'react';
-import pants from "../assets/images/pants.png"
+import pants from "../assets/images/pants-1.png"
 import { ProductCart } from "./ProductCart"
 import "../styles/orderCart.scss"
 
