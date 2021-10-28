@@ -139,6 +139,16 @@
     background-color: #b3dc68;
 }
 
+.container-card-products-novo{
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: hidden;
+        justify-content: flex-start; 
+         width: auto; 
+         width: 63%;
+    //     width: 100%;
+}
+
 // .arrow {
 //     font-size: 50px;
 //     /* border: solid 1px #B3DC68; */

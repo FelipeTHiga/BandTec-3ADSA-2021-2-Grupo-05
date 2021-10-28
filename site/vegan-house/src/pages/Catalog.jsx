@@ -5,6 +5,7 @@ import { Card } from '../components/Card';
 import '../styles/catalog.scss';
 import '../styles/global.scss';
 import { getUser } from '../scripts/crud-user';
+import { CardTeste } from '../components/CardTeste';
 
 export function Catalog() {
     return (
@@ -56,8 +57,9 @@ export function Catalog() {
                             </div>
 
                         </div>
-                        <div className="container-cards-products line-up">
-                            <Card />
+                        <div className="container-cards-products-novo line-up">
+                            {/* <Card /> */}
+                            <CardTeste/>
                         </div>
                     </div>
                 </div>
