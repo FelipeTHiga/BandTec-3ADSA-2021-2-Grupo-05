@@ -7,6 +7,7 @@ import { RegisterSeller } from "./pages/RegisterSeller";
 import { getProducts } from "./scripts/crud-product";
 import { ProductPage } from "./pages/ProductPage";
 import { ShoppingCart } from "./pages/ShoppingCart";
+import { Catalog } from "./pages/Catalog";
 
 
 // import { NewRoom } from "./pages/NewRoom";
@@ -21,7 +22,8 @@ function App() {
         <Route path="/perfil/cadastro-seller" component={RegisterSeller} />
         <Route path="/perfil/meus-produtos" component={MyProducts} />
         <Route path="/carrinho" component={ShoppingCart} />
-        <Route path="/todos-os-resultados/" component={ProductPage} />
+        <Route path="/todos-os-resultados/" exact={true} component={Catalog}/>
+        <Route path="/todos-os-resultados/..." component={ProductPage} />
            {/* /todos os resultados/{props.categoria}/{props.subcategoria}/{props.nomeDoProduto} */}
       </Switch>
     </BrowserRouter>

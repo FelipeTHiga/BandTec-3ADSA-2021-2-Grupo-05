@@ -17,7 +17,7 @@ export function Navbar(props) {
                     <input placeholder="Busque seus produtos aqui" type="text" />
                     <div className="container-search-icon">
                         <button className="search-button">
-                            <Link to="">
+                            <Link to="/todos-os-resultados">
                                 <i className="fas fa-search"></i>
                             </Link>
                         </button>
@@ -38,8 +38,8 @@ export function Navbar(props) {
                                     <Link to="/login">Entrar</Link>
                                 </li>
                                 <li>
-                                    <i className="fas fa-shopping-cart"></i>
-                                    <a href="#"> Carrinho</a>
+                                <Link to="/carrinho"><i className="fas fa-shopping-cart"></i></Link>
+                                <Link to="/carrinho"><a href="#"> Carrinho</a></Link>
                                 </li>
                             </>
                         ) : (
@@ -53,8 +53,8 @@ export function Navbar(props) {
                                     <Link to="/login">Entrar</Link>
                                 </li>
                                 <li>
-                                    <i className="fas fa-shopping-cart"></i>
-                                    <a href="#"> Carrinho</a>
+                                <Link to="/carrinho"><i className="fas fa-shopping-cart"></i></Link>
+                                <Link to="/carrinho"><a href="#"> Carrinho</a></Link>
                                 </li>
                             </>
                         )}

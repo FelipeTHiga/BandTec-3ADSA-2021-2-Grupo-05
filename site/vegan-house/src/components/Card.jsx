@@ -3,9 +3,10 @@ import pants from '../assets/images/pants-1.png'
 import polish from '../assets/images/polish.png'
 import tea from '../assets/images/tea.png'
 import '../styles/card.scss'
-import { useRef } from 'react';
-import { newsProducts } from '../scripts/vetor.js';
+import { useRef } from 'react'
+import { newsProducts } from '../scripts/vetor.js'
 import { ShowStars } from '../scripts/showScore'
+import { CardTeste } from './CardTeste'
 
 function Card() {
     const carousel = useRef(null);
@@ -30,7 +31,8 @@ function Card() {
             <div className="container">
 
                 <div className="carousel" ref={carousel}>
-                    {newsProducts.map((produto, index) => {
+                     <CardTeste/> 
+                    {/* {newsProducts.map((produto, index) => {
                         const { score, price, description, category } = produto;
                         return (
                             <div className="card-product line-up" key={index}>
@@ -50,7 +52,7 @@ function Card() {
                                 </div>
                             </div>
                         )
-                    })}
+                    })} */}
                 </div>
                 <div className="buttons">
                     <button onClick={handleLeftClick}>
@@ -66,3 +68,4 @@ function Card() {
 }
 
 export { Card };
+
