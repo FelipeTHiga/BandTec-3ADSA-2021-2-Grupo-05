@@ -22,9 +22,12 @@
     }
 }
 
-.product-note{
+.product-score{
     display: flex;
     align-items: center;
+    h6 {
+        margin-left: 5px;
+    }
 }
 
 .product-seller {
@@ -90,6 +93,10 @@
     color: #2264D1;
     font-size: 20px;
     font-weight: 500;
+    cursor: pointer;
 }
 
-
+.teste {
+    justify-content: start !important;
+    width: auto !important;
+}
