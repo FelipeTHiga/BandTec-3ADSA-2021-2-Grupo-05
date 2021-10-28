@@ -27,17 +27,101 @@ const newsProducts = [
         "description": "Calça de algodão marrom", 
         "category": "vestimenta",    
     },
+    {
+        "imgProduct": "/public/images/shoe.png",
+        "note": 2, 
+        "price": 900.50, 
+        "description": "Calça de algodão marrom", 
+        "category": "vestimenta",    
+    },
+    {
+        "imgProduct": "/public/images/shoe.png",
+        "note": 2, 
+        "price": 900.50, 
+        "description": "Calça de algodão marrom", 
+        "category": "vestimenta",    
+    },
+    {
+        "imgProduct": "/public/images/shoe.png",
+        "note": 2, 
+        "price": 900.50, 
+        "description": "Calça de algodão marrom", 
+        "category": "vestimenta",    
+    },
+    {
+        "imgProduct": "/public/images/shoe.png",
+        "note": 2, 
+        "price": 900.50, 
+        "description": "Calça de algodão marrom", 
+        "category": "vestimenta",    
+    },
+    {
+        "imgProduct": "/public/images/shoe.png",
+        "note": 2, 
+        "price": 900.50, 
+        "description": "Calça de algodão marrom", 
+        "category": "vestimenta",    
+    },
+    {
+        "imgProduct": "/public/images/shoe.png",
+        "note": 2, 
+        "price": 900.50, 
+        "description": "Calça de algodão marrom", 
+        "category": "vestimenta",    
+    },
+    {
+        "imgProduct": "/public/images/shoe.png",
+        "note": 2, 
+        "price": 900.50, 
+        "description": "Calça de algodão marrom", 
+        "category": "vestimenta",    
+    },
+    {
+        "imgProduct": "/public/images/shoe.png",
+        "note": 2, 
+        "price": 900.50, 
+        "description": "Calça de algodão marrom", 
+        "category": "vestimenta",    
+    },
+    {
+        "imgProduct": "/public/images/shoe.png",
+        "note": 2, 
+        "price": 900.50, 
+        "description": "Calça de algodão marrom", 
+        "category": "vestimenta",    
+    },
+    {
+        "imgProduct": "/public/images/shoe.png",
+        "note": 2, 
+        "price": 900.50, 
+        "description": "Calça de algodão marrom", 
+        "category": "vestimenta",    
+    },
+    {
+        "imgProduct": "/public/images/shoe.png",
+        "note": 2, 
+        "price": 900.50, 
+        "description": "Calça de algodão marrom", 
+        "category": "vestimenta",    
+    },
+    {
+        "imgProduct": "/public/images/shoe.png",
+        "note": 2, 
+        "price": 900.50, 
+        "description": "Calça de algodão marrom", 
+        "category": "vestimenta",    
+    },
 ];
 
 const sellersPop = [
     {
-        "img": "/public/images/logo-kerai.png",
+        "img": "logo-kerai.png",
     },
     {
-        "img": "/public/images/logo-donatotta.png",
+        "img": "logo-kerai.png",
     },
     {
-        "img": "/public/images/logo-biomare.png",
+        "img": "logo-kerai.png",
     }
 ];
 

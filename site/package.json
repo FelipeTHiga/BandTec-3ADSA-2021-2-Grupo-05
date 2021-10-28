@@ -1,8 +1,0 @@
-{
-  "devDependencies": {
-    "@types/react": "^17.0.25"
-  },
-  "dependencies": {
-    "yarn": "^1.22.14"
-  }
-}
