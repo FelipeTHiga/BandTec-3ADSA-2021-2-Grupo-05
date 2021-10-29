@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import "../styles/accountMenu.css";
 
 
@@ -12,7 +13,7 @@ export function AccountMenu(props) {
                         </p>
                     </li>
                     <li class="active">
-                        <a href="#">Dados pessoais</a>
+                        <Link to="/perfil/dados-pessoais">Dados pessoais</Link>
                     </li>
                     <li>
                         <a href="#">Endereço</a>

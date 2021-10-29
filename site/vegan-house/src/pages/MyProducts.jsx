@@ -32,7 +32,7 @@ export function MyProducts() {
                 <div className="container-menus-and-products">
                     <div className="section-menus align-column">
                         <AccountMenu isSeller={true} />
-                        <SellerMenu />
+                        <SellerMenu isSeller={true} />
                     </div>
 
                     <div className="section-products">
