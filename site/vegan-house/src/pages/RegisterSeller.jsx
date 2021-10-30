@@ -5,7 +5,7 @@ import { Submenu } from '../components/Submenu';
 import { Button } from '../components/Button';
 import '../styles/registerSeller.scss';
 import '../styles/global.scss';
-import { getUser } from '../scripts/crud-user';
+import { getUser } from '../services/crud-user';
 
 
 

@@ -1,8 +1,7 @@
 import '../styles/productTableRow.css';
-import { user_logged } from "../scripts/crud-user";
-import { getProducts, deleteProducts, list_products } from "../scripts/crud-product";
-import api from '../scripts/api';
+import api from '../services/api';
 import React, { Component, useState } from "react";
+import { list_products } from '../scripts/vetor2';
 
 class Products extends Component {
   state = {
@@ -13,7 +12,8 @@ class Products extends Component {
       subCategory: "",
       inventory: ""
     }],
-    error: ""
+    error: "",
+    testeList: []
   };
 
 
@@ -38,11 +38,22 @@ class Products extends Component {
     return this.state.products;
   }
 
+  getProd (){
+    list_products.then ( list => {
+      console.log(list)
+      this.setState({testeList : list.data})
+    })
+  }
+
+  componentDidMount() {
+    this.getProd()
+  }
+  
   render() {
     return (
       <>
         {
-          list_products.map(product => (
+          this.state.testeList.map(product => (
             <div className="products-table-row" key={product.id}>
               <label>{product.name}</label>
               <label>{product.category}</label>

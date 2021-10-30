@@ -1,3 +1,6 @@
+import productService from "../services/crud-product";
+import loginService from "../services/login";
+
 const selectedProduct = [
     {
         "name": "Calça de algodão marrom",
@@ -23,7 +26,9 @@ const selectedProduct = [
         "imgCertification": "/assets/images/certifications/Selo-5.png",
     }
 ];
-
+let user = loginService.getSession();
+var list_products = productService.getProducts(user);
+console.log(list_products);
 // const socialMidias = [
 //     {
 
@@ -34,4 +39,4 @@ const selectedProduct = [
 
 // ];
 
-export { selectedProduct };
+export { selectedProduct, list_products };

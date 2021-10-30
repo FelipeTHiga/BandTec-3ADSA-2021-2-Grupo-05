@@ -8,13 +8,15 @@ import '../styles/carousel.scss'
 import '../styles/card.scss'
 
 import '../styles/home.scss';
-import { getUser, submit } from "../scripts/crud-user";
+import { getUser, submit } from "../services/crud-user";
 import React from 'react';
+import loginService from "../services/login";
 
-  function  Home() {
+  function Home() {
+      let user = loginService.getSession();
     return(
         <>
-        <Navbar isLogged={false}/>
+        <Navbar isLogged={user.authenticated}/>
         <Submenu/>
         <section className="container-main-banner line-up">
            
