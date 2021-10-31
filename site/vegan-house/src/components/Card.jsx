@@ -6,7 +6,7 @@ import '../styles/card.scss'
 import { useRef } from 'react'
 import { newsProducts } from '../scripts/vetor.js'
 import { ShowStars } from '../scripts/showScore'
-import { CardTeste } from './CardTeste'
+import { ProductCard } from '../components/ProductCard'
 
 function Card() {
     const carousel = useRef(null);
@@ -31,28 +31,7 @@ function Card() {
             <div className="container">
 
                 <div className="carousel" ref={carousel}>
-                     <CardTeste/> 
-                    {/* {newsProducts.map((produto, index) => {
-                        const { score, price, description, category } = produto;
-                        return (
-                            <div className="card-product line-up" key={index}>
-                                <img src={shoe} />
-                                <div className="container-evaluation-card line-up">
-                                    <div className="container-stars line-up">
-                                        {ShowStars(score)}
-                                        <div className="container-score line-up">
-                                            <div>{score}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="container-description-product">
-                                    <p className="description">{description}</p>
-                                    <p className="price">R${price}</p>
-                                    <button><i className="fa fa-shopping-cart"></i>Comprar</button>
-                                </div>
-                            </div>
-                        )
-                    })} */}
+                     <ProductCard/> 
                 </div>
                 <div className="buttons">
                     <button onClick={handleLeftClick}>

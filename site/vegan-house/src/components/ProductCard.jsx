@@ -9,7 +9,7 @@ import productService from '../services/crud-product';
 import React, { Component, useState } from 'react';
 
 
-class ProductCard extends Component {
+class ProductCardClass extends Component {
     state = {
         products: [{
             id: 0,
@@ -62,46 +62,8 @@ class ProductCard extends Component {
     }
 }
 
-    export function CardTeste(params) {
+    export function ProductCard(params) {
         return (
-            new ProductCard()
+            new ProductCardClass()
         )
     }
-
-// var products = [];
-// productService.getProducts().then(resultado => console.log("getProducts " + resultado))
-// var products = productService.getProducts();
-// console.log(products)
-// console.log(typeof(products))
-// console.log(newsProducts)
-// console.log("NewProducts: " + typeof(newsProducts))
-
-// var products = getProducts();
-// Array.from(products[mapFn[produto]]);
-// Array.from(products)
-// console.log(products)
-// console.log(typeof(products))
-// console.log(productsArr)
-
-// this.state.testeList.map((produto, index) => {
-//     const { score, price, description, category } = produto;
-//     //const {category, description, fkUser, id, inventory, name, price, subCategory}
-//     return (
-//         <>
-//             <div className="card-product line-up" key={index}>
-//                 <img src={shoe} />
-//                 <div className="container-evaluation-card line-up">
-//                     <div className="container-stars line-up">
-//                         {ShowStars(score)}
-//                         <div className="container-score line-up">
-//                             <div>{score}</div>
-//                         </div>
-//                     </div>
-//                 </div>
-//                 <div className="container-description-product">
-//                     <p className="description">{description}</p>
-//                     <p className="price">R${price}</p>
-//                     <button><i className="fa fa-shopping-cart"></i>Comprar</button>
-//                 </div>
-//             </div>
-//         </>
