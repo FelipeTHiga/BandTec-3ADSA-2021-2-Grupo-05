@@ -74,17 +74,17 @@ async function getProductByCategory(){
     });
 }
 
-async function getProducts(props){
-    await api({
+async function  getProducts() {
+   await api({
         method: 'get',
-        url: '/product/all',
+        url: '/products/all',
         params: user_logged.id
+    }).then((response)=> {
+       let produto =  response.data;
+       console.log(produto)
+        return produto;
     })
-    .then(function (response) {
-        console.log(response.data);
-        list_products = response.data;
-        return response.data;
-    });
+   
 }
 
 
@@ -99,7 +99,6 @@ async function deleteProducts(props){
         console.log(status);
     });
 }
-
 
 
 export {createProduct, getProductByName, getProductByCategory, getProducts, deleteProducts, list_products};

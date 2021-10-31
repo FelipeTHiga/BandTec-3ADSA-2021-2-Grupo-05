@@ -4,10 +4,14 @@ import polish from '../assets/images/polish.png'
 import tea from '../assets/images/tea.png'
 import { ShowStars } from "../scripts/showScore";
 import { newsProducts } from "../scripts/vetor";
-import '../styles/card.scss'
+import  { getProducts }  from "../scripts/crud-product";
+
+getProducts().then(resultado => console.log(resultado));
 
 
 export function CardTeste() {
+   
+
     return (
         newsProducts.map((produto, index) => {
             const { score, price, description, category } = produto;
@@ -34,4 +38,5 @@ export function CardTeste() {
         })
     );  
 
+    return null;
 }
