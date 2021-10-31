@@ -30,7 +30,7 @@ import { getProducts } from "../scripts/crud-product";
 
 console.log(getProducts());
 
-export function ProductPage() {
+export function ProductPage(props) {
     return (
         <>
             <Navbar isLogged={true} />

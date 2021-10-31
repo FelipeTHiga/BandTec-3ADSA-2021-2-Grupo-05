@@ -10,18 +10,16 @@ import { UserGreeting } from '../components/UserGreeting';
 import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/myProducts.css';
-import { createProduct, getProductByName, getProducts } from '../scripts/crud-product';
-import { getUser, user_logged} from '../scripts/crud-user';
 import { ProductTableRow } from '../components/ProductTableRow';
-getProducts();
-    getUser();
-    console.log(user_logged);
+import productService from '../services/crud-product'
+import loginService from '../services/login';
 export function MyProducts() {
+    let user = loginService.getSession();
     return (
         <>
             <Navbar isLogged={true} />
             <div className="page-container">
-                <UserGreeting username={user_logged.nameUser} isSeller={true}/>
+                <UserGreeting username={user.nameUser} isSeller={true}/>
             </div>
 
             <div className="line-up">
@@ -142,7 +140,7 @@ export function MyProducts() {
                                 </div>
 
                                 <div className="align-column margin-top-20 margin-bottom-25">
-                                    <button className="create-product-btn" onClick={createProduct}>Cadastrar</button>
+                                    <button className="create-product-btn" onClick={productService.createProduct}>Cadastrar</button>
                                 </div>
                             </div>
                         </div>
