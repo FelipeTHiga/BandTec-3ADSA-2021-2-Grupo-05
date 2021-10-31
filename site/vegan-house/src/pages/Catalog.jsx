@@ -57,7 +57,7 @@ export function Catalog() {
                             </div>
 
                         </div>
-                        <div className="container-cards-products-novo line-up">
+                        <div className="container-cards-products-changed line-up">
                             {/* <Card /> */}
                             <CardTeste/>
                         </div>

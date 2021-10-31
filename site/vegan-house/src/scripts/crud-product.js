@@ -81,7 +81,7 @@ async function getProducts(props){
         params: user_logged.id
     })
     .then(function (response) {
-        console.log(response.data);
+    //    console.log(response.data);
         list_products = response.data;
         return response.data;
     });
@@ -99,6 +99,6 @@ async function deleteProducts(props){
     });
 }
 
-
+console.log(getProducts())
 
 export {createProduct, getProductByName, getProductByCategory, getProducts, deleteProducts, list_products};
