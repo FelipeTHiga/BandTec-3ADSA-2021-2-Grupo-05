@@ -50,10 +50,12 @@
     overflow: hidden;
     
     .description {
-        padding: 20px 40px 0;
-        color: #19191d;
-        font-size: 16px;
-        overflow: hidden;
+    color: #19191d;
+    font-size: 16px;
+    overflow: hidden;
+    width: 98%;
+    height: 37px;
+    padding: 2px 34px;
     }
     
     .price {
@@ -98,11 +100,11 @@
     flex-direction: column;
     flex: none;
     font-family: 'Roboto', sans-serif;
-    width: 210px;
+    width: 210px !important;
     height: 325px;
     box-shadow: 2px 3px 5px 3px rgba(0, 0, 0, 0.1);
     border-radius: 10px;    
-    margin: 0 15px;
+    margin: 0 15px !important;
     background-color: #fff;
     img {
                 width: 150px;
@@ -133,3 +135,5 @@
    .container-products-and-arrow button:first-child img{
     transform: rotate(180deg)
   }
+
+//   width: 220px;

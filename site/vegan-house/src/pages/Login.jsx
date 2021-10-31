@@ -5,7 +5,7 @@ import { Submenu } from '../components/Submenu';
 import { Button } from '../components/Button';
 import '../styles/login.scss';
 import '../styles/global.scss';
-import { getUser, login } from '../scripts/crud-user';
+import { getUser, login } from '../services/crud-user';
 import { Link, withRouter } from "react-router-dom";
 import {FormLogin} from '../components/FormLogin'
 

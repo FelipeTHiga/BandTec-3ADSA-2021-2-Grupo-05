@@ -1,9 +1,11 @@
 import '../styles/productTableRow.css';
-import { user_logged } from "../scripts/crud-user";
-import { getProducts, deleteProducts, list_products } from "../scripts/crud-product";
-import api from '../scripts/api';
+import api from '../services/api';
 import React, { Component, useState } from "react";
+import { list_products } from '../scripts/vetor2';
+import productService from '../services/crud-product'
+import loginService from '../services/login'
 
+let user = loginService.getSession();
 class Products extends Component {
   state = {
     products: [{
@@ -13,36 +15,48 @@ class Products extends Component {
       subCategory: "",
       inventory: ""
     }],
-    error: ""
+    error: "",
+    testeList: []
   };
 
+  
 
+  // handleProducts = async e => {
+  //   try {
+  //     const response = await api.get("/product/all");
+  //     // this.props.history.push("/home");
+  //     if (response.status != 200) {
+  //       this.setState({
+  //         error:
+  //           "Você não possui produtos cadastrados."
+  //       });
+  //     }
+  //     this.setState({ products: response.data });
+  //   } catch (err) {
+  //     this.setState({
+  //       error:
+  //         "Ocorreu um erro ao buscar produtos."
+  //     });
+  //   }
+  //   return this.state.products;
+  // }
 
-  handleProducts = async e => {
-    try {
-      const response = await api.get("/product/all");
-      // this.props.history.push("/home");
-      if (response.status != 200) {
-        this.setState({
-          error:
-            "Você não possui produtos cadastrados."
-        });
-      }
-      this.setState({ products: response.data });
-    } catch (err) {
-      this.setState({
-        error:
-          "Ocorreu um erro ao buscar produtos."
-      });
-    }
-    return this.state.products;
+  getProd (){
+      productService.getProducts(user).then ( list => {
+      console.log(list)
+      this.setState({testeList : list.data})
+    })
   }
 
+  componentDidMount() {
+    this.getProd()
+  }
+  
   render() {
     return (
       <>
         {
-          list_products.map(product => (
+          this.state.testeList.map(product => (
             <div className="products-table-row" key={product.id}>
               <label>{product.name}</label>
               <label>{product.category}</label>

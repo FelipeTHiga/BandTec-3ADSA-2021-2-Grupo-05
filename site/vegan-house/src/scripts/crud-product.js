@@ -1,5 +1,5 @@
-import api from "./api";
-import { getUser, user_logged} from '../scripts/crud-user';
+import api from "../services/api";
+import { getUser, user_logged} from '../services/crud-user';
 import { Redirect, Route, Router, __RouterContext } from "react-router";
 
 var list_products = [{
@@ -84,9 +84,12 @@ async function  getProducts() {
        console.log(produto)
         return produto;
     })
-   
+    .then(function (response) {
+    //    console.log(response.data);
+        list_products = response.data;
+        return response.data;
+    });
 }
-
 
 async function deleteProducts(props){
     await api({
@@ -100,5 +103,6 @@ async function deleteProducts(props){
     });
 }
 
+console.log(getProducts())
 
 export {createProduct, getProductByName, getProductByCategory, getProducts, deleteProducts, list_products};
