@@ -16,30 +16,28 @@ class Products extends Component {
     testeList: []
   };
 
-
-
-  handleProducts = async e => {
-    try {
-      const response = await api.get("/product/all");
-      // this.props.history.push("/home");
-      if (response.status != 200) {
-        this.setState({
-          error:
-            "Você não possui produtos cadastrados."
-        });
-      }
-      this.setState({ products: response.data });
-    } catch (err) {
-      this.setState({
-        error:
-          "Ocorreu um erro ao buscar produtos."
-      });
-    }
-    return this.state.products;
-  }
+  // handleProducts = async e => {
+  //   try {
+  //     const response = await api.get("/product/all");
+  //     // this.props.history.push("/home");
+  //     if (response.status != 200) {
+  //       this.setState({
+  //         error:
+  //           "Você não possui produtos cadastrados."
+  //       });
+  //     }
+  //     this.setState({ products: response.data });
+  //   } catch (err) {
+  //     this.setState({
+  //       error:
+  //         "Ocorreu um erro ao buscar produtos."
+  //     });
+  //   }
+  //   return this.state.products;
+  // }
 
   getProd (){
-    list_products.then ( list => {
+      productService.getProducts(user).then ( list => {
       console.log(list)
       this.setState({testeList : list.data})
     })

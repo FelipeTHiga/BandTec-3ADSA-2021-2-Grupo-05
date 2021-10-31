@@ -43,7 +43,7 @@ const productService = {
 
     // Request para atualizar o produto 
     async updateProduct(productData) {
-        return api({
+        return await api({
             method: 'put',
             url: '/products',
             params: productData.id
@@ -52,7 +52,7 @@ const productService = {
 
     // Request para deletar um produto
     async deleteProduct(productData) {
-        return api({
+        return await api({
             method: 'delete',
             url: '/products',
             params: productData.id

@@ -27,8 +27,11 @@ const selectedProduct = [
     }
 ];
 let user = loginService.getSession();
+
 var list_products = productService.getProducts(user);
+
 console.log(list_products);
+
 // const socialMidias = [
 //     {
 
