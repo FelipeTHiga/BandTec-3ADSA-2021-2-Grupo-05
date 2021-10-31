@@ -2,7 +2,10 @@ import '../styles/productTableRow.css';
 import api from '../services/api';
 import React, { Component, useState } from "react";
 import { list_products } from '../scripts/vetor2';
+import productService from '../services/crud-product'
+import loginService from '../services/login'
 
+let user = loginService.getSession();
 class Products extends Component {
   state = {
     products: [{
@@ -15,6 +18,8 @@ class Products extends Component {
     error: "",
     testeList: []
   };
+
+  
 
   // handleProducts = async e => {
   //   try {

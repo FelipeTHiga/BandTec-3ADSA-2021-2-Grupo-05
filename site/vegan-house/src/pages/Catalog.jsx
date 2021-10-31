@@ -4,13 +4,13 @@ import { Submenu } from '../components/Submenu';
 import { Card } from '../components/Card';
 import '../styles/catalog.scss';
 import '../styles/global.scss';
-import { getUser } from '../scripts/crud-user';
+import loginService from '../services/login';
 import { CardTeste } from '../components/CardTeste';
 
 export function Catalog() {
     return (
         <>
-            <Navbar isLogged={getUser} />
+            <Navbar isLogged={loginService.getSession()} />
             <Submenu />
             <section class="container-search-result">
 

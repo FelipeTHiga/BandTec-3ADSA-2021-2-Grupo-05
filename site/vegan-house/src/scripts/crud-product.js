@@ -1,5 +1,5 @@
-import api from "./api";
-import { getUser, user_logged} from '../scripts/crud-user';
+import api from "../services/api";
+import { getUser, user_logged} from '../services/crud-user';
 import { Redirect, Route, Router, __RouterContext } from "react-router";
 
 var list_products = [{

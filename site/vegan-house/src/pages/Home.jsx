@@ -12,48 +12,30 @@ import { getUser, submit } from "../services/crud-user";
 import React from 'react';
 import loginService from "../services/login";
 
-  function Home() {
-      let user = loginService.getSession();
-    return(
+function Home() {
+    let user = loginService.getSession();
+    return (
         <>
-        <Navbar isLogged={user.authenticated}/>
-        <Submenu/>
-        <section className="container-main-banner line-up">
-           
-           <div className="container-main-phrase line-up">
-                   <div className="container-phrase line-up">
-                       <h1 className="title-banner">Seja bem vinde!</h1>
-                           <p>Vegan house, o lar de produtos 100% veganos.</p>
-                           <Button text="Explorar"/>
-                   </div>
-           </div>
-   
-                   <div className="container-img-banner"></div>
-                   
-       </section>
-       <section className="container-pattern container-products-home">
-            <div className="container-title-pattern line-up">
-                <div className="line-average"></div>
-                <p>Novidades</p>
-                <div className="line-average"></div>
-            </div>
-            <div className="container-products-and-arrow">
-                        <div  className="container-cards-products">
-                            <Card />
-                        </div>
-            </div>
+            <Navbar isLogged={user} />
+            <Submenu />
+            <section className="container-main-banner line-up">
 
-              <div className="line-great"></div>
-    </section>
+                <div className="container-main-phrase line-up">
+                    <div className="container-phrase line-up">
+                        <h1 className="title-banner">Seja bem vinde!</h1>
+                        <p>Vegan house, o lar de produtos 100% veganos.</p>
+                        <Button text="Explorar" />
+                    </div>
+                </div>
 
+                <div className="container-img-banner"></div>
 
-
-    {/* <!-- incio container de vendedores --> */}
-    <section class="container-pattern container-sellers-pop line-up">
-        <div class="container-title-pattern line-up">
-            <div class="line-average"></div>
-                <div class="container-title-sellers-pop">
-                    <p>Vendedores</p> <p> Populares</p>
+            </section>
+            <section className="container-pattern container-products-home">
+                <div className="container-title-pattern line-up">
+                    <div className="line-average"></div>
+                    <p>Novidades</p>
+                    <div className="line-average"></div>
                 </div>
                 <div className="container-products-and-arrow">
                     <div className="container-cards-products">
@@ -62,8 +44,7 @@ import loginService from "../services/login";
                 </div>
 
                 <div className="line-great"></div>
-            </section>
-
+            </section>/
 
 
             {/* <!-- incio container de vendedores --> */}
