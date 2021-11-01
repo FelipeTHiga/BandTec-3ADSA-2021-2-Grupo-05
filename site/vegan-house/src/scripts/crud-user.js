@@ -1,6 +1,8 @@
 import { faRandom } from "@fortawesome/free-solid-svg-icons";
 import { Redirect } from "react-router";
 import api from "./api";
+import loginService from '../services/login'
+
 var user_logged = {
     id: 0,
     nameUser: "",
@@ -63,5 +65,28 @@ async function getUser(){
     
 }
 
+async function updateUser(props) {
+    let userUpdate = loginService.getSession();
+    const user = {
+        id: userUpdate.id,
+        nameUser: userUpdate.nameUser,
+        surName: userUpdate.surName,
+        cpf: userUpdate.cpf,
+        email: document.getElementById("emailUserUpdate").value,
+        passwordUser: userUpdate.passwordUser
+    }
 
-export {submit, getUser, login, user_logged};
+    await api({
+        method: 'put',
+        url: '/users',
+        params: {
+            idUser: userUpdate.id
+        },
+        data: user,
+    })
+    .then(function (response) {
+        console.log(response.status);
+    });
+}
+
+export {submit, getUser, login, user_logged, updateUser};

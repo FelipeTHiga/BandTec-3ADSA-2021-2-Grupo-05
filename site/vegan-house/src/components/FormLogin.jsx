@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import api from "../scripts/api";
-
+import loginService from "../services/login";
 
 class SignIn extends Component {
     state = {
@@ -19,9 +18,8 @@ class SignIn extends Component {
             this.setState({ error: "Preencha e-mail e senha para continuar." });
         } else {
             try {
-                const response = await api.post("/session/login", { email, passwordUser });
-                // this.props.history.push("/home");
-                this.setState({ sucess: "Login feito com sucesso." , link: "/products"});
+                let res = await loginService.login({email, passwordUser});
+                loginService.setSession(res.data);
                 
             } catch (err) {
                 this.setState({

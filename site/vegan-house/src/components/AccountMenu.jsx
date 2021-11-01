@@ -12,14 +12,12 @@ export function AccountMenu(props) {
                             <b>Minha conta</b>
                         </p>
                     </li>
+
                     <li class="active">
                         <Link to="/perfil/dados-pessoais">Dados pessoais</Link>
                     </li>
                     <li>
-                        <a href="#">Endereço</a>
-                    </li>
-                    <li>
-                        <a href="#">Segurança</a>
+                        <Link to="/perfil/endereco">Endereço</Link>
                     </li>
                     <li>
                         <a href="#">Pedidos</a>
@@ -34,7 +32,7 @@ export function AccountMenu(props) {
                             ) :
                             (
                                 <li class="radius-bottom-left-right">
-                                    <a href="#">Trabalhe conosco</a>
+                                    <Link to="/perfil/cadastro-seller">Trabalhe conosco</Link>
                                 </li>
                             )
                     }
