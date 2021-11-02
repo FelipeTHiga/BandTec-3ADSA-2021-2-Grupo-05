@@ -1,14 +1,30 @@
+import '../styles/catalog.scss';
+import '../styles/global.scss';
+//import '../scripts/catalog';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
-import { Card } from '../components/Card';
-import '../styles/catalog.scss';
-import '../styles/global.scss';
 import loginService from '../services/login';
 import { ProductCard } from '../components/ProductCard';
 import productService from '../services/crud-product';
 import React, { Component, useState } from 'react';
 
+let list = [];
+
+function toggleClass(id, classe) {
+
+if(!list.isEmpty) {
+    for(var i = 0; i < list.length; i++) {
+        list[i].classList.remove(classe);
+    }
+}
+
+let element = document.getElementById(id);
+element.classList.toggle(classe);
+//element.setState(classe);
+list.push(element);
+
+}
 class CatalogClass extends Component {
     state = {
         products: [{
@@ -33,8 +49,8 @@ class CatalogClass extends Component {
         this.getProd()
     }
 
-
     render() {
+
         return (
             <>
                 <Navbar isLogged={loginService.getSession()} />
@@ -51,17 +67,17 @@ class CatalogClass extends Component {
                             <div class="categories">
                                 <h3 class="category-title">Categorias</h3>
                                 <ul class="category-list">
-                                    <li id="item-0" class="category-itens" onclick="toggleClass('item-0', 'iten-active')">Todos
+                                    <li id="item-0" class="category-itens" onClick="toggleClass('item-0', 'iten-active')">Todos
                                         ({this.state.testeList.length})</li>
-                                    <li id="item-1" class="category-itens" onclick="toggleClass('item-1', 'iten-active')">Acessórios
+                                    <li id="item-1" class="category-itens" onClick="toggleClass('item-1', 'iten-active')">Acessórios
                                         ()</li>
-                                    <li id="item-2" class="category-itens" onclick="toggleClass('item-2', 'iten-active')">Alimentos
+                                    <li id="item-2" class="category-itens" onClick="toggleClass('item-2', 'iten-active')">Alimentos
                                         ()</li>
-                                    <li id="item-3" class="category-itens" onclick="toggleClass('item-3', 'iten-active')">Cosméticos
+                                    <li id="item-3" class="category-itens" onClick="toggleClass('item-3', 'iten-active')">Cosméticos
                                         ()</li>
-                                    <li id="item-4" class="category-itens" onclick="toggleClass('item-4', 'iten-active')">Saúde
+                                    <li id="item-4" class="category-itens" onClick="toggleClass('item-4', 'iten-active')">Saúde
                                         ()</li>
-                                    <li id="item-5" class="category-itens" onclick="toggleClass('item-5', 'iten-active')">Vestimenta
+                                    <li id="item-5" class="category-itens" onClick="toggleClass('item-5', 'iten-active')">Vestimenta
                                         ()</li>
                                 </ul>
                             </div>
@@ -73,15 +89,15 @@ class CatalogClass extends Component {
                                 </div>
                                 <div class="filters">
                                     <button id="btn-filter-1" class="btn-filter"
-                                        onclick="toggleClass('btn-filter-1', 'active')">Menor preço</button>
+                                        onClick="toggleClass('btn-filter-1', 'active')">Menor preço</button>
                                     <button id="btn-filter-2" class="btn-filter"
-                                        onclick="toggleClass('btn-filter-2', 'active')">Maior preço</button>
+                                        onClick="toggleClass('btn-filter-2', 'active')">Maior preço</button>
                                     <button id="btn-filter-3" class="btn-filter"
-                                        onclick="toggleClass('btn-filter-3', 'active')">Nome</button>
+                                        onClick="toggleClass('btn-filter-3', 'active')">Nome</button>
                                 </div>
                             </div>
                             <div className="container-cards-products-changed line-up">
-                                <ProductCard/>
+                                <ProductCard />
                             </div>
                         </div>
                     </div>
@@ -93,7 +109,11 @@ class CatalogClass extends Component {
 }
 
 export function Catalog(params) {
-    return(
+    return (
         new CatalogClass()
     )
 }
+
+{/* <script>
+
+</script> */}

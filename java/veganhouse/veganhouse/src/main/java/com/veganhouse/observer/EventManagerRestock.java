@@ -40,7 +40,7 @@ public class EventManagerRestock {
 
         for(RestockNotification r: restockNotificationList){
             if(r.getFkProduct() == productId)
-                usersNotified.add(userRepository.getById(r.getFkUsuer())); // Talvez o getById de erro e tenha que usar findById
+                usersNotified.add(userRepository.getById(r.getFkUser())); // Talvez o getById de erro e tenha que usar findById
         }
 
         for (User u : usersNotified){

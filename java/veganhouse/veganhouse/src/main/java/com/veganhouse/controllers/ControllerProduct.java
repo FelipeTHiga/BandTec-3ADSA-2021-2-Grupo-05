@@ -8,10 +8,12 @@ import com.veganhouse.observer.IRestockNotificationRepository;
 
 import com.veganhouse.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -57,6 +59,14 @@ public class ControllerProduct {
         }
         return ResponseEntity.status(204).build();
     }
+
+//    @GetMapping("{id}/productSeller")
+//    public ResponseEntity getProductByIdAndSeller(@PathVariable int id) {
+//        if (productRepository.existsById(id)) {
+//            return ResponseEntity.status(200).body(productRepository.productSeller(id));
+//        }
+//        return ResponseEntity.status(204).build();
+//    }
 
     @GetMapping("all/{id}")
     public ResponseEntity getAllProductsSeller(@PathVariable Integer fkUser){

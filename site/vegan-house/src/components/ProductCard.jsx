@@ -50,7 +50,7 @@ class ProductCardClass extends Component {
                             </div>
                             <div className="container-description-product">
                                 <p className="description">{product.name}</p>
-                                <p className="price">R${product.price}</p>
+                                <p className="price">R${(product.price).toFixed(2)}</p>
                                 <button><i className="fa fa-shopping-cart"></i>Comprar</button>
                             </div>
                         </div>

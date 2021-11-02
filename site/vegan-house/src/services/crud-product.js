@@ -24,11 +24,17 @@ const productService = {
     },
 
     // Request para o endpoint para recuperar um produto (id)
-    async getProductById(productData) {
+    async getProductById(productId) {
         return await api({
             method: 'get',
-            url: '/products',
-            params: productData.id
+            url: `/products/${productId}`,
+        })
+    },
+
+    async getProductByIdAndSeller(productId) {
+        return await api({
+            method: 'get',
+            url: `/products/${productId}/productSeller`,
         })
     },
 

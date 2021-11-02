@@ -28,6 +28,22 @@ async function submit(props) {
     });
 }
 
+async function subscribe(fkProduct) {
+    console.log(fkProduct)
+
+    await api({
+        method: 'post',
+        url: '/restock-subscribe',
+        data: {
+            fkProduct: fkProduct
+        }
+    })
+    .then(function (response) {
+        console.log(response.status);
+    });
+
+}
+
 async function login(){
     const user = {
         email: document.getElementById("email_login").value,
@@ -64,4 +80,4 @@ async function getUser(){
 }
 
 
-export {submit, getUser, login, user_logged};
+export {submit, getUser, login, user_logged, subscribe};
