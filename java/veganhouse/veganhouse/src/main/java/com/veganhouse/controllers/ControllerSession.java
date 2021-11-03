@@ -50,7 +50,7 @@ public class ControllerSession {
             ControllerSession.getSession(userBD);
             userBD.setAuthenticated(true);
             userRepository.save(userBD);
-            return ResponseEntity.status(200).build();
+            return ResponseEntity.status(200).body(userBD);
         }
         return ResponseEntity.status(403).build();
     }

@@ -28,7 +28,7 @@ import image4 from "../assets/images/pants-4.png";
 
 
 
-export function ProductPage() {
+export function ProductPage(props) {
     return (
         <>
             <Navbar isLogged={true} />
