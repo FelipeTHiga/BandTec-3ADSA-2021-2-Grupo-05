@@ -1,11 +1,17 @@
 import '../styles/productTextDescription.scss';
+import { selectedProduct } from '../scripts/vetor2.js';
 
-export function ProductTextDescription(props) {
-    return(
+const productText = (product) => {
+    return (
         <div className="text-description">
-        <p>{props.text}</p>
-    </div>
+            <p>{product.descriptionText}</p>
+        </div>
     );
 }
 
-// myProp={<div><SomeComponent>Some String</div>}
+export function ProductTextDescription() {
+    return (
+        selectedProduct.map(productText)
+    );
+}
+

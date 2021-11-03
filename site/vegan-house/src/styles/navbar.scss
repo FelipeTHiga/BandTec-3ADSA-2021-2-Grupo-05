@@ -6,7 +6,7 @@
     justify-content: center;
     font-family: 'Roboto', sans-serif;
     img {
-        width: 60%;
+        width: 88%;
     }
 }
 
@@ -22,7 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 85%;
+    width: 80%;
     height: 100%;
 }
 
@@ -45,8 +45,10 @@
         border-bottom-left-radius: 8px;
         border: none;
         border-style: none;
+        outline: none;
         padding: 0 10px;
         font-weight: 500;
+        outline: none;
     }
     i {
         font-size: 20px;

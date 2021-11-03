@@ -37,6 +37,7 @@
     form {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         align-items: center;
         height: 61%;
         width: 100%;
@@ -61,6 +62,7 @@
             padding-left: 6px;
             border-top-right-radius: 6px;
             border-bottom-right-radius: 6px;
+            outline: none;
             height: 100%;
             width: 100%;
             border: 1px solid #AEABAB;

@@ -25,7 +25,7 @@ import image1 from "../assets/images/pants-1.png";
 import image2 from "../assets/images/pants-2.png";
 import image3 from "../assets/images/pants-3.png";
 import image4 from "../assets/images/pants-4.png";
-import stars from "../assets/images/stars.png";
+
 
 
 export function ProductPage(props) {
@@ -53,34 +53,14 @@ export function ProductPage(props) {
                                 </div>
                                 <BigImage src={image4} />
                             </div>
-                            <BuyCard 
-                                // isAvailable={true} 
-                                // description="Calça de algodão marrom"
-                                // src={stars}
-                                // score="4.99"
-                                // seller=" joaao"
-                                // price="47,00" 
-                                />
+                            <BuyCard/>
                         </section>
 
                         <section className="section-product-description">
                             <div className="container-product-description">
                                 <SubTitle subTitle="Descrição do produto" />
-                                <ProductTextDescription text="
-                                    A Calça de algodão é a escolha certa para criar looks com muito estilo! Confeccionada em jeans color, a calça apresenta modelagem paper bag, a queridinha do momento! Perfeita para ocasiões especiais, encontros com os amigos e com o crush, aposte!
-                                    <br />
-                                    <br />
-                                    Características: <br />
-                                    Modelo paper bag <br />
-                                    Cós elástico <br />
-                                    Cós com passantes <br />
-                                    Braguilha com zíper e botões <br />
-                                    Bolsos frontais tipo faca <br />
-                                    Bolsos posteriores <br />
-                                    Barra simples <br />
-                                    <br />
-                                    <br />
-                                    A cor do produto nas fotos reproduzidas com modelos, pode sofrer alteração em decorrência do uso do flash." />
+                                <ProductTextDescription/>
+
                             </div>
                         </section>
                         <section className="section-product-seller">
@@ -118,3 +98,23 @@ export function ProductPage(props) {
 }
 
 
+                                    {/* A Calça de algodão é a escolha certa para criar looks com muito estilo! Confeccionada em jeans color, a calça apresenta modelagem paper bag, a queridinha do momento! Perfeita para ocasiões especiais, encontros com os amigos e com o crush, aposte!
+                                    <br />
+                                    <br />
+                                    Características: <br />
+                                    Modelo paper bag <br />
+                                    Cós elástico <br />
+                                    Cós com passantes <br />
+                                    Braguilha com zíper e botões <br />
+                                    Bolsos frontais tipo faca <br />
+                                    Bolsos posteriores <br />
+                                    Barra simples <br />
+                                    <br />
+                                    <br />
+                                    A cor do produto nas fotos reproduzidas com modelos, pode sofrer alteração em decorrência do uso do flash." */}
+                                                                    // isAvailable={true} 
+                                // description="Calça de algodão marrom"
+                                // src={stars}
+                                // score="4.99"
+                                // seller=" joaao"
+                                // price="47,00" 
