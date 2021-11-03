@@ -8,7 +8,6 @@ import '../styles/carousel.scss'
 import '../styles/card.scss'
 import { Link } from 'react-router-dom';
 import '../styles/home.scss';
-import { getUser, submit } from "../scripts/crud-user";
 import React from 'react';
 
 function Home() {
