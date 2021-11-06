@@ -19,12 +19,6 @@ import Selo_5 from '../assets/images/certifications/Selo-5.png';
 
 
 
-
-
-
-
-
-
 export function PerfilSeller() {
     let user = loginService.getSession();
     return (
