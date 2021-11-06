@@ -166,3 +166,23 @@ SELECT * FROM order_;
 SELECT * FROM basket;
 
  -- drop database vegan_house;
+----------------------------------------------------------------------------------------------------------------------
+
+script que o spring boot cria 
+create table adress (
+	id_adress int primary key auto_increment, 
+	cep varchar(10),
+    	city varchar(60), 
+    	complement varchar(100), 
+    	district varchar(100), 
+    	logradouro varchar(100), 
+    	number int, 
+    	state char(2), 
+    	fk_user int, 
+    	foreign key (fk_user) references user (id)
+);
+
+create table certification(
+	id_certification int primary key auto_increment, 
+    	name varchar(60)
+);	

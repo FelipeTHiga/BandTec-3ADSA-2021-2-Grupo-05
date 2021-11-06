@@ -26,11 +26,12 @@ const selectedProduct = [
         "imgCertification": "/assets/images/certifications/Selo-5.png",
     }
 ];
-let user = loginService.getSession();
 
-var list_products = productService.getProducts(user);
+// let user = loginService.getSession();
 
-console.log(list_products);
+// var list_products = productService.getProducts(user);
+
+// console.log(list_products);
 
 // const socialMidias = [
 //     {
@@ -42,4 +43,4 @@ console.log(list_products);
 
 // ];
 
-export { selectedProduct, list_products };
+export { selectedProduct };

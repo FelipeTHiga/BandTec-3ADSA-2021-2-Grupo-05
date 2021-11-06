@@ -3,6 +3,7 @@ import React, { Component, useState } from "react";
 import loginService from '../services/login';
 import productService from '../services/crud-product'
 
+let user = loginService.getSession();
 class Products extends Component {
   state = {
     products: [{

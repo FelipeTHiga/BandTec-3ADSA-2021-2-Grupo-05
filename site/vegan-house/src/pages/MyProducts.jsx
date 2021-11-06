@@ -13,6 +13,8 @@ import '../styles/myProducts.css';
 import { ProductTableRow } from '../components/ProductTableRow';
 import productService from '../services/crud-product'
 import loginService from '../services/login';
+
+
 export function MyProducts() {
     let user = loginService.getSession();
     return (
