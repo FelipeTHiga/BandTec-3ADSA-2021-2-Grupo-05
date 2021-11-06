@@ -71,9 +71,9 @@ class SignIn extends Component {
                             />
                         </div>
                         <label><u>Esqueceu sua senha?</u></label>
-                    </div>
-                    <div className="password-btn-container">
-                        <button type="submit">Entrar</button>   
+                        
+                        <button type="submit">Entrar</button>
+                        
                     </div>
                     {this.state.error && <p className="error">{this.state.error}</p>}
                     {this.state.sucess && <p className="sucess">{this.state.sucess}</p>}

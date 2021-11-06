@@ -9,18 +9,19 @@ const productService = {
     // Request para o endpoint de cadastro de produto
     async createProduct() {
         let user = loginService.getSession();
-
-        const product = {
-            name: document.getElementById("name_product").value,
-            price: parseFloat(document.getElementById("price").value),
-            category: document.getElementById("category").value,
-            subCategory: document.getElementById("sub_category").value,
-            description: document.getElementById("description").value,
-            inventory: parseInt(document.getElementById("inventory").value),
-            fkUser: user.id
+        if (user){
+            const product = {
+                name: document.getElementById("name_product").value,
+                price: parseFloat(document.getElementById("price").value),
+                category: document.getElementById("category").value,
+                subCategory: document.getElementById("sub_category").value,
+                description: document.getElementById("description").value,
+                inventory: parseInt(document.getElementById("inventory").value),
+                fkUser: user.id
+            }
+    
+            return api.post("/products", product);
         }
-
-        return api.post("/products", product);
     },
 
     // Request para o endpoint para recuperar um produto (id)
@@ -34,10 +35,19 @@ const productService = {
 
     // Request para recuperar todos os produtos de uma loja
     async getProducts(user) {
+        if(user){
+            return await api({
+                method: "get",
+                url: '/products/all',
+                params: user.id
+            })
+        }
+    },
+
+    async getProductsAll() {
         return await api({
             method: "get",
-            url: '/products/all',
-            params: user.id
+            url: '/products/all'
         })
     },
 

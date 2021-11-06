@@ -8,9 +8,7 @@ import '../styles/carousel.scss'
 import '../styles/card.scss'
 import { Link } from 'react-router-dom';
 import '../styles/home.scss';
-import { getUser, submit } from "../services/crud-user";
 import React from 'react';
-import loginService from "../services/login";
 
 function Home() {
     let user = loginService.getSession();
