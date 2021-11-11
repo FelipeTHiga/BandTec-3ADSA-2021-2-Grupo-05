@@ -6,8 +6,11 @@ import { Register } from "./pages/Register";
 import { RegisterSeller } from "./pages/RegisterSeller";
 import { ProductPage } from "./pages/ProductPage";
 import { ShoppingCart } from "./pages/ShoppingCart";
+import { UserProfile } from "./pages/UserProfile";
+import { UserAdress } from "./pages/UserAdress";
 import { Catalog } from "./pages/Catalog";
 import  { PerfilSeller }  from "./pages/PerfilSeller";
+
 
 
 // import { NewRoom } from "./pages/NewRoom";
@@ -22,10 +25,14 @@ function App() {
         <Route path="/perfil/cadastro-seller" component={RegisterSeller} />
         <Route path="/perfil/meus-produtos" component={MyProducts} />
         <Route path="/carrinho" component={ShoppingCart} />
+        <Route path="/produto" component={ProductPage} />
+        <Route path="/perfil/dados-pessoais" component={UserProfile} />
+        <Route path="/perfil/endereco" component={UserAdress} />
         <Route path="/perfil/seller" component={PerfilSeller} />
         <Route path="/todos-os-resultados/" exact={true} component={Catalog}/>
         <Route path="/todos-os-resultados/..." component={ProductPage} />
            {/* /todos os resultados/{props.categoria}/{props.subcategoria}/{props.nomeDoProduto} */}
+
       </Switch>
     </BrowserRouter>
   );

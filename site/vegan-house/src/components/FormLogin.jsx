@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import loginService from "../services/login"
 
@@ -26,6 +27,7 @@ class SignIn extends Component {
                 let res = await loginService.login({email, passwordUser});
                 loginService.setSession(res.data);
                 this.setState({ redirectTo : "/" })
+
             } catch (err) {
                 this.setState({
                     error:
