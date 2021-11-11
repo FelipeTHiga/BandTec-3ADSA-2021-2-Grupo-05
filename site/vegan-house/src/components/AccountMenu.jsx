@@ -1,23 +1,28 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import React from 'react';
 import "../styles/accountMenu.css";
 
 
 export function AccountMenu(props) {
+
+    const[activeMenu, setActiveMenu] = React.useState('');
+    console.log(activeMenu);
+
     return (
-        <div class="container-menu-perfil">
+        <div class="container-menu-profile">
             <section>
-                <ul>
+                <ul className="ul-menu">
                     <li class="radius-top-left-right">
                         <p class="line-up">
                             <b>Minha conta</b>
                         </p>
                     </li>
 
-                    <li class="active">
-                        <Link to="/perfil/dados-pessoais">Dados pessoais</Link>
+                    <li className="link">
+                        <NavLink to="/perfil/dados-pessoais" activeClassName='active'>Dados pessoais</NavLink>
                     </li>
-                    <li>
-                        <Link to="/perfil/endereco">Endereço</Link>
+                    <li className="link">
+                        <NavLink to="/perfil/endereco" activeClassName='active'>Endereço</NavLink>
                     </li>
                     <li>
                         <a href="#">Pedidos</a>

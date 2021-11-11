@@ -4,7 +4,7 @@ import "../styles/accountMenu.css";
 export function SellerMenu(props) {
     return (
         <>
-            <div class="container-menu-perfil">
+            <div class="container-menu-profile">
                 {
                     props.isSeller ? (
                         <>
@@ -22,6 +22,10 @@ export function SellerMenu(props) {
 
                                     <li class="radius-bottom-left-right-white">
                                         <a href="#">Vendas</a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="#">Dados bancários</a>
                                     </li>
                                 </ul>
                             </section>

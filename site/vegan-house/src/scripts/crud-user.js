@@ -30,6 +30,38 @@ async function submit(props) {
     });
 }
 
+async function getAdress() {
+    let userLogged = loginService.getSession();
+    await api({
+        method: 'get',
+        url: `/adress/${userLogged.id}`,
+    })
+}
+
+async function submitAdress(props) {
+    let userLogged = loginService.getSession();
+    const userAdress = {
+        street: document.getElementById("street").value,
+        number: document.getElementById("numberHouse").value,
+        state: document.getElementById("state").value,
+        city: document.getElementById("city").value,
+        complement: document.getElementById("complement").value,
+        cep: document.getElementById("cep").value,
+        district: document.getElementById("district").value,
+        fkUser: userLogged.id
+    }
+    
+    await api({
+        method: 'post',
+        url: '/users/adress',
+        data: userAdress,
+    })
+    .then(function (response) {
+        console.log(response.status);
+    });
+}
+
+
 async function login(){
     const user = {
         email: document.getElementById("email_login").value,
@@ -89,4 +121,4 @@ async function updateUser(props) {
     });
 }
 
-export {submit, getUser, login, user_logged, updateUser};
+export {submit, getUser, login, user_logged, updateUser, submitAdress, getAdress};

@@ -8,7 +8,7 @@ export function Navbar(props) {
         <header className="header">
             <div className="container-header">
                 <div className="title-site line-up">
-                    <Link to="/home">
+                    <Link to="/">
                         <img src={logo} alt="Logo Vegan House" />
                     </Link>
                 </div>

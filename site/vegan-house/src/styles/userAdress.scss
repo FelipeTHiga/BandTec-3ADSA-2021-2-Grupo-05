@@ -45,6 +45,10 @@ input {
         padding-top: 15px;
         width: 100%;
 
+        #btn-put {
+            display: none;
+        }
+
         button {
             font-family: Roboto;
             font-style: normal;
