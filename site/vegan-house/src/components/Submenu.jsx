@@ -6,27 +6,22 @@ export function Submenu() {
                 <li className="foods ">
                     <i className=" fas fa-utensils"></i>
                     <a href="#">Alimentos</a>
-                    <i className="fas fa-sort-down"></i>
                 </li>
                 <li className="cosmetics ">
                     <i className="fas fa-air-freshener"></i>
                     <a href="#">Cosméticos</a>
-                    <i className="fas fa-sort-down"></i>
                 </li>
                 <li className="health ">
                     <i className="fas fa-first-aid"></i>
-                    <a href="#">Saúde</a>
-                    <i className="fas fa-sort-down"></i>
+                    <a href="#">Saúde</a>                    
                 </li>
                 <li className="accessories ">
                     <i className="fas fa-suitcase"></i>
-                    <a href="#">Acessórios</a>
-                    <i className="fas fa-sort-down"></i>
+                    <a href="#">Acessórios</a>                   
                 </li>
                 <li className="dress ">
                     <i className="fas fa-tshirt"></i>
-                    <a href="#">Vestimentas</a>
-                    <i className="fas fa-sort-down"></i>
+                    <a href="#">Vestimentas</a>    
                 </li>
             </ul>
         </section>

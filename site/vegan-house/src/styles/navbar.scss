@@ -22,7 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 85%;
+    width: 80%;
     height: 100%;
 }
 
@@ -48,6 +48,7 @@
         outline: none;
         padding: 0 10px;
         font-weight: 500;
+        outline: none;
     }
     i {
         font-size: 20px;
@@ -59,13 +60,13 @@
         border-bottom-right-radius: 8px;
         width: 60px;
         background-color: #C9E891;
-        color: #604D4D;
-        cursor: pointer;
+        a:-webkit-any-link {
+            color: #604D4D;
+            cursor: pointer;
+        }
     }
 }
  
-
-
 .nav-bar {
     width: 37%;
     height: 100%;

@@ -1,15 +1,21 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import loginService from "../services/login";
+import { Redirect } from "react-router-dom";
+import loginService from "../services/login"
+
 
 class SignIn extends Component {
-    state = {
-        email: "",
-        passwordUser: "",
-        error: "",
-        sucess: "",
-        link: "/login"
-    };
+    
+    constructor(props){
+        super(props)
+        this.state = {
+            email: "",
+            passwordUser: "",
+            error: "",
+            sucess: "",
+            redirectTo: null
+        };
+    }
 
     handleSignIn = async e => {
         e.preventDefault();
@@ -20,7 +26,8 @@ class SignIn extends Component {
             try {
                 let res = await loginService.login({email, passwordUser});
                 loginService.setSession(res.data);
-                
+                this.setState({ redirectTo : "/" })
+
             } catch (err) {
                 this.setState({
                     error:
@@ -31,6 +38,14 @@ class SignIn extends Component {
     };
 
     render() {
+
+        // Redireciona caso redirectTo não esteja com o valor nulo
+        if (this.state.redirectTo){
+            return (
+                <Redirect to={this.state.redirectTo}/>
+            )
+        }
+
         return (
             <div className="login-content">
                 <h2>Olá, digite o seu e-mail e a <br /> senha utilizados no cadastro</h2>

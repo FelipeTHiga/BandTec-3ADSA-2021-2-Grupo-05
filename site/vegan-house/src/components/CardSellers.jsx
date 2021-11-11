@@ -8,7 +8,7 @@ import { newsProducts, sellersPop } from '../scripts/vetor.js';
 const CreatCardSeller = (card, index)=>{
     return(
         <>
-            <img src={kerai} />
+            <img src={kerai} key={index} />
         </>
     )
 };

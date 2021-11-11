@@ -1,6 +1,8 @@
 import '../styles/buyCard.scss';
 import shoppingCart from '../assets/images/shopping-cart.png';
 import { selectedProduct } from '../scripts/vetor2.js';
+import stars from "../assets/images/stars.png";
+import { ShowStars } from '../scripts/showScore';
 
 const creatProduct = (product) => {
 
@@ -13,8 +15,9 @@ const creatProduct = (product) => {
                 <div className="product-title">
                     <h1>{product.name}</h1>
                 </div>
-                <div className="product-note">
-                    <img src={product.scoreImage} alt="" />
+                <div className="product-score">
+                    <div className="container-stars teste">{ShowStars(product.score)}</div>
+                    {/* <img src={ShowStars(product.score)} alt="" /> */}
                     <h6>{product.score}</h6>
                 </div>
                 <div className="product-seller">
@@ -32,7 +35,6 @@ const creatProduct = (product) => {
                         <>
                             <div className="container-buy-btn">
                                 <button className="buy-btn" onclick="buy()">
-                                    {/* <i class="fas fa-shopping-cart"></i> */}
                                     <img src={shoppingCart} alt="" />
                                     <h2>Comprar</h2>
                                 </button>
@@ -44,7 +46,7 @@ const creatProduct = (product) => {
                                 <button className="btn-unavailable">
                                     <h1>Indisponível</h1>
                                 </button>
-                                <h3>Avise-me quando chegar</h3>
+                                <h3 onclick="">Avise-me quando chegar</h3>
                             </div>
                         </>
                     )

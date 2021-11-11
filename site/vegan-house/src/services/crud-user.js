@@ -22,7 +22,7 @@ async function submit(props) {
     
     await api({
         method: 'post',
-        url: '/user',
+        url: '/users',
         data: user,
     })
     .then(function (response) {
