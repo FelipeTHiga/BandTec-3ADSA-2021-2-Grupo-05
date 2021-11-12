@@ -1,9 +1,9 @@
 import '../styles/productTableRow.css';
-import { user_logged } from "../scripts/crud-user";
-import { getProducts, deleteProducts, list_products } from "../scripts/crud-product";
-import api from '../scripts/api';
 import React, { Component, useState } from "react";
+import loginService from '../services/login';
+import productService from '../services/crud-product'
 
+let user = loginService.getSession();
 class Products extends Component {
   state = {
     products: [{
@@ -13,36 +13,27 @@ class Products extends Component {
       subCategory: "",
       inventory: ""
     }],
-    error: ""
+    error: "",
+    testeList: []
   };
 
-
-
-  handleProducts = async e => {
-    try {
-      const response = await api.get("/product/all");
-      // this.props.history.push("/home");
-      if (response.status != 200) {
-        this.setState({
-          error:
-            "Você não possui produtos cadastrados."
-        });
-      }
-      this.setState({ products: response.data });
-    } catch (err) {
-      this.setState({
-        error:
-          "Ocorreu um erro ao buscar produtos."
-      });
-    }
-    return this.state.products;
+  getProd (){
+    let user = loginService.getSession();
+      productService.getProducts(user).then ( list => {
+      console.log(list)
+      this.setState({testeList : list.data})
+    })
   }
 
+  componentDidMount() {
+    this.getProd()
+  }
+  
   render() {
     return (
       <>
         {
-          list_products.map(product => (
+          this.state.testeList.map(product => (
             <div className="products-table-row" key={product.id}>
               <label>{product.name}</label>
               <label>{product.category}</label>
@@ -50,7 +41,7 @@ class Products extends Component {
               <label>{product.inventory}</label>
 
               <div className="products-table-row-buttons">
-                <button><i class="fas fa-edit"></i></button>
+                <button ><i class="fas fa-edit"></i></button>
                 <button><i class="fas fa-trash"></i></button>
               </div>
             </div>

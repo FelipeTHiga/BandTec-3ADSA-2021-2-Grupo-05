@@ -26,9 +26,7 @@ import image2 from "../assets/images/pants-2.png";
 import image3 from "../assets/images/pants-3.png";
 import image4 from "../assets/images/pants-4.png";
 
-
-
-export function ProductPage() {
+export function ProductPage(props) {
     return (
         <>
             <Navbar isLogged={true} />

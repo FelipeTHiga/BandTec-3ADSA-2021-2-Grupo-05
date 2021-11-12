@@ -8,13 +8,14 @@ import '../styles/carousel.scss'
 import '../styles/card.scss'
 import { Link } from 'react-router-dom';
 import '../styles/home.scss';
-import { getUser, submit } from "../scripts/crud-user";
 import React from 'react';
+import loginService from "../services/login";
 
 function Home() {
+    let user = loginService.getSession();
     return (
         <>
-            <Navbar isLogged={false} />
+            <Navbar isLogged={user} />
             <Submenu />
             <section className="container-main-banner line-up">
 
@@ -22,9 +23,7 @@ function Home() {
                     <div className="container-phrase line-up">
                         <h1 className="title-banner">Seja bem vinde!</h1>
                         <p>Vegan house, o lar de produtos 100% veganos.</p>
-                        <Link to="/todos-os-resultados">
-                            <Button text="Explorar" />
-                        </Link>
+                        <Button text="Explorar" />
                     </div>
                 </div>
 
@@ -44,8 +43,7 @@ function Home() {
                 </div>
 
                 <div className="line-great"></div>
-            </section>
-
+            </section>/
 
 
             {/* <!-- incio container de vendedores --> */}

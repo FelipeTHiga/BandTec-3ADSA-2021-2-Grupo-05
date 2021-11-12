@@ -5,7 +5,8 @@ import { Submenu } from '../components/Submenu';
 import { Button } from '../components/Button';
 import '../styles/registerSeller.scss';
 import '../styles/global.scss';
-import { getUser } from '../scripts/crud-user';
+import { getUser } from '../services/crud-user';
+import  serviceSeller  from '../services/crud-seller';
 
 
 
@@ -22,29 +23,29 @@ export function RegisterSeller() {
                         <h2>Dados comerciais</h2>
                         <form>
                             <div className="name-seller">
-                                <label>Nome comercial</label>
+                                <label for="name">Nome comercial</label>
                                 <div className="name-content-seller">
                                     <i className="fas fa-user"></i>
-                                    <input type="text" placeholder="Ex. Doces do João" />
+                                    <input id="name" type="text" placeholder="Ex. Doces do João" />
                                     <p>*</p>
                                 </div>
                             </div>
 
                             <div className="cnpj-seller">
-                                <label>CNPJ</label>
+                                <label for="cnpj">CNPJ</label>
                                 <div className="cnpj-content-seller">
                                     <i className="fas fa-id-card"></i>
-                                    <input type="text" placeholder="Ex. 11222333444455" />
+                                    <input id="cnpj" type="text" placeholder="Ex. 11222333444455" />
                                     <p>*</p>
                                 </div>
                                 <label className="instructions">Digite apenas números</label>
                             </div>
 
                             <div className="email-seller">
-                                <label>E-mail comercial</label>
+                                <label for="email">E-mail comercial</label>
                                 <div className="email-content-seller">
                                     <i className="far fa-envelope"></i>
-                                    <input type="email" placeholder="Ex. DocesJ@email.com" />
+                                    <input id="email" type="email" placeholder="Ex. DocesJ@email.com" />
                                     <p>*</p>
                                 </div>
                             </div>
@@ -52,7 +53,8 @@ export function RegisterSeller() {
                                 <input type="checkbox" />
                                 <p class="phrase">Li e concordo com os <a class="term" href="">termos do regulamento</a>.</p>
                             </div>
-                            <Button text="Enviar" />
+                            <span onClick={serviceSeller.submitSeller}>Enviar</span>
+                            {/* <Button onClick={submitSeller}  text="Enviar" /> */}
                         </form>
                     </div>
                 </div>
