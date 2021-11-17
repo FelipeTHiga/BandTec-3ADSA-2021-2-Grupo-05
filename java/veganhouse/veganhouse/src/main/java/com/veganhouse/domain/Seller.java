@@ -13,6 +13,7 @@ public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idSeller;
+
     private String commercialName;
     private String cnpj;
     private String commercialEmail;

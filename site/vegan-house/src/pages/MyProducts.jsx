@@ -13,6 +13,8 @@ import '../styles/myProducts.css';
 import { ProductTableRow } from '../components/ProductTableRow';
 import productService from '../services/crud-product'
 import loginService from '../services/login';
+
+
 export function MyProducts() {
     let user = loginService.getSession();
     return (
@@ -30,7 +32,7 @@ export function MyProducts() {
                 <div className="container-menus-and-products">
                     <div className="section-menus align-column">
                         <AccountMenu isSeller={true} />
-                        <SellerMenu />
+                        <SellerMenu isSeller={true} />
                     </div>
 
                     <div className="section-products">

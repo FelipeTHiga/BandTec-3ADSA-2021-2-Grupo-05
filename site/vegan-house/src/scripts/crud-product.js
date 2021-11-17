@@ -74,11 +74,15 @@ async function getProductByCategory(){
     });
 }
 
-async function getProducts(props){
-    await api({
+async function  getProducts() {
+   await api({
         method: 'get',
         url: '/products/all',
         params: user_logged.id
+    }).then((response)=> {
+       let produto =  response.data;
+       console.log(produto)
+        return produto;
     })
     .then(function (response) {
     //    console.log(response.data);

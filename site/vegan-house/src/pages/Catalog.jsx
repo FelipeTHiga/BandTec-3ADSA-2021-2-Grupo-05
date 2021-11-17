@@ -121,7 +121,7 @@ export function Catalog() {
 
     return (
         <>
-            <Navbar isLogged={loginService.getSession()} />
+            <Navbar isLogged={false} />
             <Submenu />
             <section className="container-search-result">
                 <div className="title-catalog">

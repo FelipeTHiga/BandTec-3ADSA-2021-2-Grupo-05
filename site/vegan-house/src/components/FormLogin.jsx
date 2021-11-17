@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import loginService from "../services/login"
 
@@ -26,6 +27,7 @@ class SignIn extends Component {
                 let res = await loginService.login({email, passwordUser});
                 loginService.setSession(res.data);
                 this.setState({ redirectTo : "/" })
+
             } catch (err) {
                 this.setState({
                     error:
@@ -71,9 +73,9 @@ class SignIn extends Component {
                             />
                         </div>
                         <label><u>Esqueceu sua senha?</u></label>
-                    </div>
-                    <div className="password-btn-container">
-                        <button type="submit">Entrar</button>   
+                        
+                        <button type="submit">Entrar</button>
+                        
                     </div>
                     {this.state.error && <p className="error">{this.state.error}</p>}
                     {this.state.sucess && <p className="sucess">{this.state.sucess}</p>}
