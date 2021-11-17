@@ -15,6 +15,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export function UserAdress() {
+
+    let userUpdate = loginService.getSession();
+
     const [cep, setCep] = useState('')
     const [street, setStreet] = useState('')
     const [district, setDistrict] = useState('')
@@ -27,7 +30,6 @@ export function UserAdress() {
 
     function updateAdress(e) {
         e.preventDefault();
-        let userUpdate = loginService.getSession();
         const adress = {
             idAdress: idAdress,
             cep: cep,
@@ -95,7 +97,7 @@ export function UserAdress() {
         <>
             <Navbar isLogged={true} />
             <div className="page-container">
-                <UserGreeting username={user_logged.nameUser} isSeller={false} />
+                <UserGreeting username={userUpdate.nameUser} isSeller={userUpdate.isSeller} />
             </div>
 
             <div className="line-up">
@@ -104,8 +106,8 @@ export function UserAdress() {
             <div className="page-container">
                 <div className="container-menu-and-adress">
                     <div className="section-menus align-column">
-                        <AccountMenu isSeller={false} />
-                        <SellerMenu isSeller={false} />
+                        <AccountMenu isSeller={userUpdate.isSeller} />
+                        <SellerMenu isSeller={userUpdate.isSeller} />
                     </div>
 
                     <div className="section-adress">

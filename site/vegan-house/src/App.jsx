@@ -10,6 +10,7 @@ import { UserProfile } from "./pages/UserProfile";
 import { UserAdress } from "./pages/UserAdress";
 import { Catalog } from "./pages/Catalog";
 import  { PerfilSeller }  from "./pages/PerfilSeller";
+import  { MyOrders }  from "./pages/MyOrders";
 
 
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="/produto" component={ProductPage} />
         <Route path="/perfil/dados-pessoais" component={UserProfile} />
         <Route path="/perfil/endereco" component={UserAdress} />
+        <Route path="/perfil/meus-pedidos" component={MyOrders} />
         <Route path="/perfil/seller" component={PerfilSeller} />
         <Route path="/todos-os-resultados/" exact={true} component={Catalog}/>
         <Route path="/todos-os-resultados/..." component={ProductPage} />
