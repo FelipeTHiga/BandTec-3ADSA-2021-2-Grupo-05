@@ -7,63 +7,37 @@ import { newsProducts } from "../scripts/vetor";
 import '../styles/card.scss'
 import productService from '../services/crud-product';
 import React, { Component, useState } from 'react';
+import { useHistory } from 'react-router';
 
 
-class ProductCardClass extends Component {
-    state = {
-        products: [{
-            id: 0,
-            name: "",
-            category: "",
-            subCategory: "",
-            inventory: ""
-        }],
-        error: "",
-        testeList: []
-    };
+export function ProductCard(props) {
 
-    getProd() {
-        productService.getProductsAll().then(list => {
-            console.log(list)
-            this.setState({ testeList: list.data })
-        })
+    const history = useHistory();
+
+    const buyProduct = (event) => {
+        history.push(`/todos-os-resultados/${props.category}/${props.id}`);
     }
 
-    componentDidMount() {
-        this.getProd()
-    }
-
-    render() {
-        return (
-            <>
-                {
-                    this.state.testeList.map(product => (
-                        <div className="card-product line-up" key={product.id}>
-                            <img src={shoe} />
-                            <div className="container-evaluation-card line-up">
-                                <div className="container-stars line-up">
-                                    {ShowStars(2.5)}
-                                    <div className="container-score line-up">
-                                        <div>{2.5}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="container-description-product">
-                                <p className="description">{product.name}</p>
-                                <p className="price">R${(product.price).toFixed(2)}</p>
-                                <button><i className="fa fa-shopping-cart"></i>Comprar</button>
-                            </div>
+    return (
+        <>
+            <div className="card-product line-up" key={props.id}>
+                <img src={shoe} />
+                <div className="container-evaluation-card line-up">
+                    <div className="container-stars line-up">
+                        {ShowStars(2.5)}
+                        <div className="container-score line-up">
+                            <div>{2.5}</div>
                         </div>
-                    ))
-                }
-            </>
-        );
-
-    }
+                    </div>
+                </div>
+                <div className="container-description-product">
+                    <p className="description">{props.name}</p>
+                    <p className="price">R${(props.price)}</p>
+                    <button onClick={buyProduct}><i className="fa fa-shopping-cart"></i>Comprar</button>
+                </div>
+            </div>
+        </>
+    );
 }
 
-    export function ProductCard(params) {
-        return (
-            new ProductCardClass()
-        )
-    }
+// toFixed(2)

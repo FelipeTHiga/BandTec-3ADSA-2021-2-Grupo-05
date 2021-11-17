@@ -4,12 +4,15 @@ import stars from "../assets/images/stars.png";
 import { ShowStars } from '../scripts/showScore';
 import loginService from '../services/login';
 import { subscribe } from '../services/crud-user';
+import React, { useState } from 'react';
+import Modal from './Modal';
 
 export function BuyCard2(props) {
 
     var isAvailable = (props.product.inventory <= 0) ? false : true;
     let user = loginService.getSession();
     var isLogged = (user == null) ? false : true;
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
     return (
         <>
@@ -25,7 +28,7 @@ export function BuyCard2(props) {
                         <h6>2.3</h6>
                     </div>
                     <div className="product-seller">
-                        <h4>Vendido por <u>joao</u></h4>
+                        <h4>Vendido por <u>{props.seller.commercialName}</u></h4>
                     </div>
                 </div>
                 <hr />
@@ -48,12 +51,11 @@ export function BuyCard2(props) {
                                 <button className="btn-unavailable">
                                     <h1>Indisponível</h1>
                                 </button>
-
                                 {
                                     isLogged ? (
-                                        <h3 onClick={()=> {subscribe(props.product.id)}}>Avise-me quando chegar</h3>
+                                        <h3 onClick={() => { subscribe(props.product.id, user.id) }}>Avise-me quando chegar</h3>
                                     ) : (
-                                        <h3>Não</h3>
+                                        <h3 onClick={() => { setIsModalVisible(true) }}>Avise-me quando chegar</h3>
                                     )
                                 }
                             </div>
@@ -61,6 +63,16 @@ export function BuyCard2(props) {
                     }
                 </div>
             </div>
+            {
+                isModalVisible ?
+                    <Modal 
+                    onClose={() => setIsModalVisible(false)} 
+                    height={document.body.scrollHeight}
+                    title="Modal" 
+                    message="Para acessar a funcionalidade, você precisa estar logado"
+                    btnTitle="Ir para Login!" />
+                    : null
+            }
         </>
     );
 }

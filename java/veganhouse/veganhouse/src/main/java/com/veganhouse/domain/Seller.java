@@ -4,11 +4,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.List;
 
 @Entity
-public class Seller extends User{
+public class Seller {
 
     //region Attributes
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idSeller;
     private String commercialName;
     private String cnpj;

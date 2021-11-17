@@ -36,6 +36,20 @@
     justify-content: space-between;
 }
 
+.image{
+    width: 103px;
+    height: 131px;
+    border: solid 1px #AEABAB;
+    border-radius: 4px;
+}
+
+.big-image{
+    width: 480px;
+    height: 454px;
+    border: solid 1px #AEABAB;
+    border-radius: 5px;
+}
+
 .section-product-description{
     margin-top: 30px;
     height: 354px;
@@ -76,7 +90,9 @@
 .certifications{
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    height: 330px;
+    height: auto;
 }
 
+.img-active {
+    border: solid 1px #383838;
+}

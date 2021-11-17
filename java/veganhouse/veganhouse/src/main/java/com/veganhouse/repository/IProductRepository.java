@@ -12,6 +12,11 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findByName(String name);
     List<Product> findByFkUser(Integer fkUser);
 
+    @Query(value = "select count(*) as qtd, category from product group by category\n" +
+            "union select count(*) as qtd, 'Todos' as category from product", nativeQuery = true)
+    List<Object> listCountCategory();
+
+
     //@Query("select c from Carro c where c.unidadesVendidas >= ?1 and c.dataLancamento > ?2") List<Carro>
     // (Integer unidades, LocalDate data);
 

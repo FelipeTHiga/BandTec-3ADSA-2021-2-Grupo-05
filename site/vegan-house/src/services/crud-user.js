@@ -28,14 +28,16 @@ async function submit(props) {
     });
 }
 
-async function subscribe(fkProduct) {
+async function subscribe(fkProduct, fkUser) {
     console.log(fkProduct)
+    console.log(fkUser)
 
     await api({
         method: 'post',
         url: '/restock-subscribe',
         data: {
-            fkProduct: fkProduct
+            fkProduct: fkProduct,
+            fkUser: fkUser
         }
     })
     .then(function (response) {
@@ -79,5 +81,13 @@ async function getUser(){
     
 }
 
+async function getUserById(userId) {
+    return await api({
+        method: 'get',
+        url: `/users/${(userId)}`,
+    })
+}
 
-export {submit, getUser, login, user_logged, subscribe};
+
+
+export {submit, getUser, login, user_logged, subscribe, getUserById};
