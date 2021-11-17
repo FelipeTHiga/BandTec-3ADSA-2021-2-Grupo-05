@@ -24,8 +24,8 @@ export function AccountMenu(props) {
                     <li className="link">
                         <NavLink to="/perfil/endereco" activeClassName='active'>Endereço</NavLink>
                     </li>
-                    <li>
-                        <a href="#">Pedidos</a>
+                    <li className="link" >
+                    <NavLink to="/perfil/meus-pedidos" activeClassName='active'>Pedidos</NavLink>
                     </li>
 
                     {
