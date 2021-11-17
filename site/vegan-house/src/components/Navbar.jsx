@@ -27,7 +27,7 @@ export function Navbar(props) {
                     <input placeholder="Busque seus produtos aqui" type="text" />
                     <div className="container-search-icon">
                         <button className="search-button">
-                            <Link to="/todos-os-resultados">
+                            <Link to="/todos-os-resultados/Todos">
                                 <i className="fas fa-search"></i>
                             </Link>
                         </button>

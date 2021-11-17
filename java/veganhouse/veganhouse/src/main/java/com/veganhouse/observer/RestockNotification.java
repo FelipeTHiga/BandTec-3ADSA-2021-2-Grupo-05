@@ -10,7 +10,7 @@ public class RestockNotification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idRestockNotification;
-    private int fkUsuer;
+    private int fkUser;
     private int fkProduct;
 
     public int getIdRestockNotification() {
@@ -21,12 +21,12 @@ public class RestockNotification {
         this.idRestockNotification = idRestockNotification;
     }
 
-    public int getFkUsuer() {
-        return fkUsuer;
+    public int getFkUser() {
+        return fkUser;
     }
 
-    public void setFkUsuer(int fkUsuer) {
-        this.fkUsuer = fkUsuer;
+    public void setFkUser(int fkUser) {
+        this.fkUser = fkUser;
     }
 
     public int getFkProduct() {

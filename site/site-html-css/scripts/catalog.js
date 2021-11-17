@@ -70,18 +70,15 @@ function searchResult(newsProducts) {
 //    }
 
 
-
 //stream().sorted(Comparator.comparing(Pokemon::getNome)).collect(Collectors.toList());
 
+// window.addEventListener('load', (event) => {
+//     //const dropArea = document.querySelectorAll(`.${order}`);
+//     document.querySelector(countSearchResult());
+// })
 
 
-
-
-
-
-
-
-
+// window.addEventListener('load', countSearchResult());
 
 //  document.getElementById("toggle").addEventListener('click', function() {
 //      Array.prototype.forEach.call(document.getElementsByClassName('select'), function(elementos) {

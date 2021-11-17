@@ -19,7 +19,32 @@ public class Product {
     protected String description;
     protected Integer inventory;
     protected Integer fkUser;
-    //endregion
+
+    public Product() {
+
+    }
+
+    public Product(String name, Double price, String category, String subCategory, String description, Integer inventory) {
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.subCategory = subCategory;
+        this.description = description;
+        this.inventory = inventory;
+    }
+
+    public Product(Integer id, String name, Double price, String category, String subCategory, String description, Integer inventory, Integer fkUser) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.subCategory = subCategory;
+        this.description = description;
+        this.inventory = inventory;
+        this.fkUser = fkUser;
+    }
+
+//endregion
 
     //region Getters and Setters
     public Integer getId() {
