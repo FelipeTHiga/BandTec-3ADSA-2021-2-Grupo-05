@@ -2,21 +2,15 @@ import '../styles/submenu.scss';
 import { useHistory } from 'react-router';
 import React, { useState } from 'react';
 
-export function Submenu(props) {
+export function Submenu() {
 
     const history = useHistory();
-    const [categoryT, setCategoryT] = useState("");   
+    const [categoryUrl, setCategoryUrl] = useState("");   
     
     const redirectTo = (event) => {
-
-        setCategoryT(event.target.id)
-        history.push(`/todos-os-resultados/${categoryT}`);
+        setCategoryUrl(event.target.id)
+        history.push(`/todos-os-resultados/${event.target.id}`);
     }
-
-    // function redirectTo = (event) => {
-    //     setCategoryT(event.target.id)
-    //     history.push(`/todos-os-resultados/${categoryT}`);
-    // }
 
     return (
         <section className="sub-menu line-up">

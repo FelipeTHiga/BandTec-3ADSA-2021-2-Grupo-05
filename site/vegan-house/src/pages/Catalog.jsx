@@ -11,10 +11,9 @@ import { useParams } from 'react-router';
 
 export function Catalog() {
 
-    let {categoryT} = useParams();
-    console.log(categoryT)
+    let {categoryUrl} = useParams();
     const [products, setProducts] = useState([]);
-    const [category, setCategory] = useState(categoryT);
+    const [category, setCategory] = useState(categoryUrl);
     const [filter, setFilter] = useState("lowest-price");
 
     const [countAcessories, setCountAcessories] = useState(0);
@@ -23,7 +22,6 @@ export function Catalog() {
     const [countHealth, setCountHealth] = useState(0);
     const [countClothing, setCountClothing] = useState(0);
     const [countAll, setCountAll] = useState(0);
-
 
     // const [countCategory, setCountCategory] = useState({
     //     countAll: 0,
@@ -36,7 +34,7 @@ export function Catalog() {
 
     useEffect(() => {
         async function productAll() {
-            const res = await api.get("/products/filter/lowest-price/Todos");
+            const res = await api.get(`/products/filter/lowest-price/${categoryUrl}`);
             setProducts(res.data);
             console.log(res.data);
         }
