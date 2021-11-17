@@ -6,6 +6,7 @@ import com.veganhouse.exports.ListaObj;
 import com.veganhouse.observer.EventManagerRestock;
 import com.veganhouse.observer.IRestockNotificationRepository;
 
+import com.veganhouse.productsCommander.ProductCommander;
 import com.veganhouse.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +27,16 @@ public class ControllerProduct {
     @Autowired
     EventManagerRestock eventManagerRestock;
 
+    @Autowired
+    ProductCommander productCommander;
+
     public ControllerProduct() {
     }
 
     @PostMapping()
     public ResponseEntity postProduct(@RequestBody Product newProduct){
         productRepository.save(newProduct);
+        productCommander.pushCommand("create", newProduct);
         return ResponseEntity.status(201).build();
     }
 
@@ -78,6 +83,7 @@ public class ControllerProduct {
     public ResponseEntity deleteProduct(@PathVariable Integer id){
         if (productRepository.existsById(id)){
             productRepository.deleteById(id);
+            productCommander.pushCommand("delete", productRepository.getById(id));
             return ResponseEntity.status(200).build();
         }
         return ResponseEntity.status(204).build();
@@ -134,6 +140,18 @@ public class ControllerProduct {
             return ResponseEntity.status(200).build();
         }
         return ResponseEntity.status(204).build();
+    }
+
+    @PostMapping("/undo")
+    public ResponseEntity undoCommand(){
+        productCommander.undo();
+        return ResponseEntity.status(200).build();
+    }
+
+    @PostMapping("/redo")
+    public ResponseEntity redoCommand(){
+        productCommander.redo();
+        return ResponseEntity.status(200).build();
     }
 
 }
