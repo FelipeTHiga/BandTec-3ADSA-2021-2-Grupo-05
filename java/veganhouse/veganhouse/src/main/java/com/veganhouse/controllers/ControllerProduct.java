@@ -7,6 +7,7 @@ import com.veganhouse.exports.ListaObj;
 import com.veganhouse.observer.EventManagerRestock;
 import com.veganhouse.observer.IRestockNotificationRepository;
 
+import com.veganhouse.productsCommander.ProductCommander;
 import com.veganhouse.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,6 +33,9 @@ public class ControllerProduct {
     @Autowired
     EventManagerRestock eventManagerRestock;
 
+    @Autowired
+    ProductCommander productCommander;
+
     public ControllerProduct() {
     }
 
@@ -53,7 +57,22 @@ public class ControllerProduct {
             productRepository.save(product);
             return ResponseEntity.status(200).build();
         }
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(404).build();
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity patchProduct(@PathVariable Integer id, @RequestBody Product product){
+        if (productRepository.existsById(id)){
+            if(restockNotificationRepository.existsByFkProduct(id)
+                    && product.getInventory()>0
+                    && productRepository.getById(id).getInventory()==0)
+                eventManagerRestock.notify(id);
+
+            product.setId(id);
+            productRepository.save(product);
+            return ResponseEntity.status(200).build();
+        }
+        return ResponseEntity.status(404).build();
     }
 
     @GetMapping("{id}")
@@ -61,7 +80,7 @@ public class ControllerProduct {
         if (productRepository.existsById(id)) {
             return ResponseEntity.status(200).body(productRepository.findById(id).get());
         }
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(404).build();
     }
 
     @GetMapping("/tag/{category}")
@@ -128,7 +147,7 @@ public class ControllerProduct {
         if (productRepository.count() > 0) {
             return ResponseEntity.status(200).body(productRepository.findByFkUser(fkUser));
         }
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(404).build();
     }
 
     @GetMapping("all")
@@ -136,16 +155,17 @@ public class ControllerProduct {
         if (productRepository.count() > 0) {
             return ResponseEntity.status(200).body(productRepository.findAll());
         }
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(404).build();
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity deleteProduct(@PathVariable Integer id) {
         if (productRepository.existsById(id)) {
             productRepository.deleteById(id);
+            productCommander.pushCommand("delete", productRepository.getById(id));
             return ResponseEntity.status(200).build();
         }
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(404).build();
     }
 
     @GetMapping("/name/{name}")
@@ -153,7 +173,15 @@ public class ControllerProduct {
         if (productRepository.count() > 0) {
             return ResponseEntity.status(200).body(productRepository.findByName(name));
         }
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(404).build();
+    }
+
+    @GetMapping("/name/{name}/{id}")
+    public ResponseEntity getProductsByName(@PathVariable String name, @PathVariable Integer id){
+        if (productRepository.count() > 0){
+            return ResponseEntity.status(200).body(productRepository.findByName(name));
+        }
+        return ResponseEntity.status(404).build();
     }
 
     @PostMapping("exportCsv/{nameArq}/{fkUser}")
@@ -214,5 +242,17 @@ public class ControllerProduct {
 //        if (productRepository.count() > 0) {
 //
 //        }
+
+    @PostMapping("/undo")
+    public ResponseEntity undoCommand(){
+        productCommander.undo();
+        return ResponseEntity.status(200).build();
+    }
+
+    @PostMapping("/redo")
+    public ResponseEntity redoCommand(){
+        productCommander.redo();
+        return ResponseEntity.status(200).build();
+    }
 
 }

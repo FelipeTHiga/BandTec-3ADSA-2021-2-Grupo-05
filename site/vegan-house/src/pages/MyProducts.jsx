@@ -10,18 +10,148 @@ import { UserGreeting } from '../components/UserGreeting';
 import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/myProducts.css';
-import { ProductTableRow } from '../components/ProductTableRow';
 import productService from '../services/crud-product'
 import loginService from '../services/login';
+import ProductTableRow from '../components/ProductTableRow';
+import React, { Component, useState, useEffect, useHistory } from "react";
+import api from '../services/api';
 
 
 export function MyProducts() {
     let user = loginService.getSession();
+    const [products, setProducts] = useState([]);
+
+    const [id, setId] = useState(0);
+    const [name, setName] = useState("");
+    const [category, setCategory] = useState("");
+    const [subCategory, setSubCategory] = useState("");
+    const [inventory, setInvetory] = useState("");
+    const [price, setPrice] = useState(0.0);
+    const [description, setDescription] = useState("");
+    const [fkUser, setFkUser] = useState(0);
+    const [searchName, setSearchName] = useState("");
+    const [searchCategory, setSearchCategory] = useState("");
+    const [searchSubCategory, setSearchSubCategory] = useState("");
+
+    useEffect(() => {
+        async function productsAll() {
+            const res = await api.get("/products/all");
+            setProducts(res.data);
+            console.log(res.data);
+        }
+
+        productsAll();
+    }, [])
+
+    // USAR CONST PARA ADICIONAR O VALE
+
+
+    function patch(e) {
+        e.preventDefault();
+
+        api.patch(`/products/${id}`, {
+            name: name,
+            category: category,
+            subCategory: subCategory,
+            inventory: inventory,
+            price: price,
+            description: description
+        }).then((res) => {
+            if (res.status === 200) {
+                console.log("Produto atualizado - " + res.statusText);
+            } else {
+                console.log("Ocorreu um erro na atualizacao - " + res.statusText);
+            }
+            console.log(res.status);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+
+    function edit(event) {
+        console.log(event.target.value);
+        setId(event.target.id);
+        api.get(`/products/${id}`)
+        .then((res) => {
+            if (res.status === 200) {
+                setName(res.data.name)
+                setCategory(res.data.category)
+                setSubCategory(res.data.subCategory)
+                setInvetory(res.data.inventory)
+                setPrice(res.data.price)
+                setDescription(res.data.description)
+                setFkUser(res.data.fkUser)
+                document.getElementById("create-btn").style.display = "none";
+                document.getElementById("edit-btn").style.display = "block";
+            }
+            console.log(res.status);
+        }).catch((err) => {
+            console.log(err);
+        })
+        console.log(event.target.id)
+    }
+
+    function remove(e) {
+        e.preventDefault();
+        setId(e.target.id);
+        api.delete(`/products/${id}`)
+        .then((res) => {
+            if (res.status === 200) {
+                console.log("Produto deletado - " + res.statusText);
+            } else {
+                console.log("Ocorreu um erro na delecao - " + res.statusText);
+            }
+            console.log(res.status);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+
+    function getSearchName(e){
+        e.preventDefault();
+        console.log(e.target.id);
+        api.get(`/products/name/${searchName}`)
+        .then((res) => {
+            if (res.status === 200) {
+                setProducts(res.data)
+            }
+            console.log(res.status);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+
+    function getSearchCategory(e){
+        e.preventDefault();
+        api.get(`/products/tag/${searchCategory}`)
+        .then((res) => {
+            if (res.status === 200) {
+                setProducts(res.data)
+            }
+            console.log(res.status);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+
+    // function getSearchSubCategory(e){
+    //     e.preventDefault();
+    //     api.get(`/products/tag/${searchSubCategory}`)
+    //     .then((res) => {
+    //         if (res.status === 200) {
+    //             setProducts(res.data)
+    //         }
+    //         console.log(res.status);
+    //     }).catch((err) => {
+    //         console.log(err);
+    //     })
+    // }
+
     return (
         <>
-            <Navbar isLogged={true} />
+            <Navbar isLogged={user.authenticaded} />
             <div className="page-container">
-                <UserGreeting username={user.nameUser} isSeller={true}/>
+                <UserGreeting username={user.nameUser} isSeller={true} />
             </div>
 
             <div className="line-up">
@@ -44,14 +174,14 @@ export function MyProducts() {
                                     <label htmlFor="">Buscar produto</label>
 
                                     <section className="search-bar line-up">
-                                        <input id="name_search" className="input" placeholder="Buscar" type="text" />
-                                        <button ><i className="fas fa-search"></i></button>
+                                        <input id="name_search" onChange={e => setSearchName(e.target.value)} className="input" placeholder="Buscar" type="text" />
+                                        <button id="allala" onClick={getSearchName}><i className="fas fa-search"></i></button>
                                     </section>
                                 </div>
 
                                 <div className="product-option" >
                                     <label htmlFor="">Ordenar por</label>
-                                    <select name="" id="state">
+                                    <select name="" onChange={get} id="state">
                                         <option value="">-- Categoria -- </option>
                                         <option value="">Alimentos</option>
                                         <option value="">Vestimentas</option>
@@ -84,7 +214,9 @@ export function MyProducts() {
                             </div>
 
                             <div className="products-table-body">
-                                <ProductTableRow />
+                                {products.map(product => (
+                                    <ProductTableRow id={product.id} name={product.name} category={product.category} subCategory={product.subCategory} inventory={product.inventory} edit={edit} remove={remove} pro={product}/>
+                                ))}
                             </div>
                         </div>
 
@@ -92,58 +224,62 @@ export function MyProducts() {
                             <div className="container-products">
                                 <SectionTitle text="Cadastrar produtos" />
 
-                                <div className="product-edit-camp">
-                                    <label>Nome</label>
-                                    <input id="name_product" className="input" type="text" placeholder="Ex. Sorverte de banana" />
-                                </div>
-
-                                <div className="line-up width-100">
-                                    <div className="product-edit-camp margin-right-50">
-                                        <label htmlFor="">Categoria</label>
-                                        <select name="" id="category">
-                                            <option value="alimentos">Alimentos</option>
-                                            <option value="medicamentos">Medicamentos</option>
-                                            <option value="vestimentas">Vestimentas</option>
-                                            <i class="fas fa-arrow-down"></i>
-                                        </select>
-                                    </div>
                                     <div className="product-edit-camp">
-                                        <label htmlFor="">Subcategoria</label>
-                                        <select name="" id="sub_category">
-                                            <option value="sobremesas">Sobremesas</option>
-                                            <option value="calçados">Calçados</option>
-                                            <option value="blusas">Blusas</option>
-                                            <i class="fas fa-arrow-down"></i>
-                                        </select>
+                                        <label>Nome</label>
+                                        <input id="name_product" onChange={e => setName(e.target.value)} value={name} className="input" type="text" placeholder="Ex. Sorverte de banana" />
                                     </div>
-                                </div>
 
-                                <div className="line-up width-100">
-                                    <div className="product-edit-camp margin-right-50">
-                                        <label htmlFor="">Preço</label>
-                                        <input id="price" className="input" type="text" placeholder="R$" />
+                                    <div className="line-up width-100">
+                                        <div className="product-edit-camp margin-right-50">
+                                            <label htmlFor="">Categoria</label>
+                                            <select name="" onChange={e => setCategory(e.target.value)} value={category} id="category">
+                                                <option value="">Selecione uma categoria</option>
+                                                <option value="alimentos">Alimentos</option>
+                                                <option value="medicamentos">Medicamentos</option>
+                                                <option value="vestimentas">Vestimentas</option>
+                                                <i class="fas fa-arrow-down"></i>
+                                            </select>
+                                        </div>
+                                        <div className="product-edit-camp">
+                                            <label htmlFor="">Subcategoria</label>
+                                            <select name="" onChange={e => setSubCategory(e.target.value)} value={subCategory} id="sub_category">
+                                                <option value="">Selecione uma Subcategoria</option>
+                                                <option value="sobremesas">Sobremesas</option>
+                                                <option value="calçados">Calçados</option>
+                                                <option value="blusas">Blusas</option>
+                                                <i class="fas fa-arrow-down"></i>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="line-up width-100">
+                                        <div className="product-edit-camp margin-right-50">
+                                            <label htmlFor="">Preço</label>
+                                            <input id="price" onChange={e => setPrice(e.target.value)} value={price} className="input" type="text" placeholder="R$" />
+                                        </div>
+
+                                        <div className="product-edit-camp">
+                                            <label htmlFor="">Qtd. estoque</label>
+                                            <input id="inventory" onChange={e => setInvetory(e.target.value)} value={inventory} className="input" type="text" placeholder="100" />
+                                        </div>
+                                    </div>
+
+                                    <div className="line-up width-100 margin-top-20">
+                                        <DragDropUpload dragId="dragId-1" />
+                                        <DragDropUpload dragId="dragId-2" />
+                                        <DragDropUpload dragId="dragId-3" />
                                     </div>
 
                                     <div className="product-edit-camp">
-                                        <label htmlFor="">Qtd. estoque</label>
-                                        <input id="inventory" className="input" type="text" placeholder="100" />
+                                        <label htmlFor="">Descrição</label>
+                                        <textarea name="" id="description"  onChange={e => setDescription(e.target.value)} value={description} cols="30" rows="10"></textarea>
                                     </div>
-                                </div>
 
-                                <div className="line-up width-100 margin-top-20">
-                                    <DragDropUpload dragId="dragId-1" />
-                                    <DragDropUpload dragId="dragId-2" />
-                                    <DragDropUpload dragId="dragId-3" />
-                                </div>
+                                    <div className="align-column margin-top-20 margin-bottom-25">
+                                        <button id="create-btn" className="create-product-btn" onClick={productService.createProduct}>Cadastrar</button>
+                                        <button id="edit-btn" className="edit-product-btn" onClick={patch}>Editar</button>
+                                    </div>
 
-                                <div className="product-edit-camp">
-                                    <label htmlFor="">Descrição</label>
-                                    <textarea name="" id="description" cols="30" rows="10"></textarea>
-                                </div>
-
-                                <div className="align-column margin-top-20 margin-bottom-25">
-                                    <button className="create-product-btn" onClick={productService.createProduct}>Cadastrar</button>
-                                </div>
                             </div>
                         </div>
                     </div>

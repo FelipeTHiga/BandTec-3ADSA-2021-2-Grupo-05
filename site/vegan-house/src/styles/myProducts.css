@@ -249,3 +249,20 @@
     cursor: pointer;
     width: 150px;
 }
+
+.edit-product-btn {
+    display: none;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 26px;
+    text-align: center;
+    color: #604D4D;
+    background-color: #C9E891;
+    padding: 7px 36px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 150px;
+}
