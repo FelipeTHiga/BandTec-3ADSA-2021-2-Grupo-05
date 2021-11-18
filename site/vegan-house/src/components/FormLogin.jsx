@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Redirect } from "react-router-dom";
+import { user_logged } from "../services/crud-user";
 import loginService from "../services/login"
 
 
@@ -35,7 +36,7 @@ class SignIn extends Component {
                 });
             }
         }
-    };
+    }
 
     render() {
 
@@ -73,10 +74,11 @@ class SignIn extends Component {
                             />
                         </div>
                         <label><u>Esqueceu sua senha?</u></label>
+
                     </div>
 
                     <button type="submit">Entrar</button>
-                    
+
                     {this.state.error && <p className="error">{this.state.error}</p>}
                     {this.state.sucess && <p className="sucess">{this.state.sucess}</p>}
                     <hr />
