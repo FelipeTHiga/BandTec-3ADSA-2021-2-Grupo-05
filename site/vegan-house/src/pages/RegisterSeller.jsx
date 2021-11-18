@@ -7,10 +7,41 @@ import '../styles/registerSeller.scss';
 import '../styles/global.scss';
 import { getUser } from '../services/crud-user';
 import  serviceSeller  from '../services/crud-seller';
+import React, { Component, useState, useEffect } from "react";
+import { useHistory } from "react-router";
+import api from '../services/api';
 
 
 
 export function RegisterSeller() {
+    const [commercialName, setCommercialName] = useState("");
+    const [cnpj, setCnpj] = useState("");
+    const [commercialEmail, setCommercialEmail] = useState("");
+    const [error, setError] = useState("");
+    const history = useHistory();
+
+    function registerSeller(e) {
+        e.preventDefault();
+        api.post(`/sellers`,{
+            commercialName: commercialName,
+            cnpj: cnpj,
+            commercialEmail: commercialEmail,
+        })
+        .then((res) => {
+            if (res.status === 201) {
+                console.log("Cadastro realizado - " + res.statusText);
+                let parseDados = JSON.stringify(res.data);
+                sessionStorage.setItem("user", parseDados);
+                history.push(`/login`);
+            } else {
+                setError("Ocorreu um erro no cadastro!" + res.statusText);
+            }
+            console.log(res.status);
+        }).catch((err) => {
+            console.log(err);
+            setError("Ocorreu um erro no cadastro!")
+        })
+    }
     return (
         <>
             <Navbar isLogged={getUser} />
@@ -26,7 +57,7 @@ export function RegisterSeller() {
                                 <label for="name">Nome comercial</label>
                                 <div className="name-content-seller">
                                     <i className="fas fa-user"></i>
-                                    <input id="name" type="text" placeholder="Ex. Doces do João" />
+                                    <input id="name" onChange={e => setCommercialName(e.target.value)} type="text" placeholder="Ex. Doces do João" />
                                     <p>*</p>
                                 </div>
                             </div>
@@ -35,7 +66,7 @@ export function RegisterSeller() {
                                 <label for="cnpj">CNPJ</label>
                                 <div className="cnpj-content-seller">
                                     <i className="fas fa-id-card"></i>
-                                    <input id="cnpj" type="text" placeholder="Ex. 11222333444455" />
+                                    <input id="cnpj" onChange={e => setCnpj(e.target.value)} type="text" placeholder="Ex. 11222333444455" />
                                     <p>*</p>
                                 </div>
                                 <label className="instructions">Digite apenas números</label>
@@ -45,7 +76,7 @@ export function RegisterSeller() {
                                 <label for="email">E-mail comercial</label>
                                 <div className="email-content-seller">
                                     <i className="far fa-envelope"></i>
-                                    <input id="email" type="email" placeholder="Ex. DocesJ@email.com" />
+                                    <input id="email" onChange={e => setCommercialEmail(e.target.value)} type="email" placeholder="Ex. DocesJ@email.com" />
                                     <p>*</p>
                                 </div>
                             </div>
@@ -53,7 +84,9 @@ export function RegisterSeller() {
                                 <input type="checkbox" />
                                 <p class="phrase">Li e concordo com os <a class="term" href="">termos do regulamento</a>.</p>
                             </div>
-                            <span onClick={serviceSeller.submitSeller}>Enviar</span>
+                            <button type={registerSeller}>Enviar</button>
+                            {error && <p className="sucess">{error}</p>}
+                            {/* <span onClick={serviceSeller.submitSeller}>Enviar</span> */}
                             {/* <Button onClick={submitSeller}  text="Enviar" /> */}
                         </form>
                     </div>

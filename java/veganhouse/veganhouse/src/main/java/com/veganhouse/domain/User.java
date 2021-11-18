@@ -19,7 +19,6 @@ public class User {
     protected String passwordUser;
     protected Boolean isSeller;
     protected Boolean authenticated;
-    protected String dtype;
     //endregion
 
 

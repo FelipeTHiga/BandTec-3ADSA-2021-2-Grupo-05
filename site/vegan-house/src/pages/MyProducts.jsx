@@ -81,10 +81,10 @@ export function MyProducts() {
         })
     }
 
-    function edit(event) {
-        console.log(event.target.value);
-        setId(event.target.id);
-        api.get(`/products/${id}`)
+    function edit(e) {
+        e.preventDefault();
+        let idProduct = e.target.id;
+        api.get(`/products/${idProduct}`)
             .then((res) => {
                 if (res.status === 200) {
                     setName(res.data.name)
@@ -96,23 +96,24 @@ export function MyProducts() {
                     setFkUser(res.data.fkUser)
                     document.getElementById("create-btn").style.display = "none";
                     document.getElementById("edit-btn").style.display = "block";
+                    getAllProducts();
                     setAcao("Editar produto")
                 }
                 console.log(res.status);
             }).catch((err) => {
                 console.log(err);
             })
-        console.log(event.target.id)
     }
 
     function remove(e) {
         e.preventDefault();
-        setId(e.target.id);
-        api.delete(`/products/${id}`)
+        let idProduct = e.target.id;
+        api.delete(`/products/${idProduct}`)
             .then((res) => {
                 if (res.status === 200) {
                     console.log("Produto deletado - " + res.statusText);
-                    alert("O produto foi deletado!")
+                    alert("O produto foi deletado!");
+                    getAllProducts();
                 } else {
                     console.log("Ocorreu um erro na delecao - " + res.statusText);
                 }
@@ -183,8 +184,8 @@ export function MyProducts() {
     }
 
     function getSearchCategory(e) {
-        setSearchCategory(e.target.value);
-        api.get(`/products/tag/${searchCategory}`)
+        let category = e.target.value;
+        api.get(`/products/tag/${category}`)
             .then((res) => {
                 if (res.status === 200) {
                     setProducts(res.data)
@@ -212,7 +213,7 @@ export function MyProducts() {
         <>
             <Navbar isLogged={user.authenticaded} />
             <div className="page-container">
-                <UserGreeting username={user.nameUser} isSeller={true} />
+                <UserGreeting username={user.nameUser} isSeller={user.isSeller} />
             </div>
 
             <div className="line-up">
@@ -222,8 +223,8 @@ export function MyProducts() {
             <div className="page-container">
                 <div className="container-menus-and-products">
                     <div className="section-menus align-column">
-                        <AccountMenu isSeller={true} />
-                        <SellerMenu isSeller={true} />
+                        <AccountMenu isSeller={user.isSeller} />
+                        <SellerMenu isSeller={user.isSeller} />
                     </div>
 
                     <div className="section-products">
