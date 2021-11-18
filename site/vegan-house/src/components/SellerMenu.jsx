@@ -17,7 +17,7 @@ export function SellerMenu(props) {
                                     </li>
 
                                     <li>
-                                        <a href="#">Produtos</a>
+                                        <a href="/perfil/meus-produtos">Produtos</a>
                                     </li>
 
                                     <li class="radius-bottom-left-right-white">

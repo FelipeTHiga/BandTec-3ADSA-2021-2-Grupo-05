@@ -12,16 +12,19 @@ import { useParams } from 'react-router';
 export function Catalog() {
 
     let {categoryUrl} = useParams();
+
     const [products, setProducts] = useState([]);
     const [category, setCategory] = useState(categoryUrl);
     const [filter, setFilter] = useState("lowest-price");
-
+    
     const [countAcessories, setCountAcessories] = useState(0);
     const [countFood, setCountFood] = useState(0);
     const [countCosmetics, setCountCosmetics] = useState(0);
     const [countHealth, setCountHealth] = useState(0);
     const [countClothing, setCountClothing] = useState(0);
     const [countAll, setCountAll] = useState(0);
+
+    var isCategoryAll = category == "Todos" ? "" : category;
 
     // const [countCategory, setCountCategory] = useState({
     //     countAll: 0,
@@ -123,7 +126,8 @@ export function Catalog() {
             <Submenu />
             <section className="container-search-result">
                 <div className="title-catalog">
-                    <h1>Todos os resultados /</h1>
+                    
+                    <h1>{`Todos os resultados / ${isCategoryAll}`}</h1>
                 </div>
                 <div className="catalog-content">
                     <div className="container-categories">

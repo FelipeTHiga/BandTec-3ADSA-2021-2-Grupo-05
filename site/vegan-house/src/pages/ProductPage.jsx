@@ -5,7 +5,6 @@ import { Title2 } from "../components/Title2";
 import { SectionTitle } from "../components/SectionTitle";
 import { SubTitle } from "../components/SubTitle";
 import { SocialMidia } from "../components/SocialMidia";
-import { BuyCard } from "../components/BuyCard";
 import { Certification } from "../components/Certification";
 import { ProductTextDescription } from "../components/ProductTextDescription";
 import shoppingCart from "../assets/images/shopping-cart.png";
@@ -20,7 +19,7 @@ import image2 from "../assets/images/pants-2.svg";
 import image3 from "../assets/images/pants-3.svg";
 import React, { Component, useEffect, useState } from 'react';
 import { useParams } from "react-router";
-import { BuyCard2 } from "../components/BuyCard2";
+import { BuyCard } from "../components/BuyCard";
 import api from "../services/api";
 
 
@@ -103,7 +102,7 @@ export function ProductPage() {
                                 </div>
                                 <img id="selected-image" src={image1} alt="product-img-selected" className="big-image" />
                             </div>
-                            <BuyCard2 product={product} seller={seller} />
+                            <BuyCard product={product} seller={seller} />
                         </section>
 
                         <section className="section-product-description">
