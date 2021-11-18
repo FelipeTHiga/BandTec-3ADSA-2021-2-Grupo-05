@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -52,7 +53,22 @@ public class ControllerProduct {
             productRepository.save(product);
             return ResponseEntity.status(200).build();
         }
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(404).build();
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity patchProduct(@PathVariable Integer id, @RequestBody Product product){
+        if (productRepository.existsById(id)){
+            if(restockNotificationRepository.existsByFkProduct(id)
+                    && product.getInventory()>0
+                    && productRepository.getById(id).getInventory()==0)
+                eventManagerRestock.notify(id);
+
+            product.setId(id);
+            productRepository.save(product);
+            return ResponseEntity.status(200).build();
+        }
+        return ResponseEntity.status(404).build();
     }
 
     @GetMapping("{id}")
@@ -60,7 +76,7 @@ public class ControllerProduct {
         if (productRepository.existsById(id)){
             return ResponseEntity.status(200).body(productRepository.findById(id).get());
         }
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(404).build();
     }
 
     @GetMapping("all/{id}")
@@ -68,7 +84,7 @@ public class ControllerProduct {
         if (productRepository.count() > 0){
             return ResponseEntity.status(200).body(productRepository.findByFkUser(fkUser));
         }
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(404).build();
     }
 
     @GetMapping("all")
@@ -76,7 +92,7 @@ public class ControllerProduct {
         if (productRepository.count() > 0){
             return ResponseEntity.status(200).body(productRepository.findAll());
         }
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(404).build();
     }
 
     @DeleteMapping("{id}")
@@ -86,7 +102,7 @@ public class ControllerProduct {
             productCommander.pushCommand("delete", productRepository.getById(id));
             return ResponseEntity.status(200).build();
         }
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(404).build();
     }
 
 
@@ -98,12 +114,28 @@ public class ControllerProduct {
         return ResponseEntity.status(204).build();
     }
 
+    @GetMapping("/tag/{category}/{id}")
+    public ResponseEntity getProductsByCategory(@PathVariable String category, @PathVariable Integer id){
+        if (productRepository.count() > 0){
+            return ResponseEntity.status(200).body(productRepository.findByCategory(category));
+        }
+        return ResponseEntity.status(204).build();
+    }
+
     @GetMapping("/name/{name}")
     public ResponseEntity getProductsByName(@PathVariable String name){
         if (productRepository.count() > 0){
             return ResponseEntity.status(200).body(productRepository.findByName(name));
         }
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(404).build();
+    }
+
+    @GetMapping("/name/{name}/{id}")
+    public ResponseEntity getProductsByName(@PathVariable String name, @PathVariable Integer id){
+        if (productRepository.count() > 0){
+            return ResponseEntity.status(200).body(productRepository.findByName(name));
+        }
+        return ResponseEntity.status(404).build();
     }
 
     @PostMapping("export/{nameArq}/{fkUser}")

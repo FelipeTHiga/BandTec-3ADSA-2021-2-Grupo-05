@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import { user_logged } from "../services/crud-user";
 import loginService from "../services/login"
 
 
@@ -33,7 +34,7 @@ class SignIn extends Component {
                 });
             }
         }
-    };
+    }
 
     render() {
 
@@ -42,8 +43,8 @@ class SignIn extends Component {
             return (
                 <Redirect to={this.state.redirectTo}/>
             )
-        }
-
+        } 
+        
         return (
             <div className="login-content">
                 <h2>Olá, digite o seu e-mail e a <br /> senha utilizados no cadastro</h2>
@@ -73,6 +74,7 @@ class SignIn extends Component {
                         <label><u>Esqueceu sua senha?</u></label>
                         
                         <button type="submit">Entrar</button>
+                        
                         
                     </div>
                     {this.state.error && <p className="error">{this.state.error}</p>}

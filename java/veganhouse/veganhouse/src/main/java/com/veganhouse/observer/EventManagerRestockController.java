@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/restock-subscribe")
 public class EventManagerRestockController {
-   @Autowired
+    @Autowired
     EventManagerRestock eventManagerRestock;
 
     @Autowired
