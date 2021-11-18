@@ -9,7 +9,7 @@ import { DragDropUpload } from '../components/DragDropUpload';
 import { UserGreeting } from '../components/UserGreeting';
 import '../styles/global.scss';
 import '../styles/reset.css';
-import '../styles/myProducts.css';
+import '../styles/myProducts.scss';
 import { ProductTableRow } from '../components/ProductTableRow';
 import productService from '../services/crud-product'
 import loginService from '../services/login';

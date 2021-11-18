@@ -17,10 +17,10 @@ import Selo_5 from '../assets/images/certifications/Selo-5.png';
 
 
 
-
-
 export function PerfilSeller() {
+
     let user = loginService.getSession();
+    
     return (
         <>
             {/* //  Inicio header  */}
@@ -176,7 +176,7 @@ export function PerfilSeller() {
                                     <label for="checkCertifications1">Selo da Sociedade Vegetariana Brasileira</label>
                                 </div>
                                 <div className="container-checkbox">
-                                    <input className="input-checkbox" type="checkbox" placeholder="" name="" id="checkCertifications1" />
+                                    <input value="1" className="input-checkbox" type="checkbox" placeholder="" name="" id="checkCertifications1" />
                                 </div>
                             </div>
 
@@ -186,7 +186,7 @@ export function PerfilSeller() {
                                     <label for="checkCertifications2">Selo The Leaping Bunny</label>
                                 </div>
                                 <div className="container-checkbox">
-                                    <input className="input-checkbox" type="checkbox" placeholder="" name="" id="checkCertifications2" />
+                                    <input value="2" className="input-checkbox" type="checkbox" placeholder="" name="" id="checkCertifications2" />
                                 </div>
                             </div>
 
@@ -196,7 +196,7 @@ export function PerfilSeller() {
                                     <label for="checkCertifications3">Selo Escolha sem Crueldade</label>
                                 </div>
                                 <div className="container-checkbox">
-                                    <input className="input-checkbox" type="checkbox" placeholder="" name="" id="checkCertifications3" />
+                                    <input value="3" className="input-checkbox" type="checkbox" placeholder="" name="" id="checkCertifications3" />
                                 </div>
                             </div>
 
@@ -206,7 +206,7 @@ export function PerfilSeller() {
                                     <label for="checkCertifications4">Certificado Vegano da Organização Veganismo Brasi</label>
                                 </div>
                                 <div className="container-checkbox">
-                                    <input className="input-checkbox" type="checkbox" placeholder="" name="" id="checkCertifications4" />
+                                    <input value="4" className="input-checkbox" type="checkbox" placeholder="" name="" id="checkCertifications4" />
                                 </div>
                             </div>
 
@@ -216,7 +216,7 @@ export function PerfilSeller() {
                                     <label for="checkCertifications5">Selo da Vegan Societ</label>
                                 </div>
                                 <div className="container-checkbox">
-                                    <input className="input-checkbox" type="checkbox" placeholder="" name="" id="checkCertifications5" />
+                                    <input value="5" className="input-checkbox" type="checkbox" placeholder="" name="" id="checkCertifications5" />
                                 </div>
                             </div>
 
@@ -240,12 +240,12 @@ export function PerfilSeller() {
             {/* //   fim container menu e dados do usuario comercial */}
 
 
-                {/* //  inicio footer  */}
+            {/* //  inicio footer  */}
 
-                <Footer />
+            <Footer />
 
-                {/* //  fim footer  */}
-            </>
+            {/* //  fim footer  */}
+        </>
 
-            );
+    );
 }
