@@ -9,10 +9,10 @@ import { DragDropUpload } from '../components/DragDropUpload';
 import { UserGreeting } from '../components/UserGreeting';
 import '../styles/global.scss';
 import '../styles/reset.css';
-import '../styles/myProducts.css';
+import '../styles/myProducts.scss';
+import ProductTableRow from '../components/ProductTableRow';
 import productService from '../services/crud-product'
 import loginService from '../services/login';
-import ProductTableRow from '../components/ProductTableRow';
 import React, { Component, useState, useEffect, useHistory } from "react";
 import api from '../services/api';
 
@@ -82,6 +82,7 @@ export function MyProducts() {
     }
 
     function edit(event) {
+        console.log(event.target.value);
         setId(event.target.id);
         api.get(`/products/${id}`)
             .then((res) => {
