@@ -30,6 +30,20 @@ async function submit(props) {
     });
 }
 
+async function subscribe(fkProduct, fkUser) {
+    console.log(fkProduct)
+    console.log(fkUser)
+
+    await api({
+        method: 'post',
+        url: '/restock-subscribe',
+        data: {
+            fkProduct: fkProduct,
+            fkUser: fkUser
+        }
+    })
+}
+
 async function getAdress() {
     let userLogged = loginService.getSession();
     await api({
@@ -59,6 +73,7 @@ async function submitAdress(props) {
     .then(function (response) {
         console.log(response.status);
     });
+
 }
 
 
@@ -97,6 +112,14 @@ async function getUser(){
     
 }
 
+async function getUserById(userId) {
+    return await api({
+        method: 'get',
+        url: `/users/${(userId)}`,
+    })
+}
+
+
 async function updateUser(props) {
     let userUpdate = loginService.getSession();
     const user = {
@@ -121,4 +144,5 @@ async function updateUser(props) {
     });
 }
 
-export {submit, getUser, login, user_logged, updateUser, submitAdress, getAdress};
+export {submit, getUser, login, user_logged, updateUser, submitAdress, getAdress, subscribe, getUserById};
+

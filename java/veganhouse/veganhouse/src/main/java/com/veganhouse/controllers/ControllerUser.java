@@ -25,13 +25,19 @@ public class ControllerUser {
     @PostMapping
     public ResponseEntity createUser(@RequestBody User newUser){
         newUser.setIsSeller(false);
+        newUser.setAuthenticated(false);
         userRepository.save(newUser);
         return ResponseEntity.status(201).body(newUser);
     }
 
+//    @Value("#{new Integer.parseInt('${idUser}')}")
     @GetMapping("/{idUser}")
-    public ResponseEntity getUser(@PathVariable Integer idUser){
-        return ResponseEntity.of(userRepository.findById(idUser));
+    public ResponseEntity getUser(@PathVariable int idUser){
+        if(userRepository.existsById(idUser)) {
+            return ResponseEntity.of(userRepository.findById(idUser));
+        }
+        return ResponseEntity.status(404).build();
+
     }
 
     @PutMapping()

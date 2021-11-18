@@ -23,7 +23,9 @@ function Home() {
                     <div className="container-phrase line-up">
                         <h1 className="title-banner">Seja bem vinde!</h1>
                         <p>Vegan house, o lar de produtos 100% veganos.</p>
-                        <Button text="Explorar" />
+                        <Link to="/todos-os-resultados/Todos">
+                            <Button text="Explorar" />
+                        </Link>
                     </div>
                 </div>
 

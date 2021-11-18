@@ -12,6 +12,7 @@ public class Certification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCertification;
     private String name;
+    private String url;
 
     //region Getters and Setters
     public int getIdCertification() {
@@ -29,5 +30,14 @@ public class Certification {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     //endregion
 }
