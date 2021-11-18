@@ -1,8 +1,9 @@
 import { faRandom } from "@fortawesome/free-solid-svg-icons";
 import { Redirect } from "react-router";
 import api from "./api";
+import { useHistory } from "react-router";
 
-
+const history = useHistory();
 
 
 const serviceSeller = {
@@ -24,6 +25,7 @@ const serviceSeller = {
             console.log(response.status);
             console.log(response.request);
             console.log(response.statusText);
+            history.push('/');
         })
     }
 }

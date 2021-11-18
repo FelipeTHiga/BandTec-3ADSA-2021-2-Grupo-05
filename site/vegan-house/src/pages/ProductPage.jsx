@@ -36,7 +36,7 @@ function selectImage(e) {
 
 export function ProductPage() {
 
-    let {category, id} = useParams();
+    let { category, id } = useParams();
     const [product, setProduct] = useState({});
     const [seller, setSeller] = useState({});
     const [sellerCertification, setSellerCertification] = useState([]);
@@ -71,6 +71,39 @@ export function ProductPage() {
         sellerById();
         sellerCertification();
     }, [], {}, [])
+
+    // useEffect(() => {
+
+    //     async function payload() {
+    //         await api({
+    //             method: 'get',
+    //             url: `/products/${id}`,
+    //         })
+    //             .then(function (res) {
+    //                 setProduct(res.data)
+    //                 console.log("Products " + res.data)
+    //                 api({
+    //                     method: 'get',
+    //                     url: `/sellers/${product.fkUser}`,
+    //                 })
+    //                     .then(function (res) {
+    //                         setSeller(res.data)
+    //                         console.log("Seller " + res.data)
+    //                         api({
+    //                             method: 'get',
+    //                             url: `/certifieds/${seller.id}`,
+    //                         })
+    //                             .then(function (res) {
+    //                                 setSeller(res.data)
+    //                                 console.log("Certifieds " +res.data)
+    //                             });
+    //                     })
+    //             })
+
+    //     }
+
+    //     payload();
+    // }, [])
 
     return (
         <>
@@ -132,9 +165,9 @@ export function ProductPage() {
                                     <div className="certifications">
                                         {sellerCertification.map(certification => (
                                             <Certification name={certification[0]}
-                                            src={certification[1]} />
+                                                src={certification[1]} />
                                         ))}
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -147,28 +180,3 @@ export function ProductPage() {
     );
 }
 
-
-// await api({
-//     method: 'get',
-//     url: `/products/${id}`,
-// })
-//     .then(function (res) {
-//         setProduct(res.data)
-//         console.log(res.data)
-//         await api({
-//             method: 'get',
-//             url: `/sellers/${product.fkUser}`,
-//         })
-//             .then(function (res) {
-//                 setSeller(res.data)
-//                 console.log(res.data)
-//                 await api({
-//                     method: 'get',
-//                     url: `/certifieds/${seller.id}`,
-//                 })
-//                     .then(function (res) {
-//                         setSeller(res.data)
-//                         console.log(res.data)
-//                     });
-//             })
-//     })
