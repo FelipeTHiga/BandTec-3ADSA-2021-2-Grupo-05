@@ -10,10 +10,9 @@ import { UserGreeting } from '../components/UserGreeting';
 import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/myProducts.scss';
-import { ProductTableRow } from '../components/ProductTableRow';
+import ProductTableRow from '../components/ProductTableRow';
 import productService from '../services/crud-product'
 import loginService from '../services/login';
-import ProductTableRow from '../components/ProductTableRow';
 import React, { Component, useState, useEffect, useHistory } from "react";
 import api from '../services/api';
 
@@ -182,7 +181,7 @@ export function MyProducts() {
 
                                 <div className="product-option" >
                                     <label htmlFor="">Ordenar por</label>
-                                    <select name="" onChange={get} id="state">
+                                    <select name="" id="state">
                                         <option value="">-- Categoria -- </option>
                                         <option value="">Alimentos</option>
                                         <option value="">Vestimentas</option>
