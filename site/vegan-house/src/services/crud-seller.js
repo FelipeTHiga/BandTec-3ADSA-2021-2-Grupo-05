@@ -14,7 +14,7 @@ const serviceSeller = {
         }
         await api({
             method: 'post',
-            url: '/seller',
+            url: '/sellers',
             data: user,
         })
         .then(function (response) {

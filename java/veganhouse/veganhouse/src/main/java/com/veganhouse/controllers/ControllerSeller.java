@@ -36,7 +36,7 @@ public class ControllerSeller {
                 userRepository.save(userLogged); // Update do user
                 sellerRepository.save(newSeller); // Add novo seller
 
-                return ResponseEntity.status(201).build();
+                return ResponseEntity.status(201).body(userLogged);
             }
         } catch (NullPointerException erro) {
             return ResponseEntity.status(404).build();

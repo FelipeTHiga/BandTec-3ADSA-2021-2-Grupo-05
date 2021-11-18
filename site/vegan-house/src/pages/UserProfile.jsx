@@ -17,7 +17,7 @@ export function UserProfile() {
         <>
             <Navbar isLogged={true} />
             <div className="page-container">
-                <UserGreeting username={user_logged.nameUser} isSeller={false} />
+                <UserGreeting username={user.nameUser} isSeller={user.isSeller} />
             </div>
 
             <div className="line-up">
@@ -26,8 +26,8 @@ export function UserProfile() {
             <div className="page-container">
                 <div className="container-menu-and-profile">
                     <div className="section-menus align-column">
-                        <AccountMenu isSeller={false} />
-                        <SellerMenu isSeller={false} />
+                        <AccountMenu isSeller={user.isSeller} />
+                        <SellerMenu isSeller={user.isSeller} />
                     </div>
 
                     <div className="section-profile">
