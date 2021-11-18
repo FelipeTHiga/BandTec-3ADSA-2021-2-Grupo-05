@@ -6,9 +6,50 @@ import { Button } from '../components/Button';
 import '../styles/register.scss';
 import '../styles/global.scss';
 import { getUser, submit } from '../services/crud-user';
+import React, { Component, useState, useEffect } from "react";
+import { useHistory } from "react-router";
+import api from '../services/api';
 
 
 export function Register() {
+    const [nameUser, setNameUser] = useState("");
+    const [surName, setSurName] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [email, setEmail] = useState("");
+    const [passwordUser, setPasswordUser] = useState("");
+    const [passwordUserConfirm, setPasswordUserConfirm] = useState("");
+    const [error, setError] = useState("");
+    const history = useHistory();
+    const [user, setUser] = useState({});
+
+    function singin(e) {
+        e.preventDefault();
+        if (passwordUser != passwordUserConfirm) {
+            setError("As senhas informadas não conhecidem!")
+        } else {
+            api.post(`/users`, {
+                nameUser: nameUser,
+                surName: surName,
+                cpf: cpf,
+                email: email,
+                passwordUser: passwordUser
+            })
+            .then((res) => {
+                if (res.status === 201) {
+                    console.log("Cadastro realizado - " + res.statusText);
+                    history.push(`/login`);
+                } else {
+                    setError("Ocorreu um erro no cadastro - " + res.statusText);
+                }
+                console.log(res.status);
+            }).catch((err) => {
+                console.log(err);
+                setError("Ocorreu um erro no cadastro - " + err)
+            })
+        }
+        
+    }
+
     return (
         <>
             <Navbar isLogged={getUser} />
@@ -24,7 +65,7 @@ export function Register() {
                                 <label>Nome</label>
                                 <div className="name-content">
                                     <i className="fas fa-user"></i>
-                                    <input id="name" type="text" placeholder="Ex. João" />
+                                    <input id="name" onChange={e => setNameUser(e.target.value)} type="text" placeholder="Ex. João" />
                                     <p>*</p>
                                 </div>
                             </div>
@@ -33,7 +74,7 @@ export function Register() {
                                 <label>Sobrenome</label>
                                 <div className="last-name-content">
                                     <i className="fas fa-user"></i>
-                                    <input id="surname" type="text" placeholder="Ex. Silva" />
+                                    <input id="surname" onChange={e => setSurName(e.target.value)} type="text" placeholder="Ex. Silva" />
                                     <p>*</p>
                                 </div>
                             </div>
@@ -42,7 +83,7 @@ export function Register() {
                                 <label>CPF</label>
                                 <div className="cpf-content">
                                     <i className="fas fa-id-card"></i>
-                                    <input id="cpf" type="text" placeholder="Ex. 11122233344" />
+                                    <input id="cpf" onChange={e => setCpf(e.target.value)} type="text" placeholder="Ex. 11122233344" />
                                     <p>*</p>
                                 </div>
                                 <label className="instructions">Digite apenas números</label>
@@ -52,7 +93,7 @@ export function Register() {
                                 <label>E-mail</label>
                                 <div className="email-content">
                                     <i className="far fa-envelope"></i>
-                                    <input id="email" type="email" placeholder="Ex. joao.silva@email.com" />
+                                    <input id="email" onChange={e => setEmail(e.target.value)} type="email" placeholder="Ex. joao.silva@email.com" />
                                     <p>*</p>
                                 </div>
                             </div>
@@ -61,7 +102,7 @@ export function Register() {
                                 <label>Senha</label>
                                 <div className="password-content">
                                     <i className="fas fa-lock"></i>
-                                    <input id="password" type="password" />
+                                    <input id="password" onChange={e => setPasswordUser(e.target.value)} type="password" />
                                     <p>*</p>
                                 </div>
                                 <label className="instructions">Use de 6 a 20 caracteres</label>
@@ -71,7 +112,7 @@ export function Register() {
                                 <label>Confirme a senha</label>
                                 <div className="password-content">
                                     <i className="fas fa-lock"></i>
-                                    <input type="password" />
+                                    <input onChange={e => setPasswordUserConfirm(e.target.value)} type="password" />
                                     <p>*</p>
                                 </div>
                             </div>

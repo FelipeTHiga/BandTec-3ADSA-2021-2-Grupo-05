@@ -19,7 +19,22 @@ public class User {
     protected String passwordUser;
     protected Boolean isSeller;
     protected Boolean authenticated;
+    protected String dtype;
     //endregion
+
+
+    public User() {
+    }
+
+    public User(int id, String nameUser, String surName, String cpf, String email, String passwordUser) {
+        this.id = id;
+        this.nameUser = nameUser;
+        this.surName = surName;
+        this.cpf = cpf;
+        this.email = email;
+        this.passwordUser = passwordUser;
+        this.authenticated = false;
+    }
 
     public void sendEmail(Product product){
         System.out.printf("\nEmail enviado para %s sobre a chegada de produtos %s\n", email, product.getName());

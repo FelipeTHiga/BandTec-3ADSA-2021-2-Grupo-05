@@ -25,6 +25,7 @@ public class ControllerUser {
     @PostMapping
     public ResponseEntity createUser(@RequestBody User newUser){
         newUser.setIsSeller(false);
+        newUser.setAuthenticated(false);
         userRepository.save(newUser);
         return ResponseEntity.status(201).body(newUser);
     }
