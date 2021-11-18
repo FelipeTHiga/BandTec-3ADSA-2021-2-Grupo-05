@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import { user_logged } from "../services/crud-user";
 import loginService from "../services/login"
@@ -27,6 +28,7 @@ class SignIn extends Component {
                 let res = await loginService.login({email, passwordUser});
                 loginService.setSession(res.data);
                 this.setState({ redirectTo : "/" })
+
             } catch (err) {
                 this.setState({
                     error:
@@ -43,8 +45,8 @@ class SignIn extends Component {
             return (
                 <Redirect to={this.state.redirectTo}/>
             )
-        } 
-        
+        }
+
         return (
             <div className="login-content">
                 <h2>Olá, digite o seu e-mail e a <br /> senha utilizados no cadastro</h2>
@@ -72,11 +74,11 @@ class SignIn extends Component {
                             />
                         </div>
                         <label><u>Esqueceu sua senha?</u></label>
-                        
-                        <button type="submit">Entrar</button>
-                        
-                        
+
                     </div>
+
+                    <button type="submit">Entrar</button>
+
                     {this.state.error && <p className="error">{this.state.error}</p>}
                     {this.state.sucess && <p className="sucess">{this.state.sucess}</p>}
                     <hr />

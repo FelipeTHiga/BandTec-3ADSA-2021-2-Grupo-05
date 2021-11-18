@@ -19,10 +19,11 @@ public class EventManagerRestockController {
     @Autowired
     IRestockNotificationRepository repository;
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity createSubscription(@RequestBody RestockNotification restockNotification){
-        User userLogged = ControllerSession.session.getUser();
-        restockNotification.setFkUsuer(userLogged.getId());
+        //User userLogged = ControllerSession.session.getUser();
+        //restockNotification.setFkUser(userLogged.getId());
+        //restockNotification.setFkProduct(fkProduct);
         // O FK do produto tem que ser passado pelo JSON
         eventManagerRestock.subscribe(restockNotification);
         return ResponseEntity.status(201).body(restockNotification);

@@ -15,6 +15,8 @@ import loginService from '../services/login';
 import ProductTableRow from '../components/ProductTableRow';
 import React, { Component, useState, useEffect, useHistory } from "react";
 import api from '../services/api';
+
+
 export function MyProducts() {
     let user = loginService.getSession();
     const [products, setProducts] = useState([]);
@@ -160,7 +162,7 @@ export function MyProducts() {
                 <div className="container-menus-and-products">
                     <div className="section-menus align-column">
                         <AccountMenu isSeller={true} />
-                        <SellerMenu />
+                        <SellerMenu isSeller={true} />
                     </div>
 
                     <div className="section-products">
@@ -221,7 +223,7 @@ export function MyProducts() {
                         <div className="section-products-edit">
                             <div className="container-products">
                                 <SectionTitle text="Cadastrar produtos" />
-                                
+
                                     <div className="product-edit-camp">
                                         <label>Nome</label>
                                         <input id="name_product" onChange={e => setName(e.target.value)} value={name} className="input" type="text" placeholder="Ex. Sorverte de banana" />
@@ -277,7 +279,7 @@ export function MyProducts() {
                                         <button id="create-btn" className="create-product-btn" onClick={productService.createProduct}>Cadastrar</button>
                                         <button id="edit-btn" className="edit-product-btn" onClick={patch}>Editar</button>
                                     </div>
-                                
+
                             </div>
                         </div>
                     </div>

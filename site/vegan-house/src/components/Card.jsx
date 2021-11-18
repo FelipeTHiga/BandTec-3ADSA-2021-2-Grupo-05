@@ -6,7 +6,9 @@ import '../styles/card.scss'
 import { useRef } from 'react'
 import { newsProducts } from '../scripts/vetor.js'
 import { ShowStars } from '../scripts/showScore'
-import { CardTeste } from './CardTeste'
+import { ProductCard } from '../components/ProductCard'
+import api from '../services/api';
+import React, { Component, useEffect, useState } from 'react';
 
 function Card() {
     const carousel = useRef(null);
@@ -25,34 +27,27 @@ function Card() {
         carousel.current.scrollLeft += carousel.current.offsetWidth;
     };
 
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        async function productAll() {
+            const res = await api.get("/products/all");
+            setProducts(res.data);
+            console.log(res.data);
+        }
+
+        productAll();
+    }, [])
+
 
     return (
         <>
             <div className="container">
 
                 <div className="carousel" ref={carousel}>
-                     <CardTeste/> 
-                    {/* {newsProducts.map((produto, index) => {
-                        const { score, price, description, category } = produto;
-                        return (
-                            <div className="card-product line-up" key={index}>
-                                <img src={shoe} />
-                                <div className="container-evaluation-card line-up">
-                                    <div className="container-stars line-up">
-                                        {ShowStars(score)}
-                                        <div className="container-score line-up">
-                                            <div>{score}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="container-description-product">
-                                    <p className="description">{description}</p>
-                                    <p className="price">R${price}</p>
-                                    <button><i className="fa fa-shopping-cart"></i>Comprar</button>
-                                </div>
-                            </div>
-                        )
-                    })} */}
+                    {products.map(product => (
+                        <ProductCard id={product.id} name={product.name} price={product.price} />
+                    ))}
                 </div>
                 <div className="buttons">
                     <button onClick={handleLeftClick}>

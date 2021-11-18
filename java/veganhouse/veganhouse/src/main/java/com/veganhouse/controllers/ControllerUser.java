@@ -29,16 +29,19 @@ public class ControllerUser {
         return ResponseEntity.status(201).body(newUser);
     }
 
+//    @Value("#{new Integer.parseInt('${idUser}')}")
     @GetMapping("/{idUser}")
-    public ResponseEntity getUser(@PathVariable Integer idUser){
-        return ResponseEntity.of(userRepository.findById(idUser));
+    public ResponseEntity getUser(@PathVariable int idUser){
+        if(userRepository.existsById(idUser)) {
+            return ResponseEntity.of(userRepository.findById(idUser));
+        }
+        return ResponseEntity.status(404).build();
+
     }
 
-    @PutMapping("/{idUser}")
-    public ResponseEntity putUser(@PathVariable Integer idUser,
-                                  @RequestBody User newUpdate){
-        if (userRepository.existsById(idUser)) {
-            newUpdate.setId(idUser);
+    @PutMapping()
+    public ResponseEntity putUser(@RequestBody User newUpdate){
+        if (userRepository.existsById(newUpdate.getId())) {
             userRepository.save(newUpdate);
             return ResponseEntity.status(200).build();
         } else {
@@ -60,10 +63,18 @@ public class ControllerUser {
         return ResponseEntity.status(201).build();
     }
 
-    @GetMapping("/adress/{idAdress}")
-    public ResponseEntity getAdress(@PathVariable Integer idAdress){
-        return ResponseEntity.of(adressRepository.findById(idAdress));
+    @GetMapping("/adress/{idUser}")
+    public ResponseEntity getAdress(@PathVariable Integer idUser) {
+        if(adressRepository.existsAdressByFkUser(idUser)) {
+            return ResponseEntity.status(200).body(adressRepository.findByFkUser(idUser));
+        }
+       return ResponseEntity.status(404).build();
     }
+
+//    @GetMapping("/adress/{idAdress}")
+//    public ResponseEntity getAdress(@PathVariable Integer idAdress){
+//        return ResponseEntity.of(adressRepository.findById(idAdress));
+//    }
 
     @PutMapping("/adress/{idAdress}")
     public ResponseEntity putAdress(@PathVariable Integer idAdress,
@@ -82,4 +93,6 @@ public class ControllerUser {
         adressRepository.save(newAdress);
         return ResponseEntity.status(201).build();
     }
+
+
 }
