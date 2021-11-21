@@ -19,6 +19,9 @@ public class Product {
     protected String description;
     protected Integer inventory;
     protected Integer fkUser;
+    protected String image_url1;
+    protected String image_url2;
+    protected String image_url3;
     //endregion
 
     //region Getters and Setters
@@ -85,5 +88,30 @@ public class Product {
     public void setFkUser(Integer fkUser) {
         this.fkUser = fkUser;
     }
+
+    public String getImage_url1() {
+        return image_url1;
+    }
+
+    public void setImage_url1(String image_url1) {
+        this.image_url1 = image_url1;
+    }
+
+    public String getImage_url2() {
+        return image_url2;
+    }
+
+    public void setImage_url2(String image_url2) {
+        this.image_url2 = image_url2;
+    }
+
+    public String getImage_url3() {
+        return image_url3;
+    }
+
+    public void setImage_url3(String image_url3) {
+        this.image_url3 = image_url3;
+    }
+
     //endregion
 }
