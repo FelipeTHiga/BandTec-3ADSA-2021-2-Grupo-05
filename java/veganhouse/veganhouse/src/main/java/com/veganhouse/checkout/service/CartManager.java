@@ -31,7 +31,7 @@ public class CartManager {
         List<CartItem> userCartItems = cartItemsRepository.findByFkUser(userId);
 
         for (CartItem cartItem: userCartItems)
-            cartItemsRepository.deleteById(cartItem.getId());
+            cartItemsRepository.deleteById(cartItem.getIdCartItem());
     }
 
 

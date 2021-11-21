@@ -14,54 +14,35 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @ManyToOne
-    private User user;
-    private Adress adress;
+    private int idOrder;
+    private int fkUser;
+    private int fkAdress;
     private double total;
-    private List<CartItem> orderItems;
-    private LocalDate date;
-    private String status;
+    private LocalDate orderDate;
+    private String orderStatus;
 
-    public List<CartItem> getProductsBySeller(int sellerId){
-        return this.orderItems.stream()
-                .filter(cartItem -> cartItem.getProduct().getFkUser().equals(sellerId))
-                .collect(Collectors.toList());
+    public int getIdOrder() {
+        return idOrder;
     }
 
-    public List<Integer> getSellers(){
-        List<Integer> sellersList = new ArrayList();
-
-        for(CartItem c : orderItems){
-            if(!sellersList.contains(c.getFkUser()))
-                sellersList.add(c.getFkUser());
-        }
-
-        return sellersList;
+    public void setIdOrder(int idOrder) {
+        this.idOrder = idOrder;
     }
 
-    public int getId() {
-        return id;
+    public int getFkUser() {
+        return fkUser;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setFkUser(int fkUser) {
+        this.fkUser = fkUser;
     }
 
-    public User getUser() {
-        return user;
+    public int getFkAdress() {
+        return fkAdress;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Adress getAdress() {
-        return adress;
-    }
-
-    public void setAdress(Adress adress) {
-        this.adress = adress;
+    public void setFkAdress(int fkAdress) {
+        this.fkAdress = fkAdress;
     }
 
     public double getTotal() {
@@ -72,27 +53,19 @@ public class Order {
         this.total = total;
     }
 
-    public List<CartItem> getOrderItems() {
-        return orderItems;
+    public LocalDate getOrderDate() {
+        return orderDate;
     }
 
-    public void setOrderItems(List<CartItem> orderItems) {
-        this.orderItems = orderItems;
+    public void setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public String getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }

@@ -20,8 +20,7 @@ public class User {
     protected Boolean isSeller;
     protected Boolean authenticated;
     protected String dtype;
-    @ManyToOne
-    protected Adress adress;
+
 
     //protected Order orders
     //endregion
@@ -115,14 +114,6 @@ public class User {
 
     public void setAuthenticated(Boolean authenticated) {
         this.authenticated = authenticated;
-    }
-
-    public Adress getAdress() {
-        return adress;
-    }
-
-    public void setAdress(Adress adress) {
-        this.adress = adress;
     }
 
     //endregion

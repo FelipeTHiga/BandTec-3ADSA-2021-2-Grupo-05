@@ -2,30 +2,37 @@ package com.veganhouse.checkout.domain;
 
 import com.veganhouse.domain.Product;
 
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
+@Entity
 public class CartItem {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idCartItem;
     @ManyToOne
     private Product product;
     private int quantity;
     private double subTotal;
     private int fkUser;
+    private int fkOrder;
+
+    public CartItem() {
+    }
 
     public CartItem(int id, Product product, int quantity) {
-        this.id = id;
+        this.idCartItem = id;
         this.product = product;
         this.quantity = quantity;
         this.subTotal = product.getPrice() * quantity;
     }
 
-    public int getId() {
-        return id;
+    public int getIdCartItem() {
+        return idCartItem;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdCartItem(int idCartItem) {
+        this.idCartItem = idCartItem;
     }
 
     public Product getProduct() {
@@ -58,5 +65,13 @@ public class CartItem {
 
     public void setFkUser(int fkUser) {
         this.fkUser = fkUser;
+    }
+
+    public int getFkOrder() {
+        return fkOrder;
+    }
+
+    public void setFkOrder(int fkOrder) {
+        this.fkOrder = fkOrder;
     }
 }

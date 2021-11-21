@@ -3,7 +3,7 @@ package com.veganhouse.domain;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+
 public class Order {
 
     @Id
@@ -12,6 +12,7 @@ public class Order {
 
     @ManyToOne
     private User user;
+    @ManyToOne
     private Adress adress;
     @OneToMany
     private List<OrderItem> orderItems;
@@ -22,7 +23,7 @@ public class Order {
         this.user = user;
         this.orderItems = orderItems;
         this.total = total;
-        this.adress = user.getAdress();
+        this.adress = null;
     }
 
 }

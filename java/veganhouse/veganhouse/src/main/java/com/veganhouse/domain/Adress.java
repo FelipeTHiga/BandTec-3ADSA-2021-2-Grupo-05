@@ -19,6 +19,7 @@ public class Adress {
     private String complement;
     private String cep;
     private String district;
+    private Integer fkUser;
     //endregion
 
     //region Getters and Setters
@@ -85,6 +86,14 @@ public class Adress {
 
     public void setDistrict(String district) {
         this.district = district;
+    }
+
+    public Integer getFkUser() {
+        return fkUser;
+    }
+
+    public void setFkUser(Integer fkUser) {
+        this.fkUser = fkUser;
     }
     //endregion
 }
