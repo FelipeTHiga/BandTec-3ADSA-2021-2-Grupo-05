@@ -13,11 +13,11 @@ import java.util.Objects;
 @RequestMapping("cartItems")
 public class ControllerCartItem {
     @Autowired
-    CartManager cartManager;
+    private CartManager cartManager;
 
-    @GetMapping
-    public ResponseEntity getUserCartItems(int userId){
-        List<CartItem> cartItemList = cartManager.getUserCartItems(userId);
+    @GetMapping("{idUser}")
+    public ResponseEntity getUserCartItems(@PathVariable int idUser){
+        List<CartItem> cartItemList = cartManager.getAllUserCartItemsWithoutOrder(idUser);
 
         if (Objects.isNull(cartItemList) ||cartItemList.isEmpty())
             return ResponseEntity.status(204).build();

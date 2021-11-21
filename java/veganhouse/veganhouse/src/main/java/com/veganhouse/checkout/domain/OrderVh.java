@@ -10,13 +10,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-public class Order {
+public class OrderVh {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idOrder;
-    private int fkUser;
-    private int fkAdress;
+    @ManyToOne
+    private User user;
+    @ManyToOne
+    private Adress adress;
     private double total;
     private LocalDate orderDate;
     private String orderStatus;
@@ -29,20 +31,20 @@ public class Order {
         this.idOrder = idOrder;
     }
 
-    public int getFkUser() {
-        return fkUser;
+    public User getUser() {
+        return user;
     }
 
-    public void setFkUser(int fkUser) {
-        this.fkUser = fkUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public int getFkAdress() {
-        return fkAdress;
+    public Adress getAdress() {
+        return adress;
     }
 
-    public void setFkAdress(int fkAdress) {
-        this.fkAdress = fkAdress;
+    public void setAdress(Adress adress) {
+        this.adress = adress;
     }
 
     public double getTotal() {

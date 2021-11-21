@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("orders")
 public class ControllerOrder {
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
 
     @PostMapping
-    public void postOrder(User user){
+    public void postOrder(@RequestBody User user){
         orderService.createOrder(user);
     }
 
-    @GetMapping("user/{id}")
+    @GetMapping("user/{idUser}")
     public ResponseEntity getUserOrder(@PathVariable int idUser){
         return ResponseEntity.status(200).body(orderService.getUserOrders(idUser));
     }
 
-    @GetMapping("seller/{id}")
+    @GetMapping("seller/{idUser}")
     public ResponseEntity getSellerOrder(@PathVariable int idUser){
         return ResponseEntity.status(200).body(orderService.getSellerOrders(idUser));
     }

@@ -34,8 +34,8 @@ public class OrderDTO {
         List<Integer> sellersList = new ArrayList();
 
         for(CartItem c : orderItems){
-            if(!sellersList.contains(c.getFkUser()))
-                sellersList.add(c.getFkUser());
+            if(!sellersList.contains(c.getProduct().getFkUser()))
+                sellersList.add(c.getProduct().getFkUser());
         }
 
         return sellersList;

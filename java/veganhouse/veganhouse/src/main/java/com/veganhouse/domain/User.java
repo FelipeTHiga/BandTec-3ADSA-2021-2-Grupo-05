@@ -19,7 +19,8 @@ public class User {
     protected String passwordUser;
     protected Boolean isSeller;
     protected Boolean authenticated;
-    protected String dtype;
+    @ManyToOne
+    private Adress adress;
 
 
     //protected Order orders
@@ -46,6 +47,14 @@ public class User {
     //region Getters and Setters
     public int getId() {
         return id;
+    }
+
+    public Adress getAdress() {
+        return adress;
+    }
+
+    public void setAdress(Adress adress) {
+        this.adress = adress;
     }
 
     public void setId(int id) {

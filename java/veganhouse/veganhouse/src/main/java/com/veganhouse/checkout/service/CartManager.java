@@ -4,8 +4,10 @@ import com.veganhouse.checkout.domain.CartItem;
 import com.veganhouse.checkout.repository.ICartItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PatchMapping;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CartManager {
@@ -15,6 +17,7 @@ public class CartManager {
     // Adicionar item no carrinho
     public void addItem(int idUser, CartItem cartItem){
         cartItem.setFkUser(idUser);
+        cartItem.setSubTotal(cartItem.getSubTotal());
         cartItemsRepository.save(cartItem);
     }
     // Remover item do carrinho
@@ -34,10 +37,17 @@ public class CartManager {
             cartItemsRepository.deleteById(cartItem.getIdCartItem());
     }
 
+    public void updateOrderId(CartItem c){
+        cartItemsRepository.save(c);
+    }
 
     //Retornar itens do carrinho
-    public List<CartItem> getUserCartItems(int idUser){
+    public List<CartItem> getAllUserCartItems(int idUser){
         return cartItemsRepository.findByFkUser(idUser);
+    }
+
+    public List<CartItem> getAllUserCartItemsWithoutOrder(int idUser){
+        return cartItemsRepository.findByFkUser(idUser).stream().filter(cartItem -> cartItem.getFkOrder() == 0).collect(Collectors.toList());
     }
 
     // Alterar quantidade de itens

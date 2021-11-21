@@ -1,7 +1,7 @@
 package com.veganhouse.checkout.service;
 
 import com.veganhouse.checkout.domain.CartItem;
-import com.veganhouse.checkout.domain.Order;
+import com.veganhouse.checkout.domain.OrderVh;
 import com.veganhouse.checkout.dto.OrderDTO;
 import com.veganhouse.checkout.repository.IOrderRepository;
 import com.veganhouse.domain.User;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,49 +24,53 @@ public class OrderService {
     IUserRepository userRepository;
 
     // Criar pedidos
-    public Order orderBuilder(User user) {
-        Order order = new Order();
-        order.setFkUser(user.getId());
-        order.setFkAdress(1);
-        order.setOrderDate(LocalDate.now());
-        order.setOrderStatus("Pendente");
-
-        return order;
+    public OrderVh orderBuilder(User user) {
+        OrderVh orderVh = new OrderVh();
+        List<CartItem> cartItemList = cartManager.getAllUserCartItemsWithoutOrder(user.getId());
+        orderVh.setUser(user);
+        orderVh.setAdress(user.getAdress());
+        orderVh.setOrderDate(LocalDate.now());
+        orderVh.setOrderStatus("Pendente");
+        orderVh.setTotal(cartItemList.stream().mapToDouble(CartItem::getSubTotal).sum());
+        return orderVh;
     }
 
     public void createOrder(User user) {
         orderRepository.save(orderBuilder(user));
-        int lastOrderId = orderRepository.findAll().stream().findFirst().get().getIdOrder();
+        int lastOrderId = orderRepository.findAll().stream().skip(orderRepository.count()-1).findFirst().get().getIdOrder();
 
-        for (CartItem c : cartManager.getUserCartItems(user.getId())){
-            if(Objects.isNull(c.getFkOrder()))
+        for (CartItem c : cartManager.getAllUserCartItemsWithoutOrder(user.getId())){
                 c.setFkOrder(lastOrderId);
+                cartManager.updateOrderId(c);
         }
     }
 
     // Selecionar pedidos de um usuário
-    public List<Order> getUserOrders(int userId) {
-        List<Order> orderList = orderRepository.findAll();
-        ArrayList<Order> userOrders = new ArrayList();
+    public List<OrderDTO> getUserOrders(int userId) {
+        List<OrderVh> orderVhList = orderRepository.findAll();
+        ArrayList<OrderDTO> userOrderDTO = new ArrayList();
+
 
 //        for (Order order:orderList){
 //            if(order.getUser().getId()==userId)
 //                userOrders.add(order);
 //        }
-
-        return orderList.stream()
-                .filter(order -> order.getFkUser() == userId)
-                .collect(Collectors.toList());
+        for(OrderVh o : orderVhList.stream()
+                .filter(orderVh -> orderVh.getUser().getId() == userId)
+                .collect(Collectors.toList())){
+            userOrderDTO.add(mapOrderDTO(o));
+        }
+        return userOrderDTO;
     }
 
 
     // Selecionar pedidos de um seller
     public List<OrderDTO> getSellerOrders(int userId) {
-        List<Order> orderList = orderRepository.findAll();
+        List<OrderVh> orderVhList = orderRepository.findAll();
         List<OrderDTO> orderDTOList = new ArrayList<>();
 
-        for (Order order : orderList)
-            orderDTOList.add(mapOrderDTO(order));
+        for (OrderVh orderVh : orderVhList)
+            orderDTOList.add(mapOrderDTO(orderVh));
 
         List<OrderDTO> sellerOrders =
                 orderDTOList.stream().filter(order -> order.getSellers().contains(userId))
@@ -85,18 +88,18 @@ public class OrderService {
         return sellerOrders;
     }
 
-    private OrderDTO mapOrderDTO(Order order){
+    private OrderDTO mapOrderDTO(OrderVh orderVh){
         OrderDTO orderDTO= new OrderDTO();
 
-        orderDTO.setIdOrder(order.getIdOrder());
-        orderDTO.setAdress(null);
-        orderDTO.setUser(userRepository.findById(order.getFkUser()).get());
-        orderDTO.setOrderDate(order.getOrderDate());
-        orderDTO.setOrderStatus(order.getOrderStatus());
+        orderDTO.setIdOrder(orderVh.getIdOrder());
+        orderDTO.setAdress(orderVh.getAdress());
+        orderDTO.setUser(orderVh.getUser());
+        orderDTO.setOrderDate(orderVh.getOrderDate());
+        orderDTO.setOrderStatus(orderVh.getOrderStatus());
 
-       List<CartItem> orderItems = cartManager.getUserCartItems(order.getFkUser())
+       List<CartItem> orderItems = cartManager.getAllUserCartItems(orderVh.getUser().getId())
                 .stream()
-                .filter(cartItem -> cartItem.getFkOrder()==order.getIdOrder())
+                .filter(cartItem -> cartItem.getFkOrder()== orderVh.getIdOrder())
                .collect(Collectors.toList());
 
        orderDTO.setOrderItems(orderItems);
