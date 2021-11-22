@@ -17,6 +17,7 @@ const serviceSeller = {
             data: user,
         })
         .then(function (response) {
+            sessionStorage.setItem("user", response.data)
             console.log(response)
             console.log(response.data)
             console.log(response.config)
