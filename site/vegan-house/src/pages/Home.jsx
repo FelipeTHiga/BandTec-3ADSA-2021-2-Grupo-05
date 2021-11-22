@@ -15,7 +15,7 @@ function Home() {
     let user = loginService.getSession();
     return (
         <>
-            <Navbar isLogged={user} />
+            <Navbar />
             <Submenu />
             <section className="container-main-banner line-up">
 

@@ -25,7 +25,7 @@ export function ShoppingCart(props) {
 
     return (
         <>
-            <Navbar isLogged={true} />
+            <Navbar />
             <section className="shopping-cart-section">
                 <div className="container-cart">
                     <div className="title-cart-main">

@@ -4,17 +4,16 @@ import api from "./api";
 
 
 
-
 const serviceSeller = {
     async submitSeller(props) {
         const user = {
             commercialName: document.getElementById("name").value,
-            cnpj: document.getElementById("cnpj").value,
+            cnpj: document.getElementById("cnpj").value.replace(/\D/g,''),
             commercialEmail: document.getElementById("email").value,
         }
         await api({
             method: 'post',
-            url: '/seller',
+            url: '/sellers',
             data: user,
         })
         .then(function (response) {
