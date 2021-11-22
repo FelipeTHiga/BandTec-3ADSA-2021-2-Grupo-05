@@ -11,6 +11,7 @@ import { UserAdress } from "./pages/UserAdress";
 import { Catalog } from "./pages/Catalog";
 import { PerfilSeller } from "./pages/PerfilSeller";
 import { MyOrders } from "./pages/MyOrders";
+import { MySales } from "./pages/MySales";
 
 
 // import { NewRoom } from "./pages/NewRoom";
@@ -32,6 +33,7 @@ function App() {
         <Route path="/todos-os-resultados/:category/:id" exact={true} component={ProductPage} />
         <Route path="/produto" component={ProductPage} />
         <Route path="/carrinho" component={ShoppingCart} />
+        <Route path="/perfil/minhas-vendas" component={MySales} />
         {/* na url colocar um parametro :id*/}
         {/* /todos os resultados/{props.categoria}/{props.subcategoria}/{props.nomeDoProduto} */}
       </Switch>

@@ -12,7 +12,7 @@ import {FormLogin} from '../components/FormLogin'
 export function Login() {
     return (
             <>
-            <Navbar isLogged={false} />
+            <Navbar />
             <Submenu />
             <section className="login-section">
             <div className="container-login">

@@ -210,7 +210,7 @@ export function MyProducts() {
 
     return (
         <>
-            <Navbar isLogged={user.authenticaded} />
+            <Navbar />
             <div className="page-container">
                 <UserGreeting username={user.nameUser} isSeller={true} />
             </div>

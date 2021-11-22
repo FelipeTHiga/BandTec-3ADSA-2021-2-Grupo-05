@@ -202,15 +202,19 @@
     width: 100%;
 }
 .container-data-user button {
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: 700;
-    border-radius: 6px;
-    width: 180px;
-    height: 50px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 26px;
+    text-align: center;
     color: #604D4D;
-    background: #C9E891;
+    background-color: #C9E891;
+    padding: 7px 36px;
     border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 150px;
 }
 
 .container-data-user .input-state{

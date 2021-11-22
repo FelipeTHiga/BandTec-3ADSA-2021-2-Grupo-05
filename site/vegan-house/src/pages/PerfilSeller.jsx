@@ -1,6 +1,11 @@
 
 import { Footer } from '../components/Footer';
 import { Navbar } from "../components/Navbar";
+import { UserGreeting } from '../components/UserGreeting';
+import { Title } from '../components/Title';
+import { AccountMenu } from '../components/AccountMenu';
+import { SellerMenu } from '../components/SellerMenu';
+import { SectionTitle } from '../components/SectionTitle';
 import loginService from "../services/login";
 
 
@@ -20,93 +25,27 @@ import Selo_5 from '../assets/images/certifications/Selo-5.png';
 export function PerfilSeller() {
 
     let user = loginService.getSession();
-    
+
     return (
         <>
-            {/* //  Inicio header  */}
-            <Navbar isLogged={user} />
-            {/* //  fim header  */}
+            <Navbar />
 
-            {/* //  inicio nome usuario  */}
-            <div className="container-name-user line-up">
-                <div className="line-up">
-                    <div className="name-user">João Silva</div>
-                    <p>
-                        Sua conta pessoal & comercial
-                    </p>
-                </div>
+            <div className="page-container">
+                <UserGreeting username={user.nameUser} isSeller={user.isSeller} />
             </div>
-            {/* //    fim nome usuario  */}
 
-            {/* //  inicio titulo perfil  */}
-            <div className="container-title-perfil line-up">
-                <div className="line-up">
-                    <p>Seu pefil</p>
-                </div>
+            <div className="line-up">
+                <Title title="Seu perfil" />
             </div>
-            {/* //   fim titulo perfil  */}
-
-
-            {/* //     inicio container menu e dados do usuario  */}
-            <div className="container-menu-and-data-user line-up container-menu-and-data-user-commercial">
-
-                {/* //  inicio container que alinha card do menu e dados do usuario  */}
-                <div className="line-up ">
-
-                    {/* //    inicio menu pefil usuario    */}
-                    <div className="container-menus">
-                        <div className="container-menu-perfil menu-seller">
-                            <section>
-                                <ul>
-                                    <li className="radius-top-left-right">
-                                        <p className="line-up">Minha conta</p>
-                                    </li>
-                                    <li className="active">
-                                        <a href="#">Dados pessoais</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Endereço</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Segurança</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Pedidos</a>
-                                    </li>
-                                    <li className="radius-bottom-left-right">
-                                        <a href="#">Trabalhe conosco</a>
-                                    </li>
-                                </ul>
-                            </section>
-                        </div>
-
-                        <div className="container-menu-perfil-seller">
-                            <section>
-                                <ul>
-                                    <li className="title-menu-commercial radius-top-left-right">
-                                        <p className="line-up">Comercial</p>
-                                    </li>
-                                    <li className="active">
-                                        <a href="#">Produtos</a>
-                                    </li>
-                                    <li className="radius-bottom-left-right-seller">
-                                        <a href="#">Vendas</a>
-                                    </li>
-                                </ul>
-                            </section>
-                        </div>
-
+            <div className="page-container">
+                <div className="container-menu-and-seller">
+                    <div className="section-menus">
+                        <AccountMenu isSeller={true} />
+                        <SellerMenu isSeller={true} />
                     </div>
-
-
-                    {/* //   fim menu pefil usuario    */}
-
-                    {/* //   inicio container de dados do usuario comercial */}
                     <div className="container-data-user container-data-user-seller">
-
-                        {/* //   inicio formulario de dados pessoais do usuario comercial */}
-                        <div className="title-data-user">Dados comerciais</div>
-                        <form action="" method="POST">
+                        <SectionTitle text="Dados comerciais" />
+                        <form>
                             <div className="container-input">
                                 <label for="nameCommercial">Nome Comercial</label>
                                 <div>
@@ -129,12 +68,8 @@ export function PerfilSeller() {
                                 </div>
                             </div>
                         </form>
-                        {/* //   fim formulario de dados pessoais do usuario comercial */}
-
-
-                        {/* //    inicio formulario de dados de contato do usuario comercial */}
-                        <div className="title-data-user">Contato & Redes Sociais</div>
-                        <form action="POST">
+                        <SectionTitle text="Contato & Redes Sociais" />
+                        <form>
                             <div className="container-input">
                                 <label for="whatsapp">WhatsApp</label>
                                 <div>
@@ -157,11 +92,7 @@ export function PerfilSeller() {
                                 </div>
                             </div>
                         </form>
-                        {/* //  fim formulario de dados de contato do usuario comercial */}
-
-
-                        {/* //  inicio formulario de certificações do seller  */}
-                        <div className="title-data-user">Certificações</div>
+                        <SectionTitle text="Certificações" />
                         <form action="">
                             <div className="container-title-certification">
                                 <p>Nome</p>
@@ -221,30 +152,21 @@ export function PerfilSeller() {
                             </div>
 
                         </form>
-                        {/* //  fim formulario de certificações do seller  */}
-
-
-
                         <div className="container-button-update-user line-up">
                             <button>Atualizar</button>
                         </div>
-                        {/* //    fim formulario de dadaos comerciais do usuario  */}
+
+
 
                     </div>
-                    {/* //    fim container de dados do usuario comercial */}
+
+
 
                 </div>
-                {/* //  fim container que alinha card do menu e dados do usuario  */}
-
             </div>
-            {/* //   fim container menu e dados do usuario comercial */}
+            <Footer/>
 
 
-            {/* //  inicio footer  */}
-
-            <Footer />
-
-            {/* //  fim footer  */}
         </>
 
     );
