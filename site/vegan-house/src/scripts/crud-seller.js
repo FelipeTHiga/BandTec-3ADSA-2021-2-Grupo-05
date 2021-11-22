@@ -14,10 +14,11 @@ const serviceSeller = {
         }
         await api({
             method: 'post',
-            url: '/seller',
+            url: '/sellers',
             data: user,
         })
         .then(function (response) {
+            sessionStorage.setItem("user", response.data)
             console.log(response)
             console.log(response.data)
             console.log(response.config)

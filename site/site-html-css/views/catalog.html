@@ -17,7 +17,8 @@
     <!-- Inicio header -->
     <header class="header">
         <div class="container-header">
-            <div class="title-site line-up"><a href="index.html"><img src="/public/images/logo.png" alt="Logo do site"></a></div>
+            <div class="title-site line-up"><a href="index.html"><img src="/public/images/logo.png"
+                        alt="Logo do site"></a></div>
 
             <section class="container-search-bar line-up">
                 <input placeholder="Busque seus produtos aqui" type="text">
@@ -228,20 +229,35 @@
 <script>
 
     var list = [];
+    // var inicio = document.getElementById('item-0');
+    // var price = document.getElementById('price');
+    //  var list = [];
+    // list.push(inicio, price);
+
+    // onClick={() => { getProductByCategory("Alimentos") }
+    // onClick={() => { toggleClass('btn-filter-1', 'btn-active') }}
+    // onClick={() => { toggleClass('btn-filter-3', 'btn-active') }}
+    // onClick={() => { toggleClass('Vestimenta', 'iten-active') }
+    // onClick={() => { toggleClass('item-0', 'iten-active') }}
+    // onClick={() => { toggleClass('item-1', 'iten-active') }}
+    // onClick={() => { toggleClass('item-2', 'iten-active') }}
+    // onClick={() => { toggleClass('item-3', 'iten-active') }}
+    // onClick={() => { toggleClass('item-4', 'iten-active') }}
+    // onClick={() => { toggleClass('btn-filter-2', 'btn-active') }}
 
     function toggleClass(id, classe) {
 
-    if(!list.isEmpty) {
-        for(i = 0; i < list.length; i++) {
-            list[i].classList.remove(classe);
+        if (!list.isEmpty) {
+            for (i = 0; i < list.length; i++) {
+                list[i].classList.remove(classe);
+            }
         }
+
+        var element = document.getElementById(id);
+        element.classList.toggle(classe);
+        list.push(element)
+
     }
-
-    var element = document.getElementById(id);
-    element.classList.toggle(classe);
-    list.push(element)
-
-}
 </script>
 
 

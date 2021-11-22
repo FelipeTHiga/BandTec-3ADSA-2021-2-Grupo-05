@@ -25,13 +25,32 @@ const productService = {
     },
 
     // Request para o endpoint para recuperar um produto (id)
-    async getProductById(productData) {
+    async getProductById(productId) {
         return await api({
             method: 'get',
-            url: '/products',
-            params: productData.id
+            url: `/products/${productId}`,
         })
     },
+
+    // getProductByCategory(category){
+    //     //const category = document.getElementById("name_search").value;
+    
+    //     return await api({
+    //         method: 'get',
+    //         url: `/product/tag/${category}`
+    //     }).then(function (response) {
+    //         const status = response.status;
+    //         console.log(status);
+    //         list_products = response.data;
+    //     });
+    // },
+
+    // async getProductByIdAndSeller(productId) {
+    //     return await api({
+    //         method: 'get',
+    //         url: `/products/${productId}/productSeller`,
+    //     })
+    // },
 
     // Request para recuperar todos os produtos de uma loja
     async getProducts(user) {
@@ -129,24 +148,7 @@ export default productService;
 //     });
 // }
 
-// async function getProductByCategory(){
-//     const category = document.getElementById("name_search").value;
 
-//     await api({
-//         method: 'get',
-//         url: '/product/tag',
-//         params: {
-//             category: category,
-//             id: user_logged.id
-//         }
-
-//     })
-//     .then(function (response) {
-//         const status = response.status;
-//         console.log(status);
-//         list_products = response.data;
-//     });
-// }
 
 // async function getProducts(props){
 //     await api({
@@ -171,6 +173,25 @@ export default productService;
 //     .then(function (response) {
 //         const status = response.status;
 //         console.log(status);
+//     });
+// }
+
+// async getProductByCategory(){
+//     const category = document.getElementById("name_search").value;
+
+//     await api({
+//         method: 'get',
+//         url: `/product/tag/${category}`,
+//         params: {
+//             category: category,
+//             id: user_logged.id
+//         }
+
+//     })
+//     .then(function (response) {
+//         const status = response.status;
+//         console.log(status);
+//         list_products = response.data;
 //     });
 // }
 

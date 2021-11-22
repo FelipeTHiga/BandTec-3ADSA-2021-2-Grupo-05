@@ -1,0 +1,28 @@
+
+.container-menu-and-orders {
+    width: 100%;
+    margin-top: 50px;
+    display: flex;
+    justify-self: center;
+
+    .section-orders {
+        background-color: #fff;
+        border-radius: 10px;
+        border: #c8c7c7 solid 1px;
+        width: 77%;
+        height: 755px;
+    }
+
+    .container-orders {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        padding-top: 20px;
+
+    }
+
+    
+}
