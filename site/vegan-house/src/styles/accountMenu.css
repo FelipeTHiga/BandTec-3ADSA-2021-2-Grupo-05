@@ -1,5 +1,5 @@
 /* inicio menu do perfil */
-.container-menu-perfil {
+.container-menu-profile {
     width: 100%;
     height: 300px;
     margin: 0 5% 0 0;
@@ -7,11 +7,11 @@
     margin-bottom: 100px;
 }
 
-.container-menu-perfil ul {
+.container-menu-profile ul {
     list-style: none;
 }
 
-.container-menu-perfil ul li {
+.container-menu-profile ul li {
     width: 100%;
     height: 60px;
     background-color: #FFFFFF;
@@ -20,23 +20,23 @@
     align-items: center;
     justify-content:center;
 }
-.container-menu-perfil ul .radius-top-left-right{
+.container-menu-profile ul .radius-top-left-right{
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
 
-.container-menu-perfil ul .radius-bottom-left-right{
+.container-menu-profile ul .radius-bottom-left-right{
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     background: #C9E891;
 }
 
-.container-menu-perfil ul li a{
+.container-menu-profile ul li a{
     text-decoration: none;
     font-size: 18px;
     color: #604D4D;
 }
-.container-menu-perfil ul li p{
+.container-menu-profile ul li p{
     border-radius: 10px 10px 0 0;
     font-size: 18px;
     width: 100%;
@@ -45,7 +45,28 @@
     background: #FFE0DE;
 }
 
-.container-menu-perfil ul li.active {
+
+
+.container-menu-profile .ul-menu .active {
+    background-color: #FFFFFF;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     border: #000 solid 1px;
 }
+
+.container-menu-profile .ul-menu-seller .activeSeller {
+    background-color: #FFFFFF;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: #000 solid 1px;
+}
+
 /* fim menu do perfil */

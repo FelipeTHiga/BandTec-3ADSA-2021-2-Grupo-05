@@ -12,7 +12,7 @@ public class Adress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idAdress;
-    private String logradouro;
+    private String street;
     private Integer number;
     private String state;
     private String city;
@@ -32,12 +32,12 @@ public class Adress {
         this.idAdress = idAdress;
     }
 
-    public String getLogradouro() {
-        return logradouro;
+    public String getStreet() {
+        return street;
     }
 
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public Integer getNumber() {

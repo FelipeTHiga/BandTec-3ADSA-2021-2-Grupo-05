@@ -24,9 +24,10 @@
         list-style: none;
         display: flex;
         justify-content: center;
+        cursor: pointer;
     }
     
-    a {
+    .a-category {
         text-decoration: none;
         color: #604D4D;
         font-weight: 600;

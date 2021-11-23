@@ -1,6 +1,8 @@
-import { faRandom } from "@fortawesome/free-solid-svg-icons";
-import { Redirect } from "react-router";
+// import { faRandom } from "@fortawesome/free-solid-svg-icons";
+// import { Redirect } from "react-router";
 import api from "./api";
+import loginService from '../services/login'
+
 var user_logged = {
     id: 0,
     nameUser: "",
@@ -13,7 +15,7 @@ async function submit(props) {
     const user = {
         nameUser: document.getElementById("name").value,
         surName: document.getElementById("surname").value,
-        cpf: document.getElementById("cpf").value,
+        cpf: document.getElementById("cpf").value.replace(/\D/g,''),
         email: document.getElementById("email").value,
         passwordUser: document.getElementById("password").value
     }
@@ -27,6 +29,53 @@ async function submit(props) {
         console.log(response.status);
     });
 }
+
+async function subscribe(fkProduct, fkUser) {
+    console.log(fkProduct)
+    console.log(fkUser)
+
+    await api({
+        method: 'post',
+        url: '/restock-subscribe',
+        data: {
+            fkProduct: fkProduct,
+            fkUser: fkUser
+        }
+    })
+}
+
+async function getAdress() {
+    let userLogged = loginService.getSession();
+    await api({
+        method: 'get',
+        url: `/adress/${userLogged.id}`,
+    })
+}
+
+async function submitAdress(props) {
+    let userLogged = loginService.getSession();
+    const userAdress = {
+        street: document.getElementById("street").value,
+        number: document.getElementById("numberHouse").value,
+        state: document.getElementById("state").value,
+        city: document.getElementById("city").value,
+        complement: document.getElementById("complement").value,
+        cep: document.getElementById("cep").value.replace(/\D/g,''),
+        district: document.getElementById("district").value,
+        fkUser: userLogged.id
+    }
+    
+    await api({
+        method: 'post',
+        url: '/users/adress',
+        data: userAdress,
+    })
+    .then(function (response) {
+        console.log(response.status);
+    });
+
+}
+
 
 async function login(){
     const user = {
@@ -63,5 +112,37 @@ async function getUser(){
     
 }
 
+async function getUserById(userId) {
+    return await api({
+        method: 'get',
+        url: `/users/${(userId)}`,
+    })
+}
 
-export {submit, getUser, login, user_logged};
+
+async function updateUser(props) {
+    let userUpdate = loginService.getSession();
+    const user = {
+        id: userUpdate.id,
+        nameUser: userUpdate.nameUser,
+        surName: userUpdate.surName,
+        cpf: userUpdate.cpf,
+        email: document.getElementById("emailUserUpdate").value,
+        passwordUser: userUpdate.passwordUser
+    }
+
+    await api({
+        method: 'put',
+        url: '/users',
+        params: {
+            idUser: userUpdate.id
+        },
+        data: user,
+    })
+    .then(function (response) {
+        console.log(response.status);
+    });
+}
+
+export {submit, getUser, login, user_logged, updateUser, submitAdress, getAdress, subscribe, getUserById};
+

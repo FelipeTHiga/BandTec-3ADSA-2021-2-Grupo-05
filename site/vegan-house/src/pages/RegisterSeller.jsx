@@ -2,18 +2,15 @@ import { Title } from '../components/Title';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
-import { Button } from '../components/Button';
 import '../styles/registerSeller.scss';
 import '../styles/global.scss';
-import { getUser } from '../services/crud-user';
 import  serviceSeller  from '../services/crud-seller';
-
-
+import InputMask from 'react-input-mask'
 
 export function RegisterSeller() {
     return (
         <>
-            <Navbar isLogged={getUser} />
+            <Navbar />
             <Submenu />
             <section className="register">
                 <div className="container-register">
@@ -35,7 +32,7 @@ export function RegisterSeller() {
                                 <label for="cnpj">CNPJ</label>
                                 <div className="cnpj-content-seller">
                                     <i className="fas fa-id-card"></i>
-                                    <input id="cnpj" type="text" placeholder="Ex. 11222333444455" />
+                                    <InputMask mask="99.999.999/9999-99" id="cnpj" type="text" placeholder="Ex. 11.222.333/4444-55" />
                                     <p>*</p>
                                 </div>
                                 <label className="instructions">Digite apenas números</label>

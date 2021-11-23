@@ -25,7 +25,7 @@ export function ShoppingCart(props) {
 
     return (
         <>
-            <Navbar isLogged={true} />
+            <Navbar />
             <section className="shopping-cart-section">
                 <div className="container-cart">
                     <div className="title-cart-main">
@@ -42,14 +42,13 @@ export function ShoppingCart(props) {
                                 <h3>Subtotal</h3>
                                 <h3>Remover</h3>
                             </div>
-                            <OrderCart price={20.00} setTotal={setNumber} cardId="orderCart1" />
-                            <OrderCart price={20.00} setTotal={setNumber} cardId="orderCart1" />
-
                         </div>
-                        <div className="cart-final">
-                            <h1>Total: <span id="totalLabel">R${totalAmount.total.toFixed(2)}</span></h1>
-                            <button>Continuar</button>
-                        </div>
+                        <OrderCart price={20.00} setTotal={setNumber} cardId="orderCart1" />
+                        <OrderCart price={20.00} setTotal={setNumber} cardId="orderCart1" />
+                    </div>
+                    <div className="cart-final">
+                        <h1>Total: <span id="totalLabel">R${totalAmount.total.toFixed(2)}</span></h1>
+                        <button>Continuar</button>
                     </div>
                 </div>
             </section>
