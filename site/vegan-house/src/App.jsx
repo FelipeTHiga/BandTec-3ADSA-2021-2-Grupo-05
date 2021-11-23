@@ -8,6 +8,8 @@ import { ProductPage } from "./pages/ProductPage";
 import { ShoppingCart } from "./pages/ShoppingCart";
 import { Catalog } from "./pages/Catalog";
 import  { PerfilSeller }  from "./pages/PerfilSeller";
+import  { Checkout }  from "./pages/Checkout";
+
 
 
 // import { NewRoom } from "./pages/NewRoom";
@@ -22,6 +24,7 @@ function App() {
         <Route path="/perfil/cadastro-seller" component={RegisterSeller} />
         <Route path="/perfil/meus-produtos" component={MyProducts} />
         <Route path="/carrinho" component={ShoppingCart} />
+        <Route path="/checkout" component={Checkout} />
         <Route path="/perfil/seller" component={PerfilSeller} />
         <Route path="/todos-os-resultados/" exact={true} component={Catalog}/>
         <Route path="/todos-os-resultados/..." component={ProductPage} />
