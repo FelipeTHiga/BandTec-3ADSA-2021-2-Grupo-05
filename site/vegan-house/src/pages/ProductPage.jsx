@@ -36,7 +36,7 @@ function selectImage(e) {
 
 export function ProductPage() {
 
-    let { category, id } = useParams();
+    let { category, id, fkSeller} = useParams();
     const [product, setProduct] = useState({});
     const [seller, setSeller] = useState({});
     const [sellerCertification, setSellerCertification] = useState([]);
@@ -55,14 +55,14 @@ export function ProductPage() {
         // }
 
         async function sellerById() {
-            console.log("TESTE" + product.fkUser)
-            const res = await api.get(`/sellers/${4}`);
+            console.log("TESTE" + fkSeller)
+            const res = await api.get(`/sellers/${fkSeller}`);
             setSeller(res.data);
             console.log(res.data);
         }
 
         async function sellerCertification() {
-            const res = await api.get(`/certifieds/${4}`);
+            const res = await api.get(`/certifieds/${fkSeller}`);
             setSellerCertification(res.data);
             console.log(res.data);
         }
@@ -167,7 +167,6 @@ export function ProductPage() {
                                             <Certification name={certification[0]}
                                                 src={certification[1]} />
                                         ))}
-
                                     </div>
                                 </div>
                             </div>

@@ -18,7 +18,7 @@ public class Product {
     protected String subCategory;
     protected String description;
     protected Integer inventory;
-    protected Integer fkUser;
+    protected Integer fkSeller;
 
     public Product() {
 
@@ -33,7 +33,7 @@ public class Product {
         this.inventory = inventory;
     }
 
-    public Product(Integer id, String name, Double price, String category, String subCategory, String description, Integer inventory, Integer fkUser) {
+    public Product(Integer id, String name, Double price, String category, String subCategory, String description, Integer inventory, Integer fkSeller) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -41,7 +41,7 @@ public class Product {
         this.subCategory = subCategory;
         this.description = description;
         this.inventory = inventory;
-        this.fkUser = fkUser;
+        this.fkSeller = fkSeller;
     }
 
 //endregion
@@ -103,12 +103,13 @@ public class Product {
         this.inventory = inventory;
     }
 
-    public Integer getFkUser() {
-        return fkUser;
+    public Integer getFkSeller() {
+        return fkSeller;
     }
 
-    public void setFkUser(Integer fkUser) {
-        this.fkUser = fkUser;
+    public void setFkSeller(Integer fkSeller) {
+        this.fkSeller = fkSeller;
     }
-    //endregion
+
+//endregion
 }

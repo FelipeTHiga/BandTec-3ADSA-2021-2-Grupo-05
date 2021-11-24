@@ -10,7 +10,6 @@ import api from '../services/api';
 import { useHistory } from "react-router";
 import { useState } from 'react';
 
-import  serviceSeller  from '../services/crud-seller';
 import InputMask from 'react-input-mask'
 
 export function RegisterSeller() {
