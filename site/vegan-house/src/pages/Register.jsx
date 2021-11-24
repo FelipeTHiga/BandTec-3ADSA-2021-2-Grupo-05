@@ -60,7 +60,7 @@ export function Register() {
 
                     <div className="register-content">
                         <h2>Dados de Usuário</h2>
-                        <form>
+                        <form onSubmit={singin}>
                             <div className="name">
                                 <label>Nome</label>
                                 <div className="name-content">
@@ -118,7 +118,8 @@ export function Register() {
                                     <p>*</p>
                                 </div>
                             </div>
-                            <button onClick={submit}>Enviar</button>
+                            <button type="submit" >Enviar</button>
+                            {error && <p className="error">{error}</p>}
                             {/* <Button path="/home" text="Enviar" type="submit"/> */}
                         </form>
                     </div>
