@@ -6,14 +6,16 @@ import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { UserGreeting } from '../components/UserGreeting';
 import loginService from '../services/login'
+import { SaleBox } from '../components/SaleBox'
+import '../styles/mySales.scss';
 import '../styles/myOrders.scss';
-import { OrderBox } from '../components/OrderBox';
 
-export function MyOrders() {
+
+export function MySales() {
     let userUpdate = loginService.getSession();
     return (
         <>
-            <Navbar />
+           <Navbar />
             <div className="page-container">
                 <UserGreeting username={userUpdate.nameUser} isSeller={userUpdate.isSeller} />
             </div>
@@ -25,14 +27,14 @@ export function MyOrders() {
             <div className="page-container">
                 <div className="container-menu-and-orders">
                     <div className="section-menus align-column">
-                        <AccountMenu isSeller={userUpdate.isSeller} />
-                        <SellerMenu isSeller={userUpdate.isSeller} />
+                        <AccountMenu isSeller={true} />
+                        <SellerMenu isSeller={true} />
                     </div>
 
                     <div className="section-orders">
                         <div className="container-orders">
                             <SectionTitle text="Pedidos" />
-                            <OrderBox/>
+                            <SaleBox />
                     </div>
                 </div>
             </div>

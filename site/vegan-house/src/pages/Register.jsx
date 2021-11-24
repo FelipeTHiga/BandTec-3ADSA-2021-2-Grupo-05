@@ -6,10 +6,10 @@ import { Button } from '../components/Button';
 import '../styles/register.scss';
 import '../styles/global.scss';
 import { getUser, submit } from '../services/crud-user';
+import InputMask from 'react-input-mask'
 import React, { Component, useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import api from '../services/api';
-
 
 export function Register() {
     const [nameUser, setNameUser] = useState("");
@@ -52,7 +52,7 @@ export function Register() {
 
     return (
         <>
-            <Navbar isLogged={getUser} />
+            <Navbar />
             <Submenu />
             <section className="register">
                 <div className="container-register">
@@ -83,7 +83,9 @@ export function Register() {
                                 <label>CPF</label>
                                 <div className="cpf-content">
                                     <i className="fas fa-id-card"></i>
-                                    <input id="cpf" onChange={e => setCpf(e.target.value)} type="text" placeholder="Ex. 11122233344" />
+
+                                    <InputMask mask="999.999.999-99" id="cpf" type="text" onChange={e => setCpf(e.target.value)} placeholder="Ex. 111.222.333-44" />
+
                                     <p>*</p>
                                 </div>
                                 <label className="instructions">Digite apenas números</label>
