@@ -107,7 +107,7 @@ export function ProductPage() {
 
     return (
         <>
-            <Navbar isLogged={true} />
+            <Navbar />
             <Submenu />
 
             <section className="section-title">

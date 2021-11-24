@@ -15,7 +15,7 @@ export function UserProfile() {
     let user = loginService.getSession();
     return (
         <>
-            <Navbar isLogged={true} />
+            <Navbar />
             <div className="page-container">
                 <UserGreeting username={user.nameUser} isSeller={user.isSeller} />
             </div>

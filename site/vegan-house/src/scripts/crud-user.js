@@ -15,7 +15,7 @@ async function submit(props) {
     const user = {
         nameUser: document.getElementById("name").value,
         surName: document.getElementById("surname").value,
-        cpf: document.getElementById("cpf").value,
+        cpf: document.getElementById("cpf").value.replace(/\D/g,''),
         email: document.getElementById("email").value,
         passwordUser: document.getElementById("password").value
     }
@@ -46,7 +46,7 @@ async function submitAdress(props) {
         state: document.getElementById("state").value,
         city: document.getElementById("city").value,
         complement: document.getElementById("complement").value,
-        cep: document.getElementById("cep").value,
+        cep: document.getElementById("cep").value.replace(/\D/g,''),
         district: document.getElementById("district").value,
         fkUser: userLogged.id
     }

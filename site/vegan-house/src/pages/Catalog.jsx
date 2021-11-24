@@ -122,7 +122,7 @@ export function Catalog() {
 
     return (
         <>
-            <Navbar isLogged={false} />
+            <Navbar />
             <Submenu />
             <section className="container-search-result">
                 <div className="title-catalog">
