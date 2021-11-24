@@ -56,13 +56,13 @@ export function ProductPage() {
 
         async function sellerById() {
             console.log("TESTE" + product.fkUser)
-            const res = await api.get(`/sellers/${1}`);
+            const res = await api.get(`/sellers/${4}`);
             setSeller(res.data);
             console.log(res.data);
         }
 
         async function sellerCertification() {
-            const res = await api.get(`/certifieds/${1}`);
+            const res = await api.get(`/certifieds/${4}`);
             setSellerCertification(res.data);
             console.log(res.data);
         }

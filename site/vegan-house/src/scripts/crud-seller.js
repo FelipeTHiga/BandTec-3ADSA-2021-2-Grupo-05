@@ -31,5 +31,4 @@ const serviceSeller = {
     }
 }
 
-
 export default serviceSeller;

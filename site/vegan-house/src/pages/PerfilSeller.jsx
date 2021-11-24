@@ -8,6 +8,7 @@ import '../styles/perfilSeller.scss';
 import '../styles/perfil.scss';
 import '../styles/global.scss';
 import '../styles/reset.css';
+import api from '../services/api';
 
 import Selo_1 from '../assets/images/certifications/Selo-1.png';
 import Selo_2 from '../assets/images/certifications/Selo-2.png';
@@ -20,7 +21,40 @@ import Selo_5 from '../assets/images/certifications/Selo-5.png';
 export function PerfilSeller() {
 
     let user = loginService.getSession();
-    
+
+    async function updateSeller() {
+
+        const certification1 = document.getElementById("checkCertifications1")
+        const certification2 = document.getElementById("checkCertifications2")
+        const certification3 = document.getElementById("checkCertifications3")
+        const certification4 = document.getElementById("checkCertifications4")
+        const certification5 = document.getElementById("checkCertifications5")
+        document.getElementById("checkCertifications1").checked = true;
+        document.getElementById("checkCertifications2").checked = true;
+
+        let certificationAr = [certification1, certification2, certification3, certification4, certification5];
+
+        let certificationChecked = certificationAr.filter(certification => certification.checked === true);
+
+        let certificationPost = await certificationChecked.map((certification) => {
+            const sellerCertified = {
+                fkCertification: certification.value,
+                fkSeller: user.id
+            } 
+            //hasCertification: 1
+            return sellerCertified
+        })
+
+        await api({
+            method: 'post',
+            url: '/certifieds',
+            data: certificationPost,
+        })
+            .then(function (response) {
+                console.log(response.status);
+            });
+    }
+
     return (
         <>
             {/* //  Inicio header  */}
@@ -226,7 +260,7 @@ export function PerfilSeller() {
 
 
                         <div className="container-button-update-user line-up">
-                            <button>Atualizar</button>
+                            <button onClick={updateSeller}>Atualizar</button>
                         </div>
                         {/* //    fim formulario de dadaos comerciais do usuario  */}
 
