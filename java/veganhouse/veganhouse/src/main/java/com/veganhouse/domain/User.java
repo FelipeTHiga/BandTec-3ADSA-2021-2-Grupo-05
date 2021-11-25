@@ -15,7 +15,6 @@ public class User {
     protected String surName;
     protected String cpf;
     protected String email;
-    @JsonIgnore
     protected String passwordUser;
     protected Boolean isSeller;
     protected Boolean authenticated;

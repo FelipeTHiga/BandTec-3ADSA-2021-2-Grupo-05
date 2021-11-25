@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -90,9 +91,14 @@ public class OrderService {
 
     private OrderDTO mapOrderDTO(OrderVh orderVh){
         OrderDTO orderDTO= new OrderDTO();
-
+        String adress = "Não cadastrado";
         orderDTO.setIdOrder(orderVh.getIdOrder());
-        orderDTO.setAdress(orderVh.getAdress());
+
+        if(Objects.nonNull(orderVh.getAdress())){
+            adress = orderVh.getAdress().getStringAdress();
+        }
+
+        orderDTO.setAdress(adress);
         orderDTO.setUser(orderVh.getUser());
         orderDTO.setOrderDate(orderVh.getOrderDate());
         orderDTO.setOrderStatus(orderVh.getOrderStatus());
@@ -103,6 +109,7 @@ public class OrderService {
                .collect(Collectors.toList());
 
        orderDTO.setOrderItems(orderItems);
+       orderDTO.setTotal(orderVh.getTotal());
 
         return orderDTO;
     }

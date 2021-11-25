@@ -22,6 +22,10 @@ public class Adress {
     private Integer fkUser;
     //endregion
 
+    public String getStringAdress(){
+        return String.format("%s, nº%d - %s, %s - %s", street, number, district, city, cep);
+    }
+
     //region Getters and Setters
 
     public int getIdAdress() {

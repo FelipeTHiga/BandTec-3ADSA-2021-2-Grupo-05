@@ -15,7 +15,7 @@ public class OrderDTO {
     private int idOrder;
 
     private User user;
-    private Adress adress;
+    private String adress;
     private double total;
     private List<CartItem> orderItems;
     private LocalDate orderDate;
@@ -57,11 +57,11 @@ public class OrderDTO {
         this.user = user;
     }
 
-    public Adress getAdress() {
+    public String getAdress() {
         return adress;
     }
 
-    public void setAdress(Adress adress) {
+    public void setAdress(String adress) {
         this.adress = adress;
     }
 
