@@ -12,7 +12,7 @@ import '../styles/reset.css';
 import '../styles/myProducts.scss';
 import ProductTableRow from '../components/ProductTableRow';
 import loginService from '../services/login';
-import React, { Component, useState, useEffect, useHistory } from "react";
+import React, { Component, useState, useEffect} from "react";
 import api from '../services/api';
 import undo from '../assets/images/undo.png'
 import redo from '../assets/images/redo.png'
@@ -80,7 +80,6 @@ export function MyProducts() {
         })
             .then((res) => {
                 if (res.status === 201) {
-                    alert("Cadastro feito com sucesso!");
                     pacthImage();
                 }
                 console.log(res.status);
@@ -102,7 +101,6 @@ export function MyProducts() {
             fkSeller: user.id
         }).then((res) => {
             if (res.status === 200) {
-                alert("O produto foi atualizado!");
                 setName("");
                 setCategory("");
                 setSubCategory("");
@@ -153,17 +151,13 @@ export function MyProducts() {
             .then((res) => {
                 if (res.status === 200) {
                     getAllProducts();
-                    alert("O produto foi removido.");
-                } else {
-                    alert("O produto não foi removido.");
-                }
+                } 
             }).catch((err) => {
-                alert("O produto não foi removido.");
+                console.log();
             })
     }
 
-    function getAllProducts(e) {
-        e.preventDefault();
+    function getAllProducts() {
         api.get(`/products/all/${user.id}`)
             .then((res) => {
                 if (res.status === 200) {

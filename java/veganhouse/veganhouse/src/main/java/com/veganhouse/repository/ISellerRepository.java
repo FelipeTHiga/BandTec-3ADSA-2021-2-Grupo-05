@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface ISellerRepository extends JpaRepository<Seller,Integer> {
-
+    Seller findByFkUser(int fkUser);
 }

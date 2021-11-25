@@ -37,7 +37,7 @@ function selectImage(e) {
 
 export function ProductPage() {
 
-    let { category, id, fkSeller} = useParams();
+    let { category, id, fkSeller } = useParams();
     const [product, setProduct] = useState({});
     const [seller, setSeller] = useState({});
     const [sellerCertification, setSellerCertification] = useState([]);
@@ -47,31 +47,31 @@ export function ProductPage() {
     }
     let userLogged = loginService.getSession() ?? authenticatedUser;
 
-    function postCartItem(e){
+    function postCartItem(e) {
         e.preventDefault();
         debugger;
-         api.post(`/cartItems/${userLogged.id}`, {
-                product: {
-                    id: product.id
-                },
-                quantity: 1,
-                fkUser: userLogged.id
-            })
+        api.post(`/cartItems/${userLogged.id}`, {
+            product: {
+                id: product.id
+            },
+            quantity: 1,
+            fkUser: userLogged.id
+        })
             .then((res) => {
                 if (res.status === 201) {
                     console.log("Item de carrinho adicionado - " + res.statusText);
                     alert("Sucesso")
                     history.push(``);
                 } else {
-                    
+
                 }
                 console.log(res.status);
             }).catch((err) => {
                 console.log(err);
-            
+
             })
 
-    } 
+    }
 
     useEffect(() => {
         async function productById() {
@@ -195,10 +195,14 @@ export function ProductPage() {
                                     <SectionTitle text="Certificações" />
 
                                     <div className="certifications">
-                                        {sellerCertification.map(certification => (
-                                            <Certification name={certification[0]}
-                                                src={certification[1]} />
-                                        ))}
+                                        {sellerCertification.length > 0 ?
+
+                                            sellerCertification.map(certification => (
+                                                <Certification name={certification[0]}
+                                                    src={certification[1]} />
+                                            ))
+                                            : null
+                                        }
                                     </div>
                                 </div>
                             </div>
