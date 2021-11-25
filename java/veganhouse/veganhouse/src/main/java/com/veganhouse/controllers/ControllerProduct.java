@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -47,6 +49,7 @@ public class ControllerProduct {
 
     @PutMapping("{id}")
     public ResponseEntity putProduct(@PathVariable Integer id, @RequestBody Product product) {
+
         if (productRepository.existsById(id)) {
             if (restockNotificationRepository.existsByFkProduct(id)
                     && product.getInventory() > 0
@@ -61,7 +64,8 @@ public class ControllerProduct {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity patchProduct(@PathVariable Integer id, @RequestBody Product product){
+    public ResponseEntity patchProduct(@PathVariable Integer id, @RequestBody Product product) {
+
         if (productRepository.existsById(id)){
             if(restockNotificationRepository.existsByFkProduct(id)
                     && product.getInventory()>0
@@ -74,6 +78,42 @@ public class ControllerProduct {
         }
         return ResponseEntity.status(404).build();
     }
+
+
+    @PatchMapping("/image/{id}")
+    public ResponseEntity patchImageProduct(@PathVariable Integer id,
+                                            @RequestParam MultipartFile foto1,
+                                            @RequestParam MultipartFile foto2,
+                                            @RequestParam MultipartFile foto3) throws IOException  {
+
+       Product product = productRepository.findById(id).get();
+
+        byte[] novaFoto1 = foto1.getBytes();
+        byte[] novaFoto2 = foto2.getBytes();
+        byte[] novaFoto3 = foto3.getBytes();
+
+        product.setImage_url1(novaFoto1);
+        product.setImage_url2(novaFoto2);
+        product.setImage_url3(novaFoto3);
+
+        productRepository.save(product);
+        return ResponseEntity.status(200).build();
+    }
+
+
+    @GetMapping("/image/{id}")
+    public ResponseEntity getFoto(@PathVariable int id) {
+        Product product = productRepository.findById(id).get();
+        byte[] foto = product.getImage_url1();
+
+        return ResponseEntity
+                .status(200)
+                .header("content-type", "image/jpeg")
+                .body(foto);
+    }
+
+
+
 
     @GetMapping("{id}")
     public ResponseEntity getProductById(@PathVariable int id) {
@@ -143,9 +183,9 @@ public class ControllerProduct {
 //    }
 
     @GetMapping("all/{id}")
-    public ResponseEntity getAllProductsSeller(@PathVariable Integer fkUser) {
+    public ResponseEntity getAllProductsSeller(@PathVariable Integer fkSeller) {
         if (productRepository.count() > 0) {
-            return ResponseEntity.status(200).body(productRepository.findByFkUser(fkUser));
+            return ResponseEntity.status(200).body(productRepository.findByFkSeller(fkSeller));
         }
         return ResponseEntity.status(404).build();
     }
@@ -184,11 +224,11 @@ public class ControllerProduct {
         return ResponseEntity.status(404).build();
     }
 
-    @PostMapping("exportCsv/{nameArq}/{fkUser}")
-    public ResponseEntity exportCsv(@PathVariable String nameArq, @PathVariable Integer fkUser) {
+    @PostMapping("exportCsv/{nameArq}/{fkSeller}")
+    public ResponseEntity exportCsv(@PathVariable String nameArq, @PathVariable Integer fkSeller) {
         if (productRepository.count() > 0) {
 
-            List<Product> list = productRepository.findByFkUser(fkUser);
+            List<Product> list = productRepository.findByFkSeller(fkSeller);
             ListaObj listaObj = new ListaObj(((int) productRepository.count()));
 
             for (int i = 0; i < list.size(); i++) {
@@ -201,11 +241,11 @@ public class ControllerProduct {
         return ResponseEntity.status(204).build();
     }
 
-    @PostMapping("exportCsv/{nameArq}/{limit}/{fkUser}")
-    public ResponseEntity exportCsvLimit(@PathVariable String nameArq, @PathVariable Integer limit, @PathVariable Integer fkUser) {
+    @PostMapping("exportCsv/{nameArq}/{limit}/{fkSeller}")
+    public ResponseEntity exportCsvLimit(@PathVariable String nameArq, @PathVariable Integer limit, @PathVariable Integer fkSeller) {
         if (productRepository.count() > 0) {
 
-            List<Product> list = productRepository.findByFkUser(fkUser);
+            List<Product> list = productRepository.findByFkSeller(fkSeller);
             ListaObj listaObj = new ListaObj(limit);
 
             for (int i = 0; i < list.size(); i++) {
@@ -220,11 +260,11 @@ public class ControllerProduct {
         return ResponseEntity.status(204).build();
     }
 
-    @PostMapping("exportTxt/{fileName}/{fkUser}")
-    public ResponseEntity exportTxt(@PathVariable String fileName, @PathVariable Integer fkUser) {
+    @PostMapping("exportTxt/{fileName}/{fkSeller}")
+    public ResponseEntity exportTxt(@PathVariable String fileName, @PathVariable Integer fkSeller) {
         if (productRepository.count() > 0) {
 
-            List<Product> list = productRepository.findByFkUser(fkUser);
+            List<Product> list = productRepository.findByFkSeller(fkSeller);
             ListaObj listaObj = new ListaObj(((int) productRepository.count()));
 
             for (int i = 0; i < list.size(); i++) {

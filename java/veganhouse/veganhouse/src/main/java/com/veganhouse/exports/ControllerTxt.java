@@ -59,7 +59,7 @@ public class ControllerTxt {
             body += String.format("%-30.30s", p.getCategory());
             body += String.format("%-30.30s", p.getSubCategory());
             body += String.format("%-255.255s ", p.getDescription());
-            body += String.format("%05d", p.getFkUser());
+            body += String.format("%05d", p.getFkSeller());
 
             recordRegister(fileName, body);
             countRegister++;

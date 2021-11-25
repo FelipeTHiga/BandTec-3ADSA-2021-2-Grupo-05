@@ -5,10 +5,43 @@ import loginService from '../services/login';
 import { subscribe } from '../services/crud-user';
 import React, { useState } from 'react';
 import Modal from './Modal';
+
 import { useParams, useHistory } from "react-router";
 import api from "../services/api";
 
+
 export function BuyCard(props) {
+
+    // function addCartItem(e) {
+
+    //     e.preventDefault();
+
+    //     const cart = {
+    //         commercialName: document.getElementById("name").value,
+    //         cnpj: document.getElementById("cnpj").value,
+    //         commercialEmail: document.getElementById("email").value,
+    //     }
+    //     api({
+    //         method: 'post',
+    //         url: '/sellers',
+    //         data: user,
+    //     })
+    //         .then(function (response) {
+    //             console.log(response)
+    //             console.log(response.data)
+    //             console.log(response.config)
+    //             console.log(response.status);
+    //             console.log(response.request);
+    //             console.log(response.statusText);
+    //             history.push('/');
+    //         })
+    // }
+
+    const history = useHistory();
+
+    const buyProduct = (event) => {
+        history.push(`/carrinho/`);
+    }
 
     var isAvailable = (props.product.inventory <= 0) ? false : true;
     let user = loginService.getSession();
@@ -69,8 +102,10 @@ export function BuyCard(props) {
                 <div className="btn">
                     {
                         isAvailable ? (
+
                             <div className="container-buy-btn" onclick={postCartItem}>
                                 <button className="buy-btn" onclick={postCartItem}>
+
                                     <img src={shoppingCart} alt="" />
                                     <h2 onClick={() => { postCartItem() }}>Comprar</h2>
                                 </button>
@@ -97,7 +132,7 @@ export function BuyCard(props) {
                     <Modal 
                     onClose={() => setIsModalVisible(false)} 
                     height={document.body.scrollHeight}
-                    title="Modal" 
+                    title="Atenção" 
                     message="Para acessar a funcionalidade, você precisa estar logado"
                     btnTitle="Ir para Login!" />
                     : null

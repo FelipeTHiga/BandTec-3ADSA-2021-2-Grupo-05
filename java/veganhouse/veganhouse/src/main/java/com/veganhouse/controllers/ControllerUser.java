@@ -4,7 +4,6 @@ import com.veganhouse.domain.Adress;
 import com.veganhouse.domain.Seller;
 import com.veganhouse.domain.User;
 import com.veganhouse.repository.IAdressRepository;
-import com.veganhouse.repository.ISellerRepository;
 import com.veganhouse.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
