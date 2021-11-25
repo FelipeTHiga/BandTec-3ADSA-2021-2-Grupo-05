@@ -8,9 +8,39 @@ import { UserGreeting } from '../components/UserGreeting';
 import loginService from '../services/login'
 import '../styles/myOrders.scss';
 import { OrderBox } from '../components/OrderBox';
+import api from "../services/api";
+import { useParams, useHistory } from "react-router";
+import React, { Component, useEffect, useState } from 'react';
 
 export function MyOrders() {
     let userUpdate = loginService.getSession();
+
+    const history = useHistory();
+    const [orders, setOrder] = React.useState([]);
+    let userLogged = loginService.getSession();
+
+    useEffect(() => {
+        if (userLogged) {
+            function getOrder() {
+                api.get(`orders/user/${userLogged.id}`)
+                    .then((res) => {
+                        if (res.status === 200) {
+                            console.log(res.data);
+                            setOrder(res.data);
+                        }
+                    
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+            }
+
+            getOrder();
+        }
+        else {
+            history.push(`/login`);
+        }
+    }, [])
+
     return (
         <>
             <Navbar />
@@ -32,7 +62,8 @@ export function MyOrders() {
                     <div className="section-orders">
                         <div className="container-orders">
                             <SectionTitle text="Pedidos" />
-                            <OrderBox/>
+                            
+                            {orders.map(order=><OrderBox orderId={order.idOrder} date={order.orderDate} total={order.total} status={order.orderStatus} orderItems={order.orderItems} />)}
                     </div>
                 </div>
             </div>
