@@ -181,6 +181,8 @@ export function MyProducts() {
             }).catch((err) => {
                 console.log(err);
             })
+
+        window.location.href = '#section-products-edit'
     }
 
     function getSearchCategory(e) {
@@ -285,8 +287,8 @@ export function MyProducts() {
 
                             </div>
                             <div className="commands">
-                                <button><img src={undo}/></button>
-                                <button><img src={redo}/></button>
+                                <button><img src={undo} /></button>
+                                <button><img src={redo} /></button>
                             </div>
                             <div className="products-table-header">
                                 <label htmlFor="">Nome do produto</label>
@@ -302,7 +304,7 @@ export function MyProducts() {
                             </div>
                         </div>
 
-                        <div className="section-products-edit">
+                        <div id="section-products-edit" className="section-products-edit">
                             <div className="container-products">
                                 <SectionTitle text={acao} />
 
