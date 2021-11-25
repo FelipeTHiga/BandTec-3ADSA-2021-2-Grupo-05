@@ -13,6 +13,7 @@ import '../styles/reset.css';
 import '../styles/userAdress.scss';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import InputMask from 'react-input-mask'
 
 export function UserAdress() {
 
@@ -32,7 +33,7 @@ export function UserAdress() {
         e.preventDefault();
         const adress = {
             idAdress: idAdress,
-            cep: cep,
+            cep: cep.replace(/\D/g,''),
             street: street,
             district: district,
             city: city,
@@ -95,7 +96,7 @@ export function UserAdress() {
 
     return (
         <>
-            <Navbar isLogged={true} />
+            <Navbar />
             <div className="page-container">
                 <UserGreeting username={userUpdate.nameUser} isSeller={userUpdate.isSeller} />
             </div>
@@ -112,13 +113,13 @@ export function UserAdress() {
 
                     <div className="section-adress">
                         <div className="container-adress">
-                            <SectionTitle text="Dados pessoais" />
+                            <SectionTitle text="Endereço" />
                             <div className="container-adress-data">
                                 <form>
                                     <div className="container-input">
                                         <label for="cep">CEP</label>
                                         <div>
-                                            <input onBlur={pullCep} onChange={e => { setCep(e.target.value) }} value={cep} className="input-default input-address" type="text" placeholder="" name="" id="cep" />
+                                            <InputMask mask="99999-999" onBlur={pullCep} onChange={e => { setCep(e.target.value) }} value={cep} className="input-default input-address" type="text" placeholder="" name="" id="cep" />
                                         </div>
                                     </div>
                                     <div className="container-city">

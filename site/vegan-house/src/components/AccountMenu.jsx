@@ -5,7 +5,7 @@ import "../styles/accountMenu.css";
 
 export function AccountMenu(props) {
 
-    const[activeMenu, setActiveMenu] = React.useState('');
+    const [activeMenu, setActiveMenu] = React.useState('');
     console.log(activeMenu);
 
     return (
@@ -25,14 +25,14 @@ export function AccountMenu(props) {
                         <NavLink to="/perfil/endereco" activeClassName='active'>Endereço</NavLink>
                     </li>
                     <li className="link" >
-                    <NavLink to="/perfil/meus-pedidos" activeClassName='active'>Pedidos</NavLink>
+                        <NavLink to="/perfil/meus-pedidos" activeClassName='active'>Pedidos</NavLink>
                     </li>
 
                     {
                         props.isSeller ?
                             (
-                                <li class="radius-bottom-left-right-white">
-                                    <a href="#">Dados comerciais</a>
+                                <li className="link">
+                                     <NavLink to="/perfil/seller" activeClassName='active'>Dados comerciais</NavLink>
                                 </li>
                             ) :
                             (
