@@ -1,9 +1,8 @@
 package com.veganhouse.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 
 @Entity
 public class Product {
@@ -19,6 +18,19 @@ public class Product {
     protected String description;
     protected Integer inventory;
     protected Integer fkSeller;
+
+
+    @Column(length = 20_000_000)
+    protected byte[] image_url1;
+
+
+    @Column(length = 20_000_000)
+    protected byte[]  image_url2;
+
+
+    @Column(length = 20_000_000)
+    protected byte[]  image_url3;
+    //endregion
 
     public Product() {
 
@@ -111,5 +123,30 @@ public class Product {
         this.fkSeller = fkSeller;
     }
 
-//endregion
+    public byte[] getImage_url1() {
+        return image_url1;
+    }
+
+    public void setImage_url1(byte[] image_url1) {
+        this.image_url1 = image_url1;
+    }
+
+    public byte[] getImage_url2() {
+        return image_url2;
+    }
+
+    public void setImage_url2(byte[] image_url2) {
+        this.image_url2 = image_url2;
+    }
+
+    public byte[] getImage_url3() {
+        return image_url3;
+    }
+
+    public void setImage_url3(byte[] image_url3) {
+        this.image_url3 = image_url3;
+    }
+
+    //endregion
+
 }
