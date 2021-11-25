@@ -101,17 +101,24 @@ public class ControllerProduct {
     }
 
 
-    @GetMapping("/image/{id}")
-    public ResponseEntity getFoto(@PathVariable int id) {
+    @GetMapping("/image/{id}/{idImage}")
+    public ResponseEntity getFoto(@PathVariable int id, @PathVariable int idImage) {
         Product product = productRepository.findById(id).get();
-        byte[] foto = product.getImage_url1();
+
+        byte[] foto;
+        if (idImage == 1){
+             foto = product.getImage_url1();
+        } else if (idImage == 2) {
+            foto = product.getImage_url2();
+        } else {
+            foto = product.getImage_url3();
+        }
 
         return ResponseEntity
                 .status(200)
                 .header("content-type", "image/jpeg")
                 .body(foto);
     }
-
 
 
 
