@@ -3,11 +3,47 @@ import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
 import { OrderItem } from '../components/OrderItem';
 import { SectionTitle } from '../components/SectionTitle';
+import loginService from '../services/login';
+import api from "../services/api";
+import { useParams, useHistory } from "react-router";
+import React, { Component, useEffect, useState } from 'react';
 
 import "../styles/checkout.css";
 
 
 export function Checkout(props) {
+    const history = useHistory();
+    const [order, setOrder] = React.useState({});
+    let userLogged = loginService.getSession();
+    const [orderItems, setOrderItem] = React.useState([]);
+
+    useEffect(() => {
+        if (userLogged) {
+            function getOrder() {
+                api.get(`orders/checkout/lastOrder/${userLogged.id}`)
+                    .then((res) => {
+                        if (res.status === 200) {
+                            console.log(res);
+                            setOrder(res.data);
+                            setOrderItem(res.data.orderItems)
+                        }
+
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+            }
+
+            getOrder();
+        }
+        else {
+            history.push(`/login`);
+        }
+    }, [])
+
+    function finishOrder(){
+        history.push("/perfil/meus-pedidos");
+    }
+
     return (
         <>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -26,19 +62,16 @@ export function Checkout(props) {
                     <div className="order-detail">
                         <SectionTitle text="Informações do pedido" />
 
-                        <label><b>Endereço:</b> {props.adress}</label>
-                        <label><b>Remetente:</b> {props.reciver}</label>
-
+                        <label><b>Endereço:</b> {order.adress}</label>
                         <label><b>Itens do pedido:</b></label>
 
                         <div className="order-itens-container">
-                            <OrderItem />
-                            <OrderItem />
+                            {orderItems.map(orderItem => <OrderItem productName={orderItem.product.name} quantity={orderItem.quantity} subTotal={orderItem.subTotal}/>)}
                         </div>
 
                         <SectionTitle text=" " />
 
-                        <h3 className="margin-top-20">Total:</h3>
+                        <h3 className="margin-top-20">Total: R${order.total}</h3>
                     </div>
 
 
@@ -86,7 +119,7 @@ export function Checkout(props) {
                                 <input type="hidden" id="amount" />
                                 <input type="hidden" id="description" />
                                 <div className="container-button">
-                                    <button id="form-checkout__submit" type="submit" class="btn btn-primary btn-block">Finalizar compra</button>
+                                    <button id="form-checkout__submit" type="submit" class="btn btn-primary btn-block" onClick={finishOrder}>Finalizar compra</button>
                                 </div>
                             </div>
                         </div>

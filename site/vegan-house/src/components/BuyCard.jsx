@@ -5,7 +5,10 @@ import loginService from '../services/login';
 import { subscribe } from '../services/crud-user';
 import React, { useState } from 'react';
 import Modal from './Modal';
-import { useHistory } from 'react-router';
+
+import { useParams, useHistory } from "react-router";
+import api from "../services/api";
+
 
 export function BuyCard(props) {
 
@@ -44,6 +47,35 @@ export function BuyCard(props) {
     let user = loginService.getSession();
     var isLogged = (user == null) ? false : true;
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const history = useHistory();
+    let authenticatedUser = {
+        authenticated: false
+    }
+    let userLogged = loginService.getSession() ?? authenticatedUser;
+
+    function postCartItem(e){
+         api.post(`/cartItems/${userLogged.id}`, {
+                product: {
+                    id: props.product.id,
+                    price:props.product.price
+                },
+                quantity: 1,
+            })
+            .then((res) => {
+                if (res.status === 201) {
+                    console.log("Item de carrinho adicionado - " + res.statusText);
+                    alert("Sucesso")
+                    history.push(`/carrinho`);
+                } else {
+                    
+                }
+                console.log(res.status);
+            }).catch((err) => {
+                console.log(err);
+            
+            })
+    }
+
 
     return (
         <>
@@ -70,10 +102,12 @@ export function BuyCard(props) {
                 <div className="btn">
                     {
                         isAvailable ? (
-                            <div className="container-buy-btn">
-                                <button className="buy-btn" onclick={buyProduct}>
+
+                            <div className="container-buy-btn" onclick={postCartItem}>
+                                <button className="buy-btn" onclick={postCartItem}>
+
                                     <img src={shoppingCart} alt="" />
-                                    <h2>Comprar</h2>
+                                    <h2 onClick={() => { postCartItem() }}>Comprar</h2>
                                 </button>
                             </div>
                         ) : (
