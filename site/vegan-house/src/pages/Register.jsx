@@ -30,7 +30,7 @@ export function Register() {
             api.post(`/users`, {
                 nameUser: nameUser,
                 surName: surName,
-                cpf: cpf,
+                cpf: cpf.replace(/\D/g,''),
                 email: email,
                 passwordUser: passwordUser
             })
@@ -60,7 +60,7 @@ export function Register() {
 
                     <div className="register-content">
                         <h2>Dados de Usuário</h2>
-                        <form>
+                        <form onSubmit={singin}>
                             <div className="name">
                                 <label>Nome</label>
                                 <div className="name-content">
@@ -118,7 +118,7 @@ export function Register() {
                                     <p>*</p>
                                 </div>
                             </div>
-                            <button onClick={submit}>Enviar</button>
+                            <button type="submit">Enviar</button>
                             {/* <Button path="/home" text="Enviar" type="submit"/> */}
                         </form>
                     </div>
