@@ -7,7 +7,7 @@ export function DragDropUpload(props) {
     const dragAndDrop= (dragAreaId) => {
        // window.addEventListener('load', (event) => {
             //selecting all required elements
-            const dropArea = document.querySelector(`#${dragAreaId}`),
+            const dropArea = document.querySelector(`#${dragAreaId}`),  
                 dragText = dropArea.querySelector("header"),
                 button = dropArea.querySelector("button"),
                 input = dropArea.querySelector("input");
@@ -20,6 +20,8 @@ export function DragDropUpload(props) {
             input.addEventListener("change", function () {
                 //getting user select file and [0] this means if user select multiple files then we'll select only the first one
                 file = this.files[0];
+
+                
                 dropArea.classList.add("active");
                 showFile(); //calling function
             });

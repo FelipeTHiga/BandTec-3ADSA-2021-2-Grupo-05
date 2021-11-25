@@ -56,6 +56,8 @@ public class Product {
         this.fkSeller = fkSeller;
     }
 
+
+
 //endregion
 
     //region Getters and Setters
@@ -148,5 +150,4 @@ public class Product {
     }
 
     //endregion
-
 }

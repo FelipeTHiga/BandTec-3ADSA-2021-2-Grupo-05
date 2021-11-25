@@ -35,6 +35,12 @@ export function MyProducts() {
     const [searchSubCategory, setSearchSubCategory] = useState("");
     const [acao, setAcao] = useState("Cadastrar produto");
 
+    const [image_url1, setImageUrl1] = useState("");
+    const [image_url2, setImageUrl2] = useState("");
+    const [image_url3, setImageUrl3] = useState("");
+    let idProduct;
+
+
     useEffect(() => {
         async function productsAll() {
             const res = await api.get("/products/all");
@@ -46,6 +52,20 @@ export function MyProducts() {
     }, [])
 
     // USAR CONST PARA ADICIONAR O VALE
+
+    function pacthImage(e) {
+        e.preventDefault();
+
+        api.patch(`/products/image/${2}`, {
+            image_url1: image_url1,
+            image_url2: image_url2, 
+            image_url3: image_url3
+        }).then((res)=>{
+            setImageUrl1(res.data.image_url1);
+            setImageUrl2(res.data.image_url2);
+            setImageUrl3(res.data.image_url3);
+        })
+    }
 
 
 
@@ -105,6 +125,7 @@ export function MyProducts() {
                 console.log(err);
             })
         console.log(event.target.id)
+        idProduct = event.target.id;
     }
 
     function remove(e) {
@@ -182,6 +203,8 @@ export function MyProducts() {
             }).catch((err) => {
                 console.log(err);
             })
+
+        window.location.href = '#section-products-edit'
     }
 
     function getSearchCategory(e) {
@@ -286,8 +309,8 @@ export function MyProducts() {
 
                             </div>
                             <div className="commands">
-                                <button><img src={undo}/></button>
-                                <button><img src={redo}/></button>
+                                <button><img src={undo} /></button>
+                                <button><img src={redo} /></button>
                             </div>
                             <div className="products-table-header">
                                 <label htmlFor="">Nome do produto</label>
@@ -303,7 +326,7 @@ export function MyProducts() {
                             </div>
                         </div>
 
-                        <div className="section-products-edit">
+                        <div id="section-products-edit" className="section-products-edit">
                             <div className="container-products">
                                 <SectionTitle text={acao} />
 
@@ -364,7 +387,8 @@ export function MyProducts() {
 
                                 <div className="align-column margin-top-20 margin-bottom-25">
                                     <button id="create-btn" className="create-product-btn" onClick={productService.createProduct}>Cadastrar</button>
-                                    <button id="edit-btn" className="edit-product-btn" onClick={patch}>Editar</button>
+                                    <button id="edit-btn" className="edit-product-btn" onClick={pacthImage}>Editar</button>
+                                    
                                 </div>
 
                             </div>
