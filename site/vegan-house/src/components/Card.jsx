@@ -46,7 +46,8 @@ function Card() {
 
                 <div className="carousel" ref={carousel}>
                     {products.map(product => (
-                        <ProductCard id={product.id} name={product.name} price={product.price} />
+                        <ProductCard id={product.id} src={"data:image/jpeg;base64,"+ product.image_url1} name={product.name} price={product.price} />
+                      
                     ))}
                 </div>
                 <div className="buttons">

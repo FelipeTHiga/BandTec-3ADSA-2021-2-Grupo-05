@@ -2,7 +2,6 @@ import { Title } from '../components/Title';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
-import { Button } from '../components/Button';
 import '../styles/registerSeller.scss';
 import '../styles/global.scss';
 import { getUser } from '../services/crud-user';
@@ -11,7 +10,7 @@ import React, { Component, useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import api from '../services/api';
 
-
+import  InputMask  from 'react-input-mask'
 
 export function RegisterSeller() {
     const [commercialName, setCommercialName] = useState("");
@@ -44,7 +43,7 @@ export function RegisterSeller() {
     }
     return (
         <>
-            <Navbar isLogged={getUser} />
+            <Navbar />
             <Submenu />
             <section className="register">
                 <div className="container-register">
@@ -66,7 +65,7 @@ export function RegisterSeller() {
                                 <label for="cnpj">CNPJ</label>
                                 <div className="cnpj-content-seller">
                                     <i className="fas fa-id-card"></i>
-                                    <input id="cnpj" onChange={e => setCnpj(e.target.value)} type="text" placeholder="Ex. 11222333444455" />
+                                    <InputMask mask="99.999.999/9999-99" id="cnpj" onChange={e => setCnpj(e.target.value)} type="text"/>
                                     <p>*</p>
                                 </div>
                                 <label className="instructions">Digite apenas números</label>

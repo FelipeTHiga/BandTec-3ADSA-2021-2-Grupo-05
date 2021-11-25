@@ -36,7 +36,7 @@ function selectImage(e) {
 
 export function ProductPage() {
 
-    let {category, id} = useParams();
+    let { category, id, fkSeller} = useParams();
     const [product, setProduct] = useState({});
     const [seller, setSeller] = useState({});
     const [sellerCertification, setSellerCertification] = useState([]);
@@ -55,14 +55,14 @@ export function ProductPage() {
         // }
 
         async function sellerById() {
-            console.log("TESTE" + product.fkUser)
-            const res = await api.get(`/sellers/${1}`);
+            console.log("TESTE" + fkSeller)
+            const res = await api.get(`/sellers/${fkSeller}`);
             setSeller(res.data);
             console.log(res.data);
         }
 
         async function sellerCertification() {
-            const res = await api.get(`/certifieds/${1}`);
+            const res = await api.get(`/certifieds/${fkSeller}`);
             setSellerCertification(res.data);
             console.log(res.data);
         }
@@ -72,9 +72,42 @@ export function ProductPage() {
         sellerCertification();
     }, [], {}, [])
 
+    // useEffect(() => {
+
+    //     async function payload() {
+    //         await api({
+    //             method: 'get',
+    //             url: `/products/${id}`,
+    //         })
+    //             .then(function (res) {
+    //                 setProduct(res.data)
+    //                 console.log("Products " + res.data)
+    //                 api({
+    //                     method: 'get',
+    //                     url: `/sellers/${product.fkUser}`,
+    //                 })
+    //                     .then(function (res) {
+    //                         setSeller(res.data)
+    //                         console.log("Seller " + res.data)
+    //                         api({
+    //                             method: 'get',
+    //                             url: `/certifieds/${seller.id}`,
+    //                         })
+    //                             .then(function (res) {
+    //                                 setSeller(res.data)
+    //                                 console.log("Certifieds " +res.data)
+    //                             });
+    //                     })
+    //             })
+
+    //     }
+
+    //     payload();
+    // }, [])
+
     return (
         <>
-            <Navbar isLogged={true} />
+            <Navbar />
             <Submenu />
 
             <section className="section-title">
@@ -132,9 +165,8 @@ export function ProductPage() {
                                     <div className="certifications">
                                         {sellerCertification.map(certification => (
                                             <Certification name={certification[0]}
-                                            src={certification[1]} />
+                                                src={certification[1]} />
                                         ))}
-                                        
                                     </div>
                                 </div>
                             </div>
@@ -147,28 +179,3 @@ export function ProductPage() {
     );
 }
 
-
-// await api({
-//     method: 'get',
-//     url: `/products/${id}`,
-// })
-//     .then(function (res) {
-//         setProduct(res.data)
-//         console.log(res.data)
-//         await api({
-//             method: 'get',
-//             url: `/sellers/${product.fkUser}`,
-//         })
-//             .then(function (res) {
-//                 setSeller(res.data)
-//                 console.log(res.data)
-//                 await api({
-//                     method: 'get',
-//                     url: `/certifieds/${seller.id}`,
-//                 })
-//                     .then(function (res) {
-//                         setSeller(res.data)
-//                         console.log(res.data)
-//                     });
-//             })
-//     })

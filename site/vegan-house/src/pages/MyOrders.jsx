@@ -13,7 +13,7 @@ export function MyOrders() {
     let userUpdate = loginService.getSession();
     return (
         <>
-            <Navbar isLogged={true} />
+            <Navbar />
             <div className="page-container">
                 <UserGreeting username={userUpdate.nameUser} isSeller={userUpdate.isSeller} />
             </div>
