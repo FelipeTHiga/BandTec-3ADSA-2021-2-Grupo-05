@@ -24,7 +24,9 @@ export function Register() {
 
     function singin(e) {
         e.preventDefault();
-        if (passwordUser != passwordUserConfirm) {
+        if (passwordUser.length < 6 || passwordUser.length > 20) {
+            setError("A senha possui um número caracteres inválido!")
+        } else if((passwordUser != passwordUserConfirm)) {
             setError("As senhas informadas não conhecidem!")
         } else {
             api.post(`/users`, {
@@ -37,6 +39,7 @@ export function Register() {
             .then((res) => {
                 if (res.status === 201) {
                     console.log("Cadastro realizado - " + res.statusText);
+                    sessionStorage.setItem("sucess", "Seu cadastro foi realizado com sucesso!")
                     history.push(`/login`);
                 } else {
                     setError("Ocorreu um erro no cadastro - " + res.statusText);
@@ -44,7 +47,7 @@ export function Register() {
                 console.log(res.status);
             }).catch((err) => {
                 console.log(err);
-                setError("Ocorreu um erro no cadastro - " + err)
+                setError("Ocorreu um ao tentar realizar o cadastro!")
             })
         }
         
@@ -118,10 +121,8 @@ export function Register() {
                                     <p>*</p>
                                 </div>
                             </div>
-
-                            <button type="submit" >Enviar</button>
+                            <button type="submit">Enviar</button>
                             {error && <p className="error">{error}</p>}
-                             
                             {/* <Button path="/home" text="Enviar" type="submit"/> */}
                         </form>
                     </div>

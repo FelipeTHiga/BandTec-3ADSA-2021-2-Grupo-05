@@ -141,6 +141,21 @@ public class ControllerProduct {
         return ResponseEntity.status(204).build();
     }
 
+    @GetMapping("/tag/{category}/{idSeller}")
+    public ResponseEntity getProductByCategoryIdSeller(@PathVariable String category, @PathVariable Integer idSeller) {
+        List<Product> listSearch = new ArrayList<>();
+        if (productRepository.count() > 0) {
+            List<Product> list = productRepository.findByCategory(category);
+            for (Product p : list) {
+                if (p.getFkSeller() != null && p.getFkSeller().equals(idSeller)){
+                    listSearch.add(p);
+                }
+            }
+            return ResponseEntity.status(200).body(listSearch);
+        }
+        return ResponseEntity.status(204).build();
+    }
+
     @GetMapping("/filter/{filter}/{category}")
     public ResponseEntity getProductByFilter(@PathVariable String filter, @PathVariable String category) {
 
@@ -189,10 +204,10 @@ public class ControllerProduct {
 //        return ResponseEntity.status(204).build();
 //    }
 
-    @GetMapping("all/{id}")
-    public ResponseEntity getAllProductsSeller(@PathVariable Integer fkSeller) {
+    @GetMapping("all/{idSeller}")
+    public ResponseEntity getAllProductsSeller(@PathVariable Integer idSeller) {
         if (productRepository.count() > 0) {
-            return ResponseEntity.status(200).body(productRepository.findByFkSeller(fkSeller));
+            return ResponseEntity.status(200).body(productRepository.findByFkSeller(idSeller));
         }
         return ResponseEntity.status(404).build();
     }
@@ -223,10 +238,17 @@ public class ControllerProduct {
         return ResponseEntity.status(404).build();
     }
 
-    @GetMapping("/name/{name}/{id}")
-    public ResponseEntity getProductsByName(@PathVariable String name, @PathVariable Integer id){
+    @GetMapping("/name/{name}/{idSeller}")
+    public ResponseEntity getProductsByName(@PathVariable String name, @PathVariable Integer idSeller){
+        List<Product> listSearch = new ArrayList<>();
         if (productRepository.count() > 0){
-            return ResponseEntity.status(200).body(productRepository.findByName(name));
+            List<Product> list = productRepository.findByName(name);
+            for (Product p : list) {
+                if (p.getFkSeller() != null && p.getFkSeller().equals(idSeller)){
+                    listSearch.add(p);
+                }
+            }
+            return ResponseEntity.status(200).body(listSearch);
         }
         return ResponseEntity.status(404).build();
     }

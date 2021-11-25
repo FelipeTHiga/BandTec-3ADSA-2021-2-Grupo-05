@@ -18,9 +18,10 @@ import image1 from "../assets/images/pants-1.svg";
 import image2 from "../assets/images/pants-2.svg";
 import image3 from "../assets/images/pants-3.svg";
 import React, { Component, useEffect, useState } from 'react';
-import { useParams } from "react-router";
+import { useParams, useHistory } from "react-router";
 import { BuyCard } from "../components/BuyCard";
 import api from "../services/api";
+import loginService from '../services/login';
 
 
 function selectImage(e) {
@@ -40,6 +41,37 @@ export function ProductPage() {
     const [product, setProduct] = useState({});
     const [seller, setSeller] = useState({});
     const [sellerCertification, setSellerCertification] = useState([]);
+    const history = useHistory();
+    let authenticatedUser = {
+        authenticated: false
+    }
+    let userLogged = loginService.getSession() ?? authenticatedUser;
+
+    function postCartItem(e){
+        e.preventDefault();
+        debugger;
+         api.post(`/cartItems/${userLogged.id}`, {
+                product: {
+                    id: product.id
+                },
+                quantity: 1,
+                fkUser: userLogged.id
+            })
+            .then((res) => {
+                if (res.status === 201) {
+                    console.log("Item de carrinho adicionado - " + res.statusText);
+                    alert("Sucesso")
+                    history.push(``);
+                } else {
+                    
+                }
+                console.log(res.status);
+            }).catch((err) => {
+                console.log(err);
+            
+            })
+
+    } 
 
     useEffect(() => {
         async function productById() {
@@ -135,7 +167,7 @@ export function ProductPage() {
                                 </div>
                                 <img id="selected-image" src={image1} alt="product-img-selected" className="big-image" />
                             </div>
-                            <BuyCard product={product} seller={seller} />
+                            <BuyCard product={product} seller={seller} addCartItem={postCartItem} />
                         </section>
 
                         <section className="section-product-description">
