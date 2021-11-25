@@ -16,7 +16,7 @@ export function ProductCard(props) {
     const history = useHistory();
 
     const buyProduct = (event) => {
-        history.push(`/todos-os-resultados/${props.category}/${props.id}`);
+        history.push(`/todos-os-resultados/${props.category}/${props.id}/${props.fkSeller}`);
     }
 
     return (

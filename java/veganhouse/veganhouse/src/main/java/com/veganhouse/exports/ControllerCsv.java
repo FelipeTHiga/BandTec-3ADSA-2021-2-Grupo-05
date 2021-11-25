@@ -40,7 +40,7 @@ public class ControllerCsv {
                         product.getCategory(),
                         product.getSubCategory(),
                         product.getDescription(),
-                        product.getFkUser());
+                        product.getFkSeller());
             }
         }
         catch (FormatterClosedException erro) {

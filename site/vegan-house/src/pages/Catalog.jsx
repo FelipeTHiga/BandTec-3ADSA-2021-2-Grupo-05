@@ -175,7 +175,7 @@ export function Catalog() {
                         <div className="container-cards-products-changed line-up">
                             {products.map(product => (
                                 <ProductCard id={product.id} name={product.name}
-                                    price={product.price} category={product.category} />
+                                    price={product.price} category={product.category} fkSeller={product.fkSeller} />
                             ))}
                         </div>
                     </div>

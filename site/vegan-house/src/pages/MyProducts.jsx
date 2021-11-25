@@ -29,11 +29,17 @@ export function MyProducts() {
     const [inventory, setInvetory] = useState("");
     const [price, setPrice] = useState(0.0);
     const [description, setDescription] = useState("");
-    const [fkUser, setFkUser] = useState(0);
+    const [fkSeller, setFkSeller] = useState(0);
     const [searchName, setSearchName] = useState("");
     const [searchCategory, setSearchCategory] = useState("");
     const [searchSubCategory, setSearchSubCategory] = useState("");
     const [acao, setAcao] = useState("Cadastrar produto");
+
+    const [image_url1, setImageUrl1] = useState("");
+    const [image_url2, setImageUrl2] = useState("");
+    const [image_url3, setImageUrl3] = useState("");
+    let idProduct;
+
 
     useEffect(() => {
         async function productsAll() {
@@ -47,6 +53,20 @@ export function MyProducts() {
 
     // USAR CONST PARA ADICIONAR O VALE
 
+    function pacthImage(e) {
+        e.preventDefault();
+
+        api.patch(`/products/image/${2}`, {
+            image_url1: image_url1,
+            image_url2: image_url2, 
+            image_url3: image_url3
+        }).then((res)=>{
+            setImageUrl1(res.data.image_url1);
+            setImageUrl2(res.data.image_url2);
+            setImageUrl3(res.data.image_url3);
+        })
+    }
+
 
 
     function patch(e) {
@@ -58,7 +78,8 @@ export function MyProducts() {
             subCategory: subCategory,
             inventory: inventory,
             price: parseFloat(price),
-            description: description
+            description: description,
+            fkSeller: user.id
         }).then((res) => {
             if (res.status === 200) {
                 console.log("Produto atualizado - " + res.statusText);
@@ -69,7 +90,7 @@ export function MyProducts() {
                 setInvetory("");
                 setPrice("");
                 setDescription("");
-                setFkUser("");
+                setFkSeller("");
                 document.getElementById("create-btn").style.display = "block";
                 document.getElementById("edit-btn").style.display = "none";
                 setAcao("Cadastrar produto");
@@ -94,7 +115,7 @@ export function MyProducts() {
                     setInvetory(res.data.inventory)
                     setPrice(res.data.price)
                     setDescription(res.data.description)
-                    setFkUser(res.data.fkUser)
+                    setFkSeller(res.data.fkSeller)
                     document.getElementById("create-btn").style.display = "none";
                     document.getElementById("edit-btn").style.display = "block";
                     setAcao("Editar produto")
@@ -104,6 +125,7 @@ export function MyProducts() {
                 console.log(err);
             })
         console.log(event.target.id)
+        idProduct = event.target.id;
     }
 
     function remove(e) {
@@ -365,7 +387,8 @@ export function MyProducts() {
 
                                 <div className="align-column margin-top-20 margin-bottom-25">
                                     <button id="create-btn" className="create-product-btn" onClick={productService.createProduct}>Cadastrar</button>
-                                    <button id="edit-btn" className="edit-product-btn" onClick={patch}>Editar</button>
+                                    <button id="edit-btn" className="edit-product-btn" onClick={pacthImage}>Editar</button>
+                                    
                                 </div>
 
                             </div>

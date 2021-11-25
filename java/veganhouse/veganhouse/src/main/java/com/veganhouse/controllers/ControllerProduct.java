@@ -101,17 +101,24 @@ public class ControllerProduct {
     }
 
 
-    @GetMapping("/image/{id}")
-    public ResponseEntity getFoto(@PathVariable int id) {
+    @GetMapping("/image/{id}/{idImage}")
+    public ResponseEntity getFoto(@PathVariable int id, @PathVariable int idImage) {
         Product product = productRepository.findById(id).get();
-        byte[] foto = product.getImage_url1();
+
+        byte[] foto;
+        if (idImage == 1){
+             foto = product.getImage_url1();
+        } else if (idImage == 2) {
+            foto = product.getImage_url2();
+        } else {
+            foto = product.getImage_url3();
+        }
 
         return ResponseEntity
                 .status(200)
                 .header("content-type", "image/jpeg")
                 .body(foto);
     }
-
 
 
 
@@ -183,9 +190,9 @@ public class ControllerProduct {
 //    }
 
     @GetMapping("all/{id}")
-    public ResponseEntity getAllProductsSeller(@PathVariable Integer fkUser) {
+    public ResponseEntity getAllProductsSeller(@PathVariable Integer fkSeller) {
         if (productRepository.count() > 0) {
-            return ResponseEntity.status(200).body(productRepository.findByFkUser(fkUser));
+            return ResponseEntity.status(200).body(productRepository.findByFkSeller(fkSeller));
         }
         return ResponseEntity.status(404).build();
     }
@@ -224,11 +231,11 @@ public class ControllerProduct {
         return ResponseEntity.status(404).build();
     }
 
-    @PostMapping("exportCsv/{nameArq}/{fkUser}")
-    public ResponseEntity exportCsv(@PathVariable String nameArq, @PathVariable Integer fkUser) {
+    @PostMapping("exportCsv/{nameArq}/{fkSeller}")
+    public ResponseEntity exportCsv(@PathVariable String nameArq, @PathVariable Integer fkSeller) {
         if (productRepository.count() > 0) {
 
-            List<Product> list = productRepository.findByFkUser(fkUser);
+            List<Product> list = productRepository.findByFkSeller(fkSeller);
             ListaObj listaObj = new ListaObj(((int) productRepository.count()));
 
             for (int i = 0; i < list.size(); i++) {
@@ -241,11 +248,11 @@ public class ControllerProduct {
         return ResponseEntity.status(204).build();
     }
 
-    @PostMapping("exportCsv/{nameArq}/{limit}/{fkUser}")
-    public ResponseEntity exportCsvLimit(@PathVariable String nameArq, @PathVariable Integer limit, @PathVariable Integer fkUser) {
+    @PostMapping("exportCsv/{nameArq}/{limit}/{fkSeller}")
+    public ResponseEntity exportCsvLimit(@PathVariable String nameArq, @PathVariable Integer limit, @PathVariable Integer fkSeller) {
         if (productRepository.count() > 0) {
 
-            List<Product> list = productRepository.findByFkUser(fkUser);
+            List<Product> list = productRepository.findByFkSeller(fkSeller);
             ListaObj listaObj = new ListaObj(limit);
 
             for (int i = 0; i < list.size(); i++) {
@@ -260,11 +267,11 @@ public class ControllerProduct {
         return ResponseEntity.status(204).build();
     }
 
-    @PostMapping("exportTxt/{fileName}/{fkUser}")
-    public ResponseEntity exportTxt(@PathVariable String fileName, @PathVariable Integer fkUser) {
+    @PostMapping("exportTxt/{fileName}/{fkSeller}")
+    public ResponseEntity exportTxt(@PathVariable String fileName, @PathVariable Integer fkSeller) {
         if (productRepository.count() > 0) {
 
-            List<Product> list = productRepository.findByFkUser(fkUser);
+            List<Product> list = productRepository.findByFkSeller(fkSeller);
             ListaObj listaObj = new ListaObj(((int) productRepository.count()));
 
             for (int i = 0; i < list.size(); i++) {

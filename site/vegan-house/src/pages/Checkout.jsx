@@ -3,7 +3,8 @@ import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
 import { OrderItem } from '../components/OrderItem';
 import { SectionTitle } from '../components/SectionTitle';
-//import { PayPalButton } from "react-paypal-button-v2";
+import { PayPalButton } from "react-paypal-button-v2";
+
 import "../styles/checkout.css";
 
 

@@ -12,11 +12,27 @@ public class Cart {
     //region Atributtes
     private List<Product> productsCart;
     private Integer idBuyer;
+    private List<OrderItem> orderItems;
+    private User user;
     //endregion
 
     public Cart() {
         this.productsCart = new ArrayList<>();
+        this.orderItems = new ArrayList<>();
     }
+    
+    public Double getTotal(){
+        Double total = 0.0;
+
+        if (orderItems.isEmpty()) 
+            return total;
+        
+        for (OrderItem orderItem : orderItems)
+            total+= orderItem.getSubTotal();
+
+        return total;
+    }
+
 
     public void addProduct(Product product) {
         productsCart.add(product);
