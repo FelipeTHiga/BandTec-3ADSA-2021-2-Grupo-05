@@ -18,12 +18,12 @@ public class ControllerSeller {
     @Autowired
     private IUserRepository userRepository;
 
-    @PostMapping
-    public ResponseEntity createSeller(@RequestBody Seller newSeller) {
+    @PostMapping("/{idUser}")
+    public ResponseEntity createSeller(@RequestBody Seller newSeller, @PathVariable Integer idUser) {
 
         try {
-            // Pegando o usário logado
-            User userLogged = ControllerSession.session.getUser();
+            // Pegando o usário
+            User userLogged = userRepository.findById(idUser).get();
 
             if (userLogged.getIsSeller()) {
                 return ResponseEntity.status(409).build();

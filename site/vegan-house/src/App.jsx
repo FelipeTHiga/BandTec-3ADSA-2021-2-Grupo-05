@@ -35,7 +35,6 @@ function App() {
         {/* <Route path="/produto" component={ProductPage} /> */}
         <Route path="/carrinho" component={ShoppingCart} />
         <Route path="/checkout" component={Checkout} />
-        <Route path="/perfil/seller" component={PerfilSeller} />
         <Route path="/todos-os-resultados/" exact={true} component={Catalog}/>
         {/* <Route path="/todos-os-resultados/..." component={ProductPage} />           */}
         <Route path="/perfil/minhas-vendas" component={MySales} />

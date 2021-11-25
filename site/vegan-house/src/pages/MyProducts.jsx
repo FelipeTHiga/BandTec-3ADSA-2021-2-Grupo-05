@@ -11,7 +11,6 @@ import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/myProducts.scss';
 import ProductTableRow from '../components/ProductTableRow';
-import productService from '../services/crud-product'
 import loginService from '../services/login';
 import React, { Component, useState, useEffect, useHistory } from "react";
 import api from '../services/api';
@@ -43,7 +42,7 @@ export function MyProducts() {
 
     useEffect(() => {
         async function productsAll() {
-            const res = await api.get("/products/all");
+            const res = await api.get(`products/all/${user.id}`);
             setProducts(res.data);
             console.log(res.data);
         }
@@ -60,7 +59,7 @@ export function MyProducts() {
             image_url1: image_url1,
             image_url2: image_url2,
             image_url3: image_url3
-        }).then((res)=>{
+        }).then((res) => {
             setImageUrl1(res.data.image_url1);
             setImageUrl2(res.data.image_url2);
             setImageUrl3(res.data.image_url3);
@@ -68,6 +67,27 @@ export function MyProducts() {
     }
 
 
+    function createProduct(e) {
+        e.preventDefault();
+        api.post(`/products`, {
+            name: name,
+            price: parseFloat(price),
+            category: category,
+            subCategory: subCategory,
+            description: description,
+            inventory: parseInt(inventory),
+            fkSeller: user.id
+        })
+            .then((res) => {
+                if (res.status === 201) {
+                    alert("Cadastro feito com sucesso!");
+                    pacthImage();
+                }
+                console.log(res.status);
+            }).catch((err) => {
+                console.log(err);
+            })
+    }
 
     function patch(e) {
         e.preventDefault();
@@ -82,7 +102,6 @@ export function MyProducts() {
             fkSeller: user.id
         }).then((res) => {
             if (res.status === 200) {
-                console.log("Produto atualizado - " + res.statusText);
                 alert("O produto foi atualizado!");
                 setName("");
                 setCategory("");
@@ -95,11 +114,10 @@ export function MyProducts() {
                 document.getElementById("edit-btn").style.display = "none";
                 setAcao("Cadastrar produto");
             } else {
-                console.log("Ocorreu um erro na atualizacao - " + res.statusText);
+                alert("O produto não foi atualizado!");
             }
-            console.log(res.status);
         }).catch((err) => {
-            console.log(err);
+            alert("O produto não foi atualizado!");
         })
     }
 
@@ -109,24 +127,23 @@ export function MyProducts() {
         api.get(`/products/${idProduct}`)
             .then((res) => {
                 if (res.status === 200) {
-                    setName(res.data.name)
-                    setCategory(res.data.category)
-                    setSubCategory(res.data.subCategory)
-                    setInvetory(res.data.inventory)
-                    setPrice(res.data.price)
-                    setDescription(res.data.description)
-                    setFkSeller(res.data.fkSeller)
+                    window.location.href = '#section-products-edit';
+                    setAcao("Editar produto");
+                    setId(res.data.id);
+                    setName(res.data.name);
+                    setCategory(res.data.category);
+                    setSubCategory(res.data.subCategory);
+                    setInvetory(res.data.inventory);
+                    setPrice(res.data.price);
+                    setDescription(res.data.description);
+                    setFkSeller(res.data.fkSeller);
                     document.getElementById("create-btn").style.display = "none";
                     document.getElementById("edit-btn").style.display = "block";
                     getAllProducts();
-                    setAcao("Editar produto")
                 }
-                console.log(res.status);
             }).catch((err) => {
                 console.log(err);
             })
-        console.log(event.target.id)
-        idProduct = event.target.id;
     }
 
     function remove(e) {
@@ -135,11 +152,22 @@ export function MyProducts() {
         api.delete(`/products/${idProduct}`)
             .then((res) => {
                 if (res.status === 200) {
-                    console.log("Produto deletado - " + res.statusText);
-                    alert("O produto foi deletado!");
                     getAllProducts();
+                    alert("O produto foi removido.");
                 } else {
-                    console.log("Ocorreu um erro na delecao - " + res.statusText);
+                    alert("O produto não foi removido.");
+                }
+            }).catch((err) => {
+                alert("O produto não foi removido.");
+            })
+    }
+
+    function getAllProducts(e) {
+        e.preventDefault();
+        api.get(`/products/all/${user.id}`)
+            .then((res) => {
+                if (res.status === 200) {
+                    setProducts(res.data)
                 }
                 console.log(res.status);
             }).catch((err) => {
@@ -150,28 +178,17 @@ export function MyProducts() {
     function getSearchName(e) {
         e.preventDefault();
         if (searchName) {
-            api.get(`/products/name/${searchName}`)
+            api.get(`/products/name/${searchName}/${user.id}`)
                 .then((res) => {
                     if (res.status === 200) {
                         setProducts(res.data)
                     }
-                    console.log(res.status);
                     setSearchName("");
                 }).catch((err) => {
                     console.log(err);
                 })
         } else {
-            // api.get(`/products/all/${user.id}`)
-            //     .then((res) => {
-            //         if (res.status === 200) {
-            //             setProducts(res.data)
-            //         }
-            //         console.log(res.status);
-            //     }).catch((err) => {
-            //         console.log(err);
-            //     })
-
-            api.get(`/products/all`)
+            api.get(`/products/all/${user.id}`)
                 .then((res) => {
                     if (res.status === 200) {
                         setProducts(res.data)
@@ -184,34 +201,24 @@ export function MyProducts() {
 
     }
 
-    function getAllProducts(e) {
+    function cadastroRedi(e) {
         e.preventDefault();
-        // api.get(`/products/all/${user.id}`)
-        //     .then((res) => {
-        //         if (res.status === 200) {
-        //             setProducts(res.data)
-        //         }
-        //         console.log(res.status);
-        //     }).catch((err) => {
-        //         console.log(err);
-        //     })
-
-        api.get(`/products/all`)
-            .then((res) => {
-                if (res.status === 200) {
-                    setProducts(res.data)
-                }
-                console.log(res.status);
-            }).catch((err) => {
-                console.log(err);
-            })
-
+        setAcao("Cadastrar produtos");
+        setName("")
+        setCategory("")
+        setSubCategory("")
+        setInvetory("")
+        setPrice("")
+        setDescription("")
+        setFkSeller("")
+        document.getElementById("create-btn").style.display = "block";
+        document.getElementById("edit-btn").style.display = "none";
         window.location.href = '#section-products-edit'
     }
 
     function getSearchCategory(e) {
         let category = e.target.value;
-        api.get(`/products/tag/${category}`)
+        api.get(`/products/tag/${category}/${user.id}`)
             .then((res) => {
                 if (res.status === 200) {
                     setProducts(res.data)
@@ -284,7 +291,7 @@ export function MyProducts() {
 
                                     <div className="product-option" >
                                         <label htmlFor="">Adicionar produto</label>
-                                        <button onClick={getAllProducts} className="all-product" >Cadastrar</button>
+                                        <button onClick={cadastroRedi} className="all-product" >Cadastrar</button>
                                     </div>
 
                                 </div>
@@ -388,8 +395,8 @@ export function MyProducts() {
                                 </div>
 
                                 <div className="align-column margin-top-20 margin-bottom-25">
-                                    <button id="create-btn" className="create-product-btn" onClick={productService.createProduct}>Cadastrar</button>
-                                    <button id="edit-btn" className="edit-product-btn" onClick={pacthImage}>Editar</button>
+                                    <button id="create-btn" className="create-product-btn" onClick={createProduct}>Cadastrar</button>
+                                    <button id="edit-btn" className="edit-product-btn" onClick={patch}>Editar</button>
 
                                 </div>
 

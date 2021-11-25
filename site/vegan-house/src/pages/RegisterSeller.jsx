@@ -11,35 +11,42 @@ import { useHistory } from "react-router";
 import api from '../services/api';
 
 import  InputMask  from 'react-input-mask'
+import loginService from '../services/login';
 
 export function RegisterSeller() {
     const [commercialName, setCommercialName] = useState("");
     const [cnpj, setCnpj] = useState("");
     const [commercialEmail, setCommercialEmail] = useState("");
     const [error, setError] = useState("");
+    let user = loginService.getSession();
     const history = useHistory();
 
     function registerSeller(e) {
         e.preventDefault();
-        api.post(`/sellers`,{
-            commercialName: commercialName,
-            cnpj: cnpj,
-            commercialEmail: commercialEmail,
-        })
-        .then((res) => {
-            if (res.status === 201) {
-                console.log("Cadastro realizado - " + res.statusText);
-                let parseDados = JSON.stringify(res.data);
-                sessionStorage.setItem("user", parseDados);
-                history.push(`/login`);
-            } else {
-                setError("Ocorreu um erro no cadastro!" + res.statusText);
-            }
-            console.log(res.status);
-        }).catch((err) => {
-            console.log(err);
-            setError("Ocorreu um erro no cadastro!")
-        })
+        if (!document.getElementById("checkbox").checked) {
+            setError("Você precisa aceitar nossos termos para poder continuar.")
+        } else {
+            api.post(`/sellers/${user.id}`,{
+                commercialName: commercialName,
+                cnpj: cnpj,
+                commercialEmail: commercialEmail,
+            })
+            .then((res) => {
+                if (res.status === 201) {
+                    console.log("Cadastro realizado - " + res.statusText);
+                    let parseDados = JSON.stringify(res.data);
+                    sessionStorage.setItem("user", parseDados);
+                    history.push(`/perfil/seller`);
+                } else {
+                    setError("Ocorreu um erro no cadastro!" + res.statusText);
+                }
+                console.log(res.status);
+            }).catch((err) => {
+                console.log(err);
+                setError("Ocorreu um erro no cadastro!")
+            })
+        }
+        
     }
     return (
         <>
@@ -51,7 +58,7 @@ export function RegisterSeller() {
 
                     <div className="register-content-seller">
                         <h2>Dados comerciais</h2>
-                        <form>
+                        <form onSubmit={registerSeller}>
                             <div className="name-seller">
                                 <label for="name">Nome comercial</label>
                                 <div className="name-content-seller">
@@ -80,11 +87,11 @@ export function RegisterSeller() {
                                 </div>
                             </div>
                             <div class="term-area">
-                                <input type="checkbox" />
+                                <input type="checkbox" id="checkbox"/>
                                 <p class="phrase">Li e concordo com os <a class="term" href="">termos do regulamento</a>.</p>
                             </div>
-                            <button type={registerSeller}>Enviar</button>
-                            {error && <p className="sucess">{error}</p>}
+                            <button className="button" type="submit">Enviar</button>
+                            {error && <p className="error">{error}</p>}
                             {/* <span onClick={serviceSeller.submitSeller}>Enviar</span> */}
                             {/* <Button onClick={submitSeller}  text="Enviar" /> */}
                         </form>
