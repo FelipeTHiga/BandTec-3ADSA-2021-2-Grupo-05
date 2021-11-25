@@ -56,29 +56,6 @@ public class Product {
         this.fkSeller = fkSeller;
     }
 
-//    public Product(Integer id,
-//                   String name,
-//                   Double price,
-//                   String category,
-//                   String subCategory,
-//                   String description,
-//                   Integer inventory,
-//                   Integer fkSeller,
-//                   byte[] image_url1,
-//                   byte[] image_url2,
-//                   byte[] image_url3) {
-//        this.id = id;
-//        this.name = name;
-//        this.price = price;
-//        this.category = category;
-//        this.subCategory = subCategory;
-//        this.description = description;
-//        this.inventory = inventory;
-//        this.fkSeller = fkSeller;
-//        this.image_url1 = image_url1;
-//        this.image_url2 = image_url2;
-//        this.image_url3 = image_url3;
-//    }
 
 
 //endregion

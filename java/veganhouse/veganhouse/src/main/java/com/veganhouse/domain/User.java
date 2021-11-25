@@ -1,9 +1,8 @@
 package com.veganhouse.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 
 @Entity
 public class User {
@@ -19,7 +18,12 @@ public class User {
     protected String passwordUser;
     protected Boolean isSeller;
     protected Boolean authenticated;
-    protected String dtype;
+    @ManyToOne
+    private Adress adress;
+
+
+    //protected Order orders
+
     //endregion
 
 
@@ -43,6 +47,14 @@ public class User {
     //region Getters and Setters
     public int getId() {
         return id;
+    }
+
+    public Adress getAdress() {
+        return adress;
+    }
+
+    public void setAdress(Adress adress) {
+        this.adress = adress;
     }
 
     public void setId(int id) {
@@ -112,5 +124,6 @@ public class User {
     public void setAuthenticated(Boolean authenticated) {
         this.authenticated = authenticated;
     }
+
     //endregion
 }

@@ -30,7 +30,7 @@ export function Register() {
             api.post(`/users`, {
                 nameUser: nameUser,
                 surName: surName,
-                cpf: cpf,
+                cpf: cpf.replace(/\D/g,''),
                 email: email,
                 passwordUser: passwordUser
             })
@@ -118,8 +118,10 @@ export function Register() {
                                     <p>*</p>
                                 </div>
                             </div>
+
                             <button type="submit" >Enviar</button>
                             {error && <p className="error">{error}</p>}
+                             
                             {/* <Button path="/home" text="Enviar" type="submit"/> */}
                         </form>
                     </div>
