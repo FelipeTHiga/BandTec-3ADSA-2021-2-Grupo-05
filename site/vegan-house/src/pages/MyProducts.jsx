@@ -15,7 +15,8 @@ import productService from '../services/crud-product'
 import loginService from '../services/login';
 import React, { Component, useState, useEffect, useHistory } from "react";
 import api from '../services/api';
-
+import undo from '../assets/images/undo.png'
+import redo from '../assets/images/redo.png'
 
 export function MyProducts() {
     let user = loginService.getSession();
@@ -28,7 +29,7 @@ export function MyProducts() {
     const [inventory, setInvetory] = useState("");
     const [price, setPrice] = useState(0.0);
     const [description, setDescription] = useState("");
-    const [fkUser, setFkUser] = useState(0);
+    const [fkSeller, setFkSeller] = useState(0);
     const [searchName, setSearchName] = useState("");
     const [searchCategory, setSearchCategory] = useState("");
     const [searchSubCategory, setSearchSubCategory] = useState("");
@@ -57,7 +58,8 @@ export function MyProducts() {
             subCategory: subCategory,
             inventory: inventory,
             price: parseFloat(price),
-            description: description
+            description: description,
+            fkSeller: user.id
         }).then((res) => {
             if (res.status === 200) {
                 console.log("Produto atualizado - " + res.statusText);
@@ -68,7 +70,7 @@ export function MyProducts() {
                 setInvetory("");
                 setPrice("");
                 setDescription("");
-                setFkUser("");
+                setFkSeller("");
                 document.getElementById("create-btn").style.display = "block";
                 document.getElementById("edit-btn").style.display = "none";
                 setAcao("Cadastrar produto");
@@ -93,7 +95,7 @@ export function MyProducts() {
                     setInvetory(res.data.inventory)
                     setPrice(res.data.price)
                     setDescription(res.data.description)
-                    setFkUser(res.data.fkUser)
+                    setFkSeller(res.data.fkSeller)
                     document.getElementById("create-btn").style.display = "none";
                     document.getElementById("edit-btn").style.display = "block";
                     setAcao("Editar produto")
@@ -231,48 +233,62 @@ export function MyProducts() {
                             <SectionTitle text="Meus produtos" />
 
                             <div className="container-product-options">
-                                <div className="product-option" >
-                                    <label htmlFor="">Buscar produto</label>
+                                <div className="product-options2">
+                                    <div className="product-option" >
+                                        <label htmlFor="">Buscar produto</label>
 
-                                    <section className="search-bar line-up">
-                                        <input id="name_search" onChange={e => setSearchName(e.target.value)} className="input" placeholder="Buscar" type="text" />
-                                        <button onClick={getSearchName}><i className="fas fa-search"></i></button>
-                                    </section>
+                                        <section className="search-bar line-up">
+                                            <input id="name_search" onChange={e => setSearchName(e.target.value)} className="input" placeholder="Buscar" type="text" />
+                                            <button onClick={getSearchName}><i className="fas fa-search"></i></button>
+                                        </section>
+                                    </div>
+
+                                    <div className="product-option" >
+                                        <label htmlFor="">Ordenar por</label>
+                                        <select name="" id="state" onChange={getSearchCategory}>
+                                            <option value="">-- Categoria -- </option>
+                                            <option value="Alimentos">Alimentos</option>
+                                            <option value="Vestimenta">Vestimenta</option>
+                                            <option value="Acessórios">Acessórios</option>
+                                            <option value="Cosméticos">Cosméticos</option>
+                                            <option value="Saúde">Saúde</option>
+                                            <i class="fas fa-arrow-down"></i>
+                                        </select>
+                                    </div>
+
+
+                                    <div className="product-option" >
+                                        <label htmlFor="">Adicionar produto</label>
+                                        <button onClick={getAllProducts} className="all-product" >Cadastrar</button>
+                                    </div>
+
                                 </div>
+                                <div className="product-options-export-and-import">
+                                    <div className="product-option" >
+                                        <label htmlFor="">Importar produtos</label>
 
-                                <div className="product-option" >
-                                    <label htmlFor="">Ordenar por</label>
-                                    <select name="" id="state" onChange={getSearchCategory}>
-                                        <option value="">-- Categoria -- </option>
-                                        <option value="Alimentos">Alimentos</option>
-                                        <option value="Vestimenta">Vestimenta</option>
-                                        <option value="Acessórios">Acessórios</option>
-                                        <option value="Cosméticos">Cosméticos</option>
-                                        <option value="Saúde">Saúde</option>
-                                        <i class="fas fa-arrow-down"></i>
-                                    </select>
-                                </div>
+                                        <label class="file">
+                                            <span class="file-custom"></span>
+                                            <input type="file" id="file" aria-label="File browser example" />
+                                        </label>
+                                        <a className="a-download">Baixar documento de layout</a>
+                                    </div>
 
-                                <div className="product-option" >
-                                    <label htmlFor="">Ordenar por</label>
-                                    <select name="" id="state" onChange={getSearchCategory}>
-                                        <option value="">-- Subcategoria -- </option>
-                                        <option value="Alimentos">Alimentos</option>
-                                        <option value="Vestimenta">Vestimenta</option>
-                                        <option value="Acessórios">Acessórios</option>
-                                        <option value="Cosméticos">Cosméticos</option>
-                                        <option value="Saúde">Saúde</option>
-                                        <i class="fas fa-arrow-down"></i>
-                                    </select>
-                                </div>
+                                    <div className="product-option" >
+                                        <label htmlFor="">Exportar produtos</label>
+                                        <section className="line-up">
+                                            <button className="btn-txt">TXT</button>
+                                            <button className="btn-csv">CSV</button>
+                                        </section>
+                                    </div>
 
-                                <div className="product-option" >
-                                    <label htmlFor="">Exibir todos</label>
-                                    <button onClick={getAllProducts} className="all-product" >Exibir</button>
                                 </div>
 
                             </div>
-
+                            <div className="commands">
+                                <button><img src={undo}/></button>
+                                <button><img src={redo}/></button>
+                            </div>
                             <div className="products-table-header">
                                 <label htmlFor="">Nome do produto</label>
                                 <label htmlFor="">Categoria</label>
