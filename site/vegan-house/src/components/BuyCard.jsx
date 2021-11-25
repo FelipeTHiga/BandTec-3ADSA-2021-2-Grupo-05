@@ -37,7 +37,7 @@ export function BuyCard(props) {
     //         })
     // }
 
-    const history = useHistory();
+    // const history = useHistory();
 
     const buyProduct = (event) => {
         history.push(`/carrinho/`);

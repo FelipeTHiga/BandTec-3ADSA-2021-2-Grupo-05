@@ -155,17 +155,17 @@ export function ProductPage() {
                         <section className="section-product-info">
                             <div className="div-images">
                                 <div className="small-images">
-                                    <img id="img-1" src={image1}
+                                    <img id="img-1" src={`http://localhost:8080/products/image/${id}/1`}
                                         onClick={selectImage}
                                         alt="product-img-1" className="image img-active" />
-                                    <img id="img-2" src={image2}
+                                    <img id="img-2" src={`http://localhost:8080/products/image/${id}/2`}
                                         onClick={selectImage}
                                         alt="product-img-2" className="image" />
-                                    <img id="img-3" src={image3}
+                                    <img id="img-3" src={`http://localhost:8080/products/image/${id}/3`}
                                         onClick={selectImage}
                                         alt="product-img-3" className="image" />
                                 </div>
-                                <img id="selected-image" src={image1} alt="product-img-selected" className="big-image" />
+                                <img id="selected-image" src={`http://localhost:8080/products/image/${id}/1`} alt="product-img-selected" className="big-image" />
                             </div>
                             <BuyCard product={product} seller={seller} addCartItem={postCartItem} />
                         </section>

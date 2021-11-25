@@ -12,7 +12,8 @@ import '../styles/reset.css';
 import '../styles/myProducts.scss';
 import ProductTableRow from '../components/ProductTableRow';
 import loginService from '../services/login';
-import React, { Component, useState, useEffect, useHistory } from "react";
+import React, { Component, useState, useEffect } from "react";
+import { useParams, useHistory } from "react-router";
 import api from '../services/api';
 import undo from '../assets/images/undo.png'
 import redo from '../assets/images/redo.png'
@@ -20,7 +21,7 @@ import redo from '../assets/images/redo.png'
 export function MyProducts() {
     let user = loginService.getSession();
     const [products, setProducts] = useState([]);
-
+    const history = useHistory();
     const [id, setId] = useState(0);
     const [name, setName] = useState("");
     const [category, setCategory] = useState("");
@@ -52,13 +53,20 @@ export function MyProducts() {
 
     // USAR CONST PARA ADICIONAR O VALE
 
-    function pacthImage(e) {
-        e.preventDefault();
+    function pacthImage(idProduto) {
 
-        api.patch(`/products/image/${2}`, {
-            image_url1: image_url1,
-            image_url2: image_url2,
-            image_url3: image_url3
+        console.log(image_url1.files);
+
+
+        let form = new FormData();
+        form.append("foto1", image_url1.files[0])
+        form.append("foto2", image_url2.files[0])
+        form.append("foto3", image_url3.files[0])
+
+        api.patch(`/products/image/${idProduto}`, form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         }).then((res) => {
             setImageUrl1(res.data.image_url1);
             setImageUrl2(res.data.image_url2);
@@ -80,8 +88,9 @@ export function MyProducts() {
         })
             .then((res) => {
                 if (res.status === 201) {
-                    alert("Cadastro feito com sucesso!");
-                    pacthImage();
+                    // alert("Cadastro feito com sucesso!");
+                    pacthImage(res.data.id);
+                    
                 }
                 console.log(res.status);
             }).catch((err) => {
@@ -114,10 +123,8 @@ export function MyProducts() {
                 document.getElementById("edit-btn").style.display = "none";
                 setAcao("Cadastrar produto");
             } else {
-                alert("O produto não foi atualizado!");
             }
         }).catch((err) => {
-            alert("O produto não foi atualizado!");
         })
     }
 
@@ -384,9 +391,9 @@ export function MyProducts() {
                                 </div>
 
                                 <div className="line-up width-100 margin-top-20">
-                                    <DragDropUpload dragId="dragId-1" />
-                                    <DragDropUpload dragId="dragId-2" />
-                                    <DragDropUpload dragId="dragId-3" />
+                                    <DragDropUpload dragId="dragId-1" setImage={setImageUrl1}/>
+                                    <DragDropUpload dragId="dragId-2" setImage={setImageUrl2}/>
+                                    <DragDropUpload dragId="dragId-3" setImage={setImageUrl3}/>
                                 </div>
 
                                 <div className="product-edit-camp">
