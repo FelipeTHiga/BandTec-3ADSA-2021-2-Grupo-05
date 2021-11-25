@@ -37,6 +37,7 @@ export function Register() {
             .then((res) => {
                 if (res.status === 201) {
                     console.log("Cadastro realizado - " + res.statusText);
+                    alert("Sucesso")
                     history.push(`/login`);
                 } else {
                     setError("Ocorreu um erro no cadastro - " + res.statusText);
@@ -60,7 +61,7 @@ export function Register() {
 
                     <div className="register-content">
                         <h2>Dados de Usuário</h2>
-                        <form>
+                        <form onSubmit={singin}>
                             <div className="name">
                                 <label>Nome</label>
                                 <div className="name-content">
@@ -118,7 +119,7 @@ export function Register() {
                                     <p>*</p>
                                 </div>
                             </div>
-                            <button onClick={submit}>Enviar</button>
+                            <button type="submit">Enviar</button>
                             {/* <Button path="/home" text="Enviar" type="submit"/> */}
                         </form>
                     </div>

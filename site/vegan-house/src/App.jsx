@@ -11,8 +11,6 @@ import { UserAdress } from "./pages/UserAdress";
 import { Catalog } from "./pages/Catalog";
 import  { PerfilSeller }  from "./pages/PerfilSeller";
 import  { Checkout }  from "./pages/Checkout";
-
-import { PerfilSeller } from "./pages/PerfilSeller";
 import { MyOrders } from "./pages/MyOrders";
 import { MySales } from "./pages/MySales";
 

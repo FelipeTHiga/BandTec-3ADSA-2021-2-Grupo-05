@@ -3,11 +3,37 @@ import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
 import { OrderItem } from '../components/OrderItem';
 import { SectionTitle } from '../components/SectionTitle';
-import { PayPalButton } from "react-paypal-button-v2";
+
 import "../styles/checkout.css";
 
 
 export function Checkout(props) {
+    useEffect(() => {
+        if (userLogged) {
+            function getCartItems() {
+                api.get(`/cartItems/${userLogged.id}`)
+                    .then((res) => {
+                        if (res.status === 201) {
+                            setCartItems(res.data)
+                            getTotal(res.data);
+
+                        }
+                        console.log(res.data);
+                        console.log(total)
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+            }
+
+            getCartItems();
+        }
+        else {
+            history.push(`/login`);
+        }
+    }, [])
+    
+    
+    
     return (
         <>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

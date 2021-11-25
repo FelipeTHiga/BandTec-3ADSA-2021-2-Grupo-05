@@ -3,25 +3,68 @@ import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
 import "../styles/shoppingCart.scss"
 import { OrderCart, totalAmount } from '../components/OrderCart';
-import React from 'react';
+import loginService from '../services/login';
+import api from "../services/api";
+import { useParams, useHistory } from "react-router";
+import React, { Component, useEffect, useState } from 'react';
+
+
+
 export function ShoppingCart(props) {
 
+    const history = useHistory();
+    const [cartItems, setCartItems] = React.useState([]);
+    let total = 0;
+    let userLogged = loginService.getSession();
 
+    function getTotal(cartItemsL){
+        debugger;
+        for(var i = 0; i< cartItemsL.length; i++){
+           total += parseFloat(cartItemsL[i].subTotal);
+        }
+    }
 
+    useEffect(() => {
+        if (userLogged) {
+            function getCartItems() {
+                api.get(`/cartItems/${userLogged.id}`)
+                    .then((res) => {
+                        if (res.status === 201) {
+                            setCartItems(res.data)
+                            getTotal(res.data);
 
-    let [totalAmount, setNumber] = React.useState({ total: 0 });
+                        }
+                        console.log(res.data);
+                        console.log(total)
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+            }
 
+            getCartItems();
+        }
+        else {
+            history.push(`/login`);
+        }
+    }, [])
+    
 
-    // totalAmount = () => {
-    //     const totalLabel = document.querySelector(`#${totalLabel}`),
-    //         orderCart1 = document.querySelector(`#${orderCart1}`)
+    
+    let [totalAmount, setNumber] = React.useState({ total: total });
 
-    //     orderCart1.addEventListener("change", function () {
-    //         totalLabel.value = setNumber;
-    //     });
+    function finishOrder(){
+        api.post(`/orders/`, userLogged)
+                    .then((res) => {
+                        if (res.status === 201) {
+                            history.push("/checkout")
+                        }
+                        console.log(res.data);
+                        console.log(total)
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+    }
 
-    //     alert("");
-    // }
 
     return (
         <>
@@ -43,12 +86,12 @@ export function ShoppingCart(props) {
                                 <h3>Remover</h3>
                             </div>
                         </div>
-                        <OrderCart price={20.00} setTotal={setNumber} cardId="orderCart1" />
-                        <OrderCart price={20.00} setTotal={setNumber} cardId="orderCart1" />
+                        {cartItems.map(cartItem => (<OrderCart price={cartItem.product.price} setTotal={setNumber} cardId={cartItem.idCartItem} productName={cartItem.product.name} quantity={cartItem.quantity} />))}
+
                     </div>
                     <div className="cart-final">
                         <h1>Total: <span id="totalLabel">R${totalAmount.total.toFixed(2)}</span></h1>
-                        <button>Continuar</button>
+                        <button onClick={finishOrder}>Continuar</button>
                     </div>
                 </div>
             </section>
