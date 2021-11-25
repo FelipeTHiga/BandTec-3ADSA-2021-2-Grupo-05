@@ -118,7 +118,10 @@ export function Register() {
                                     <p>*</p>
                                 </div>
                             </div>
-                            <button type="submit">Enviar</button>
+
+                            <button type="submit" >Enviar</button>
+                            {error && <p className="error">{error}</p>}
+                             
                             {/* <Button path="/home" text="Enviar" type="submit"/> */}
                         </form>
                     </div>

@@ -31,13 +31,13 @@ function App() {
         <Route path="/perfil/meus-pedidos" component={MyOrders} />
         <Route path="/perfil/meus-produtos" component={MyProducts} />
         <Route path="/todos-os-resultados/:categoryUrl" exact={true} component={Catalog} />
-        <Route path="/todos-os-resultados/:category/:id" exact={true} component={ProductPage} />
-        <Route path="/produto" component={ProductPage} />
+        <Route path="/todos-os-resultados/:category/:id/:fkSeller" exact={true} component={ProductPage} />
+        {/* <Route path="/produto" component={ProductPage} /> */}
         <Route path="/carrinho" component={ShoppingCart} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/perfil/seller" component={PerfilSeller} />
         <Route path="/todos-os-resultados/" exact={true} component={Catalog}/>
-        <Route path="/todos-os-resultados/..." component={ProductPage} />          
+        {/* <Route path="/todos-os-resultados/..." component={ProductPage} />           */}
         <Route path="/perfil/minhas-vendas" component={MySales} />
         {/* na url colocar um parametro :id*/}
         {/* /todos os resultados/{props.categoria}/{props.subcategoria}/{props.nomeDoProduto} */}

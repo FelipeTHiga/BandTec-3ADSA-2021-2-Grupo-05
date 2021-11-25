@@ -14,7 +14,7 @@ public class SellerCertified {
     private int idSellerCertified;
     private int fkCertification;
     private int fkSeller;
-    private Boolean hasCertification;
+    //private int hasCertification;
     //endregion
 
     //region Getters and Setters
@@ -42,13 +42,13 @@ public class SellerCertified {
         this.idSellerCertified = idSellerCertified;
     }
 
-    public Boolean getHasCertification() {
-        return hasCertification;
-    }
-
-    public void setHasCertification(Boolean hasCertification) {
-        this.hasCertification = hasCertification;
-    }
+//    public int getHasCertification() {
+//        return hasCertification;
+//    }
+//
+//    public void setHasCertification(int hasCertification) {
+//        this.hasCertification = hasCertification;
+//    }
 
     //endregion
 }

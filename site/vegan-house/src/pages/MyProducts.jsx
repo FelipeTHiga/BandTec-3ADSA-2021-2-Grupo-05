@@ -29,7 +29,7 @@ export function MyProducts() {
     const [inventory, setInvetory] = useState("");
     const [price, setPrice] = useState(0.0);
     const [description, setDescription] = useState("");
-    const [fkUser, setFkUser] = useState(0);
+    const [fkSeller, setFkSeller] = useState(0);
     const [searchName, setSearchName] = useState("");
     const [searchCategory, setSearchCategory] = useState("");
     const [searchSubCategory, setSearchSubCategory] = useState("");
@@ -58,7 +58,8 @@ export function MyProducts() {
             subCategory: subCategory,
             inventory: inventory,
             price: parseFloat(price),
-            description: description
+            description: description,
+            fkSeller: user.id
         }).then((res) => {
             if (res.status === 200) {
                 console.log("Produto atualizado - " + res.statusText);
@@ -69,7 +70,7 @@ export function MyProducts() {
                 setInvetory("");
                 setPrice("");
                 setDescription("");
-                setFkUser("");
+                setFkSeller("");
                 document.getElementById("create-btn").style.display = "block";
                 document.getElementById("edit-btn").style.display = "none";
                 setAcao("Cadastrar produto");
@@ -94,7 +95,7 @@ export function MyProducts() {
                     setInvetory(res.data.inventory)
                     setPrice(res.data.price)
                     setDescription(res.data.description)
-                    setFkUser(res.data.fkUser)
+                    setFkSeller(res.data.fkSeller)
                     document.getElementById("create-btn").style.display = "none";
                     document.getElementById("edit-btn").style.display = "block";
                     setAcao("Editar produto")
