@@ -5,9 +5,6 @@ import "../styles/accountMenu.css";
 
 export function AccountMenu(props) {
 
-    const [activeMenu, setActiveMenu] = React.useState('');
-    console.log(activeMenu);
-
     return (
         <div class="container-menu-profile">
             <section>

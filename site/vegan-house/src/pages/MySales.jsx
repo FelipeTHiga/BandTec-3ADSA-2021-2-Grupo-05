@@ -9,13 +9,35 @@ import loginService from '../services/login'
 import { SaleBox } from '../components/SaleBox'
 import '../styles/mySales.scss';
 import '../styles/myOrders.scss';
-
+import api from '../services/api';
+import { useHistory } from 'react-router';
+import React, { useEffect } from 'react'
 
 export function MySales() {
     let userUpdate = loginService.getSession();
+
+    const history = useHistory();
+    const [sales, setSales] = React.useState([]);
+
+    useEffect(() => {
+        function getOrder() {
+            api.get(`orders/seller/${userUpdate.id}`)
+                .then((res) => {
+                    if (res.status === 200) {
+                        console.log(res.data);
+                        setSales(res.data);
+                    }
+
+                }).catch((err) => {
+                    console.log(err);
+                })
+        }
+
+        getOrder();
+    }, [])
     return (
         <>
-           <Navbar />
+            <Navbar />
             <div className="page-container">
                 <UserGreeting username={userUpdate.nameUser} isSeller={userUpdate.isSeller} />
             </div>
@@ -34,10 +56,10 @@ export function MySales() {
                     <div className="section-orders">
                         <div className="container-orders">
                             <SectionTitle text="Pedidos" />
-                            <SaleBox />
+                            {sales.map(sale => (<SaleBox total={sale.total} date={sale.orderDate} adress={sale.adress} user={sale.user} idOrder={sale.id} orderItems={sale.orderItems} status={sale.orderStatus} />))}
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
             <Footer />
         </>
