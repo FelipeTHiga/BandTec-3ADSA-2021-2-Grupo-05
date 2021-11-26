@@ -38,7 +38,6 @@ export function BuyCard(props) {
     // }
 
     const history = useHistory();
-
     const buyProduct = (event) => {
         history.push(`/carrinho/`);
     }
@@ -47,7 +46,6 @@ export function BuyCard(props) {
     let user = loginService.getSession();
     var isLogged = (user == null) ? false : true;
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const history = useHistory();
     let authenticatedUser = {
         authenticated: false
     }
@@ -64,7 +62,6 @@ export function BuyCard(props) {
             .then((res) => {
                 if (res.status === 201) {
                     console.log("Item de carrinho adicionado - " + res.statusText);
-                    alert("Sucesso")
                     history.push(`/carrinho`);
                 } else {
                     

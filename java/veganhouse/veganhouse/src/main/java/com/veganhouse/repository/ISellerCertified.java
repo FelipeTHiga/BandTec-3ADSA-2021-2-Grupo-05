@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ISellerCertified extends JpaRepository<SellerCertified, Integer> {
 
-    @Query(value = "select name, url from certification\n" +
+    @Query(value = "select name, url, id_certification from certification\n" +
                     "inner join seller_certified\n" +
                     "on fk_certification = id_certification\n" +
                     "where fk_seller = ?1", nativeQuery = true)

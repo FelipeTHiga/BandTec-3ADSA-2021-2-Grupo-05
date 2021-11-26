@@ -15,6 +15,8 @@ public class Product {
     protected Double price;
     protected String category;
     protected String subCategory;
+
+    @Lob @Basic(fetch = FetchType.LAZY)
     protected String description;
     protected Integer inventory;
     protected Integer fkSeller;

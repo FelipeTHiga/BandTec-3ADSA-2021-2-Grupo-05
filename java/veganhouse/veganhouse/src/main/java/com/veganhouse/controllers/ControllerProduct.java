@@ -44,7 +44,7 @@ public class ControllerProduct {
     @PostMapping()
     public ResponseEntity postProduct(@RequestBody Product newProduct) {
         productRepository.save(newProduct);
-        return ResponseEntity.status(201).build();
+        return ResponseEntity.status(201).body(newProduct);
     }
 
     @PutMapping("{id}")

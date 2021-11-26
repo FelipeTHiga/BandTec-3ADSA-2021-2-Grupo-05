@@ -43,12 +43,21 @@ public class ControllerSeller {
         }
     }
 
-    @GetMapping("/{idSeller}")
-    public ResponseEntity getSeller(@PathVariable int idSeller){
+    @GetMapping("/{idUser}")
+    public ResponseEntity getSeller(@PathVariable int idUser){
+        // Adicionar validação
+            return ResponseEntity.status(200).body(sellerRepository.findByFkUser(idUser));
+
+    }
+
+    @PutMapping("/{idSeller}")
+    public ResponseEntity updateSeller(@PathVariable int idSeller, @RequestBody Seller sellerUpdate){
         if(sellerRepository.existsById(idSeller)) {
-            return ResponseEntity.of(sellerRepository.findById(idSeller));
+            sellerUpdate.setIdSeller(idSeller);
+            sellerRepository.save(sellerUpdate);
+            return ResponseEntity.status(200).build();
         }
-        return ResponseEntity.status(404).build();
+        return ResponseEntity.status(204).build();
     }
 
 }

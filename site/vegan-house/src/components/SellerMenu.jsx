@@ -4,8 +4,6 @@ import React from 'react';
 
 
 export function SellerMenu(props) {
-    const[activeMenu, setActiveMenu] = React.useState('');
-    console.log(activeMenu);
     return (
         <>
             <div class="container-menu-profile">
