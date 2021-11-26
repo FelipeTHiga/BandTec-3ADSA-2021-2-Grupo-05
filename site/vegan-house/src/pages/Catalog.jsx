@@ -59,16 +59,16 @@ export function Catalog() {
                 case "Todos":
                     setCountAll(data[i][0]);
                     break;
-                case "Acessorios":
+                case "Acessórios":
                     setCountAcessories(data[i][0]);
                     break;
                 case "Alimentos":
                     setCountFood(data[i][0]);
                     break;
-                case "Cosmeticos":
+                case "Cosméticos":
                     setCountCosmetics(data[i][0]);
                     break;
-                case "Saude":
+                case "Saúde":
                     setCountHealth(data[i][0]);
                     break;
                     case "Vestimenta":
@@ -139,15 +139,15 @@ export function Catalog() {
                             <ul className="category-list">
                                 <li id="Todos" className="iten-active"
                                     onClick={getProductByCategory}>Todos ({countAll})</li>
-                                <li id="Acessorios"
+                                <li id="Acessórios"
                                 onClick={getProductByCategory}>Acessórios ({countAcessories})</li>
                                 <li id="Alimentos"
                                 onClick={getProductByCategory}>Alimentos
                                 ({countFood})</li>
-                                <li id="Cosmeticos"
+                                <li id="Cosméticos"
                                 onClick={getProductByCategory}>Cosméticos
                                 ({countCosmetics})</li>
-                                <li id="Saude"
+                                <li id="Saúde"
                                 onClick={getProductByCategory}>Saúde
                                 ({countHealth})</li>
                                 <li id="Vestimenta"

@@ -18,7 +18,7 @@ export function SaleBox(props) {
                         </div>
                         <div className="total-sale">
                             <h2>Total</h2>
-                            <p>{props.total}</p>
+                            <p>R$ {props.total}</p>
                         </div>
                         <div className="status-sale">
                             <h2>Status</h2>
