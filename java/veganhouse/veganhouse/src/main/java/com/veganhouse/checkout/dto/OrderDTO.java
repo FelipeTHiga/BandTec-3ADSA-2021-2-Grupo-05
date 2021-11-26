@@ -33,7 +33,7 @@ public class OrderDTO {
     public List<Integer> getSellers(){
         List<Integer> sellersList = new ArrayList();
 
-        for(CartItem c : orderItems){
+            for(CartItem c : orderItems){
             if(!sellersList.contains(c.getProduct().getFkSeller()))
                 sellersList.add(c.getProduct().getFkSeller());
         }
