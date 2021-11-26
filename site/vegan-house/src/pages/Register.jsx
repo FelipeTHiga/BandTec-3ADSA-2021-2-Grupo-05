@@ -27,7 +27,7 @@ export function Register() {
         if (passwordUser.length < 6 || passwordUser.length > 20) {
             setError("A senha possui um número caracteres inválido!")
         } else if((passwordUser != passwordUserConfirm)) {
-            setError("As senhas informadas não conhecidem!")
+            setError("As senhas informadas não coincidem!")
         } else {
             api.post(`/users`, {
                 nameUser: nameUser,

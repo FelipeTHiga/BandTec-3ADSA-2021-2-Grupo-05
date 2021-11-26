@@ -111,7 +111,6 @@ export function MyProducts() {
             fkSeller: user.id
         }).then((res) => {
             if (res.status === 200) {
-                alert("O produto foi atualizado!");
                 setName("");
                 setCategory("");
                 setSubCategory("");
@@ -160,17 +159,13 @@ export function MyProducts() {
             .then((res) => {
                 if (res.status === 200) {
                     getAllProducts();
-                    alert("O produto foi removido.");
-                } else {
-                    alert("O produto não foi removido.");
-                }
+                } 
             }).catch((err) => {
-                alert("O produto não foi removido.");
+                console.log();
             })
     }
 
-    function getAllProducts(e) {
-        e.preventDefault();
+    function getAllProducts() {
         api.get(`/products/all/${user.id}`)
             .then((res) => {
                 if (res.status === 200) {

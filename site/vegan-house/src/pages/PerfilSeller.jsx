@@ -7,6 +7,7 @@ import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import loginService from "../services/login";
+import { useState, useEffect } from 'react';
 
 
 import '../styles/perfilSeller.scss';
@@ -27,17 +28,75 @@ export function PerfilSeller() {
 
     let user = loginService.getSession();
 
+    const [commercialName, setCommercialName] = useState('');
+    const [idSeller, setIdSeller] = useState(0);
+    const [cnpj, setCnpj] = useState('');
+    const [commercialEmail, setcommercialEmail] = useState('');
+    const [whatsappNumber, setWhatsappNumber] = useState('');
+    const [instagramAccount, setInstagramAccount] = useState('');
+    const [facebookAccount, setFacebookAccount] = useState('');
+
+    const certification1 = document.getElementById("checkCertifications1")
+    const certification2 = document.getElementById("checkCertifications2")
+    const certification3 = document.getElementById("checkCertifications3")
+    const certification4 = document.getElementById("checkCertifications4")
+    const certification5 = document.getElementById("checkCertifications5")
+
+    let certificationAr = [certification1, certification2, certification3, certification4, certification5];
+    //const [fkUser, setFkUser] = useState('');
+
+
+    useEffect(() => {
+
+        async function payLoad() {
+            const res = await api.get(`/sellers/${user.id}`);
+            setIdSeller(res.data.idSeller)
+            setCommercialName(res.data.commercialName);
+            setCnpj(res.data.cnpj);
+            setcommercialEmail(res.data.commercialEmail);
+            setWhatsappNumber(res.data.whatsappNumber);
+            setInstagramAccount(res.data.instagramAccount);
+            setFacebookAccount(res.data.facebookAccount);
+            console.log(res.data);
+        }
+
+        //document.getElementById("checkCertifications1").checked = true;
+        //document.getElementById("checkCertifications2").checked = true;
+
+        payLoad();
+    }, [])
+
+
+    function updateCommercialData(e) {
+        e.preventDefault();
+        updateSeller();
+        updateSellerCertified();
+    }
+
     async function updateSeller() {
+        const updateSeller = {
+            idSeller: idSeller,
+            commercialName: commercialName,
+            cnpj: cnpj,
+            commercialEmail: commercialEmail,
+            whatsappNumber: whatsappNumber,
+            instagramAccount: instagramAccount,
+            facebookAccount: facebookAccount,
+            fkUser: user.id
+        }
 
-        const certification1 = document.getElementById("checkCertifications1")
-        const certification2 = document.getElementById("checkCertifications2")
-        const certification3 = document.getElementById("checkCertifications3")
-        const certification4 = document.getElementById("checkCertifications4")
-        const certification5 = document.getElementById("checkCertifications5")
-        document.getElementById("checkCertifications1").checked = true;
-        document.getElementById("checkCertifications2").checked = true;
+        api({
+            method: 'put',
+            url: `/sellers/${idSeller}`,
+            data: updateSeller,
+        })
+            .then(function (response) {
+                console.log(response.status);
+            });
+    }
 
-        let certificationAr = [certification1, certification2, certification3, certification4, certification5];
+    async function updateSellerCertified() {
+
 
         let certificationChecked = certificationAr.filter(certification => certification.checked === true);
 
@@ -45,7 +104,7 @@ export function PerfilSeller() {
             const sellerCertified = {
                 fkCertification: certification.value,
                 fkSeller: user.id
-            } 
+            }
             //hasCertification: 1
             return sellerCertified
         })
@@ -84,21 +143,21 @@ export function PerfilSeller() {
                                 <label for="nameCommercial">Nome Comercial</label>
                                 <div>
                                     <i className="fas fa-user line-up icon-left-radius"></i>
-                                    <input className="input-default " type="text" placeholder="" name="" id="nameCommercial" />
+                                    <input className="input-default " type="text" placeholder="" name="" id="nameCommercial" value={commercialName} onChange={e => { setCommercialName(e.target.value) }} />
                                 </div>
                             </div>
                             <div className="container-input">
                                 <label for="cnpj">CNPJ</label>
                                 <div>
                                     <i className="far fa-id-card line-up icon-left-radius"></i>
-                                    <input className="input-default " type="text" placeholder="" name="" id="cnpj" />
+                                    <input className="input-default " type="text" placeholder="" name="" id="cnpj" value={cnpj} onChange={e => { setCnpj(e.target.value) }} />
                                 </div>
                             </div>
                             <div className="container-input">
                                 <label for="email">Email Comercial</label>
                                 <div>
                                     <i className="far fa-envelope line-up icon-left-radius"></i>
-                                    <input className="input-default " type="text" placeholder="" name="" id="email" />
+                                    <input className="input-default " type="text" placeholder="" name="" id="email" value={commercialEmail} onChange={e => { setcommercialEmail(e.target.value) }} />
                                 </div>
                             </div>
                         </form>
@@ -108,21 +167,21 @@ export function PerfilSeller() {
                                 <label for="whatsapp">WhatsApp</label>
                                 <div>
                                     <i className="fab fa-whatsapp line-up icon-left-radius"></i>
-                                    <input className="input-default " type="text" placeholder="" name="" id="whatsapp" />
+                                    <input className="input-default " type="text" placeholder="" name="" id="whatsapp" value={whatsappNumber} onChange={e => { setWhatsappNumber(e.target.value) }} />
                                 </div>
                             </div>
                             <div className="container-input">
                                 <label for="Instagram">Instagram</label>
                                 <div>
                                     <i className="fab fa-instagram line-up icon-left-radius"></i>
-                                    <input className="input-default " type="text" placeholder="" name="" id="Instagram" />
+                                    <input className="input-default " type="text" placeholder="" name="" id="Instagram" value={instagramAccount} onChange={e => { setInstagramAccount(e.target.value) }} />
                                 </div>
                             </div>
                             <div className="container-input">
                                 <label for="facebook">Facebook</label>
                                 <div>
                                     <i className="fab fa-facebook-square line-up icon-left-radius"></i>
-                                    <input className="input-default " type="text" placeholder="" name="" id="facebook" />
+                                    <input className="input-default " type="text" placeholder="" name="" id="facebook" value={facebookAccount} onChange={e => { setFacebookAccount(e.target.value) }} />
                                 </div>
                             </div>
                         </form>
@@ -138,26 +197,6 @@ export function PerfilSeller() {
                             <div className="container-input-certification">
                                 <div className="container-label-certification">
                                     <img src={Selo_1} alt="" />
-                                    <label for="checkCertifications1">Selo da Sociedade Vegetariana Brasileira</label>
-                                </div>
-                                <div className="container-checkbox">
-                                    <input value="1" className="input-checkbox" type="checkbox" placeholder="" name="" id="checkCertifications1" />
-                                </div>
-                            </div>
-
-                            <div className="container-input-certification">
-                                <div className="container-label-certification">
-                                    <img src={Selo_2} alt="" />
-                                    <label for="checkCertifications2">Selo The Leaping Bunny</label>
-                                </div>
-                                <div className="container-checkbox">
-                                    <input value="2" className="input-checkbox" type="checkbox" placeholder="" name="" id="checkCertifications2" />
-                                </div>
-                            </div>
-
-                            <div className="container-input-certification">
-                                <div className="container-label-certification">
-                                    <img src={Selo_3} alt="" />
                                     <label for="checkCertifications3">Selo Escolha sem Crueldade</label>
                                 </div>
                                 <div className="container-checkbox">
@@ -167,17 +206,17 @@ export function PerfilSeller() {
 
                             <div className="container-input-certification">
                                 <div className="container-label-certification">
-                                    <img src={Selo_4} alt="" />
-                                    <label for="checkCertifications4">Certificado Vegano da Organização Veganismo Brasi</label>
+                                    <img src={Selo_2} alt="" />
+                                    <label for="checkCertifications1">Selo da Sociedade Vegetariana Brasileira</label>
                                 </div>
                                 <div className="container-checkbox">
-                                    <input value="4" className="input-checkbox" type="checkbox" placeholder="" name="" id="checkCertifications4" />
+                                    <input value="1" className="input-checkbox" type="checkbox" placeholder="" name="" id="checkCertifications1" />
                                 </div>
                             </div>
 
                             <div className="container-input-certification">
                                 <div className="container-label-certification">
-                                    <img src={Selo_5} alt="" />
+                                    <img src={Selo_3} alt="" />
                                     <label for="checkCertifications5">Selo da Vegan Societ</label>
                                 </div>
                                 <div className="container-checkbox">
@@ -185,9 +224,31 @@ export function PerfilSeller() {
                                 </div>
                             </div>
 
+                            <div className="container-input-certification">
+                                <div className="container-label-certification">
+                                    <img src={Selo_4} alt="" />
+                                    <label for="checkCertifications2">Selo The Leaping Bunny</label>
+                                </div>
+                                <div className="container-checkbox">
+                                    <input value="2" className="input-checkbox" type="checkbox" placeholder="" name="" id="checkCertifications2" />
+                                </div>
+                            </div>
+
+                            <div className="container-input-certification">
+                                <div className="container-label-certification">
+                                    <img src={Selo_5} alt="" />
+                                    <label for="checkCertifications4">Certificado Vegano da Organização Veganismo Brasil</label>
+                                </div>
+                                <div className="container-checkbox">
+                                    <input value="4" className="input-checkbox" type="checkbox" placeholder="" name="" id="checkCertifications4" />
+                                </div>
+                            </div>
+
+
+
                         </form>
                         <div className="container-button-update-user line-up">
-                            <button onClick={updateSeller}>Atualizar</button>
+                            <button onClick={updateCommercialData}>Atualizar</button>
                         </div>
 
 
@@ -198,7 +259,7 @@ export function PerfilSeller() {
 
                 </div>
             </div>
-            <Footer/>
+            <Footer />
 
 
         </>
