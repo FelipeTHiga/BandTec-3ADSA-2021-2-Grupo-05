@@ -343,7 +343,7 @@ export function MyProducts() {
 
                                 <div className="product-edit-camp">
                                     <label>Nome</label>
-                                    <input id="name_product" onChange={e => setName(e.target.value)} value={name} className="input" type="text" placeholder="Ex. Sorverte de banana" />
+                                    <input id="name_product" onChange={e => setName(e.target.value)} value={name} className="input" type="text" placeholder="Ex. Sorvete de banana" />
                                 </div>
 
                                 <div className="line-up width-100">
@@ -351,11 +351,11 @@ export function MyProducts() {
                                         <label htmlFor="">Categoria</label>
                                         <select name="" onChange={e => setCategory(e.target.value)} value={category} id="category">
                                             <option value="">Selecione uma categoria</option>
-                                            <option value="Alimentos">Alimentos</option>
-                                            <option value="Vestimenta">Vestimenta</option>
                                             <option value="Acessórios">Acessórios</option>
-                                            <option value="Cosméticos">Cosméticos</option>
+                                            <option value="Alimentos">Alimentos</option>
+                                            <option value="Cosméticos">Cosméticos</option>  
                                             <option value="Saúde">Saúde</option>
+                                            <option value="Vestimenta">Vestimenta</option>
                                             <i class="fas fa-arrow-down"></i>
                                         </select>
                                     </div>
@@ -363,11 +363,11 @@ export function MyProducts() {
                                         <label htmlFor="">Subcategoria</label>
                                         <select name="" onChange={e => setSubCategory(e.target.value)} value={subCategory} id="sub_category">
                                             <option value="">Selecione uma Subcategoria</option>
-                                            <option value="Alimentos">Alimentos</option>
-                                            <option value="Vestimenta">Vestimenta</option>
                                             <option value="Acessórios">Acessórios</option>
+                                            <option value="Alimentos">Alimentos</option>
                                             <option value="Cosméticos">Cosméticos</option>
                                             <option value="Saúde">Saúde</option>
+                                            <option value="Vestimenta">Vestimenta</option>
                                             <i class="fas fa-arrow-down"></i>
                                         </select>
                                     </div>

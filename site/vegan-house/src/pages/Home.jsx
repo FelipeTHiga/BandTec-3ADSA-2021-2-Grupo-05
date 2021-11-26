@@ -10,6 +10,9 @@ import { Link } from 'react-router-dom';
 import '../styles/home.scss';
 import React from 'react';
 import loginService from "../services/login";
+import kerai from '../assets/images/logos/logo-kerai.png';
+import vegSeed from '../assets/images/logos/logo-vegSeed.png';
+import larVegan from '../assets/images/logos/logo-larVegan.png';
 
 function Home() {
     let user = loginService.getSession();
@@ -60,7 +63,9 @@ function Home() {
                 </div>
 
                 <div class="container-cards-sellers line-up">
-                    <CardSeller />
+                    <img src={kerai}/>
+                    <img src={vegSeed}/>
+                    <img src={larVegan}/>
                 </div>
 
                 <div class="line-great"></div>
