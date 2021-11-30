@@ -135,4 +135,4 @@ delete from seller_certified where id_seller_certified in (4,5, 6, 8, 9, 10, 12)
 delete from seller where id_seller = 4;
 delete from seller_certified where id_seller_certified = 6;
 
-delete from product;
+delete from product where id = 1;

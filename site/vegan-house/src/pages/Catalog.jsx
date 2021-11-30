@@ -48,7 +48,7 @@ export function Catalog() {
                 .then((res) => {
                     console.log(res.data)
                     var data = res.data;
-                    for (var i = 0; i <= data.length; i++) {
+                    for (var i = 0; i <= res.data.lenght; i++) {
                         console.log(data[i][1])
                         switch (data[i][0]) {
                             case "Todos":
