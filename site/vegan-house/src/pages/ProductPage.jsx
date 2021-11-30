@@ -80,14 +80,7 @@ export function ProductPage() {
             console.log(res.data);
         }
 
-        // async function sellerById() {
-        //     const res = await api.get(`/users/${1}`);
-        //     setSeller(res.data);
-        //     console.log(res.data);
-        // }
-
         async function sellerById() {
-            console.log("TESTE" + fkSeller)
             const res = await api.get(`/sellers/${fkSeller}`);
             setSeller(res.data);
             console.log(res.data);
@@ -103,39 +96,6 @@ export function ProductPage() {
         sellerById();
         sellerCertification();
     }, [], {}, [])
-
-    // useEffect(() => {
-
-    //     async function payload() {
-    //         await api({
-    //             method: 'get',
-    //             url: `/products/${id}`,
-    //         })
-    //             .then(function (res) {
-    //                 setProduct(res.data)
-    //                 console.log("Products " + res.data)
-    //                 api({
-    //                     method: 'get',
-    //                     url: `/sellers/${product.fkUser}`,
-    //                 })
-    //                     .then(function (res) {
-    //                         setSeller(res.data)
-    //                         console.log("Seller " + res.data)
-    //                         api({
-    //                             method: 'get',
-    //                             url: `/certifieds/${seller.id}`,
-    //                         })
-    //                             .then(function (res) {
-    //                                 setSeller(res.data)
-    //                                 console.log("Certifieds " +res.data)
-    //                             });
-    //                     })
-    //             })
-
-    //     }
-
-    //     payload();
-    // }, [])
 
     return (
         <>

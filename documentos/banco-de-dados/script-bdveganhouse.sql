@@ -7,9 +7,7 @@ insert into user values
 (null, 0, "10978253419", "flavia@hotmail.com", 0, "Flávia", "compaixao", "Silva", null),
 (null, 0, "30046512368", "kel@hotmail.com", 0, "Kel", "proposito", "Kenan", null);
 
-update user set is_seller = 1 where id = 1;
-update user set is_seller = 1 where id = 2;
-update user set is_seller = 1 where id = 3;
+update user set is_seller = 1 where id in(1, 2, 3);
 	
 insert into seller values 
 (null, 82627153753643, "kerai_dino@gmail.com", "Kerai",  "kerai_sustentavel", 1, "@kerai_sustentavel", "(11) 94913-1006"),
@@ -124,3 +122,17 @@ select * from product;
 select * from certification;
 select * from seller_certified;
 select * from restock_notification;
+
+select name, url from certification 
+inner join seller_certified
+on fk_certification = id_certification 
+where fk_seller = 1 and has_certification = 1;
+
+select * from seller where fk_user = 1;
+
+delete from seller_certified where id_seller_certified in (4,5, 6, 8, 9, 10, 12);
+
+delete from seller where id_seller = 4;
+delete from seller_certified where id_seller_certified = 6;
+
+delete from product;
