@@ -83,14 +83,14 @@
     width: 90%;
     height: 90%;
 }
-   .carousel{
+   .carroussel{
       display: flex;
       overflow-y: auto;
       height: 350px;
       scroll-behavior: smooth;
   }
   
-   .carousel::-webkit-scrollbar{
+   .carroussel::-webkit-scrollbar{
     display: none;
   }
   
@@ -113,13 +113,13 @@
   
   .container {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
+    height: 100%;
   }
 
     .container .buttons {
-        width: 100%;
-        text-align: center;
+        width: 10%;
+        display: flex;
       }
 
    .buttons {

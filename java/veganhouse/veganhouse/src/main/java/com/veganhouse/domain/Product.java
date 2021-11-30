@@ -3,10 +3,11 @@ package com.veganhouse.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
 @Entity
 public class Product {
-    
+
     //region Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +17,8 @@ public class Product {
     protected String category;
     protected String subCategory;
 
-    @Lob @Basic(fetch = FetchType.LAZY)
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
     protected String description;
     protected Integer inventory;
     protected Integer fkSeller;
@@ -27,24 +29,25 @@ public class Product {
 
 
     @Column(length = 20_000_000)
-    protected byte[]  image_url2;
+    protected byte[] image_url2;
 
 
     @Column(length = 20_000_000)
-    protected byte[]  image_url3;
+    protected byte[] image_url3;
     //endregion
 
     public Product() {
 
     }
 
-    public Product(String name, Double price, String category, String subCategory, String description, Integer inventory) {
+    public Product(String name, Double price, String category, String subCategory, String description, Integer inventory, Integer fkSeller) {
         this.name = name;
         this.price = price;
         this.category = category;
         this.subCategory = subCategory;
         this.description = description;
         this.inventory = inventory;
+        this.fkSeller = fkSeller;
     }
 
     public Product(Integer id, String name, Double price, String category, String subCategory, String description, Integer inventory, Integer fkSeller) {
@@ -58,9 +61,18 @@ public class Product {
         this.fkSeller = fkSeller;
     }
 
-
-
-//endregion
+    //endregion
+    @Override
+    public String toString() {
+        return String.format("\n----------Produto----------\n" +
+                        "Nome: %s\n" +
+                        "Preço: R$%.2f\n" +
+                        "Categoria: %s\n" +
+                        "Subcategoria: %s\n" +
+                        "Descrição: %s\n" +
+                        "Estoque: %d",
+                name, price, category, subCategory, description, inventory);
+    }
 
     //region Getters and Setters
     public Integer getId() {

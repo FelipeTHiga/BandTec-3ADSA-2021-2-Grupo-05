@@ -4,7 +4,7 @@ import { Footer } from "../components/Footer";
 import { Button } from '../components/Button';
 import { Card } from "../components/Card";
 import { CardSeller } from "../components/CardSellers";
-import '../styles/carousel.scss'
+import '../styles/carroussel.scss'
 import '../styles/card.scss'
 import { Link } from 'react-router-dom';
 import '../styles/home.scss';
@@ -48,7 +48,7 @@ function Home() {
                 </div>
 
                 <div className="line-great"></div>
-            </section>/
+            </section>
 
 
             {/* <!-- incio container de vendedores --> */}

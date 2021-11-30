@@ -9,8 +9,8 @@ import { ShoppingCart } from "./pages/ShoppingCart";
 import { UserProfile } from "./pages/UserProfile";
 import { UserAdress } from "./pages/UserAdress";
 import { Catalog } from "./pages/Catalog";
-import  { Checkout }  from "./pages/Checkout";
-import { PerfilSeller } from "./pages/PerfilSeller";
+import  { Checkout } from "./pages/Checkout";
+import { SellerProfile } from "./pages/SellerProfile";
 import { MyOrders } from "./pages/MyOrders";
 import { MySales } from "./pages/MySales";
 
@@ -27,7 +27,7 @@ function App() {
         <Route path="/perfil/cadastro-seller" component={RegisterSeller} />
         <Route path="/perfil/dados-pessoais" component={UserProfile} />
         <Route path="/perfil/endereco" component={UserAdress} />
-        <Route path="/perfil/seller" component={PerfilSeller} />
+        <Route path="/perfil/seller" component={SellerProfile} />
         <Route path="/perfil/meus-pedidos" component={MyOrders} />
         <Route path="/perfil/meus-produtos" component={MyProducts} />
         <Route path="/todos-os-resultados/:categoryUrl" exact={true} component={Catalog} />

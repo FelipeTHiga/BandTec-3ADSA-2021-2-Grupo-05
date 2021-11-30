@@ -25,7 +25,6 @@ export function ProductCard(props) {
                 <div className="div-product-image">
                 <img className="card-img" src={`http://localhost:8080/products/image/${props.id}/1`} />
                 </div>
-
                 <div className="container-evaluation-card line-up">
                     <div className="container-stars line-up">
                         {ShowStars(3.5)}
