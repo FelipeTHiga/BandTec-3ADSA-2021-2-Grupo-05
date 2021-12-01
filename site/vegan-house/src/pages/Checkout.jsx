@@ -16,8 +16,15 @@ export function Checkout(props) {
     const [order, setOrder] = React.useState({});
     let userLogged = loginService.getSession();
     const [orderItems, setOrderItem] = React.useState([]);
+    const publicKey = "TEST-622fb91c-f16d-4a94-a027-1feaaa7fb422";
+    const mercadopago="";
 
     useEffect(() => {
+        
+        const script = document.createElement('script')
+        script.src = "https://sdk.mercadopago.com/js/v2";
+        document.body.appendChild(script);
+        mercadopago  = new MercadoPago("TEST-622fb91c-f16d-4a94-a027-1feaaa7fb422");
         if (userLogged) {
             function getOrder() {
                 api.get(`orders/checkout/lastOrder/${userLogged.id}`)
@@ -26,6 +33,7 @@ export function Checkout(props) {
                             console.log(res);
                             setOrder(res.data);
                             setOrderItem(res.data.orderItems)
+
                         }
 
                     }).catch((err) => {
@@ -40,12 +48,15 @@ export function Checkout(props) {
         }
     }, [])
 
-    function finishOrder(){
+    function finishOrder() {
         history.push("/perfil/meus-pedidos");
     }
 
+   
+
     return (
         <>
+            <input type="hidden" id="mercado-pago-public-key" value="TEST-622fb91c-f16d-4a94-a027-1feaaa7fb422" />
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
             <script src="https://sdk.mercadopago.com/js/v2"></script>
             <script type="text/javascript" src="@{/js/index.js}" defer></script>
@@ -66,7 +77,7 @@ export function Checkout(props) {
                         <label><b>Itens do pedido:</b></label>
 
                         <div className="order-itens-container">
-                            {orderItems.map(orderItem => <OrderItem productName={orderItem.product.name} quantity={orderItem.quantity} subTotal={orderItem.subTotal}/>)}
+                            {orderItems.map(orderItem => <OrderItem productName={orderItem.product.name} quantity={orderItem.quantity} subTotal={orderItem.subTotal} />)}
                         </div>
 
                         <SectionTitle text=" " />
@@ -78,7 +89,7 @@ export function Checkout(props) {
                     <div className="payment-options">
                         <SectionTitle text="Forma de pagamento" />
 
-                        <div className="payment-form">
+                        <form id="form-checkout" className="payment-form">
 
                             <div className="payment-data-container">
                                 <div className="payment-form-data">
@@ -122,7 +133,7 @@ export function Checkout(props) {
                                     <button id="form-checkout__submit" type="submit" class="btn btn-primary btn-block" onClick={finishOrder}>Finalizar compra</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
 
                         {/* 
                         <div className="payment-buttons-container">
