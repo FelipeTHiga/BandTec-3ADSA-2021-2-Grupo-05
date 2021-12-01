@@ -21,16 +21,7 @@ import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/productPage.scss';
 
-function selectImage(e) {
 
-    document.getElementById('selected-image').src = e.target.src
-
-    if (document.querySelector('.img-active') !== null) {
-        document.querySelector('.img-active').classList.remove('img-active');
-    }
-    document.getElementById(e.target.id).classList.add('img-active');
-
-}
 
 export function ProductPage() {
 
@@ -49,25 +40,33 @@ export function ProductPage() {
         async function productById() {
             const res = await api.get(`/products/${id}`);
             setProduct(res.data);
-            console.log(res.data);
         }
 
         async function sellerById() {
             const res = await api.get(`/sellers/${fkSeller}`);
             setSeller(res.data);
-            console.log(res.data);
         }
 
         async function sellerCertification() {
             const res = await api.get(`/certifieds/${fkSeller}`);
             setSellerCertification(res.data);
-            console.log(res.data);
         }
 
         productById();
         sellerById();
         sellerCertification();
     }, [], {}, [])
+
+    function selectImage(e) {
+
+        document.getElementById('selected-image').src = e.target.src
+
+        if (document.querySelector('.img-active') !== null) {
+            document.querySelector('.img-active').classList.remove('img-active');
+        }
+        document.getElementById(e.target.id).classList.add('img-active');
+
+    }
 
     function postCartItem(e) {
         e.preventDefault();
@@ -81,18 +80,13 @@ export function ProductPage() {
         })
             .then((res) => {
                 if (res.status === 201) {
-                    console.log("Item de carrinho adicionado - " + res.statusText);
                     alert("Sucesso")
                     history.push(``);
                 } else {
 
                 }
-                console.log(res.status);
             }).catch((err) => {
-                console.log(err);
-
             })
-
     }
 
     return (

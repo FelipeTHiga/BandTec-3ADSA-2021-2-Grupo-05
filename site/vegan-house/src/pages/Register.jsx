@@ -4,6 +4,7 @@ import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
+
 import InputMask from 'react-input-mask';
 import api from '../services/api';
 
@@ -24,31 +25,28 @@ export function Register() {
         e.preventDefault();
         if (passwordUser.length < 6 || passwordUser.length > 20) {
             setError("A senha possui um número de caracteres inválido!")
-        } else if((passwordUser != passwordUserConfirm)) {
+        } else if ((passwordUser != passwordUserConfirm)) {
             setError("As senhas informadas não coincidem!")
         } else {
             api.post(`/users`, {
                 nameUser: nameUser,
                 surName: surName,
-                cpf: cpf.replace(/\D/g,''),
+                cpf: cpf.replace(/\D/g, ''),
                 email: email,
                 passwordUser: passwordUser
             })
-            .then((res) => {
-                if (res.status === 201) {
-                    console.log("Cadastro realizado - " + res.statusText);
-                    sessionStorage.setItem("sucess", "Seu cadastro foi realizado com sucesso!")
-                    history.push(`/login`);
-                } else {
-                    setError("Ocorreu um erro no cadastro - " + res.statusText);
-                }
-                console.log(res.status);
-            }).catch((err) => {
-                console.log(err);
-                setError("Ocorreu um ao tentar realizar o cadastro!")
-            })
+                .then((res) => {
+                    if (res.status === 201) {
+                        sessionStorage.setItem("sucess", "Seu cadastro foi realizado com sucesso!")
+                        history.push(`/login`);
+                    } else {
+                        setError("Ocorreu um erro no cadastro - " + res.statusText);
+                    }
+                }).catch((err) => {
+                    setError("Ocorreu um ao tentar realizar o cadastro!")
+                })
         }
-        
+
     }
 
     return (
@@ -128,6 +126,5 @@ export function Register() {
             </section>
             <Footer />
         </>
-
     )
 }

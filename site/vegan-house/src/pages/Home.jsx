@@ -5,7 +5,6 @@ import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { Link } from 'react-router-dom';
 
-import loginService from '../services/login';
 import kerai from '../assets/images/logos/logo-kerai.png';
 import vegSeed from '../assets/images/logos/logo-vegSeed.png';
 import larVegan from '../assets/images/logos/logo-larVegan.png';
@@ -62,9 +61,9 @@ export function Home() {
                 </div>
 
                 <div class="container-cards-sellers line-up">
-                    <img src={kerai}/>
-                    <img src={vegSeed}/>
-                    <img src={larVegan}/>
+                    <img src={kerai} />
+                    <img src={vegSeed} />
+                    <img src={larVegan} />
                 </div>
 
                 <div class="line-great"></div>

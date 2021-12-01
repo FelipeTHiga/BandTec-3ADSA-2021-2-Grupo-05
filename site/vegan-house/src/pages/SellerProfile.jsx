@@ -55,7 +55,6 @@ export function SellerProfile() {
             setWhatsappNumber(res.data.whatsappNumber);
             setInstagramAccount(res.data.instagramAccount);
             setFacebookAccount(res.data.facebookAccount);
-            console.log(res.data);
         }
 
         async function sellerCertification() {
@@ -84,7 +83,6 @@ export function SellerProfile() {
                         certification5.checked = true;
                         break;
                     default:
-                        console.log("id do certificado inválido")
                         break;
                 }
             }
@@ -152,7 +150,6 @@ export function SellerProfile() {
             data: certificationUpdate,
         })
             .then(function (response) {
-                console.log(response.status);
             });
     }
 
