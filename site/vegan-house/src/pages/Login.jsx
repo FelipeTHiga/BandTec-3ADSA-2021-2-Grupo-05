@@ -9,13 +9,13 @@ import '../styles/global.scss';
 
 export function Login() {
     return (
-            <>
+        <>
             <Navbar />
             <Submenu />
             <section className="login-section">
-            <div className="container-login">
+                <div className="container-login">
                     <Title title="Login" />
-                    <FormLogin/>
+                    <FormLogin />
                 </div>
             </section>
             <Footer />

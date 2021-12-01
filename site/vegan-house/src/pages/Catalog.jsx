@@ -1,10 +1,10 @@
-
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
 import { ProductCard } from '../components/ProductCard';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+
 import api from '../services/api';
 
 import '../styles/catalog.scss';
@@ -13,11 +13,10 @@ import '../styles/global.scss';
 export function Catalog() {
 
     let { categoryUrl } = useParams();
-
+   
     const [products, setProducts] = useState([]);
-    const [category, setCategory] = useState(categoryUrl);
     const [filter, setFilter] = useState("lowest-price");
-
+    const [category, setCategory] = useState(categoryUrl);
     const [countAcessories, setCountAcessories] = useState(0);
     const [countFood, setCountFood] = useState(0);
     const [countCosmetics, setCountCosmetics] = useState(0);
@@ -26,6 +25,7 @@ export function Catalog() {
     const [countAll, setCountAll] = useState(0);
 
     var isCategoryAll = category == "Todos" ? "" : category;
+
 
     useEffect(() => {
 
@@ -36,13 +36,11 @@ export function Catalog() {
             })
                 .then((res) => {
                     setProducts(res.data);
-                    console.log(res.data);
                 })
         }
 
         async function countCategory() {
             const res = await api.get("/products/countCategory");
-            console.log(res.data);
             await setCategoryAll(res.data)
         }
 
@@ -54,7 +52,7 @@ export function Catalog() {
     function setCategoryAll(data) {
 
         for (var i = 0; i <= data.length - 1; i++) {
-            console.log(data[i][1])
+
             switch (data[i][1]) {
                 case "Todos":
                     setCountAll(data[i][0]);
@@ -88,9 +86,7 @@ export function Catalog() {
                 if (res.status === 200) {
                     setProducts(res.data)
                 }
-                console.log(res.status);
             }).catch((err) => {
-                console.log(err);
             })
 
         if (document.querySelector('.iten-active') !== null) {
@@ -109,9 +105,7 @@ export function Catalog() {
             if (res.status === 200) {
                 setProducts(res.data)
             }
-            console.log(res.status);
         }).catch((err) => {
-            console.log(err);
         })
 
         if (document.querySelector('.b-active') !== null) {
@@ -175,7 +169,7 @@ export function Catalog() {
                         <div className="container-cards-products-changed line-up">
                             {products.map(product => (
                                 <ProductCard id={product.id} name={product.name}
-                                    price={product.price} category={product.category} fkSeller={product.fkSeller}/>
+                                    price={product.price} category={product.category} fkSeller={product.fkSeller} />
                             ))}
                         </div>
                     </div>

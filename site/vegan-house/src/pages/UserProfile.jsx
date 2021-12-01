@@ -6,10 +6,13 @@ import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { UserGreeting } from '../components/UserGreeting';
 import { updateUser } from '../scripts/crud-user';
+
+import loginService from '../services/login'
+
 import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/userProfile.scss';
-import loginService from '../services/login'
+
 
 export function UserProfile() {
     let user = loginService.getSession();

@@ -5,15 +5,17 @@ import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { UserGreeting } from '../components/UserGreeting';
-import { submitAdress, user_logged, login, getAdress } from '../scripts/crud-user';
-import loginService from '../services/login'
-import api from '../scripts/api'
+import { submitAdress } from '../scripts/crud-user';
+import { useState, useEffect } from 'react';
+
+import loginService from '../services/login';
+import api from '../scripts/api';
+import axios from 'axios';
+import InputMask from 'react-input-mask';
+
 import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/userAdress.scss';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import InputMask from 'react-input-mask'
 
 export function UserAdress() {
 
@@ -29,39 +31,13 @@ export function UserAdress() {
     const [adress, setAdress] = useState({})
     const [idAdress, setIdAdress] = useState(0)
 
-    function updateAdress(e) {
-        e.preventDefault();
-        const adress = {
-            idAdress: idAdress,
-            cep: cep.replace(/\D/g,''),
-            street: street,
-            district: district,
-            city: city,
-            state: state,
-            complement: complement,
-            number: number,
-            fkUser: userUpdate.id
-        }
-
-        api({
-            method: 'put',
-            url: `/users/adress/${idAdress}`,
-            data: adress,
-        })
-            .then(function (response) {
-                console.log(response.status);
-                alert("Dados atualizados com sucesso")
-            });
-    }
-
-
-
     useEffect(() => {
         let user = loginService.getSession();
-        async function pegaDados() {
+
+        async function payload() {
+
             const res = await api.get(`users/adress/${user.id}`);
             setAdress(res.data);
-            console.log(res.data);
 
             if (res.status === 200) {
                 setCep(res.data.cep);
@@ -78,10 +54,32 @@ export function UserAdress() {
             }
         }
 
-        pegaDados();
+        payload();
     }, {})
 
+    function updateAdress(e) {
+        e.preventDefault();
+        const adress = {
+            idAdress: idAdress,
+            cep: cep.replace(/\D/g, ''),
+            street: street,
+            district: district,
+            city: city,
+            state: state,
+            complement: complement,
+            number: number,
+            fkUser: userUpdate.id
+        }
 
+        api({
+            method: 'put',
+            url: `/users/adress/${idAdress}`,
+            data: adress,
+        })
+            .then(function (response) {
+                alert("Dados atualizados com sucesso")
+            });
+    }
 
     function pullCep() {
         axios.get(`https://viacep.com.br/ws/${cep}/json/`).then((res) => {
@@ -92,8 +90,6 @@ export function UserAdress() {
             setDistrict(res.data.bairro)
         })
     }
-
-
 
     return (
         <>

@@ -20,6 +20,7 @@ import '../styles/reset.css';
 import '../styles/myProducts.scss';
 
 export function MyProducts() {
+
     let user = loginService.getSession();
     const [products, setProducts] = useState([]);
     const [id, setId] = useState(0);
@@ -31,8 +32,6 @@ export function MyProducts() {
     const [description, setDescription] = useState("");
     const [fkSeller, setFkSeller] = useState(0);
     const [searchName, setSearchName] = useState("");
-    const [searchCategory, setSearchCategory] = useState("");
-    const [searchSubCategory, setSearchSubCategory] = useState("");
     const [acao, setAcao] = useState("Cadastrar produto");
     const [erro, setErro] = useState("");
     const [sucess, setSucess] = useState("");
@@ -42,16 +41,14 @@ export function MyProducts() {
     const [image_url3, setImageUrl3] = useState("");
 
     useEffect(() => {
+
         async function productsAll() {
             const res = await api.get(`products/all/${user.id}`);
             setProducts(res.data);
-            console.log(res.data);
         }
 
         productsAll();
     }, [])
-
-    // USAR CONST PARA ADICIONAR O VALE
 
     function pacthImage(idProduto) {
 
@@ -89,7 +86,7 @@ export function MyProducts() {
                     window.location.href = '#section-products'
                     pacthImage(res.data.id);
                 }
-                window.location.href = '#section-my-products'  
+                window.location.href = '#section-my-products'
             }).catch((err) => {
                 console.log(err);
                 setSucess("");
@@ -150,7 +147,6 @@ export function MyProducts() {
                     getAllProducts();
                 }
             }).catch((err) => {
-                console.log(err);
             })
     }
 
@@ -188,7 +184,6 @@ export function MyProducts() {
                 }
 
             }).catch((err) => {
-                console.log();
             })
     }
 
@@ -199,7 +194,6 @@ export function MyProducts() {
                     setProducts(res.data);
                 }
             }).catch((err) => {
-                console.log(err);
             })
     }
 
@@ -214,7 +208,6 @@ export function MyProducts() {
                     }
                     setSearchName("");
                 }).catch((err) => {
-                    console.log(err);
                 })
         } else {
             getAllProducts();
@@ -234,7 +227,7 @@ export function MyProducts() {
         setSucess("")
         document.getElementById("create-btn").style.display = "block";
         document.getElementById("edit-btn").style.display = "none";
-        window.location.href = '#section-products-edit'       
+        window.location.href = '#section-products-edit'
     }
 
     function getSearchCategory(e) {
@@ -245,9 +238,7 @@ export function MyProducts() {
                     setProducts(res.data)
                     setSucess("");
                 }
-                console.log(res.status);
             }).catch((err) => {
-                console.log(err);
             })
     }
 
@@ -266,10 +257,9 @@ export function MyProducts() {
             .then((res) => {
                 if (res.status === 200) {
                     alert(res.data)
-                    
+
                 }
             }).catch((err) => {
-                console.log(err);
             })
     }
 
@@ -278,11 +268,10 @@ export function MyProducts() {
             .then((res) => {
                 if (res.status === 200) {
                     alert("Arquivo txt exportado com sucesso!\nC:/Users/laris/Desktop/PROJETO-3ºS/BandTec-3ADSA-2021-2-Grupo-05/java/veganhouse/veganhouse")
-                } else if(res.status === 204){
+                } else if (res.status === 204) {
                     alert("Não foi possível exportar o arquivo txt!\nVendedor sem produtos cadastrados.")
                 }
             }).catch((err) => {
-                console.log(err);
             })
 
         if (document.querySelector('.export-active') !== null) {
@@ -296,11 +285,10 @@ export function MyProducts() {
             .then((res) => {
                 if (res.status === 200) {
                     alert("Arquivo csv exportado com sucesso!\nC:/Users/laris/Desktop/PROJETO-3ºS/BandTec-3ADSA-2021-2-Grupo-05/java/veganhouse/veganhouse")
-                } else if(res.status === 204){
+                } else if (res.status === 204) {
                     alert("Não foi possível exportar o arquivo csv!\nVendedor sem produtos cadastrados.")
                 }
             }).catch((err) => {
-                console.log(err);
             })
 
         if (document.querySelector('.export-active') !== null) {
@@ -308,19 +296,6 @@ export function MyProducts() {
         }
         document.getElementById('csv').classList.add('export-active');
     }
-
-    // function getSearchSubCategory(e){
-    //     e.preventDefault();
-    //     api.get(`/products/tag/${searchSubCategory}`)
-    //     .then((res) => {
-    //         if (res.status === 200) {
-    //             setProducts(res.data)
-    //         }
-    //         console.log(res.status);
-    //     }).catch((err) => {
-    //         console.log(err);
-    //     })
-    // }
 
     return (
         <>
@@ -368,7 +343,6 @@ export function MyProducts() {
                                         </select>
                                     </div>
 
-
                                     <div className="product-option" >
                                         <label htmlFor="">Adicionar produto</label>
                                         <button onClick={cadastroRedi} className="all-product" >Cadastrar</button>
@@ -380,7 +354,7 @@ export function MyProducts() {
                                         <label htmlFor="">Importar produtos</label>
 
                                         <label class="file">
-                                            <button className="btn-send" onClick={() => {sendTxtFile()}}>Enviar</button>
+                                            <button className="btn-send" onClick={() => { sendTxtFile() }}>Enviar</button>
                                             <span class="file-custom"></span>
                                             <input type="file" id="file" aria-label="File browser example" />
                                         </label>
