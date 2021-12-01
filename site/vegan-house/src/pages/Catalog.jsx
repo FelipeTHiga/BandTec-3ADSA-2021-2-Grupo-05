@@ -13,8 +13,7 @@ import '../styles/global.scss';
 export function Catalog() {
 
     let { categoryUrl } = useParams();
-    var isCategoryAll = category == "Todos" ? "" : category;
-
+   
     const [products, setProducts] = useState([]);
     const [filter, setFilter] = useState("lowest-price");
     const [category, setCategory] = useState(categoryUrl);
@@ -24,6 +23,8 @@ export function Catalog() {
     const [countHealth, setCountHealth] = useState(0);
     const [countClothing, setCountClothing] = useState(0);
     const [countAll, setCountAll] = useState(0);
+
+    var isCategoryAll = category == "Todos" ? "" : category;
 
 
     useEffect(() => {
