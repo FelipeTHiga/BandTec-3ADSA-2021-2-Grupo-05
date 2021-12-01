@@ -7,6 +7,7 @@ import loginService from '../services/login';
 import api from "../services/api";
 import { useParams, useHistory } from "react-router";
 import React, { Component, useEffect, useState } from 'react';
+// import paymentcheckout from "../services/payment-checkout;"
 
 import "../styles/checkout.css";
 
@@ -17,14 +18,15 @@ export function Checkout(props) {
     let userLogged = loginService.getSession();
     const [orderItems, setOrderItem] = React.useState([]);
     const publicKey = "TEST-622fb91c-f16d-4a94-a027-1feaaa7fb422";
-    const mercadopago="";
 
     useEffect(() => {
-        
-        const script = document.createElement('script')
-        script.src = "https://sdk.mercadopago.com/js/v2";
-        document.body.appendChild(script);
-        mercadopago  = new MercadoPago("TEST-622fb91c-f16d-4a94-a027-1feaaa7fb422");
+
+        // const script = document.createElement('script')
+        // script.type = 'text/javascript';
+        // script.src = "https://sdk.mercadopago.com/js/v2";
+        // script.async = true;
+        // document.body.appendChild(script);
+
         if (userLogged) {
             function getOrder() {
                 api.get(`orders/checkout/lastOrder/${userLogged.id}`)
@@ -47,19 +49,96 @@ export function Checkout(props) {
             history.push(`/login`);
         }
     }, [])
+    
+    const [transitionAmount, setTransitionAmount] = useState(order.total);
+    const [paymentMethodId, setPaymentMethodId] = useState("master");
+    const [amount, setAmount] = useState(0.0);
+    const [cardholderEmail, setCardholderEmail] = useState("");
+    const [installments, setInstallments] = useState(1);
+    const [identificationNumber, setIdentificationNumber] = useState("");
+    const [identificationType, setIdentificationType] = useState("CPF");
+    const [token, setToken] = useState("TEST-622fb91c-f16d-4a94-a027-1feaaa7fb422");
 
-    function finishOrder() {
-        history.push("/perfil/meus-pedidos");
+    function finishOrder(event) {
+
+        event.preventDefault();
+        console.log(amount)
+        // const {
+        //     paymentMethodId: paymentMethodId,
+        //     cardholderEmail: cardholderEmail,
+        //     amount: amount,
+        //     token: token,
+        //     installments: installments,
+        //     identificationNumber: identificationNumber,
+        //     identificationType:identificationType
+        // }
+
+        api.post("/process_payment", {
+            token: token,
+            paymentMethodId: paymentMethodId,
+            transactionAmount: document.getElementById("amount").value,
+            installments: Number(installments),
+            description: "productDescription",
+            payer: {
+                email: cardholderEmail,
+                identification: {
+                    type: identificationType,
+                    number: identificationNumber,
+                },
+            },
+        }).then(response => {
+            if(response.status === 201){
+                history.push("/perfil/meus-pedidos");
+            }
+            console.log(response)
+            return response.json();
+        }).catch(error => {
+            console.log("Unexpected error\n" + JSON.stringify(error));
+        });
+
+
+        // api("/process_payment", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({
+        //         token: token,
+        //         paymentMethodId: paymentMethodId,
+        //         transactionAmount: Number(amount),
+        //         installments: Number(installments),
+        //         description: "productDescription",
+        //         payer: {
+        //             email:cardholderEmail,
+        //             identification: {
+        //                 type: identificationType,
+        //                 number: identificationNumber,
+        //             },
+        //         },
+        //     }),
+        // })
+        //     .then(response => {
+        //         return response.json();
+        //     })
+        //     .then(result => {
+        //         // document.getElementById("payment-id").innerText = result.id;
+        //         // document.getElementById("payment-status").innerText = result.status;
+        //         // document.getElementById("payment-detail").innerText = result.detail;
+        //         history.push("/perfil/meus-pedidos");
+        //         // $('.container__payment').fadeOut(500);
+        //         // setTimeout(() => { $('.container__result').show(500).fadeIn(); }, 500);
+        //     })
+        //     .catch(error => {
+        //         console.log("Unexpected error\n"+JSON.stringify(error));
+        //     });
+
+
     }
 
-   
+    // const mercadopago = new MercadoPago("TEST-622fb91c-f16d-4a94-a027-1feaaa7fb422");
 
     return (
         <>
-            <input type="hidden" id="mercado-pago-public-key" value="TEST-622fb91c-f16d-4a94-a027-1feaaa7fb422" />
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-            <script src="https://sdk.mercadopago.com/js/v2"></script>
-            <script type="text/javascript" src="@{/js/index.js}" defer></script>
             <Navbar />
             <Submenu />
 
@@ -94,12 +173,12 @@ export function Checkout(props) {
                             <div className="payment-data-container">
                                 <div className="payment-form-data">
                                     <label htmlFor="">E-mail: </label>
-                                    <input placeholder="E-mail" id="form-checkout__cardholderEmail" name="cardholderEmail" type="email" class="form-control" />
+                                    <input placeholder="E-mail" id="form-checkout__cardholderEmail" name="cardholderEmail" type="email" class="form-control" onChange={e => setCardholderEmail(e.target.value)} />
                                 </div>
 
                                 <div className="payment-form-data">
                                     <label htmlFor="">CPF</label>
-                                    <input placeholder="CPF" id="form-checkout__identificationNumber" name="docNumber" type="text" class="form-control" />
+                                    <input placeholder="CPF" id="form-checkout__identificationNumber" name="docNumber" type="text" class="form-control" onChange={e => setIdentificationNumber(e.target.value)} />
                                 </div>
 
                                 <div className="payment-form-data">
@@ -127,7 +206,7 @@ export function Checkout(props) {
                                     <input placeholder="PIN" id="form-checkout__securityCode" name="securityCode" type="text" class="form-control" />
                                 </div>
 
-                                <input type="hidden" id="amount" />
+                                <input type="hidden" id="amount" value={order.total} />
                                 <input type="hidden" id="description" />
                                 <div className="container-button">
                                     <button id="form-checkout__submit" type="submit" class="btn btn-primary btn-block" onClick={finishOrder}>Finalizar compra</button>
