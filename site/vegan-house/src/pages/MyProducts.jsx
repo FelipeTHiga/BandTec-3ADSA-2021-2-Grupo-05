@@ -12,7 +12,8 @@ import '../styles/reset.css';
 import '../styles/myProducts.scss';
 import ProductTableRow from '../components/ProductTableRow';
 import loginService from '../services/login';
-import React, { Component, useState, useEffect} from "react";
+import React, { Component, useState, useEffect } from "react";
+import { useParams, useHistory } from "react-router";
 import api from '../services/api';
 import undo from '../assets/images/undo.png'
 import redo from '../assets/images/redo.png'
@@ -20,7 +21,7 @@ import redo from '../assets/images/redo.png'
 export function MyProducts() {
     let user = loginService.getSession();
     const [products, setProducts] = useState([]);
-
+    const history = useHistory();
     const [id, setId] = useState(0);
     const [name, setName] = useState("");
     const [category, setCategory] = useState("");
@@ -33,6 +34,8 @@ export function MyProducts() {
     const [searchCategory, setSearchCategory] = useState("");
     const [searchSubCategory, setSearchSubCategory] = useState("");
     const [acao, setAcao] = useState("Cadastrar produto");
+    const [erro, setErro] = useState("");
+    const [sucess, setSucess] = useState("");
 
     const [image_url1, setImageUrl1] = useState("");
     const [image_url2, setImageUrl2] = useState("");
@@ -54,7 +57,7 @@ export function MyProducts() {
 
     function pacthImage(e) {
         e.preventDefault();
-
+        history.go(0);
         api.patch(`/products/image/${2}`, {
             image_url1: image_url1,
             image_url2: image_url2,
@@ -80,11 +83,15 @@ export function MyProducts() {
         })
             .then((res) => {
                 if (res.status === 201) {
+                    setSucess("O produto foi criado!");
+                    getAllProducts();
+                    window.location.href = '#section-products'
                     pacthImage();
                 }
                 console.log(res.status);
             }).catch((err) => {
                 console.log(err);
+                setSucess("");
             })
     }
 
@@ -111,6 +118,9 @@ export function MyProducts() {
                 document.getElementById("create-btn").style.display = "block";
                 document.getElementById("edit-btn").style.display = "none";
                 setAcao("Cadastrar produto");
+                setSucess("O produto foi atualizado!");
+                getAllProducts();
+                window.location.href = '#section-products'
             } else {
                 alert("O produto não foi atualizado!");
             }
@@ -137,6 +147,7 @@ export function MyProducts() {
                     setFkSeller(res.data.fkSeller);
                     document.getElementById("create-btn").style.display = "none";
                     document.getElementById("edit-btn").style.display = "block";
+                    setSucess("");
                     getAllProducts();
                 }
             }).catch((err) => {
@@ -144,14 +155,38 @@ export function MyProducts() {
             })
     }
 
-    function remove(e) {
-        e.preventDefault();
-        let idProduct = e.target.id;
-        api.delete(`/products/${idProduct}`)
+    function undoRequest(e) {
+        api.post(`/products/undo`)
             .then((res) => {
                 if (res.status === 200) {
                     getAllProducts();
-                } 
+                    setSucess("A ação foi desfeita!");
+                }
+            }).catch((err) => {
+                console.log();
+            })
+    }
+
+    function redoRequest(e) {
+        api.post(`/products/redo`)
+            .then((res) => {
+                if (res.status === 200) {
+                    getAllProducts();
+                    setSucess("A ação foi refeita!");
+                }
+            }).catch((err) => {
+                console.log();
+            })
+    }
+
+    function remove(e) {
+        let productId = e.target.id;
+        api.delete(`/products/${productId}`)
+            .then((res) => {
+                if (res.status === 200) {
+                    getAllProducts();
+                    setSucess("O produto foi removido!");
+                }
             }).catch((err) => {
                 console.log();
             })
@@ -161,9 +196,8 @@ export function MyProducts() {
         api.get(`/products/all/${user.id}`)
             .then((res) => {
                 if (res.status === 200) {
-                    setProducts(res.data)
+                    setProducts(res.data);
                 }
-                console.log(res.status);
             }).catch((err) => {
                 console.log(err);
             })
@@ -175,24 +209,16 @@ export function MyProducts() {
             api.get(`/products/name/${searchName}/${user.id}`)
                 .then((res) => {
                     if (res.status === 200) {
-                        setProducts(res.data)
+                        setProducts(res.data);
+                        setSucess("");
                     }
                     setSearchName("");
                 }).catch((err) => {
                     console.log(err);
                 })
         } else {
-            api.get(`/products/all/${user.id}`)
-                .then((res) => {
-                    if (res.status === 200) {
-                        setProducts(res.data)
-                    }
-                    console.log(res.status);
-                }).catch((err) => {
-                    console.log(err);
-                })
+            getAllProducts();
         }
-
     }
 
     function cadastroRedi(e) {
@@ -205,6 +231,7 @@ export function MyProducts() {
         setPrice("")
         setDescription("")
         setFkSeller("")
+        setSucess("")
         document.getElementById("create-btn").style.display = "block";
         document.getElementById("edit-btn").style.display = "none";
         window.location.href = '#section-products-edit'
@@ -216,6 +243,7 @@ export function MyProducts() {
             .then((res) => {
                 if (res.status === 200) {
                     setProducts(res.data)
+                    setSucess("");
                 }
                 console.log(res.status);
             }).catch((err) => {
@@ -312,16 +340,16 @@ export function MyProducts() {
 
                             </div>
                             <div className="commands">
-                                <button><img src={undo} /></button>
-                                <button><img src={redo} /></button>
+                                <button onClick={undoRequest}><img src={undo} /></button>
+                                <button onClick={redoRequest}><img src={redo} /></button>
                             </div>
-                            <div className="products-table-header">
+                            {sucess && <p className="sucess">{sucess}</p>}
+                            <div className="products-table-header" id="section-products">
                                 <label htmlFor="">Nome do produto</label>
                                 <label htmlFor="">Categoria</label>
                                 <label htmlFor="">Subcategoria</label>
                                 <label htmlFor="">Qtd. estoque</label>
                             </div>
-
                             <div className="products-table-body">
                                 {products.map(product => (
                                     <ProductTableRow id={product.id} name={product.name} category={product.category} subCategory={product.subCategory} inventory={product.inventory} edit={edit} remove={remove} pro={product} />

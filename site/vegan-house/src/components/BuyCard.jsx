@@ -46,13 +46,14 @@ export function BuyCard(props) {
     let user = loginService.getSession();
     var isLogged = (user == null) ? false : true;
     const [isModalVisible, setIsModalVisible] = useState(false);
-    let authenticatedUser = {
-        authenticated: false
-    }
+    let authenticatedUser = null;
     let userLogged = loginService.getSession() ?? authenticatedUser;
 
     function postCartItem(e){
-         api.post(`/cartItems/${userLogged.id}`, {
+        if (!userLogged) {
+            history.push("/login")
+        } else {
+            api.post(`/cartItems/${userLogged.id}`, {
                 product: {
                     id: props.product.id,
                     price:props.product.price
@@ -72,6 +73,8 @@ export function BuyCard(props) {
                 console.log(err);
             
             })
+        }
+         
     }
 
 

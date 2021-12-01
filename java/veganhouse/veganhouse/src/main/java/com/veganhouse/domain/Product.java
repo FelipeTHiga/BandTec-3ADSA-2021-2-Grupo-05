@@ -18,6 +18,7 @@ public class Product {
     protected String description;
     protected Integer inventory;
     protected Integer fkSeller;
+    protected Boolean isAvaliable;
 
 
     @Column(length = 20_000_000)
@@ -63,6 +64,14 @@ public class Product {
     //region Getters and Setters
     public Integer getId() {
         return id;
+    }
+
+    public Boolean getAvaliable() {
+        return isAvaliable;
+    }
+
+    public void setAvaliable(Boolean avaliable) {
+        isAvaliable = avaliable;
     }
 
     public void setId(Integer id) {
