@@ -17,6 +17,9 @@ import { useParams, useHistory } from "react-router";
 import api from '../services/api';
 import undo from '../assets/images/undo.png'
 import redo from '../assets/images/redo.png'
+import withoutImage from '../assets/images/product-without-image.jpg';
+import { Link } from 'react-router-dom';
+import file from '../files/Documento-de-layout-importação.pdf';
 
 export function MyProducts() {
     let user = loginService.getSession();
@@ -43,6 +46,7 @@ export function MyProducts() {
     let idProduct;
 
 
+
     useEffect(() => {
         async function productsAll() {
             const res = await api.get(`products/all/${user.id}`);
@@ -55,13 +59,20 @@ export function MyProducts() {
 
     // USAR CONST PARA ADICIONAR O VALE
 
-    function pacthImage(e) {
-        e.preventDefault();
-        history.go(0);
-        api.patch(`/products/image/${2}`, {
-            image_url1: image_url1,
-            image_url2: image_url2,
-            image_url3: image_url3
+    function pacthImage(idProduto) {
+
+        console.log(image_url1.files);
+
+        let form = new FormData();
+        form.append("foto1", image_url1.files[0])
+        form.append("foto2", image_url2.files[0])
+        form.append("foto3", image_url3.files[0])
+
+
+        api.patch(`/products/image/${idProduto}`, form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         }).then((res) => {
             setImageUrl1(res.data.image_url1);
             setImageUrl2(res.data.image_url2);
@@ -79,14 +90,14 @@ export function MyProducts() {
             subCategory: subCategory,
             description: description,
             inventory: parseInt(inventory),
-            fkSeller: user.id
+            fkSeller: user.id,
         })
             .then((res) => {
                 if (res.status === 201) {
                     setSucess("O produto foi criado!");
                     getAllProducts();
                     window.location.href = '#section-products'
-                    pacthImage();
+                    pacthImage(res.data.id);
                 }
                 console.log(res.status);
             }).catch((err) => {
@@ -122,10 +133,8 @@ export function MyProducts() {
                 getAllProducts();
                 window.location.href = '#section-products'
             } else {
-                alert("O produto não foi atualizado!");
             }
         }).catch((err) => {
-            alert("O produto não foi atualizado!");
         })
     }
 
@@ -187,6 +196,7 @@ export function MyProducts() {
                     getAllProducts();
                     setSucess("O produto foi removido!");
                 }
+
             }).catch((err) => {
                 console.log();
             })
@@ -235,6 +245,18 @@ export function MyProducts() {
         document.getElementById("create-btn").style.display = "block";
         document.getElementById("edit-btn").style.display = "none";
         window.location.href = '#section-products-edit'
+
+        // document.getElementById('file')
+        // if()
+        // api.get(`importTxt/${user.id}`)
+        // .then((res) => {
+        //     if (res.status === 200) {
+        //         setProducts(res.data)
+        //         console.log(res.status);
+        //     }
+        // }).catch((err) => {
+        //     console.log(err);
+        // })
     }
 
     function getSearchCategory(e) {
@@ -250,6 +272,40 @@ export function MyProducts() {
                 console.log(err);
             })
     }
+
+    function exportTxt(fileName, idSeller) {
+        api.post(`products/exportTxt/${fileName}/${idSeller}`)
+            .then((res) => {
+                if (res.status === 200) {
+                    alert("Arquivo txt exportado com sucesso!\nC:/Users/laris/Desktop/PROJETO-3ºS/BandTec-3ADSA-2021-2-Grupo-05/java/veganhouse/veganhouse")
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+
+        if (document.querySelector('.export-active') !== null) {
+            document.querySelector('.export-active').classList.remove('export-active');
+        }
+        document.getElementById('txt').classList.add('export-active');
+    }
+
+    function exportCsv(fileName, idSeller) {
+        api.post(`products/exportCsv/${fileName}/${idSeller}`)
+            .then((res) => {
+                if (res.status === 200) {
+                    alert("Arquivo csv exportado com sucesso!\nC:/Users/laris/Desktop/PROJETO-3ºS/BandTec-3ADSA-2021-2-Grupo-05/java/veganhouse/veganhouse")
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+
+        if (document.querySelector('.export-active') !== null) {
+            document.querySelector('.export-active').classList.remove('export-active');
+        }
+        document.getElementById('csv').classList.add('export-active');
+    }
+
+
 
     // function getSearchSubCategory(e){
     //     e.preventDefault();
@@ -325,14 +381,15 @@ export function MyProducts() {
                                             <span class="file-custom"></span>
                                             <input type="file" id="file" aria-label="File browser example" />
                                         </label>
-                                        <a className="a-download">Baixar documento de layout</a>
+
+                                        <a className="a-download" href={file} target="_blank" download>Baixar documento de layout</a>
                                     </div>
 
                                     <div className="product-option" >
                                         <label htmlFor="">Exportar produtos</label>
                                         <section className="line-up">
-                                            <button className="btn-txt">TXT</button>
-                                            <button className="btn-csv">CSV</button>
+                                            <button id="txt" className="btn-export left export-active" onClick={() => { exportTxt("meus-produtos", user.id) }} >TXT</button>
+                                            <button id="csv" className="btn-export right" onClick={() => { exportCsv("meus-produtos", user.id) }}>CSV</button>
                                         </section>
                                     </div>
 
@@ -363,7 +420,7 @@ export function MyProducts() {
 
                                 <div className="product-edit-camp">
                                     <label>Nome</label>
-                                    <input id="name_product" onChange={e => setName(e.target.value)} value={name} className="input" type="text" placeholder="Ex. Sorverte de banana" />
+                                    <input id="name_product" onChange={e => setName(e.target.value)} value={name} className="input" type="text" placeholder="Ex. Sorvete de banana" />
                                 </div>
 
                                 <div className="line-up width-100">
@@ -371,11 +428,11 @@ export function MyProducts() {
                                         <label htmlFor="">Categoria</label>
                                         <select name="" onChange={e => setCategory(e.target.value)} value={category} id="category">
                                             <option value="">Selecione uma categoria</option>
-                                            <option value="Alimentos">Alimentos</option>
-                                            <option value="Vestimenta">Vestimenta</option>
                                             <option value="Acessórios">Acessórios</option>
+                                            <option value="Alimentos">Alimentos</option>
                                             <option value="Cosméticos">Cosméticos</option>
                                             <option value="Saúde">Saúde</option>
+                                            <option value="Vestimenta">Vestimenta</option>
                                             <i class="fas fa-arrow-down"></i>
                                         </select>
                                     </div>
@@ -383,11 +440,11 @@ export function MyProducts() {
                                         <label htmlFor="">Subcategoria</label>
                                         <select name="" onChange={e => setSubCategory(e.target.value)} value={subCategory} id="sub_category">
                                             <option value="">Selecione uma Subcategoria</option>
-                                            <option value="Alimentos">Alimentos</option>
-                                            <option value="Vestimenta">Vestimenta</option>
                                             <option value="Acessórios">Acessórios</option>
+                                            <option value="Alimentos">Alimentos</option>
                                             <option value="Cosméticos">Cosméticos</option>
                                             <option value="Saúde">Saúde</option>
+                                            <option value="Vestimenta">Vestimenta</option>
                                             <i class="fas fa-arrow-down"></i>
                                         </select>
                                     </div>
@@ -406,9 +463,9 @@ export function MyProducts() {
                                 </div>
 
                                 <div className="line-up width-100 margin-top-20">
-                                    <DragDropUpload dragId="dragId-1" />
-                                    <DragDropUpload dragId="dragId-2" />
-                                    <DragDropUpload dragId="dragId-3" />
+                                    <DragDropUpload dragId="dragId-1" setImage={setImageUrl1} />
+                                    <DragDropUpload dragId="dragId-2" setImage={setImageUrl2} />
+                                    <DragDropUpload dragId="dragId-3" setImage={setImageUrl3} />
                                 </div>
 
                                 <div className="product-edit-camp">

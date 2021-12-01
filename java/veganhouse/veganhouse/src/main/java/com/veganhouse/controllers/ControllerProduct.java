@@ -1,6 +1,7 @@
 package com.veganhouse.controllers;
 
 import com.veganhouse.domain.Product;
+import com.veganhouse.domain.Seller;
 import com.veganhouse.exports.ControllerCsv;
 import com.veganhouse.exports.ControllerTxt;
 import com.veganhouse.exports.ListaObj;
@@ -9,15 +10,21 @@ import com.veganhouse.observer.IRestockNotificationRepository;
 
 import com.veganhouse.productsCommander.ProductCommander;
 import com.veganhouse.repository.IProductRepository;
+import com.veganhouse.repository.ISellerRepository;
 import com.veganhouse.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -42,6 +49,15 @@ public class ControllerProduct {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    ISellerRepository sellerRepository;
+
+    @Autowired
+    ISellerRepository userRepository;
+
+    @Autowired
+    ControllerTxt controllerTxt;
+
     public ControllerProduct() {
     }
 
@@ -49,7 +65,7 @@ public class ControllerProduct {
     public ResponseEntity postProduct(@RequestBody Product newProduct) {
         newProduct.setAvaliable(true);
         productRepository.save(newProduct);
-        return ResponseEntity.status(201).build();
+        return ResponseEntity.status(201).body(newProduct);
     }
 
     @PutMapping("{id}")
@@ -84,6 +100,19 @@ public class ControllerProduct {
         return ResponseEntity.status(404).build();
     }
 
+//    @PatchMapping("/image/{id}")
+//    public ResponseEntity patchImageProduct1(@PathVariable Integer id,
+//                                            @RequestParam MultipartFile foto1) throws IOException  {
+//
+//        Product product = productRepository.findById(id).get();
+//
+//        byte[] novaFoto1 = foto1.getBytes();
+//
+//        product.setImage_url1(novaFoto1);
+//
+//        productRepository.save(product);
+//        return ResponseEntity.status(200).build();
+//    }
 
     @PatchMapping("/image/{id}")
     public ResponseEntity patchImageProduct(@PathVariable Integer id,
@@ -104,7 +133,6 @@ public class ControllerProduct {
         productRepository.save(product);
         return ResponseEntity.status(200).build();
     }
-
 
     @GetMapping("/image/{id}/{idImage}")
     public ResponseEntity getFoto(@PathVariable int id, @PathVariable int idImage) {
@@ -150,7 +178,7 @@ public class ControllerProduct {
     @GetMapping("/tag/{category}/{idSeller}")
     public ResponseEntity getProductByCategoryIdSeller(@PathVariable String category, @PathVariable Integer idSeller) {
         List<Product> listSearch = new ArrayList<>();
-        if (productRepository.findAll().isEmpty()) {
+        if (!productRepository.findAll().isEmpty()) {
             List<Product> list = productRepository.findByCategory(category);
             for (Product p : list) {
                 if (p.getFkSeller() != null && p.getFkSeller().equals(idSeller)){
@@ -201,14 +229,6 @@ public class ControllerProduct {
         }
         return ResponseEntity.status(200).body(productRepository.listCountCategory());
     }
-
-//    @GetMapping("{id}/productSeller")
-//    public ResponseEntity getProductByIdAndSeller(@PathVariable int id) {
-//        if (productRepository.existsById(id)) {
-//            return ResponseEntity.status(200).body(productRepository.productSeller(id));
-//        }
-//        return ResponseEntity.status(204).build();
-//    }
 
     @GetMapping("all/{idSeller}")
     public ResponseEntity getAllProductsSeller(@PathVariable Integer idSeller) {
@@ -308,17 +328,24 @@ public class ControllerProduct {
                 listaObj.adiciona(list.get(i));
             }
 
-            ControllerTxt.recordFileTxt(listaObj, fileName);
+            controllerTxt.recordFileTxt(listaObj, fileName);
             return ResponseEntity.status(200).build();
         }
         return ResponseEntity.status(204).build();
     }
 
-//    @PostMapping("importTxt/{fileName}/{}")
-//    public ResponseEntity importTxt(@PathVariable String fileName){
-//        if (productRepository.count() > 0) {
-//
-//        }
+    @PatchMapping("importTxt/{idUser}")
+    public ResponseEntity importTxt(@PathVariable int idUser, @RequestParam MultipartFile txt) throws IOException {
+
+        if(!txt.isEmpty()){
+            Seller seller = sellerRepository.findByFkUser(idUser);
+            controllerTxt.readDisplayFileTxt(seller, txt.getOriginalFilename());
+            return ResponseEntity.status(200).build();
+        }
+
+        return ResponseEntity.status(204).build();
+
+    }
 
     @PostMapping("/undo")
     public ResponseEntity undoCommand(){

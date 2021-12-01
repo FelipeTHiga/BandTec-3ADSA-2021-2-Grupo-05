@@ -63,7 +63,6 @@ export function BuyCard(props) {
             .then((res) => {
                 if (res.status === 201) {
                     console.log("Item de carrinho adicionado - " + res.statusText);
-                    alert("Sucesso")
                     history.push(`/carrinho`);
                 } else {
                     

@@ -69,7 +69,7 @@ export function OrderCart(props) {
     return (
         <>
             <div className="order" id={props.cardId} value={number * props.price.toFixed(2)}>
-                <ProductCart src={pants} text={props.productName} />
+                <ProductCart url={`http://localhost:8080/products/image/${props.productId}/1`} text={props.productName} />
                 <div className="order-props">
                     <div className="amount">
                         <button id={"button-amount-subtract"+props.cardId} onClick={subtract}>-</button>

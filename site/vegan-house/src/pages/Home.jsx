@@ -4,12 +4,15 @@ import { Footer } from "../components/Footer";
 import { Button } from '../components/Button';
 import { Card } from "../components/Card";
 import { CardSeller } from "../components/CardSellers";
-import '../styles/carousel.scss'
+import '../styles/carroussel.scss'
 import '../styles/card.scss'
 import { Link } from 'react-router-dom';
 import '../styles/home.scss';
 import React from 'react';
 import loginService from "../services/login";
+import kerai from '../assets/images/logos/logo-kerai.png';
+import vegSeed from '../assets/images/logos/logo-vegSeed.png';
+import larVegan from '../assets/images/logos/logo-larVegan.png';
 
 function Home() {
     let user = loginService.getSession();
@@ -45,7 +48,7 @@ function Home() {
                 </div>
 
                 <div className="line-great"></div>
-            </section>/
+            </section>
 
 
             {/* <!-- incio container de vendedores --> */}
@@ -60,7 +63,9 @@ function Home() {
                 </div>
 
                 <div class="container-cards-sellers line-up">
-                    <CardSeller />
+                    <img src={kerai}/>
+                    <img src={vegSeed}/>
+                    <img src={larVegan}/>
                 </div>
 
                 <div class="line-great"></div>

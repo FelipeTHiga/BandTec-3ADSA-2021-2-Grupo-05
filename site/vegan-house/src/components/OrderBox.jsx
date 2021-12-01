@@ -8,7 +8,7 @@ export function OrderBox(props) {
                 <div className="order-box-container">
                     <div className="order-desc">
                         <h1>Pedido <span>#{props.orderId}</span></h1>
-                        {props.orderItems.map(orderItems=><ProductOrder text={orderItems.product.name} src={pants}/>)}
+                        {props.orderItems.map(orderItems=><ProductOrder text={orderItems.product.name} src={`http://localhost:8080/products/image/${orderItems.product.id}/1`}/>)}
                     </div>
                     <div className="date-order">
                         <h2>Data</h2>

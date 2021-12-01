@@ -7,8 +7,8 @@ export function SaleUnit(props) {
                 <p>{props.product.id}</p>
                 <p>{props.product.name}</p>
                 <p>{props.quantity}</p>
-                <p>{props.product.price}</p>
-                <p>{props.total}</p>
+                <p>R$ {props.product.price}</p>
+                <p>R$ {props.total}</p>
             </div>
         </>
     )

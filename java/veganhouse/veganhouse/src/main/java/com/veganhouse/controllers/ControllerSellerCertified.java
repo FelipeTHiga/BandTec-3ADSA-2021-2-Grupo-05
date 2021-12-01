@@ -15,18 +15,17 @@ public class ControllerSellerCertified {
     @Autowired
     private ISellerCertified sellerCertifiedRepository;
 
-    @PostMapping
-    public ResponseEntity submitSellerCertified(@RequestBody List<SellerCertified> sellerCertifiedList){
-
-        for(SellerCertified c : sellerCertifiedList) {
-            sellerCertifiedRepository.save(c);
+    @PatchMapping
+    public ResponseEntity updateSellerCertified(@RequestBody List<SellerCertified> sellerCertifiedList) {
+        for (SellerCertified c : sellerCertifiedList) {
+            sellerCertifiedRepository.updateCertified(c.getHasCertification(), c.getFkCertification(), c.getFkSeller());
         }
         return ResponseEntity.status(201).build();
     }
 
     @GetMapping("/{fkSeller}")
-    public ResponseEntity getSellerCertified(@PathVariable Integer fkSeller){
-        if (sellerCertifiedRepository.count() > 0){
+    public ResponseEntity getSellerCertified(@PathVariable Integer fkSeller) {
+        if (sellerCertifiedRepository.count() > 0) {
             return ResponseEntity.status(200).body(sellerCertifiedRepository.certificationList(fkSeller));
         }
         return ResponseEntity.status(204).build();

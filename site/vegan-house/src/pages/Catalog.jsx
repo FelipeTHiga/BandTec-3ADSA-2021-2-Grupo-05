@@ -11,12 +11,12 @@ import { useParams } from 'react-router';
 
 export function Catalog() {
 
-    let {categoryUrl} = useParams();
+    let { categoryUrl } = useParams();
 
     const [products, setProducts] = useState([]);
     const [category, setCategory] = useState(categoryUrl);
     const [filter, setFilter] = useState("lowest-price");
-    
+
     const [countAcessories, setCountAcessories] = useState(0);
     const [countFood, setCountFood] = useState(0);
     const [countCosmetics, setCountCosmetics] = useState(0);
@@ -26,57 +26,58 @@ export function Catalog() {
 
     var isCategoryAll = category == "Todos" ? "" : category;
 
-    // const [countCategory, setCountCategory] = useState({
-    //     countAll: 0,
-    //     countAcessories: 0,
-    //     countFood: 0,
-    //     countCosmetics: 0,
-    //     countHealth: 0,
-    //     countClothing: 0,
-    // })
-
     useEffect(() => {
-        async function productAll() {
-            const res = await api.get(`/products/filter/lowest-price/${categoryUrl}`);
-            setProducts(res.data);
-            console.log(res.data);
+
+        function productAll() {
+            api({
+                method: 'get',
+                url: `/products/filter/lowest-price/${categoryUrl}`,
+            })
+                .then((res) => {
+                    setProducts(res.data);
+                    console.log(res.data);
+                })
         }
 
-        async function countCategory() {
-            const res = await api.get("/products/countCategory");
-            console.log(res.data);
-            setCategoryAll(res.data)
-        }
+        function countCategory() {
 
-        productAll();
+            api({
+                method: 'get',
+                url: "/products/countCategory",
+            })
+                .then((res) => {
+                    console.log(res.data)
+                    var data = res.data;
+                    for (var i = 0; i <= res.data.lenght; i++) {
+                        console.log(data[i][1])
+                        switch (data[i][0]) {
+                            case "Todos":
+                                setCountAll(data[i][0]);
+                                break;
+                            case "Acessórios":
+                                setCountAcessories(data[i][0]);
+                                break;
+                            case "Alimentos":
+                                setCountFood(data[i][0]);
+                                break;
+                            case "Cosméticos":
+                                setCountCosmetics(data[i][0]);
+                                break;
+                            case "Saúde":
+                                setCountHealth(data[i][0]);
+                                break;
+                                case "Vestimenta":
+                                setCountClothing(data[i][0]);
+                                break;
+                        }
+                    }
+                })
+        }
         countCategory();
-    }, [])
+        productAll();
+        
+    }, [], [])
 
-    function setCategoryAll(data) {
-
-        for (var i = 0; i <= 5; i++) {
-            switch (data[i][1]) {
-                case "Todos":
-                    setCountAll(data[i][0]);
-                    break;
-                case "Acessorios":
-                    setCountAcessories(data[i][0]);
-                    break;
-                case "Alimentos":
-                    setCountFood(data[i][0]);
-                    break;
-                case "Cosmeticos":
-                    setCountCosmetics(data[i][0]);
-                    break;
-                case "Saude":
-                    setCountHealth(data[i][0]);
-                    break;
-                    case "Vestimenta":
-                    setCountClothing(data[i][0]);
-                    break;
-            }
-        }
-    }
 
     function getProductByCategory(e) {
 
@@ -126,7 +127,7 @@ export function Catalog() {
             <Submenu />
             <section className="container-search-result">
                 <div className="title-catalog">
-                    
+
                     <h1>{`Todos os resultados / ${isCategoryAll}`}</h1>
                 </div>
                 <div className="catalog-content">
@@ -139,20 +140,20 @@ export function Catalog() {
                             <ul className="category-list">
                                 <li id="Todos" className="iten-active"
                                     onClick={getProductByCategory}>Todos ({countAll})</li>
-                                <li id="Acessorios"
-                                onClick={getProductByCategory}>Acessórios ({countAcessories})</li>
+                                <li id="Acessórios"
+                                    onClick={getProductByCategory}>Acessórios ({countAcessories})</li>
                                 <li id="Alimentos"
-                                onClick={getProductByCategory}>Alimentos
-                                ({countFood})</li>
-                                <li id="Cosmeticos"
-                                onClick={getProductByCategory}>Cosméticos
-                                ({countCosmetics})</li>
-                                <li id="Saude"
-                                onClick={getProductByCategory}>Saúde
-                                ({countHealth})</li>
+                                    onClick={getProductByCategory}>Alimentos
+                                    ({countFood})</li>
+                                <li id="Cosméticos"
+                                    onClick={getProductByCategory}>Cosméticos
+                                    ({countCosmetics})</li>
+                                <li id="Saúde"
+                                    onClick={getProductByCategory}>Saúde
+                                    ({countHealth})</li>
                                 <li id="Vestimenta"
-                                onClick={getProductByCategory}>Vestimenta
-                                ({countClothing})</li>
+                                    onClick={getProductByCategory}>Vestimenta
+                                    ({countClothing})</li>
                             </ul>
                         </div>
                     </div>

@@ -20,8 +20,6 @@ public class Seller {
     private String whatsappNumber;
     private String instagramAccount;
     private String facebookAccount;
-    //private List<Certification> listCertifications;
-    //private String descriptionSeller;
     private Integer fkUser;
     //endregion
 
