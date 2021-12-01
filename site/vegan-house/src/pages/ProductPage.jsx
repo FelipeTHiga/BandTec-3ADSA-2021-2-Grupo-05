@@ -30,10 +30,8 @@ export function ProductPage() {
     const [seller, setSeller] = useState({});
     const [sellerCertification, setSellerCertification] = useState([]);
     const history = useHistory();
-    let authenticatedUser = {
-        authenticated: false
-    }
-    let userLogged = loginService.getSession() ?? authenticatedUser;
+    let user = null;
+    let userLogged = loginService.getSession() ?? user;
 
     useEffect(() => {
 
@@ -70,7 +68,7 @@ export function ProductPage() {
 
     function postCartItem(e) {
         e.preventDefault();
-        debugger;
+        
         api.post(`/cartItems/${userLogged.id}`, {
             product: {
                 id: product.id

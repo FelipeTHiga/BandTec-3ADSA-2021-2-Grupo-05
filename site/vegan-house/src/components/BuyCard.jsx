@@ -46,31 +46,34 @@ export function BuyCard(props) {
     let user = loginService.getSession();
     var isLogged = (user == null) ? false : true;
     const [isModalVisible, setIsModalVisible] = useState(false);
-    let authenticatedUser = {
-        authenticated: false
-    }
+    let authenticatedUser = null;
     let userLogged = loginService.getSession() ?? authenticatedUser;
 
-    function postCartItem(e) {
-        api.post(`/cartItems/${userLogged.id}`, {
-            product: {
-                id: props.product.id,
-                price: props.product.price
-            },
-            quantity: 1,
-        })
+    function postCartItem(e){
+        if (!userLogged) {
+            history.push("/login")
+        } else {
+            api.post(`/cartItems/${userLogged.id}`, {
+                product: {
+                    id: props.product.id,
+                    price:props.product.price
+                },
+                quantity: 1,
+            })
             .then((res) => {
                 if (res.status === 201) {
                     console.log("Item de carrinho adicionado - " + res.statusText);
                     history.push(`/carrinho`);
                 } else {
-
+                    
                 }
                 console.log(res.status);
             }).catch((err) => {
                 console.log(err);
-
+            
             })
+        }
+
     }
 
 

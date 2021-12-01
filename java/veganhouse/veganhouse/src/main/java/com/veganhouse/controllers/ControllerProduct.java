@@ -11,6 +11,7 @@ import com.veganhouse.observer.IRestockNotificationRepository;
 import com.veganhouse.productsCommander.ProductCommander;
 import com.veganhouse.repository.IProductRepository;
 import com.veganhouse.repository.ISellerRepository;
+import com.veganhouse.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -46,6 +47,9 @@ public class ControllerProduct {
     ProductCommander productCommander;
 
     @Autowired
+    private ProductService productService;
+
+    @Autowired
     ISellerRepository sellerRepository;
 
     @Autowired
@@ -59,6 +63,7 @@ public class ControllerProduct {
 
     @PostMapping()
     public ResponseEntity postProduct(@RequestBody Product newProduct) {
+        newProduct.setAvaliable(true);
         productRepository.save(newProduct);
         return ResponseEntity.status(201).body(newProduct);
     }
@@ -168,11 +173,12 @@ public class ControllerProduct {
 
     @GetMapping("/tag/{category}")
     public ResponseEntity getProductByCategory(@PathVariable String category) {
+
         if (productRepository.count() > 0) {
             if ("Todos".equals(category)) {
-                return ResponseEntity.status(200).body(productRepository.findAll());
+                return ResponseEntity.status(200).body(productService.getIsAvailable(productRepository.findAll()));
             }
-            return ResponseEntity.status(200).body(productRepository.findByCategory(category));
+            return ResponseEntity.status(200).body(productService.getIsAvailable(productRepository.findByCategory(category)));
         }
         return ResponseEntity.status(204).build();
     }
@@ -180,14 +186,14 @@ public class ControllerProduct {
     @GetMapping("/tag/{category}/{idSeller}")
     public ResponseEntity getProductByCategoryIdSeller(@PathVariable String category, @PathVariable Integer idSeller) {
         List<Product> listSearch = new ArrayList<>();
-        if (productRepository.count() > 0) {
+        if (!productRepository.findAll().isEmpty()) {
             List<Product> list = productRepository.findByCategory(category);
             for (Product p : list) {
                 if (p.getFkSeller() != null && p.getFkSeller().equals(idSeller)) {
                     listSearch.add(p);
                 }
             }
-            return ResponseEntity.status(200).body(listSearch);
+            return ResponseEntity.status(200).body(productService.getIsAvailable(listSearch));
         }
         return ResponseEntity.status(204).build();
     }
@@ -208,18 +214,18 @@ public class ControllerProduct {
         }
 
         if ("name".equals(filter)) {
-            return ResponseEntity.status(200).body(products.stream()
+            return ResponseEntity.status(200).body(productService.getIsAvailable(products.stream()
                     .sorted(Comparator.comparing(Product::getName))
-                    .collect(Collectors.toList()));
+                    .collect(Collectors.toList())));
         } else if ("lowest-price".equals(filter)) {
-            return ResponseEntity.status(200).body(products.stream()
+            return ResponseEntity.status(200).body(productService.getIsAvailable(products.stream()
                     .sorted(Comparator.comparing(Product::getPrice))
-                    .collect(Collectors.toList()));
+                    .collect(Collectors.toList())));
         } else if ("highest-price".equals(filter)) {
-            return ResponseEntity.status(200).body(products.stream()
+            return ResponseEntity.status(200).body(productService.getIsAvailable(products.stream()
                     .sorted(Comparator.comparing(Product::getPrice)
                             .reversed())
-                    .collect(Collectors.toList()));
+                    .collect(Collectors.toList())));
         }
         return ResponseEntity.status(404).build();
     }
@@ -235,7 +241,7 @@ public class ControllerProduct {
     @GetMapping("all/{idSeller}")
     public ResponseEntity getAllProductsSeller(@PathVariable Integer idSeller) {
         if (productRepository.count() > 0) {
-            return ResponseEntity.status(200).body(productRepository.findByFkSeller(idSeller));
+            return ResponseEntity.status(200).body(productService.getIsAvailable(productRepository.findByFkSeller(idSeller)));
         }
         return ResponseEntity.status(404).build();
     }
@@ -243,7 +249,7 @@ public class ControllerProduct {
     @GetMapping("all")
     public ResponseEntity getAllProducts() {
         if (productRepository.count() > 0) {
-            return ResponseEntity.status(200).body(productRepository.findAll());
+            return ResponseEntity.status(200).body(productService.getIsAvailable(productRepository.findAll()));
         }
         return ResponseEntity.status(404).build();
     }
@@ -251,8 +257,10 @@ public class ControllerProduct {
     @DeleteMapping("{id}")
     public ResponseEntity deleteProduct(@PathVariable Integer id) {
         if (productRepository.existsById(id)) {
-            productRepository.deleteById(id);
-            productCommander.pushCommand("delete", productRepository.getById(id));
+            Product product = productRepository.findById(id).get();
+            product.setAvaliable(false);
+            productRepository.save(product);
+            productCommander.pushCommand("delete", product);
             return ResponseEntity.status(200).build();
         }
         return ResponseEntity.status(404).build();
@@ -261,7 +269,7 @@ public class ControllerProduct {
     @GetMapping("/name/{name}")
     public ResponseEntity getProductsByName(@PathVariable String name) {
         if (productRepository.count() > 0) {
-            return ResponseEntity.status(200).body(productRepository.findByName(name));
+            return ResponseEntity.status(200).body(productService.getIsAvailable(productRepository.findByName(name)));
         }
         return ResponseEntity.status(404).build();
     }
@@ -276,7 +284,7 @@ public class ControllerProduct {
                     listSearch.add(p);
                 }
             }
-            return ResponseEntity.status(200).body(listSearch);
+            return ResponseEntity.status(200).body(productService.getIsAvailable(listSearch));
         }
         return ResponseEntity.status(404).build();
     }
