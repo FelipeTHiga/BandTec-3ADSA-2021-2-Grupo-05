@@ -82,10 +82,10 @@ public class ControllerProduct {
     @PatchMapping("{id}")
     public ResponseEntity patchProduct(@PathVariable Integer id, @RequestBody Product product) {
 
-        if (productRepository.existsById(id)){
-            if(restockNotificationRepository.existsByFkProduct(id)
-                    && product.getInventory()>0
-                    && productRepository.getById(id).getInventory()==0)
+        if (productRepository.existsById(id)) {
+            if (restockNotificationRepository.existsByFkProduct(id)
+                    && product.getInventory() > 0
+                    && productRepository.getById(id).getInventory() == 0)
                 eventManagerRestock.notify(id);
 
             product.setId(id);
@@ -113,9 +113,9 @@ public class ControllerProduct {
     public ResponseEntity patchImageProduct(@PathVariable Integer id,
                                             @RequestParam MultipartFile foto1,
                                             @RequestParam MultipartFile foto2,
-                                            @RequestParam MultipartFile foto3) throws IOException  {
+                                            @RequestParam MultipartFile foto3) throws IOException {
 
-       Product product = productRepository.findById(id).get();
+        Product product = productRepository.findById(id).get();
 
         byte[] novaFoto1 = foto1.getBytes();
         byte[] novaFoto2 = foto2.getBytes();
@@ -130,16 +130,26 @@ public class ControllerProduct {
     }
 
     @GetMapping("/image/{id}/{idImage}")
-    public ResponseEntity getFoto(@PathVariable int id, @PathVariable int idImage) {
+    public ResponseEntity getFoto(@PathVariable int id, @PathVariable int idImage) throws IOException {
         Product product = productRepository.findById(id).get();
 
         byte[] foto;
-        if (idImage == 1){
-             foto = product.getImage_url1();
+
+        if (idImage == 1) {
+            foto = product.getImage_url1();
         } else if (idImage == 2) {
             foto = product.getImage_url2();
         } else {
             foto = product.getImage_url3();
+        }
+
+        if (foto == null) {
+            File imgPath = new File("src/main/resources/static/product-without-image.jpg");
+            byte[] withoutImage = Files.readAllBytes(imgPath.toPath());
+            return ResponseEntity
+                    .status(200)
+                    .header("content-type", "image/jpeg")
+                    .body(withoutImage);
         }
 
         return ResponseEntity
@@ -147,8 +157,6 @@ public class ControllerProduct {
                 .header("content-type", "image/jpeg")
                 .body(foto);
     }
-
-
 
     @GetMapping("{id}")
     public ResponseEntity getProductById(@PathVariable int id) {
@@ -175,7 +183,7 @@ public class ControllerProduct {
         if (productRepository.count() > 0) {
             List<Product> list = productRepository.findByCategory(category);
             for (Product p : list) {
-                if (p.getFkSeller() != null && p.getFkSeller().equals(idSeller)){
+                if (p.getFkSeller() != null && p.getFkSeller().equals(idSeller)) {
                     listSearch.add(p);
                 }
             }
@@ -217,7 +225,7 @@ public class ControllerProduct {
     }
 
     @GetMapping("countCategory")
-    public ResponseEntity getCountCategory(){
+    public ResponseEntity getCountCategory() {
         if (!(productRepository.count() > 0)) {
             return ResponseEntity.status(404).build();
         }
@@ -259,12 +267,12 @@ public class ControllerProduct {
     }
 
     @GetMapping("/name/{name}/{idSeller}")
-    public ResponseEntity getProductsByName(@PathVariable String name, @PathVariable Integer idSeller){
+    public ResponseEntity getProductsByName(@PathVariable String name, @PathVariable Integer idSeller) {
         List<Product> listSearch = new ArrayList<>();
-        if (productRepository.count() > 0){
+        if (productRepository.count() > 0) {
             List<Product> list = productRepository.findByName(name);
             for (Product p : list) {
-                if (p.getFkSeller() != null && p.getFkSeller().equals(idSeller)){
+                if (p.getFkSeller() != null && p.getFkSeller().equals(idSeller)) {
                     listSearch.add(p);
                 }
             }
@@ -329,10 +337,9 @@ public class ControllerProduct {
     @PatchMapping("importTxt/{idUser}")
     public ResponseEntity importTxt(@PathVariable int idUser, @RequestParam MultipartFile txt) throws IOException {
 
-        if(!txt.isEmpty()){
+        if (!txt.isEmpty()) {
             Seller seller = sellerRepository.findByFkUser(idUser);
-            controllerTxt.readDisplayFileTxt(seller, txt.getOriginalFilename());
-            return ResponseEntity.status(200).build();
+            return ResponseEntity.status(200).body(controllerTxt.readDisplayFileTxt(seller, txt.getOriginalFilename()));
         }
 
         return ResponseEntity.status(204).build();
@@ -340,13 +347,13 @@ public class ControllerProduct {
     }
 
     @PostMapping("/undo")
-    public ResponseEntity undoCommand(){
+    public ResponseEntity undoCommand() {
         productCommander.undo();
         return ResponseEntity.status(200).build();
     }
 
     @PostMapping("/redo")
-    public ResponseEntity redoCommand(){
+    public ResponseEntity redoCommand() {
         productCommander.redo();
         return ResponseEntity.status(200).build();
     }

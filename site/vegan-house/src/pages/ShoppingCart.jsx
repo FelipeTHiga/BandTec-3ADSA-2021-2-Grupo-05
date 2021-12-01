@@ -1,19 +1,19 @@
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
-import { Submenu } from '../components/Submenu';
-import "../styles/shoppingCart.scss"
-import { OrderCart, totalAmount } from '../components/OrderCart';
+import { OrderCart } from '../components/OrderCart';
+import { useHistory } from "react-router";
+import React, { useEffect } from 'react';
+
 import loginService from '../services/login';
 import api from "../services/api";
-import { useParams, useHistory } from "react-router";
-import React, { Component, useEffect, useState } from 'react';
 
-
+import "../styles/shoppingCart.scss"
 
 export function ShoppingCart(props) {
 
-    const history = useHistory();
     const [cartItems, setCartItems] = React.useState([]);
+    let [totalAmount, setNumber] = React.useState({ total: total });
+    const history = useHistory();
     let total = 0;
     let userLogged = loginService.getSession();
 
@@ -47,10 +47,6 @@ export function ShoppingCart(props) {
             history.push(`/login`);
         }
     }, [])
-    
-
-    
-    let [totalAmount, setNumber] = React.useState({ total: total });
 
     function finishOrder(){
         api.post(`/orders/`, userLogged)
@@ -58,13 +54,10 @@ export function ShoppingCart(props) {
                         if (res.status === 201) {
                             history.push("/checkout")
                         }
-                        console.log(res.data);
-                        console.log(total)
                     }).catch((err) => {
                         console.log(err);
                     })
     }
-
 
     return (
         <>

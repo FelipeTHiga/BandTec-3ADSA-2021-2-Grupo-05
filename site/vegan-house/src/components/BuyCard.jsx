@@ -51,25 +51,25 @@ export function BuyCard(props) {
     }
     let userLogged = loginService.getSession() ?? authenticatedUser;
 
-    function postCartItem(e){
-         api.post(`/cartItems/${userLogged.id}`, {
-                product: {
-                    id: props.product.id,
-                    price:props.product.price
-                },
-                quantity: 1,
-            })
+    function postCartItem(e) {
+        api.post(`/cartItems/${userLogged.id}`, {
+            product: {
+                id: props.product.id,
+                price: props.product.price
+            },
+            quantity: 1,
+        })
             .then((res) => {
                 if (res.status === 201) {
                     console.log("Item de carrinho adicionado - " + res.statusText);
                     history.push(`/carrinho`);
                 } else {
-                    
+
                 }
                 console.log(res.status);
             }).catch((err) => {
                 console.log(err);
-            
+
             })
     }
 
@@ -102,9 +102,14 @@ export function BuyCard(props) {
 
                             <div className="container-buy-btn" onclick={postCartItem}>
                                 <button className="buy-btn" onclick={postCartItem}>
-
                                     <img src={shoppingCart} alt="" />
-                                    <h2 onClick={() => { postCartItem() }}>Comprar</h2>
+                                    {
+                                        isLogged ? (
+                                            <h2 onClick={() => { postCartItem() }}>Comprar</h2>
+                                        ) : (
+                                            <h2 onClick={() => { setIsModalVisible(true) }}>Comprar</h2>
+                                        )
+                                    }
                                 </button>
                             </div>
                         ) : (
@@ -126,12 +131,12 @@ export function BuyCard(props) {
             </div>
             {
                 isModalVisible ?
-                    <Modal 
-                    onClose={() => setIsModalVisible(false)} 
-                    height={document.body.scrollHeight}
-                    title="Atenção" 
-                    message="Para acessar a funcionalidade, você precisa estar logado"
-                    btnTitle="Ir para Login!" />
+                    <Modal
+                        onClose={() => setIsModalVisible(false)}
+                        height={document.body.scrollHeight}
+                        title="Atenção"
+                        message="Para acessar a funcionalidade, você precisa estar logado"
+                        btnTitle="Ir para Login!" />
                     : null
             }
         </>

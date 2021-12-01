@@ -5,7 +5,7 @@ import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { UserGreeting } from '../components/UserGreeting';
-import { user, updateUser } from '../scripts/crud-user';
+import { updateUser } from '../scripts/crud-user';
 import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/userProfile.scss';
