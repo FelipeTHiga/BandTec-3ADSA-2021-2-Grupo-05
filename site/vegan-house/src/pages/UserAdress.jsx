@@ -50,6 +50,7 @@ export function UserAdress() {
         })
             .then(function (response) {
                 console.log(response.status);
+                alert("Dados atualizados com sucesso")
             });
     }
 

@@ -1,13 +1,14 @@
-import '../styles/catalog.scss';
-import '../styles/global.scss';
+
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
-import loginService from '../services/login';
 import { ProductCard } from '../components/ProductCard';
-import React, { Component, useEffect, useState } from 'react';
-import api from '../services/api';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import api from '../services/api';
+
+import '../styles/catalog.scss';
+import '../styles/global.scss';
 
 export function Catalog() {
 
@@ -39,45 +40,43 @@ export function Catalog() {
                 })
         }
 
-        function countCategory() {
-
-            api({
-                method: 'get',
-                url: "/products/countCategory",
-            })
-                .then((res) => {
-                    console.log(res.data)
-                    var data = res.data;
-                    for (var i = 0; i <= res.data.lenght; i++) {
-                        console.log(data[i][1])
-                        switch (data[i][0]) {
-                            case "Todos":
-                                setCountAll(data[i][0]);
-                                break;
-                            case "Acessórios":
-                                setCountAcessories(data[i][0]);
-                                break;
-                            case "Alimentos":
-                                setCountFood(data[i][0]);
-                                break;
-                            case "Cosméticos":
-                                setCountCosmetics(data[i][0]);
-                                break;
-                            case "Saúde":
-                                setCountHealth(data[i][0]);
-                                break;
-                                case "Vestimenta":
-                                setCountClothing(data[i][0]);
-                                break;
-                        }
-                    }
-                })
+        async function countCategory() {
+            const res = await api.get("/products/countCategory");
+            console.log(res.data);
+            await setCategoryAll(res.data)
         }
+
         countCategory();
         productAll();
-        
+
     }, [], [])
 
+    function setCategoryAll(data) {
+
+        for (var i = 0; i <= data.length - 1; i++) {
+            console.log(data[i][1])
+            switch (data[i][1]) {
+                case "Todos":
+                    setCountAll(data[i][0]);
+                    break;
+                case "Acessórios":
+                    setCountAcessories(data[i][0]);
+                    break;
+                case "Alimentos":
+                    setCountFood(data[i][0]);
+                    break;
+                case "Cosméticos":
+                    setCountCosmetics(data[i][0]);
+                    break;
+                case "Saúde":
+                    setCountHealth(data[i][0]);
+                    break;
+                case "Vestimenta":
+                    setCountClothing(data[i][0]);
+                    break;
+            }
+        }
+    }
 
     function getProductByCategory(e) {
 
@@ -176,7 +175,7 @@ export function Catalog() {
                         <div className="container-cards-products-changed line-up">
                             {products.map(product => (
                                 <ProductCard id={product.id} name={product.name}
-                                    price={product.price} category={product.category} fkSeller={product.fkSeller} />
+                                    price={product.price} category={product.category} fkSeller={product.fkSeller}/>
                             ))}
                         </div>
                     </div>

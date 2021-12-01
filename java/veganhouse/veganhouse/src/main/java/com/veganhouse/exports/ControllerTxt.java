@@ -22,10 +22,6 @@ public class ControllerTxt {
 
     @Autowired
     private TxtService txtService;
-//    @Autowired
-//    private IProductRepository productRepository;
-//    @Autowired
-//    private static TxtService txtService;
 
     public static void recordRegister(String fileName, String registro) {
         BufferedWriter saida = null;
@@ -83,7 +79,7 @@ public class ControllerTxt {
 
     }
 
-    public void readDisplayFileTxt(Seller seller, String fileName) {
+    public String readDisplayFileTxt(Seller seller, String fileName) {
         BufferedReader entrada = null;
         String register, registerType;
         Integer countDataRegister = 0;
@@ -161,39 +157,39 @@ public class ControllerTxt {
             System.out.println("Erro ao ler arquivo: " + erro.getMessage());
         }
 
+        // Exibir lista
         System.out.println("\n----------Conteúdo lido do arquivo:----------");
         for (int i = 0; i < readList.getTamanho(); i++) {
             Product p = readList.getElemento(i);
             System.out.println(p);
         }
 
+        // VALIDAÇÕES
         if (recordedRegisters != countDataRegister) {
             while (!productQueue.isEmpty()) {
                 productQueue.poll();
             }
             System.out.println("Quantidade de registros lidos incompatível com a quantidade de registros gravados");
-        } else if ( !commercialName.equals(seller.getCommercialName()) || !cnpj.equals(seller.getCnpj()) ) {
+            return ("Não foi possível realizar o cadastro dos produtos!\nQuantidade de registros lidos incompatível com a quantidade de registros presentes no arquivo txt.");
+        } else if (!commercialName.equals(seller.getCommercialName()) || !cnpj.equals(seller.getCnpj())) {
             while (!productQueue.isEmpty()) {
                 productQueue.poll();
             }
             System.out.println("Dados do vendedor incompatível com os dados do usuário logado");
+            return ("Não foi possível realizar o cadastro dos produtos!\nDados do vendedor no arquivo txt incompatível com os dados do usuário logado.");
         } else {
             while (!productQueue.isEmpty()) {
                 try {
                     txtService.createProduct((Product) productQueue.poll());
-                    //productRepository.save((Product) productQueue.poll());
                 } catch (Exception erro) {
                     System.out.println(erro.getMessage());
                     System.out.println(String.format("Erro de registro do %d° produto", index));
-//                    while(!productQueue.isEmpty()){
-//                        productRepository.delete(productQueue.poll());
-//                    }
+                    return (String.format("Erro ao cadastrar o %d° produto.\nPor favor, verifique se o registro do produto no arquivo txt segue nosso documento de layout.", index));
                 }
                 index++;
             }
         }
-        //createProduct(Seller seller, Integer recordedRegisters, Integer countDataRegister, String commercialName, String cnpj);
+        return ("Produtos cadastrados com sucesso!");
     }
-
 
 }

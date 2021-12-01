@@ -1,28 +1,25 @@
-import { Footer } from "../components/Footer";
-import { Navbar } from "../components/Navbar";
-import { Submenu } from "../components/Submenu";
-import { Title2 } from "../components/Title2";
-import { SectionTitle } from "../components/SectionTitle";
-import { SubTitle } from "../components/SubTitle";
-import { SocialMidia } from "../components/SocialMidia";
-import { Certification } from "../components/Certification";
-import { ProductTextDescription } from "../components/ProductTextDescription";
-import shoppingCart from "../assets/images/shopping-cart.png";
-import logoInstagram from "../assets/images/social-midias/logo-instagram.png";
-import logoFacebook from "../assets/images/social-midias/logo-facebook.png";
-import logoWhatsapp from "../assets/images/social-midias/logo-whatsapp.png";
+import { Footer } from '../components/Footer';
+import { Navbar } from '../components/Navbar';
+import { Submenu } from '../components/Submenu';
+import { Title2 } from '../components/Title2';
+import { SectionTitle } from '../components/SectionTitle';
+import { SubTitle } from '../components/SubTitle';
+import { SocialMidia } from '../components/SocialMidia';
+import { Certification } from '../components/Certification';
+import { ProductTextDescription } from '../components/ProductTextDescription';
+import { useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router';
+import { BuyCard } from '../components/BuyCard';
+
+import api from '../services/api';
+import loginService from '../services/login';
+import logoInstagram from '../assets/images/social-midias/logo-instagram.png';
+import logoFacebook from '../assets/images/social-midias/logo-facebook.png';
+import logoWhatsapp from '../assets/images/social-midias/logo-whatsapp.png';
+
 import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/productPage.scss';
-import image1 from "../assets/images/pants-1.svg";
-import image2 from "../assets/images/pants-2.svg";
-import image3 from "../assets/images/pants-3.svg";
-import React, { Component, useEffect, useState } from 'react';
-import { useParams, useHistory } from "react-router";
-import { BuyCard } from "../components/BuyCard";
-import api from "../services/api";
-import loginService from '../services/login';
-
 
 function selectImage(e) {
 
@@ -44,6 +41,31 @@ export function ProductPage() {
     const history = useHistory();
     let user = null;
     let userLogged = loginService.getSession() ?? user;
+
+    useEffect(() => {
+
+        async function productById() {
+            const res = await api.get(`/products/${id}`);
+            setProduct(res.data);
+            console.log(res.data);
+        }
+
+        async function sellerById() {
+            const res = await api.get(`/sellers/${fkSeller}`);
+            setSeller(res.data);
+            console.log(res.data);
+        }
+
+        async function sellerCertification() {
+            const res = await api.get(`/certifieds/${fkSeller}`);
+            setSellerCertification(res.data);
+            console.log(res.data);
+        }
+
+        productById();
+        sellerById();
+        sellerCertification();
+    }, [], {}, [])
 
     function postCartItem(e) {
         e.preventDefault();
@@ -71,30 +93,6 @@ export function ProductPage() {
 
     }
 
-    useEffect(() => {
-        async function productById() {
-            const res = await api.get(`/products/${id}`);
-            setProduct(res.data);
-            console.log(res.data);
-        }
-
-        async function sellerById() {
-            const res = await api.get(`/sellers/${fkSeller}`);
-            setSeller(res.data);
-            console.log(res.data);
-        }
-
-        async function sellerCertification() {
-            const res = await api.get(`/certifieds/${fkSeller}`);
-            setSellerCertification(res.data);
-            console.log(res.data);
-        }
-
-        productById();
-        sellerById();
-        sellerCertification();
-    }, [], {}, [])
-
     return (
         <>
             <Navbar />
@@ -115,15 +113,15 @@ export function ProductPage() {
                                 <div className="small-images">
                                     <img id="img-1" src={`http://localhost:8080/products/image/${id}/1`}
                                         onClick={selectImage}
-                                        alt="product-img-1" className="image img-active" />
+                                        className="image img-active" />
                                     <img id="img-2" src={`http://localhost:8080/products/image/${id}/2`}
                                         onClick={selectImage}
-                                        alt="product-img-2" className="image" />
+                                        className="image" />
                                     <img id="img-3" src={`http://localhost:8080/products/image/${id}/3`}
                                         onClick={selectImage}
-                                        alt="product-img-3" className="image" />
+                                        className="image" />
                                 </div>
-                                <img id="selected-image" src={`http://localhost:8080/products/image/${id}/1`} alt="product-img-selected" className="big-image" />
+                                <img id="selected-image" src={`http://localhost:8080/products/image/${id}/1`} className="big-image" />
                             </div>
                             <BuyCard product={product} seller={seller} addCartItem={postCartItem} />
                         </section>

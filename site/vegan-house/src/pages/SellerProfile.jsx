@@ -1,27 +1,26 @@
 
 import { Footer } from '../components/Footer';
-import { Navbar } from "../components/Navbar";
+import { Navbar } from '../components/Navbar';
 import { UserGreeting } from '../components/UserGreeting';
 import { Title } from '../components/Title';
 import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
-import loginService from "../services/login";
 import { useState, useEffect } from 'react';
-import '../styles/sellerProfile.scss';
-import '../styles/perfil.scss';
-import '../styles/global.scss';
-import '../styles/reset.css';
+
 import api from '../services/api';
 import InputMask from 'react-input-mask';
-
+import loginService from '../services/login';
 import Selo_1 from '../assets/images/certifications/Selo-1.png';
 import Selo_2 from '../assets/images/certifications/Selo-2.png';
 import Selo_3 from '../assets/images/certifications/Selo-3.png';
 import Selo_4 from '../assets/images/certifications/Selo-4.png';
 import Selo_5 from '../assets/images/certifications/Selo-5.png';
 
-
+import '../styles/sellerProfile.scss';
+import '../styles/perfil.scss';
+import '../styles/global.scss';
+import '../styles/reset.css';
 
 export function SellerProfile() {
 
@@ -44,7 +43,6 @@ export function SellerProfile() {
     const certification5 = document.getElementById("5")
 
     let certificationAr = [certification1, certification2, certification3, certification4, certification5];
-
 
     useEffect(() => {
 
@@ -108,7 +106,7 @@ export function SellerProfile() {
             commercialName: commercialName,
             cnpj: cnpj.replace(/\D/g, ''),
             commercialEmail: commercialEmail,
-            whatsappNumber: whatsappNumber, // .replace(/\D/g, '')
+            whatsappNumber: whatsappNumber,
             instagramAccount: instagramAccount,
             facebookAccount: facebookAccount,
             fkUser: user.id
@@ -284,8 +282,6 @@ export function SellerProfile() {
                                 </div>
                             </div>
 
-
-
                         </form>
                         <div className="container-button-update-user line-up">
                             <button onClick={updateCommercialData}>Atualizar</button>
@@ -293,11 +289,9 @@ export function SellerProfile() {
                         </div>
 
                     </div>
-
                 </div>
             </div>
             <Footer />
         </>
-
     );
 }

@@ -73,7 +73,7 @@ export function BuyCard(props) {
             
             })
         }
-         
+
     }
 
 
@@ -105,9 +105,14 @@ export function BuyCard(props) {
 
                             <div className="container-buy-btn" onclick={postCartItem}>
                                 <button className="buy-btn" onclick={postCartItem}>
-
                                     <img src={shoppingCart} alt="" />
-                                    <h2 onClick={() => { postCartItem() }}>Comprar</h2>
+                                    {
+                                        isLogged ? (
+                                            <h2 onClick={() => { postCartItem() }}>Comprar</h2>
+                                        ) : (
+                                            <h2 onClick={() => { setIsModalVisible(true) }}>Comprar</h2>
+                                        )
+                                    }
                                 </button>
                             </div>
                         ) : (
@@ -129,12 +134,12 @@ export function BuyCard(props) {
             </div>
             {
                 isModalVisible ?
-                    <Modal 
-                    onClose={() => setIsModalVisible(false)} 
-                    height={document.body.scrollHeight}
-                    title="Atenção" 
-                    message="Para acessar a funcionalidade, você precisa estar logado"
-                    btnTitle="Ir para Login!" />
+                    <Modal
+                        onClose={() => setIsModalVisible(false)}
+                        height={document.body.scrollHeight}
+                        title="Atenção"
+                        message="Para acessar a funcionalidade, você precisa estar logado"
+                        btnTitle="Ir para Login!" />
                     : null
             }
         </>

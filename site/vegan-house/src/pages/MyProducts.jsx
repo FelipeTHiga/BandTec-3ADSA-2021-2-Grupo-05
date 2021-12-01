@@ -4,27 +4,24 @@ import { Footer } from '../components/Footer';
 import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
-import { Button } from '../components/Button';
 import { DragDropUpload } from '../components/DragDropUpload';
 import { UserGreeting } from '../components/UserGreeting';
-import '../styles/global.scss';
-import '../styles/reset.css';
-import '../styles/myProducts.scss';
+import { useState, useEffect } from 'react';
+
 import ProductTableRow from '../components/ProductTableRow';
 import loginService from '../services/login';
-import React, { Component, useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router";
 import api from '../services/api';
 import undo from '../assets/images/undo.png'
 import redo from '../assets/images/redo.png'
-import withoutImage from '../assets/images/product-without-image.jpg';
-import { Link } from 'react-router-dom';
 import file from '../files/Documento-de-layout-importação.pdf';
+
+import '../styles/global.scss';
+import '../styles/reset.css';
+import '../styles/myProducts.scss';
 
 export function MyProducts() {
     let user = loginService.getSession();
     const [products, setProducts] = useState([]);
-    const history = useHistory();
     const [id, setId] = useState(0);
     const [name, setName] = useState("");
     const [category, setCategory] = useState("");
@@ -43,9 +40,6 @@ export function MyProducts() {
     const [image_url1, setImageUrl1] = useState("");
     const [image_url2, setImageUrl2] = useState("");
     const [image_url3, setImageUrl3] = useState("");
-    let idProduct;
-
-
 
     useEffect(() => {
         async function productsAll() {
@@ -61,13 +55,10 @@ export function MyProducts() {
 
     function pacthImage(idProduto) {
 
-        console.log(image_url1.files);
-
         let form = new FormData();
         form.append("foto1", image_url1.files[0])
         form.append("foto2", image_url2.files[0])
         form.append("foto3", image_url3.files[0])
-
 
         api.patch(`/products/image/${idProduto}`, form, {
             headers: {
@@ -79,7 +70,6 @@ export function MyProducts() {
             setImageUrl3(res.data.image_url3);
         })
     }
-
 
     function createProduct(e) {
         e.preventDefault();
@@ -99,7 +89,7 @@ export function MyProducts() {
                     window.location.href = '#section-products'
                     pacthImage(res.data.id);
                 }
-                console.log(res.status);
+                window.location.href = '#section-my-products'  
             }).catch((err) => {
                 console.log(err);
                 setSucess("");
@@ -244,19 +234,7 @@ export function MyProducts() {
         setSucess("")
         document.getElementById("create-btn").style.display = "block";
         document.getElementById("edit-btn").style.display = "none";
-        window.location.href = '#section-products-edit'
-
-        // document.getElementById('file')
-        // if()
-        // api.get(`importTxt/${user.id}`)
-        // .then((res) => {
-        //     if (res.status === 200) {
-        //         setProducts(res.data)
-        //         console.log(res.status);
-        //     }
-        // }).catch((err) => {
-        //     console.log(err);
-        // })
+        window.location.href = '#section-products-edit'       
     }
 
     function getSearchCategory(e) {
@@ -273,11 +251,35 @@ export function MyProducts() {
             })
     }
 
+    function sendTxtFile() {
+
+        var file = document.getElementById('file')
+
+        let form = new FormData();
+        form.append("txt", file.files[0])
+
+        api.patch(`products/importTxt/${user.id}`, form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then((res) => {
+                if (res.status === 200) {
+                    alert(res.data)
+                    
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+    }
+
     function exportTxt(fileName, idSeller) {
         api.post(`products/exportTxt/${fileName}/${idSeller}`)
             .then((res) => {
                 if (res.status === 200) {
                     alert("Arquivo txt exportado com sucesso!\nC:/Users/laris/Desktop/PROJETO-3ºS/BandTec-3ADSA-2021-2-Grupo-05/java/veganhouse/veganhouse")
+                } else if(res.status === 204){
+                    alert("Não foi possível exportar o arquivo txt!\nVendedor sem produtos cadastrados.")
                 }
             }).catch((err) => {
                 console.log(err);
@@ -294,6 +296,8 @@ export function MyProducts() {
             .then((res) => {
                 if (res.status === 200) {
                     alert("Arquivo csv exportado com sucesso!\nC:/Users/laris/Desktop/PROJETO-3ºS/BandTec-3ADSA-2021-2-Grupo-05/java/veganhouse/veganhouse")
+                } else if(res.status === 204){
+                    alert("Não foi possível exportar o arquivo csv!\nVendedor sem produtos cadastrados.")
                 }
             }).catch((err) => {
                 console.log(err);
@@ -304,8 +308,6 @@ export function MyProducts() {
         }
         document.getElementById('csv').classList.add('export-active');
     }
-
-
 
     // function getSearchSubCategory(e){
     //     e.preventDefault();
@@ -338,7 +340,7 @@ export function MyProducts() {
                         <SellerMenu isSeller={user.isSeller} />
                     </div>
 
-                    <div className="section-products">
+                    <div id="section-my-products" className="section-products">
                         <div className="container-products">
                             <SectionTitle text="Meus produtos" />
 
@@ -378,6 +380,7 @@ export function MyProducts() {
                                         <label htmlFor="">Importar produtos</label>
 
                                         <label class="file">
+                                            <button className="btn-send" onClick={() => {sendTxtFile()}}>Enviar</button>
                                             <span class="file-custom"></span>
                                             <input type="file" id="file" aria-label="File browser example" />
                                         </label>

@@ -2,14 +2,13 @@ import { Title } from '../components/Title';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
-import { Button } from '../components/Button';
+import { useState } from 'react';
+import { useHistory } from 'react-router';
+import InputMask from 'react-input-mask';
+import api from '../services/api';
+
 import '../styles/register.scss';
 import '../styles/global.scss';
-import { getUser, submit } from '../services/crud-user';
-import InputMask from 'react-input-mask'
-import React, { Component, useState, useEffect } from "react";
-import { useHistory } from "react-router";
-import api from '../services/api';
 
 export function Register() {
     const [nameUser, setNameUser] = useState("");
@@ -20,12 +19,11 @@ export function Register() {
     const [passwordUserConfirm, setPasswordUserConfirm] = useState("");
     const [error, setError] = useState("");
     const history = useHistory();
-    const [user, setUser] = useState({});
 
     function singin(e) {
         e.preventDefault();
         if (passwordUser.length < 6 || passwordUser.length > 20) {
-            setError("A senha possui um número caracteres inválido!")
+            setError("A senha possui um número de caracteres inválido!")
         } else if((passwordUser != passwordUserConfirm)) {
             setError("As senhas informadas não coincidem!")
         } else {
@@ -123,7 +121,6 @@ export function Register() {
                             </div>
                             <button type="submit">Enviar</button>
                             {error && <p className="error">{error}</p>}
-                            {/* <Button path="/home" text="Enviar" type="submit"/> */}
                         </form>
                     </div>
                 </div>
@@ -131,7 +128,6 @@ export function Register() {
             </section>
             <Footer />
         </>
-
 
     )
 }

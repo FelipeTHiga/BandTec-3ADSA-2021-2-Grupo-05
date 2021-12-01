@@ -2,18 +2,18 @@ import { Title } from '../components/Title';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
-import '../styles/registerSeller.scss';
-import '../styles/global.scss';
-import { getUser } from '../services/crud-user';
-import  serviceSeller  from '../services/crud-seller';
-import React, { Component, useState, useEffect } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router";
-import api from '../services/api';
 
-import  InputMask  from 'react-input-mask'
+import api from '../services/api';
+import InputMask  from 'react-input-mask'
 import loginService from '../services/login';
 
+import '../styles/registerSeller.scss';
+import '../styles/global.scss';
+
 export function RegisterSeller() {
+
     const [commercialName, setCommercialName] = useState("");
     const [cnpj, setCnpj] = useState("");
     const [commercialEmail, setCommercialEmail] = useState("");
@@ -28,7 +28,7 @@ export function RegisterSeller() {
         } else {
             api.post(`/sellers/${user.id}`,{
                 commercialName: commercialName,
-                cnpj: cnpj,
+                cnpj: cnpj.replace(/\D/g, ''),
                 commercialEmail: commercialEmail,
             })
             .then((res) => {
@@ -92,8 +92,6 @@ export function RegisterSeller() {
                             </div>
                             <button className="button" type="submit">Enviar</button>
                             {error && <p className="error">{error}</p>}
-                            {/* <span onClick={serviceSeller.submitSeller}>Enviar</span> */}
-                            {/* <Button onClick={submitSeller}  text="Enviar" /> */}
                         </form>
                     </div>
                 </div>
@@ -101,7 +99,6 @@ export function RegisterSeller() {
             </section>
             <Footer />
         </>
-
 
     )
 }

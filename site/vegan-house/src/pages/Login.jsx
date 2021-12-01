@@ -2,12 +2,10 @@ import { Title } from '../components/Title';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
-import { Button } from '../components/Button';
+import { FormLogin } from '../components/FormLogin';
+
 import '../styles/login.scss';
 import '../styles/global.scss';
-import { getUser, login } from '../services/crud-user';
-import { Link, withRouter } from "react-router-dom";
-import {FormLogin} from '../components/FormLogin'
 
 export function Login() {
     return (

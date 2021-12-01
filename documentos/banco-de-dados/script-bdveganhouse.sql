@@ -122,17 +122,14 @@ select * from product;
 select * from certification;
 select * from seller_certified;
 select * from restock_notification;
+select * from order_vh;
 
-select name, url from certification 
+select name, url, id_certification from certification 
 inner join seller_certified
-on fk_certification = id_certification 
+on fk_certification = id_certification
 where fk_seller = 1 and has_certification = 1;
 
-select * from seller where fk_user = 1;
+drop table users;
 
-delete from seller_certified where id_seller_certified in (4,5, 6, 8, 9, 10, 12);
 
-delete from seller where id_seller = 4;
-delete from seller_certified where id_seller_certified = 6;
 
-delete from product where id = 1;
