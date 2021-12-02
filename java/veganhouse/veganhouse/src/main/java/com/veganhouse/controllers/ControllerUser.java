@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 // Classe responsável pelos endpoints de criação e edição de usuários
 @RestController
 @RequestMapping("/users")
@@ -22,7 +24,7 @@ public class ControllerUser {
 
 
     @PostMapping
-    public ResponseEntity createUser(@RequestBody User newUser){
+    public ResponseEntity createUser(@RequestBody @Valid User newUser){
         newUser.setIsSeller(false);
         newUser.setAuthenticated(false);
         userRepository.save(newUser);
@@ -40,7 +42,7 @@ public class ControllerUser {
     }
 
     @PutMapping()
-    public ResponseEntity putUser(@RequestBody User newUpdate){
+    public ResponseEntity putUser(@RequestBody @Valid User newUpdate){
         if (userRepository.existsById(newUpdate.getId())) {
             userRepository.save(newUpdate);
             return ResponseEntity.status(200).build();
@@ -58,7 +60,7 @@ public class ControllerUser {
     }
 
     @PostMapping("seller")
-    public ResponseEntity createSeller(@RequestBody Seller newSeller){
+    public ResponseEntity createSeller(@RequestBody @Valid Seller newSeller){
         //sellerRepository.save(newSeller);
         return ResponseEntity.status(201).build();
     }
@@ -78,7 +80,7 @@ public class ControllerUser {
 
     @PutMapping("/adress/{idAdress}")
     public ResponseEntity putAdress(@PathVariable Integer idAdress,
-                                    @RequestBody Adress adressUpdate){
+                                    @RequestBody @Valid Adress adressUpdate){
         if (adressRepository.existsById(idAdress)) {
             adressUpdate.setIdAdress(idAdress);
             adressRepository.save(adressUpdate);
@@ -89,7 +91,7 @@ public class ControllerUser {
     }
 
     @PostMapping("/adress")
-    public ResponseEntity createAdress(@RequestBody Adress newAdress){
+    public ResponseEntity createAdress(@RequestBody @Valid Adress newAdress){
         adressRepository.save(newAdress);
         return ResponseEntity.status(201).build();
     }
