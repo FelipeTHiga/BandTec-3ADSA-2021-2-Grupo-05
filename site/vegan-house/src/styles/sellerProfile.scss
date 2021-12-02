@@ -82,6 +82,15 @@
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
     }
+
+    form {
+        .p-name {
+            margin-top: 0;
+        }
+        p{
+            color: red;
+        }
+    }
 }
 
 /* inicio container dados comerciais  */

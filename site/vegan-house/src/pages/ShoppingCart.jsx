@@ -43,9 +43,9 @@ export function ShoppingCart(props) {
             history.push(`/login`);
         }
     }, [])
-    
 
-    
+
+
     let [totalAmount, setNumber] = React.useState({ total: total });
 
     function finishOrder(){
@@ -82,7 +82,7 @@ export function ShoppingCart(props) {
                             </div>
                         </div>
                         {cartItems.map(cartItem => (<OrderCart price={cartItem.product.price} setTotal={setNumber} cardId={cartItem.idCartItem} productName={cartItem.product.name} productId={cartItem.product.id} quantity={cartItem.quantity}  />))}
-                        
+
                     </div>
                     <div className="cart-final">
                         <h1>Total: <span id="totalLabel">R${totalAmount.total.toFixed(2)}</span></h1>

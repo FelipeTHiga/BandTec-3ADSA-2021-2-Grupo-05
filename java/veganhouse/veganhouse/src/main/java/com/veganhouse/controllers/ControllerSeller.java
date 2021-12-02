@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 // Classe responsável pelos endpoints de criação e edição de sellers
 @RestController
 @RequestMapping("/sellers")
@@ -22,9 +24,9 @@ public class ControllerSeller {
     @Autowired
     private ISellerCertified sellerCertifiedRepository;
 
-    @PostMapping("/{idUser}")
-    public ResponseEntity createSeller(@RequestBody Seller newSeller, @PathVariable Integer idUser) {
 
+    @PostMapping("/{idUser}")
+    public ResponseEntity createSeller(@RequestBody @Valid Seller newSeller, @PathVariable Integer idUser) {
         try {
             // Pegando o usário
             User userLogged = userRepository.findById(idUser).get();
@@ -59,7 +61,7 @@ public class ControllerSeller {
     }
 
     @PutMapping("/{idSeller}")
-    public ResponseEntity updateSeller(@PathVariable int idSeller, @RequestBody Seller sellerUpdate) {
+    public ResponseEntity updateSeller(@PathVariable int idSeller, @RequestBody @Valid Seller sellerUpdate) {
         if (sellerRepository.existsById(idSeller)) {
             sellerUpdate.setIdSeller(idSeller);
             sellerRepository.save(sellerUpdate);

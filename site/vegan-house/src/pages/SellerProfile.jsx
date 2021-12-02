@@ -33,8 +33,13 @@ export function SellerProfile() {
     const [whatsappNumber, setWhatsappNumber] = useState('');
     const [instagramAccount, setInstagramAccount] = useState('');
     const [facebookAccount, setFacebookAccount] = useState('');
-    const [erro, setErro] = useState("");
+    //const [erro, setErro] = useState("");
     const [sucess, setSucess] = useState(sessionStorage.getItem("sucess"));
+
+    const [error, setError] = useState([]);
+    const [errorCommercialName, setErrorCommercialName] = useState("");
+    const [errorCnpj, setErrorCnpj] = useState("");
+    const [errorCommercialEmail, setErrorCommercialEmail] = useState("");
 
     const certification1 = document.getElementById("1")
     const certification2 = document.getElementById("2")
@@ -43,6 +48,20 @@ export function SellerProfile() {
     const certification5 = document.getElementById("5")
 
     let certificationAr = [certification1, certification2, certification3, certification4, certification5];
+
+    function warmings(errors) {
+        console.log(errors)
+        for (var i = 0; i < errors.length; i++) {
+            if (errors[i].field == 'commercialEmail') {
+                setErrorCommercialEmail(errors[i].defaultMessage)
+            } else if (errors[i].field == 'commercialName') {
+                setErrorCommercialName(errors[i].defaultMessage)
+            } else if (errors[i].field == 'cnpj') {
+                setErrorCnpj(errors[i].defaultMessage)
+            }
+        }
+
+    }
 
     useEffect(() => {
 
@@ -94,11 +113,16 @@ export function SellerProfile() {
 
     function updateCommercialData(e) {
         e.preventDefault();
+
+        setErrorCommercialName("");
+        setErrorCnpj("");
+        setErrorCommercialEmail("");
         updateSeller();
         updateSellerCertified();
     }
 
     async function updateSeller() {
+        
         const updateSeller = {
             idSeller: idSeller,
             commercialName: commercialName,
@@ -122,14 +146,20 @@ export function SellerProfile() {
                     alert("Dados atualizados com sucesso!");
                     window.location.reload();
                 } else {
-                    setErro("Não foi possível atualizar seus dados");
+                    //setErro("Não foi possível atualizar seus dados");
                     sessionStorage.setItem("sucess", "");
                     setSucess(null);
+                    console.log(res)
                 }
-            }).catch((res) => {
+            }).catch((err) => {
                 sessionStorage.setItem("sucess", "");
-                setErro("Ocorreu um erro ao tentar atualizar seus dados! Por favor, tente novamente.");
+                //setErro("Ocorreu um erro ao tentar atualizar seus dados! Por favor, tente novamente.");
                 setSucess(null);
+            
+                warmings(err.response.data.errors);
+                console.log(err.response.data)
+              
+              
             })
     }
 
@@ -179,6 +209,7 @@ export function SellerProfile() {
                                     <i className="fas fa-user line-up icon-left-radius"></i>
                                     <input className="input-default " type="text" placeholder="" name="" id="nameCommercial" value={commercialName} onChange={e => { setCommercialName(e.target.value) }} />
                                 </div>
+                                {errorCommercialName && <p className="error err-sellerP p-name">{errorCommercialName}</p>}
                             </div>
                             <div className="container-input">
                                 <label for="cnpj">CNPJ</label>
@@ -187,6 +218,7 @@ export function SellerProfile() {
 
                                     <InputMask mask="99.999.999/9999-99" className="input-default " type="text" placeholder="" name="" id="cnpj" value={cnpj} onChange={e => { setCnpj(e.target.value) }} />
                                 </div>
+                                {errorCnpj && <p className="error">{errorCnpj}</p>}
                             </div>
                             <div className="container-input">
                                 <label for="email">Email Comercial</label>
@@ -194,6 +226,7 @@ export function SellerProfile() {
                                     <i className="far fa-envelope line-up icon-left-radius"></i>
                                     <input className="input-default " type="text" placeholder="" name="" id="email" value={commercialEmail} onChange={e => { setcommercialEmail(e.target.value) }} />
                                 </div>
+                                {errorCommercialEmail && <p className="error">{errorCommercialEmail}</p>}
                             </div>
                         </form>
                         <SectionTitle text="Contato & Redes Sociais" />
@@ -282,7 +315,6 @@ export function SellerProfile() {
                         </form>
                         <div className="container-button-update-user line-up">
                             <button onClick={updateCommercialData}>Atualizar</button>
-                            {erro && <p className="error err-sellerP">{erro}</p>}
                         </div>
 
                     </div>

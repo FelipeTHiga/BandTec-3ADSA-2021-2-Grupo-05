@@ -3,7 +3,9 @@ package com.veganhouse.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.Arrays;
+
 
 @Entity
 public class Product {
@@ -12,15 +14,25 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
+
+    @NotBlank(message = "O campo NOME deve ser preenchido")
     protected String name;
+
+    @NotNull(message = "O campo PREÇO deve ser preenchido")
+    //@Pattern(regexp = "/^[\\d,.?!]+$/g", message = "O campo PREÇO aceita apenas números")
     protected Double price;
+
     protected String category;
     protected String subCategory;
 
+    @Size(min = 0, max = 1000, message = "A DESCRIÇÃO deve ter no máximo 1000 caracteres")
     @Lob
     @Basic(fetch = FetchType.LAZY)
     protected String description;
+
+    @NotNull(message = "O campo QUANTIDADE deve ser preenchido")
     protected Integer inventory;
+
     protected Integer fkSeller;
     protected Boolean isAvaliable;
 

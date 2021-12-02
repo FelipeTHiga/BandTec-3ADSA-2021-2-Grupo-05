@@ -13,6 +13,8 @@ import  { Checkout } from "./pages/Checkout";
 import { SellerProfile } from "./pages/SellerProfile";
 import { MyOrders } from "./pages/MyOrders";
 import { MySales } from "./pages/MySales";
+import { PaymentResponse } from "./pages/PaymentResponse";
+
 
 
 // import { NewRoom } from "./pages/NewRoom";
@@ -32,6 +34,7 @@ function App() {
         <Route path="/perfil/meus-produtos" component={MyProducts} />
         <Route path="/todos-os-resultados/:categoryUrl" exact={true} component={Catalog} />
         <Route path="/todos-os-resultados/:category/:id/:fkSeller" exact={true} component={ProductPage} />
+        <Route path="/payment-response/:id/:status/:desc" exact={true} component={PaymentResponse} />
         {/* <Route path="/produto" component={ProductPage} /> */}
         <Route path="/carrinho" component={ShoppingCart} />
         <Route path="/checkout" component={Checkout} />

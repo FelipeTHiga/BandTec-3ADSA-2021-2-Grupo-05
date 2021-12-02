@@ -1,9 +1,14 @@
 package com.veganhouse.domain;
 
+import org.hibernate.validator.constraints.br.CNPJ;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Entity
@@ -14,10 +19,23 @@ public class Seller {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idSeller;
 
+    @NotBlank(message = "O campo NOME COMERCIAL deve ser preenchido")
+    //@Pattern(regexp = "^[a-zA-Z]+[\\-'\\s]?[a-zA-Z ]+$",
+            //message = "O campo NOME COMERCIAL aceita apenas letras")
     private String commercialName;
+
+
+    @CNPJ(message = "Digite um CNPJ válido")
     private String cnpj;
+
+
+    @NotBlank(message = "Digite um e-mail válido")
     private String commercialEmail;
+
+    //@Pattern(regexp = "/\\D/g",
+            //message = "O campo WHATSAPP aceita apenas números")
     private String whatsappNumber;
+
     private String instagramAccount;
     private String facebookAccount;
     private Integer fkUser;
