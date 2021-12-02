@@ -37,7 +37,7 @@ export function MyProducts() {
     const [errorPrice, setErrorPrice] = useState("");
     const [errorDescription, setErrorDescription] = useState("");
     const [errorInventory, setErrorInventory] = useState("");
-    const [erro, setErro] = useState("");
+    const [error, setError] = useState([]);
     const [sucess, setSucess] = useState("");
 
     const [image_url1, setImageUrl1] = useState("");
@@ -53,6 +53,22 @@ export function MyProducts() {
 
         productsAll();
     }, [])
+
+    function warmings(errors) {
+        
+        for (var i = 0; i < errors.length; i++) {
+            if (errors[i].field == 'name') {
+                setErrorName(errors[i].defaultMessage)
+            } else if (errors[i].field == 'price') {
+                setErrorPrice(errors[i].defaultMessage)
+            } else if (errors[i].field == 'description') {
+                setErrorDescription(errors[i].defaultMessage)
+            } else if (errors[i].field == 'inventory') {
+                setErrorInventory(errors[i].defaultMessage)
+            }
+        }
+
+    }
 
     function pacthImage(idProduto) {
 
@@ -74,6 +90,10 @@ export function MyProducts() {
 
     function createProduct(e) {
         e.preventDefault();
+        setErrorName("");
+        setErrorPrice("");
+        setErrorDescription("");
+        setErrorInventory("");
         api.post(`/products`, {
             name: name,
             price: parseFloat(price),
@@ -81,7 +101,7 @@ export function MyProducts() {
             subCategory: subCategory,
             description: description,
             inventory: parseInt(inventory),
-            fkSeller: user.id,
+            fkSeller: user.id
         })
             .then((res) => {
                 if (res.status === 201) {
@@ -92,13 +112,18 @@ export function MyProducts() {
                 }
                 window.location.href = '#section-my-products'
             }).catch((err) => {
-                console.log(err);
+                warmings(err.response.data.errors);
+                console.log(err.response.data);
                 setSucess("");
             })
     }
 
     function patch(e) {
         e.preventDefault();
+        setErrorName("");
+        setErrorPrice("");
+        setErrorDescription("");
+        setErrorInventory("");
 
         api.patch(`/products/${id}`, {
             name: name,
@@ -107,7 +132,7 @@ export function MyProducts() {
             inventory: inventory,
             price: parseFloat(price),
             description: description,
-            fkSeller: user.id
+            fkSeller: fkSeller
         }).then((res) => {
             if (res.status === 200) {
                 setName("");
@@ -124,8 +149,10 @@ export function MyProducts() {
                 getAllProducts();
                 window.location.href = '#section-products'
             } else {
+                
             }
         }).catch((err) => {
+            warmings(err.response.data.errors);
         })
     }
 
@@ -151,6 +178,7 @@ export function MyProducts() {
                     getAllProducts();
                 }
             }).catch((err) => {
+                
             })
     }
 
@@ -271,7 +299,7 @@ export function MyProducts() {
         api.post(`products/exportTxt/${fileName}/${idSeller}`)
             .then((res) => {
                 if (res.status === 200) {
-                    alert("Arquivo txt exportado com sucesso!\nC:/Users/laris/Desktop/PROJETO-3ºS/BandTec-3ADSA-2021-2-Grupo-05/java/veganhouse/veganhouse")
+                    alert("Arquivo txt exportado com sucesso!")
                 } else if (res.status === 204) {
                     alert("Não foi possível exportar o arquivo txt!\nVendedor sem produtos cadastrados.")
                 }
@@ -288,7 +316,7 @@ export function MyProducts() {
         api.post(`products/exportCsv/${fileName}/${idSeller}`)
             .then((res) => {
                 if (res.status === 200) {
-                    alert("Arquivo csv exportado com sucesso!\nC:/Users/laris/Desktop/PROJETO-3ºS/BandTec-3ADSA-2021-2-Grupo-05/java/veganhouse/veganhouse")
+                    alert("Arquivo csv exportado com sucesso!")
                 } else if (res.status === 204) {
                     alert("Não foi possível exportar o arquivo csv!\nVendedor sem produtos cadastrados.")
                 }
@@ -402,6 +430,7 @@ export function MyProducts() {
                                 <div className="product-edit-camp">
                                     <label>Nome</label>
                                     <input id="name_product" onChange={e => setName(e.target.value)} value={name} className="input" type="text" placeholder="Ex. Sorvete de banana" />
+                                    {errorName && <p className="error">{errorName}</p>}
                                 </div>
 
                                 <div className="line-up width-100">
@@ -435,11 +464,13 @@ export function MyProducts() {
                                     <div className="product-edit-camp margin-right-50">
                                         <label htmlFor="">Preço</label>
                                         <input id="price" onChange={e => setPrice(e.target.value)} value={price} className="input" type="text" placeholder="R$" />
+                                        {errorPrice && <p className="error">{errorPrice}</p>}
                                     </div>
 
                                     <div className="product-edit-camp">
                                         <label htmlFor="">Qtd. estoque</label>
                                         <input id="inventory" onChange={e => setInvetory(e.target.value)} value={inventory} className="input" type="text" placeholder="100" />
+                                        {errorInventory && <p className="error">{errorInventory}</p>}
                                     </div>
                                 </div>
 
@@ -452,6 +483,7 @@ export function MyProducts() {
                                 <div className="product-edit-camp">
                                     <label htmlFor="">Descrição</label>
                                     <textarea name="" id="description" onChange={e => setDescription(e.target.value)} value={description} cols="30" rows="10"></textarea>
+                                    {errorDescription && <p className="error">{errorDescription}</p>}
                                 </div>
 
                                 <div className="align-column margin-top-20 margin-bottom-25">

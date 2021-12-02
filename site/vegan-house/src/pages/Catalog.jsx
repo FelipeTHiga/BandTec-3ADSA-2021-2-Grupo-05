@@ -13,7 +13,6 @@ import '../styles/global.scss';
 export function Catalog() {
 
     let { categoryUrl } = useParams();
-   
     const [products, setProducts] = useState([]);
     const [filter, setFilter] = useState("lowest-price");
     const [category, setCategory] = useState(categoryUrl);
@@ -30,14 +29,29 @@ export function Catalog() {
     useEffect(() => {
 
         function productAll() {
-            api({
-                method: 'get',
-                url: `/products/filter/lowest-price/${categoryUrl}`,
-            })
-                .then((res) => {
-                    setProducts(res.data);
+            if (categoryUrl == 'name') {
+                var name = sessionStorage.getItem("nameProd");
+                categoryUrl="";
+                api.get(`/products/name/${name}`)
+                    .then((res) => {
+                        if (res.status === 200) {
+                            setProducts(res.data);
+                            sessionStorage.setItem("nameProd", "");
+                        }
+                    }).catch((err) => {
+                    })
+            } else {
+                api({
+                    method: 'get',
+                    url: `/products/filter/lowest-price/${categoryUrl}`,
                 })
+                    .then((res) => {
+                        setProducts(res.data);
+                    })
+            }
+            
         }
+        
 
         async function countCategory() {
             const res = await api.get("/products/countCategory");
@@ -116,7 +130,7 @@ export function Catalog() {
 
     return (
         <>
-            <Navbar />
+            <Navbar isCatalog={true} setProducts={setProducts}/>
             <Submenu />
             <section className="container-search-result">
                 <div className="title-catalog">

@@ -20,18 +20,20 @@ public class Seller {
     private int idSeller;
 
     @NotBlank(message = "O campo NOME COMERCIAL deve ser preenchido")
-    @Pattern(regexp = "^[a-zA-Z]+[\\-'\\s]?[a-zA-Z ]+$",
-            message = "O campo NOME COMERCIAL aceita apenas letras")
+    //@Pattern(regexp = "^[a-zA-Z]+[\\-'\\s]?[a-zA-Z ]+$",
+            //message = "O campo NOME COMERCIAL aceita apenas letras")
     private String commercialName;
 
-    @NotBlank(message = "O campo CNPJ deve ser preenchido")
+
     @CNPJ(message = "Digite um CNPJ válido")
     private String cnpj;
 
-    @NotBlank(message = "O campo E-MAIL COMERCIAL deve ser preenchido")
-    @Email(message = "Digite um e-mail válido")
+
+    @NotBlank(message = "Digite um e-mail válido")
     private String commercialEmail;
 
+    //@Pattern(regexp = "/\\D/g",
+            //message = "O campo WHATSAPP aceita apenas números")
     private String whatsappNumber;
 
     private String instagramAccount;

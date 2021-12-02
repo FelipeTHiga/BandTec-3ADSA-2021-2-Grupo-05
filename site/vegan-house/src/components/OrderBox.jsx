@@ -16,7 +16,7 @@ export function OrderBox(props) {
                     </div>
                     <div className="total-order">
                         <h2>Total</h2>
-                        <p>R${props.total}</p>
+                        <p>R${Number(props.total).toFixed(2)}</p>
                     </div>
                     <div className="status-order">
                         <h2>Status</h2>

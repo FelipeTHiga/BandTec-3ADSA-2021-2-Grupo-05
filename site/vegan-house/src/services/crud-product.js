@@ -70,12 +70,6 @@ const productService = {
         })
     },
 
-    async getProductsAll() {
-        return await api({
-            method: "get",
-            url: '/products/all'
-        })
-    },
 
     // Request para atualizar o produto 
     async updateProduct(productData) {
