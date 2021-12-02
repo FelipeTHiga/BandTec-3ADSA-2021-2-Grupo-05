@@ -61,7 +61,6 @@
 			<artifactId>sdk-java</artifactId>
 			<version>1.11.0</version>
 		</dependency>
-	</dependencies>
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
@@ -87,5 +86,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
