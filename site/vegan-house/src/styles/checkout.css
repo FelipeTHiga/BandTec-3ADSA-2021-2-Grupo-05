@@ -11,8 +11,12 @@
 .payment-data-container{
     overflow-y: scroll;
     margin-top: 20px;
-    height: 60%;
+    height: 90%;
     padding-right: 10px;
+}
+
+.payment-form{
+overflow-y: hidden;
 }
 
 .payment-form-data{
@@ -152,4 +156,15 @@
     background: #F0F0F0;
     border-radius: 10px;
     box-shadow: inset 0px 0px 0px 0px #F0F0F0;
+}
+
+.display-none{
+    display: none;
+}
+
+.payment-data-container select{    
+    margin-top: 20px;  
+    height: 30px;
+    margin-right: 10px;
+    margin-bottom: 20px;
 }

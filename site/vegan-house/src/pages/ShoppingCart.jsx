@@ -57,6 +57,8 @@ export function ShoppingCart(props) {
                     .then((res) => {
                         if (res.status === 201) {
                             history.push("/checkout")
+                            sessionStorage.setItem("amountOrder", totalAmount.total)
+
                         }
                         console.log(res.data);
                         console.log(total)
