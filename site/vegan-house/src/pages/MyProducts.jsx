@@ -77,7 +77,7 @@ export function MyProducts() {
             subCategory: subCategory,
             description: description,
             inventory: parseInt(inventory),
-            fkSeller: user.id,
+            fkSeller: user.id
         })
             .then((res) => {
                 if (res.status === 201) {
@@ -103,7 +103,7 @@ export function MyProducts() {
             inventory: inventory,
             price: parseFloat(price),
             description: description,
-            fkSeller: user.id
+            fkSeller: fkSeller
         }).then((res) => {
             if (res.status === 200) {
                 setName("");
