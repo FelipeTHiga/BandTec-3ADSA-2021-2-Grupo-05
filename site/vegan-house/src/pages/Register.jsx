@@ -18,43 +18,74 @@ export function Register() {
     const [email, setEmail] = useState("");
     const [passwordUser, setPasswordUser] = useState("");
     const [passwordUserConfirm, setPasswordUserConfirm] = useState("");
-    const [error, setError] = useState("");
+    const [error, setError] = useState([]);
+    const [errorName, setErrorName] = useState("");
+    const [errorSurName, setErrorSurName] = useState("");
+    const [errorCpf, setErrorCpf] = useState("");
+    const [errorEmail, setErrorEmail] = useState("");
+    const [errorPassword, setErrorPassword] = useState("");
     const history = useHistory();
     const [user, setUser] = useState({});
 
+    
+    function warmings(errors) {
+        console.log(errors)
+        for(var i = 0; i < errors.length; i++) {
+           if(errors[i].field == 'passwordUser') {
+                setErrorPassword(errors[i].defaultMessage)
+            } else if(errors[i].field == 'cpf') {
+                setErrorCpf(errors[i].defaultMessage)
+            } else if(errors[i].field == 'surName') {
+                setErrorSurName(errors[i].defaultMessage)
+            } else if(errors[i].field == 'nameUser') {
+                setErrorName(errors[i].defaultMessage)
+            } else if(errors[i] == 'email') {
+                setErrorEmail(errors[i].defaultMessage)
+            }
+        }
+
+    }
+
     function singin(e) {
         e.preventDefault();
+        setErrorName("");
+        setErrorSurName("");
+        setErrorCpf("");
+        setErrorEmail("");
+        setErrorPassword("");
+
         if (passwordUser != passwordUserConfirm) {
             setError("As senhas informadas não conhecidem!")
         } else {
             api.post(`/users`, {
                 nameUser: nameUser,
                 surName: surName,
-                cpf: cpf.replace(/\D/g,''),
+                cpf: cpf.replace(/\D/g, ''),
                 email: email,
                 passwordUser: passwordUser
             })
-            .then((res) => {
-                if (res.status === 201) {
-                    console.log("Cadastro realizado - " + res.statusText);
-                    history.push(`/login`);
-                } else {
-                    setError("Ocorreu um erro no cadastro - " + res.statusText);
-                }
-                console.log(res.status);
-            }).catch((err) => {
-                console.log(err);
-                setError("Ocorreu um erro no cadastro - " + err)
-            })
+                .then((res) => {
+                    if (res.status === 201) {
+                        console.log("Cadastro realizado - " + res.statusText);
+                        history.push(`/login`);
+                    } else {
+                        warmings(res.data.errors);
+                    }
+                    console.log(res.status);
+                }).catch((err) => {
+                    var errorC = [];
+                    err.response.data.errors.forEach(erro => errorC.push(erro.defaultMessage))
+                    warmings(err.response.data.errors);
+                })
         }
-        
+
     }
 
     return (
         <>
             <Navbar />
             <Submenu />
-            <section className="register">
+            <section className="register-user">
                 <div className="container-register">
                     <Title title="Cadastro" />
 
@@ -65,18 +96,20 @@ export function Register() {
                                 <label>Nome</label>
                                 <div className="name-content">
                                     <i className="fas fa-user"></i>
-                                    <input id="name" onChange={e => setNameUser(e.target.value)} type="text" placeholder="Ex. João" />
+                                    <input value={nameUser}  id="name" onChange={e => setNameUser(e.target.value.replace(/[^a-zA-Z áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, ""))} type="text" placeholder="Ex. João" />
                                     <p>*</p>
                                 </div>
+                                {errorName && <p className="error">{errorName}</p>}
                             </div>
 
                             <div className="last-name">
                                 <label>Sobrenome</label>
                                 <div className="last-name-content">
                                     <i className="fas fa-user"></i>
-                                    <input id="surname" onChange={e => setSurName(e.target.value)} type="text" placeholder="Ex. Silva" />
+                                    <input value={surName} id="surname" onChange={e => setSurName(e.target.value.replace(/[^a-zA-Z áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, ""))} type="text" placeholder="Ex. Silva" />
                                     <p>*</p>
                                 </div>
+                               {errorSurName && <p className="error">{errorSurName}</p>}
                             </div>
 
                             <div className="cpf">
@@ -89,6 +122,7 @@ export function Register() {
                                     <p>*</p>
                                 </div>
                                 <label className="instructions">Digite apenas números</label>
+                                {errorCpf && <p className="error">{errorCpf}</p>}
                             </div>
 
                             <div className="email">
@@ -98,6 +132,7 @@ export function Register() {
                                     <input id="email" onChange={e => setEmail(e.target.value)} type="email" placeholder="Ex. joao.silva@email.com" />
                                     <p>*</p>
                                 </div>
+                                {errorEmail && <p className="error">{errorEmail}</p>}
                             </div>
 
                             <div className="password">
@@ -108,6 +143,7 @@ export function Register() {
                                     <p>*</p>
                                 </div>
                                 <label className="instructions">Use de 6 a 20 caracteres</label>
+                                {errorPassword && <p className="error">{errorPassword}</p>}
                             </div>
 
                             <div className="password">
@@ -120,8 +156,7 @@ export function Register() {
                             </div>
 
                             <button type="submit" >Enviar</button>
-                            {error && <p className="error">{error}</p>}
-                             
+
                             {/* <Button path="/home" text="Enviar" type="submit"/> */}
                         </form>
                     </div>

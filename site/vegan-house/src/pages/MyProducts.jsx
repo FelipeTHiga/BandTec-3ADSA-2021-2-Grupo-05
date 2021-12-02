@@ -34,6 +34,10 @@ export function MyProducts() {
     const [searchCategory, setSearchCategory] = useState("");
     const [searchSubCategory, setSearchSubCategory] = useState("");
     const [acao, setAcao] = useState("Cadastrar produto");
+    const [errorName, setErrorName] = useState("");
+    const [errorPrice, setErrorPrice] = useState("");
+    const [errorDescription, setErrorDescription] = useState("");
+    const [errorInventory, setErrorInventory] = useState("");
 
     const [image_url1, setImageUrl1] = useState("");
     const [image_url2, setImageUrl2] = useState("");

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -42,13 +43,13 @@ public class ControllerProduct {
     }
 
     @PostMapping()
-    public ResponseEntity postProduct(@RequestBody Product newProduct) {
+    public ResponseEntity postProduct(@RequestBody @Valid Product newProduct) {
         productRepository.save(newProduct);
         return ResponseEntity.status(201).build();
     }
 
     @PutMapping("{id}")
-    public ResponseEntity putProduct(@PathVariable Integer id, @RequestBody Product product) {
+    public ResponseEntity putProduct(@PathVariable Integer id, @RequestBody @Valid Product product) {
 
         if (productRepository.existsById(id)) {
             if (restockNotificationRepository.existsByFkProduct(id)

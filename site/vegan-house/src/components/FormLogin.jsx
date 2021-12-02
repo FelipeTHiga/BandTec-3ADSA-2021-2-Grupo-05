@@ -73,7 +73,6 @@ class SignIn extends Component {
                                 onChange={e => this.setState({ passwordUser: e.target.value })}
                             />
                         </div>
-                        <label><u>Esqueceu sua senha?</u></label>
 
                     </div>
 

@@ -26,7 +26,7 @@ public class OrderDTO {
 
     public List<CartItem> getProductsBySeller(int sellerId){
         return this.orderItems.stream()
-                .filter(cartItem -> cartItem.getProduct().getFkUser().equals(sellerId))
+                .filter(cartItem -> cartItem.getProduct().getFkSeller().equals(sellerId))
                 .collect(Collectors.toList());
     }
 
@@ -34,8 +34,8 @@ public class OrderDTO {
         List<Integer> sellersList = new ArrayList();
 
         for(CartItem c : orderItems){
-            if(!sellersList.contains(c.getProduct().getFkUser()))
-                sellersList.add(c.getProduct().getFkUser());
+            if(!sellersList.contains(c.getProduct().getFkSeller()))
+                sellersList.add(c.getProduct().getFkSeller());
         }
 
         return sellersList;

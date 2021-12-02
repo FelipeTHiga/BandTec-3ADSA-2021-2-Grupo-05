@@ -3,6 +3,9 @@ package com.veganhouse.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
+
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 public class User {
@@ -11,11 +14,24 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
+
+    @NotBlank(message = "Erro no cadastro preencha todos os campos obrigatorios (*)")
     protected String nameUser;
+
+    @NotBlank(message = "Erro no cadastro preencha todos os campos obrigatorios (*)")
     protected String surName;
+
+    @NotBlank(message = "Erro no cadastro preencha todos os campos obrigatorios (*)")
+    @CPF(message = "Insira um CPF válido")
     protected String cpf;
+
+    @Email(message = "Insira um email válido")
     protected String email;
+
+    @NotBlank(message = "Erro no cadastro preencha todos os campos obrigatorios (*)")
+    @Size(min = 6, max = 20, message = "A senha deve ter entre 6 e 20 caracteres")
     protected String passwordUser;
+
     protected Boolean isSeller;
     protected Boolean authenticated;
     @ManyToOne

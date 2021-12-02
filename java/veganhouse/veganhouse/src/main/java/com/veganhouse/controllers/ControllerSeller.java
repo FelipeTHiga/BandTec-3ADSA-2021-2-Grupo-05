@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 // Classe responsável pelos endpoints de criação e edição de sellers
 @RestController
 @RequestMapping("/sellers")
@@ -19,7 +21,7 @@ public class ControllerSeller {
     private IUserRepository userRepository;
 
     @PostMapping
-    public ResponseEntity createSeller(@RequestBody Seller newSeller) {
+    public ResponseEntity createSeller(@RequestBody @Valid Seller newSeller) {
 
         try {
             // Pegando o usário logado

@@ -5,7 +5,6 @@ import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { UserGreeting } from '../components/UserGreeting';
-import { submitAdress, user_logged, login, getAdress } from '../scripts/crud-user';
 import loginService from '../services/login'
 import api from '../scripts/api'
 import '../styles/global.scss';
@@ -28,9 +27,78 @@ export function UserAdress() {
     const [state, setState] = useState('')
     const [adress, setAdress] = useState({})
     const [idAdress, setIdAdress] = useState(0)
+    const [error, setError] = useState([]);
+    const [errorCep, setErrorCep] = useState("");
+    const [errorStreet, setErrorStreet] = useState("");
+    const [errorDistrict, setErrorDistrict] = useState("");
+    const [errorNumber, setErrorNumber] = useState("");
+    const [errorState, setErrorState] = useState("");
+    const [errorCity, setErrorCity] = useState("");
+    const [errorComplement, setErrorComplement] = useState("");
+    
+    function warmings(errors) {
+        console.log(errors)
+        for(var i = 0; i < errors.length; i++) {
+           if(errors[i].field == 'cep') {
+                setErrorCep(errors[i].defaultMessage)
+            } else if(errors[i].field == 'street') {
+                setErrorStreet(errors[i].defaultMessage)
+            } else if(errors[i].field == 'district') {
+                setErrorDistrict(errors[i].defaultMessage)
+            } else if(errors[i].field == 'city') {
+                setErrorCity(errors[i].defaultMessage)
+            } else if(errors[i].field == 'state') {
+                setErrorState(errors[i].defaultMessage)
+            } else if(errors[i].field == 'number') {
+                setErrorNumber(errors[i].defaultMessage)
+            } 
+        }
+
+    }
+
+ function submitAdress(e) {
+        e.preventDefault();
+
+        setErrorCep("");
+        setErrorStreet("");
+        setErrorDistrict("");
+        setErrorNumber("");
+        setErrorCity("");
+
+        const userAdress = {
+            street: street,
+            number: number,
+            state: state,
+            city: city,
+            complement: complement,
+            cep: cep.replace(/\D/g,''),
+            district: district,
+            fkUser: userUpdate.id
+        }
+        
+     api({
+            method: 'post',
+            url: '/users/adress',
+            data: userAdress,
+        })
+        .then(function (response) {
+            console.log(response.status);
+            alert('Endereço cadastrado com sucesso :)')
+            window.location.reload();
+        }).catch((err) => {
+            warmings(err.response.data.errors);
+
+        });
+    }
 
     function updateAdress(e) {
         e.preventDefault();
+
+        setErrorCep("");
+        setErrorStreet("");
+        setErrorDistrict("");
+        setErrorNumber("");
+        setErrorCity("");
         const adress = {
             idAdress: idAdress,
             cep: cep.replace(/\D/g,''),
@@ -50,7 +118,13 @@ export function UserAdress() {
         })
             .then(function (response) {
                 console.log(response.status);
-            });
+                alert('Endereço atualizado com sucesso :)')
+                window.location.reload();
+
+            }).catch((err) => {
+                warmings(err.response.data.errors);
+
+                });
     }
 
 
@@ -89,6 +163,8 @@ export function UserAdress() {
             setCity(res.data.localidade)
             setState(res.data.uf)
             setDistrict(res.data.bairro)
+            setNumber('')
+            setComplement('')
         })
     }
 
@@ -119,13 +195,14 @@ export function UserAdress() {
                                     <div className="container-input">
                                         <label for="cep">CEP</label>
                                         <div>
-                                            <InputMask mask="99999-999" onBlur={pullCep} onChange={e => { setCep(e.target.value) }} value={cep} className="input-default input-address" type="text" placeholder="" name="" id="cep" />
+                                            <InputMask mask="99999-999" maxLength="10" onBlur={pullCep} onChange={e => { setCep(e.target.value) }} value={cep} className="input-default input-address" type="text" placeholder="" name="" id="cep" />
                                         </div>
+                                        {errorCep && <p className="error">{errorCep}</p>}
                                     </div>
                                     <div className="container-city">
                                         <div className="container-state">
                                             <label for="state">Estado</label>
-                                            <select onChange={e => { setState(e.target.value) }} value={state} id="state">
+                                            <select onChange={e => { setState(e.target.value.replace(/\D/g,'')) }} value={state} id="state">
                                                 <option value="">-- Selecione --</option>
                                                 <option value="AC">Acre</option>
                                                 <option value="AL">Alagoas</option>
@@ -155,42 +232,49 @@ export function UserAdress() {
                                                 <option value="SE">Sergipe</option>
                                                 <option value="TO">Tocantins</option>
                                             </select>
+                                            {errorState && <p className="error">{errorState}</p>}
                                         </div>
 
                                         <div className="container-city-2">
                                             <label for="city">Cidade</label>
-                                            <input onChange={e => { setCity(e.target.value) }} value={city} className="input-city" type="text" placeholder="" name="" id="city" />
+                                            <input onChange={e => { setCity(e.target.value.replace(/[^a-zA-Z áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, "")) }} value={city} className="input-city" type="text" placeholder="" name="" id="city" />
+                                            {errorCity && <p className="error">{errorCity}</p>}
                                         </div>
                                     </div>
                                     <div className="container-input">
                                         <label for="district">Bairro</label>
                                         <div>
-                                            <input onChange={e => { setDistrict(e.target.value) }} value={district} className="input-default input-address" type="text" placeholder="" name="" id="district" />
+                                            <input onChange={e => { setDistrict(e.target.value.replace(/[^a-zA-Z áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, "")) }} value={district} className="input-default input-address" type="text" placeholder="" name="" id="district" />
                                         </div>
+                                        {errorDistrict && <p className="error">{errorDistrict}</p>}
                                     </div>
                                     <div className="container-input">
                                         <label for="street">Rua</label>
                                         <div>
-                                            <input onChange={e => { setStreet(e.target.value) }} value={street} className="input-default input-address" type="text" placeholder="" name="" id="street" />
+                                            <input onChange={e => { setStreet(e.target.value.replace(/[^a-zA-Z áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, "")) }} value={street} className="input-default input-address" type="text" placeholder="" name="" id="street" />
                                         </div>
+                                        {errorStreet && <p className="error">{errorStreet}</p>}
                                     </div>
                                     <div className="container-input">
                                         <label for="numberHouse">Número</label>
                                         <div>
-                                            <input onChange={e => { setNumber(e.target.value) }} value={number} className="input-default input-address" type="text" placeholder="" name="" id="numberHouse" />
+                                            <input onChange={e => { setNumber(e.target.value.replace(/[^a-zA-Z0-9 áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, "")) }} value={number} className="input-default input-address" type="text" placeholder="" name="" id="numberHouse" />
                                         </div>
+                                        {errorNumber && <p className="error">{errorNumber}</p>}
                                     </div>
                                     <div className="container-input">
                                         <label for="complement">Complemento</label>
                                         <div>
-                                            <input onChange={e => { setComplement(e.target.value) }} value={complement} className="input-default input-address" type="text" placeholder="" name="" id="complement" />
+                                            <input onChange={e => { setComplement(e.target.value.replace(/[^a-zA-Z0-9 áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, "")) }} value={complement} className="input-default input-address" type="text" placeholder="" name="" id="complement" />
                                         </div>
+                                        {errorComplement && <p className="error">{errorComplement}</p>}
                                     </div>
 
                                     <div className="button-form-adress">
                                         <button id="btn-sign" onClick={submitAdress}>Cadastrar</button>
                                         <button id="btn-put" onClick={updateAdress}>Atualizar</button>
                                     </div>
+                                        {error.length > 0 ? error.map(erro => <p className="error">{erro}</p>) : <div />}
                                 </form>
                             </div>
 
