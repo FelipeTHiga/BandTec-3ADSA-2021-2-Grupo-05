@@ -4,7 +4,9 @@ import com.veganhouse.checkout.domain.CartItem;
 import com.veganhouse.checkout.domain.OrderVh;
 import com.veganhouse.checkout.dto.OrderDTO;
 import com.veganhouse.checkout.repository.IOrderRepository;
+import com.veganhouse.domain.Adress;
 import com.veganhouse.domain.User;
+import com.veganhouse.repository.IAdressRepository;
 import com.veganhouse.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,16 @@ public class OrderService {
     CartManager cartManager;
     @Autowired
     IUserRepository userRepository;
+    @Autowired
+    IAdressRepository adressRepository;
+
+
+    //Atulizar status do pedido
+    public void updateStatus(String status, int order){
+        OrderVh orderVh= orderRepository.findById(order).get();
+        orderVh.setOrderStatus(status);
+        orderRepository.save(orderVh);
+    }
 
     // Criar pedidos
     public OrderVh orderBuilder(User user) {
@@ -94,8 +106,10 @@ public class OrderService {
         String adress = "Não cadastrado";
         orderDTO.setIdOrder(orderVh.getIdOrder());
 
-        if(Objects.nonNull(orderVh.getAdress())){
-            adress = orderVh.getAdress().getStringAdress();
+        Adress buyerAdress = adressRepository.findByFkUser(orderVh.getUser().getId());
+
+        if(Objects.nonNull(buyerAdress)){
+            adress = buyerAdress.getStringAdress();
         }
 
         orderDTO.setAdress(adress);
