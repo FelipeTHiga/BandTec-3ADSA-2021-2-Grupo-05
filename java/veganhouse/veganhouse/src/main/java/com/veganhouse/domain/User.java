@@ -1,7 +1,5 @@
 package com.veganhouse.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -58,7 +56,8 @@ public class User {
     }
 
     public void sendEmail(Product product){
-        System.out.printf("\nEmail enviado para %s sobre a chegada de produtos %s\n", email, product.getName());
+
+//        System.out.printf("\nEmail enviado para %s sobre a chegada de produtos %s\n", email, product.getName());
     }
 
     //region Getters and Setters

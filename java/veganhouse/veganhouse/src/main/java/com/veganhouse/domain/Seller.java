@@ -32,8 +32,6 @@ public class Seller {
     @Email(message = "Digite um e-mail válido")
     private String commercialEmail;
 
-    @Pattern(regexp = "/\\D/g",
-            message = "O campo WHATSAPP aceita apenas números")
     private String whatsappNumber;
 
     private String instagramAccount;
