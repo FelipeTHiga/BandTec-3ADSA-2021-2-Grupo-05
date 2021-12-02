@@ -4,24 +4,25 @@ import { Footer } from '../components/Footer';
 import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
-import { Button } from '../components/Button';
 import { DragDropUpload } from '../components/DragDropUpload';
 import { UserGreeting } from '../components/UserGreeting';
-import '../styles/global.scss';
-import '../styles/reset.css';
-import '../styles/myProducts.scss';
+import { useState, useEffect } from 'react';
+
 import ProductTableRow from '../components/ProductTableRow';
 import loginService from '../services/login';
-import React, { Component, useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router";
 import api from '../services/api';
 import undo from '../assets/images/undo.png'
 import redo from '../assets/images/redo.png'
+import file from '../files/Documento-de-layout-importação.pdf';
+
+import '../styles/global.scss';
+import '../styles/reset.css';
+import '../styles/myProducts.scss';
 
 export function MyProducts() {
+
     let user = loginService.getSession();
     const [products, setProducts] = useState([]);
-    const history = useHistory();
     const [id, setId] = useState(0);
     const [name, setName] = useState("");
     const [category, setCategory] = useState("");
@@ -31,32 +32,29 @@ export function MyProducts() {
     const [description, setDescription] = useState("");
     const [fkSeller, setFkSeller] = useState(0);
     const [searchName, setSearchName] = useState("");
-    const [searchCategory, setSearchCategory] = useState("");
-    const [searchSubCategory, setSearchSubCategory] = useState("");
     const [acao, setAcao] = useState("Cadastrar produto");
+    const [errorName, setErrorName] = useState("");
+    const [errorPrice, setErrorPrice] = useState("");
+    const [errorDescription, setErrorDescription] = useState("");
+    const [errorInventory, setErrorInventory] = useState("");
+    const [erro, setErro] = useState("");
+    const [sucess, setSucess] = useState("");
 
     const [image_url1, setImageUrl1] = useState("");
     const [image_url2, setImageUrl2] = useState("");
     const [image_url3, setImageUrl3] = useState("");
-    let idProduct;
-
 
     useEffect(() => {
+
         async function productsAll() {
             const res = await api.get(`products/all/${user.id}`);
             setProducts(res.data);
-            console.log(res.data);
         }
 
         productsAll();
     }, [])
 
-    // USAR CONST PARA ADICIONAR O VALE
-
     function pacthImage(idProduto) {
-
-        console.log(image_url1.files);
-
 
         let form = new FormData();
         form.append("foto1", image_url1.files[0])
@@ -74,7 +72,6 @@ export function MyProducts() {
         })
     }
 
-
     function createProduct(e) {
         e.preventDefault();
         api.post(`/products`, {
@@ -84,17 +81,19 @@ export function MyProducts() {
             subCategory: subCategory,
             description: description,
             inventory: parseInt(inventory),
-            fkSeller: user.id
+            fkSeller: user.id,
         })
             .then((res) => {
                 if (res.status === 201) {
-                    // alert("Cadastro feito com sucesso!");
+                    setSucess("O produto foi criado!");
+                    getAllProducts();
+                    window.location.href = '#section-products'
                     pacthImage(res.data.id);
-                    
                 }
-                console.log(res.status);
+                window.location.href = '#section-my-products'
             }).catch((err) => {
                 console.log(err);
+                setSucess("");
             })
     }
 
@@ -121,6 +120,9 @@ export function MyProducts() {
                 document.getElementById("create-btn").style.display = "block";
                 document.getElementById("edit-btn").style.display = "none";
                 setAcao("Cadastrar produto");
+                setSucess("O produto foi atualizado!");
+                getAllProducts();
+                window.location.href = '#section-products'
             } else {
             }
         }).catch((err) => {
@@ -145,23 +147,47 @@ export function MyProducts() {
                     setFkSeller(res.data.fkSeller);
                     document.getElementById("create-btn").style.display = "none";
                     document.getElementById("edit-btn").style.display = "block";
+                    setSucess("");
                     getAllProducts();
                 }
             }).catch((err) => {
-                console.log(err);
+            })
+    }
+
+    function undoRequest(e) {
+        api.post(`/products/undo`)
+            .then((res) => {
+                if (res.status === 200) {
+                    getAllProducts();
+                    setSucess("A ação foi desfeita!");
+                }
+            }).catch((err) => {
+                console.log();
+            })
+    }
+
+    function redoRequest(e) {
+        api.post(`/products/redo`)
+            .then((res) => {
+                if (res.status === 200) {
+                    getAllProducts();
+                    setSucess("A ação foi refeita!");
+                }
+            }).catch((err) => {
+                console.log();
             })
     }
 
     function remove(e) {
-        e.preventDefault();
-        let idProduct = e.target.id;
-        api.delete(`/products/${idProduct}`)
+        let productId = e.target.id;
+        api.delete(`/products/${productId}`)
             .then((res) => {
                 if (res.status === 200) {
                     getAllProducts();
-                } 
+                    setSucess("O produto foi removido!");
+                }
+
             }).catch((err) => {
-                console.log();
             })
     }
 
@@ -169,11 +195,9 @@ export function MyProducts() {
         api.get(`/products/all/${user.id}`)
             .then((res) => {
                 if (res.status === 200) {
-                    setProducts(res.data)
+                    setProducts(res.data);
                 }
-                console.log(res.status);
             }).catch((err) => {
-                console.log(err);
             })
     }
 
@@ -183,24 +207,15 @@ export function MyProducts() {
             api.get(`/products/name/${searchName}/${user.id}`)
                 .then((res) => {
                     if (res.status === 200) {
-                        setProducts(res.data)
+                        setProducts(res.data);
+                        setSucess("");
                     }
                     setSearchName("");
                 }).catch((err) => {
-                    console.log(err);
                 })
         } else {
-            api.get(`/products/all/${user.id}`)
-                .then((res) => {
-                    if (res.status === 200) {
-                        setProducts(res.data)
-                    }
-                    console.log(res.status);
-                }).catch((err) => {
-                    console.log(err);
-                })
+            getAllProducts();
         }
-
     }
 
     function cadastroRedi(e) {
@@ -213,6 +228,7 @@ export function MyProducts() {
         setPrice("")
         setDescription("")
         setFkSeller("")
+        setSucess("")
         document.getElementById("create-btn").style.display = "block";
         document.getElementById("edit-btn").style.display = "none";
         window.location.href = '#section-products-edit'
@@ -224,25 +240,66 @@ export function MyProducts() {
             .then((res) => {
                 if (res.status === 200) {
                     setProducts(res.data)
+                    setSucess("");
                 }
-                console.log(res.status);
             }).catch((err) => {
-                console.log(err);
             })
     }
 
-    // function getSearchSubCategory(e){
-    //     e.preventDefault();
-    //     api.get(`/products/tag/${searchSubCategory}`)
-    //     .then((res) => {
-    //         if (res.status === 200) {
-    //             setProducts(res.data)
-    //         }
-    //         console.log(res.status);
-    //     }).catch((err) => {
-    //         console.log(err);
-    //     })
-    // }
+    function sendTxtFile() {
+
+        var file = document.getElementById('file')
+
+        let form = new FormData();
+        form.append("txt", file.files[0])
+
+        api.patch(`products/importTxt/${user.id}`, form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then((res) => {
+                if (res.status === 200) {
+                    alert(res.data)
+
+                }
+            }).catch((err) => {
+            })
+    }
+
+    function exportTxt(fileName, idSeller) {
+        api.post(`products/exportTxt/${fileName}/${idSeller}`)
+            .then((res) => {
+                if (res.status === 200) {
+                    alert("Arquivo txt exportado com sucesso!\nC:/Users/laris/Desktop/PROJETO-3ºS/BandTec-3ADSA-2021-2-Grupo-05/java/veganhouse/veganhouse")
+                } else if (res.status === 204) {
+                    alert("Não foi possível exportar o arquivo txt!\nVendedor sem produtos cadastrados.")
+                }
+            }).catch((err) => {
+            })
+
+        if (document.querySelector('.export-active') !== null) {
+            document.querySelector('.export-active').classList.remove('export-active');
+        }
+        document.getElementById('txt').classList.add('export-active');
+    }
+
+    function exportCsv(fileName, idSeller) {
+        api.post(`products/exportCsv/${fileName}/${idSeller}`)
+            .then((res) => {
+                if (res.status === 200) {
+                    alert("Arquivo csv exportado com sucesso!\nC:/Users/laris/Desktop/PROJETO-3ºS/BandTec-3ADSA-2021-2-Grupo-05/java/veganhouse/veganhouse")
+                } else if (res.status === 204) {
+                    alert("Não foi possível exportar o arquivo csv!\nVendedor sem produtos cadastrados.")
+                }
+            }).catch((err) => {
+            })
+
+        if (document.querySelector('.export-active') !== null) {
+            document.querySelector('.export-active').classList.remove('export-active');
+        }
+        document.getElementById('csv').classList.add('export-active');
+    }
 
     return (
         <>
@@ -262,7 +319,7 @@ export function MyProducts() {
                         <SellerMenu isSeller={user.isSeller} />
                     </div>
 
-                    <div className="section-products">
+                    <div id="section-my-products" className="section-products">
                         <div className="container-products">
                             <SectionTitle text="Meus produtos" />
 
@@ -290,7 +347,6 @@ export function MyProducts() {
                                         </select>
                                     </div>
 
-
                                     <div className="product-option" >
                                         <label htmlFor="">Adicionar produto</label>
                                         <button onClick={cadastroRedi} className="all-product" >Cadastrar</button>
@@ -302,17 +358,19 @@ export function MyProducts() {
                                         <label htmlFor="">Importar produtos</label>
 
                                         <label class="file">
+                                            <button className="btn-send" onClick={() => { sendTxtFile() }}>Enviar</button>
                                             <span class="file-custom"></span>
                                             <input type="file" id="file" aria-label="File browser example" />
                                         </label>
-                                        <a className="a-download">Baixar documento de layout</a>
+
+                                        <a className="a-download" href={file} target="_blank" download>Baixar documento de layout</a>
                                     </div>
 
                                     <div className="product-option" >
                                         <label htmlFor="">Exportar produtos</label>
                                         <section className="line-up">
-                                            <button className="btn-txt">TXT</button>
-                                            <button className="btn-csv">CSV</button>
+                                            <button id="txt" className="btn-export left export-active" onClick={() => { exportTxt("meus-produtos", user.id) }} >TXT</button>
+                                            <button id="csv" className="btn-export right" onClick={() => { exportCsv("meus-produtos", user.id) }}>CSV</button>
                                         </section>
                                     </div>
 
@@ -320,16 +378,16 @@ export function MyProducts() {
 
                             </div>
                             <div className="commands">
-                                <button><img src={undo} /></button>
-                                <button><img src={redo} /></button>
+                                <button onClick={undoRequest}><img src={undo} /></button>
+                                <button onClick={redoRequest}><img src={redo} /></button>
                             </div>
-                            <div className="products-table-header">
+                            {sucess && <p className="sucess">{sucess}</p>}
+                            <div className="products-table-header" id="section-products">
                                 <label htmlFor="">Nome do produto</label>
                                 <label htmlFor="">Categoria</label>
                                 <label htmlFor="">Subcategoria</label>
                                 <label htmlFor="">Qtd. estoque</label>
                             </div>
-
                             <div className="products-table-body">
                                 {products.map(product => (
                                     <ProductTableRow id={product.id} name={product.name} category={product.category} subCategory={product.subCategory} inventory={product.inventory} edit={edit} remove={remove} pro={product} />
@@ -353,7 +411,7 @@ export function MyProducts() {
                                             <option value="">Selecione uma categoria</option>
                                             <option value="Acessórios">Acessórios</option>
                                             <option value="Alimentos">Alimentos</option>
-                                            <option value="Cosméticos">Cosméticos</option>  
+                                            <option value="Cosméticos">Cosméticos</option>
                                             <option value="Saúde">Saúde</option>
                                             <option value="Vestimenta">Vestimenta</option>
                                             <i class="fas fa-arrow-down"></i>
@@ -386,9 +444,9 @@ export function MyProducts() {
                                 </div>
 
                                 <div className="line-up width-100 margin-top-20">
-                                    <DragDropUpload dragId="dragId-1" setImage={setImageUrl1}/>
-                                    <DragDropUpload dragId="dragId-2" setImage={setImageUrl2}/>
-                                    <DragDropUpload dragId="dragId-3" setImage={setImageUrl3}/>
+                                    <DragDropUpload dragId="dragId-1" setImage={setImageUrl1} />
+                                    <DragDropUpload dragId="dragId-2" setImage={setImageUrl2} />
+                                    <DragDropUpload dragId="dragId-3" setImage={setImageUrl3} />
                                 </div>
 
                                 <div className="product-edit-camp">

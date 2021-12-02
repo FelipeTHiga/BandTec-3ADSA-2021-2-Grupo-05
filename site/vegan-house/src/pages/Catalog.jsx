@@ -1,22 +1,22 @@
-import '../styles/catalog.scss';
-import '../styles/global.scss';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
-import loginService from '../services/login';
 import { ProductCard } from '../components/ProductCard';
-import React, { Component, useEffect, useState } from 'react';
-import api from '../services/api';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+
+import api from '../services/api';
+
+import '../styles/catalog.scss';
+import '../styles/global.scss';
 
 export function Catalog() {
 
-    let {categoryUrl} = useParams();
-
+    let { categoryUrl } = useParams();
+   
     const [products, setProducts] = useState([]);
-    const [category, setCategory] = useState(categoryUrl);
     const [filter, setFilter] = useState("lowest-price");
-    
+    const [category, setCategory] = useState(categoryUrl);
     const [countAcessories, setCountAcessories] = useState(0);
     const [countFood, setCountFood] = useState(0);
     const [countCosmetics, setCountCosmetics] = useState(0);
@@ -26,35 +26,33 @@ export function Catalog() {
 
     var isCategoryAll = category == "Todos" ? "" : category;
 
-    // const [countCategory, setCountCategory] = useState({
-    //     countAll: 0,
-    //     countAcessories: 0,
-    //     countFood: 0,
-    //     countCosmetics: 0,
-    //     countHealth: 0,
-    //     countClothing: 0,
-    // })
 
     useEffect(() => {
-        async function productAll() {
-            const res = await api.get(`/products/filter/lowest-price/${categoryUrl}`);
-            setProducts(res.data);
-            console.log(res.data);
+
+        function productAll() {
+            api({
+                method: 'get',
+                url: `/products/filter/lowest-price/${categoryUrl}`,
+            })
+                .then((res) => {
+                    setProducts(res.data);
+                })
         }
 
         async function countCategory() {
             const res = await api.get("/products/countCategory");
-            console.log(res.data);
-            setCategoryAll(res.data)
+            await setCategoryAll(res.data)
         }
 
-        productAll();
         countCategory();
-    }, [])
+        productAll();
+
+    }, [], [])
 
     function setCategoryAll(data) {
 
-        for (var i = 0; i <= 5; i++) {
+        for (var i = 0; i <= data.length - 1; i++) {
+
             switch (data[i][1]) {
                 case "Todos":
                     setCountAll(data[i][0]);
@@ -71,7 +69,7 @@ export function Catalog() {
                 case "Saúde":
                     setCountHealth(data[i][0]);
                     break;
-                    case "Vestimenta":
+                case "Vestimenta":
                     setCountClothing(data[i][0]);
                     break;
             }
@@ -88,9 +86,7 @@ export function Catalog() {
                 if (res.status === 200) {
                     setProducts(res.data)
                 }
-                console.log(res.status);
             }).catch((err) => {
-                console.log(err);
             })
 
         if (document.querySelector('.iten-active') !== null) {
@@ -109,9 +105,7 @@ export function Catalog() {
             if (res.status === 200) {
                 setProducts(res.data)
             }
-            console.log(res.status);
         }).catch((err) => {
-            console.log(err);
         })
 
         if (document.querySelector('.b-active') !== null) {
@@ -126,7 +120,7 @@ export function Catalog() {
             <Submenu />
             <section className="container-search-result">
                 <div className="title-catalog">
-                    
+
                     <h1>{`Todos os resultados / ${isCategoryAll}`}</h1>
                 </div>
                 <div className="catalog-content">
@@ -140,19 +134,19 @@ export function Catalog() {
                                 <li id="Todos" className="iten-active"
                                     onClick={getProductByCategory}>Todos ({countAll})</li>
                                 <li id="Acessórios"
-                                onClick={getProductByCategory}>Acessórios ({countAcessories})</li>
+                                    onClick={getProductByCategory}>Acessórios ({countAcessories})</li>
                                 <li id="Alimentos"
-                                onClick={getProductByCategory}>Alimentos
-                                ({countFood})</li>
+                                    onClick={getProductByCategory}>Alimentos
+                                    ({countFood})</li>
                                 <li id="Cosméticos"
-                                onClick={getProductByCategory}>Cosméticos
-                                ({countCosmetics})</li>
+                                    onClick={getProductByCategory}>Cosméticos
+                                    ({countCosmetics})</li>
                                 <li id="Saúde"
-                                onClick={getProductByCategory}>Saúde
-                                ({countHealth})</li>
+                                    onClick={getProductByCategory}>Saúde
+                                    ({countHealth})</li>
                                 <li id="Vestimenta"
-                                onClick={getProductByCategory}>Vestimenta
-                                ({countClothing})</li>
+                                    onClick={getProductByCategory}>Vestimenta
+                                    ({countClothing})</li>
                             </ul>
                         </div>
                     </div>

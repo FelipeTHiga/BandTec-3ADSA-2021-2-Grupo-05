@@ -3,23 +3,42 @@ package com.veganhouse.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.util.Arrays;
+
 
 @Entity
 public class Product {
-    
+
     //region Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
+
+    @NotBlank(message = "O campo NOME deve ser preenchido")
     protected String name;
+
+    @NotBlank(message = "O campo PREÇO deve ser preenchido")
+    @Pattern(regexp = "/^[\\d,.?!]+$/g", message = "O campo PREÇO aceita apenas números")
     protected Double price;
+
     protected String category;
     protected String subCategory;
 
-    @Lob @Basic(fetch = FetchType.LAZY)
+    @Size(min = 0, max = 1000, message = "A DESCRIÇÃO deve ter no máximo 1000 caracteres")
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
     protected String description;
+
+    @NotBlank(message = "O campo QUANTIDADE deve ser preenchido")
+    @Pattern(regexp = "^\\d+$", message = "O campo QUANTIDADE aceita apenas números inteiros")
     protected Integer inventory;
+
     protected Integer fkSeller;
+    protected Boolean isAvaliable;
 
 
     @Column(length = 20_000_000)
@@ -27,24 +46,25 @@ public class Product {
 
 
     @Column(length = 20_000_000)
-    protected byte[]  image_url2;
+    protected byte[] image_url2;
 
 
     @Column(length = 20_000_000)
-    protected byte[]  image_url3;
+    protected byte[] image_url3;
     //endregion
 
     public Product() {
 
     }
 
-    public Product(String name, Double price, String category, String subCategory, String description, Integer inventory) {
+    public Product(String name, Double price, String category, String subCategory, String description, Integer inventory, Integer fkSeller) {
         this.name = name;
         this.price = price;
         this.category = category;
         this.subCategory = subCategory;
         this.description = description;
         this.inventory = inventory;
+        this.fkSeller = fkSeller;
     }
 
     public Product(Integer id, String name, Double price, String category, String subCategory, String description, Integer inventory, Integer fkSeller) {
@@ -58,13 +78,30 @@ public class Product {
         this.fkSeller = fkSeller;
     }
 
-
-
-//endregion
+    //endregion
+    @Override
+    public String toString() {
+        return String.format("\n----------Produto----------\n" +
+                        "Nome: %s\n" +
+                        "Preço: R$%.2f\n" +
+                        "Categoria: %s\n" +
+                        "Subcategoria: %s\n" +
+                        "Descrição: %s\n" +
+                        "Estoque: %d",
+                name, price, category, subCategory, description, inventory);
+    }
 
     //region Getters and Setters
     public Integer getId() {
         return id;
+    }
+
+    public Boolean getAvaliable() {
+        return isAvaliable;
+    }
+
+    public void setAvaliable(Boolean avaliable) {
+        isAvaliable = avaliable;
     }
 
     public void setId(Integer id) {

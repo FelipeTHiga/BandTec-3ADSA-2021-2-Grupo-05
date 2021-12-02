@@ -5,12 +5,15 @@ import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { UserGreeting } from '../components/UserGreeting';
-import loginService from '../services/login'
-import '../styles/myOrders.scss';
-import { OrderBox } from '../components/OrderBox';
-import api from "../services/api";
 import { useParams, useHistory } from "react-router";
 import React, { Component, useEffect, useState } from 'react';
+import { OrderBox } from '../components/OrderBox';
+
+import loginService from '../services/login'
+import api from "../services/api";
+
+import '../styles/myOrders.scss';
+
 
 export function MyOrders() {
     let userUpdate = loginService.getSession();

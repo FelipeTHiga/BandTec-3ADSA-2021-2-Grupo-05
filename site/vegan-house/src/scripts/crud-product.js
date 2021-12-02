@@ -1,6 +1,6 @@
-import api from "../services/api";
 import { getUser, user_logged} from '../services/crud-user';
-import { Redirect, Route, Router, __RouterContext } from "react-router";
+import { __RouterContext } from "react-router";
+import api from "../services/api";
 
 var list_products = [{
         id: "",
@@ -33,7 +33,6 @@ async function createProduct(){
     })
     .then(function (response) {
         const status = response.status;
-        console.log(status);
     });
 }
 
@@ -50,7 +49,6 @@ async function getProductByName(){
     })
     .then(function (response) {
         const status = response.status;
-        console.log(status);
         list_products = response.data;
     });
 }
@@ -69,7 +67,6 @@ async function getProductByCategory(){
     })
     .then(function (response) {
         const status = response.status;
-        console.log(status);
         list_products = response.data;
     });
 }
@@ -81,11 +78,9 @@ async function  getProducts() {
         params: user_logged.id
     }).then((response)=> {
        let produto =  response.data;
-       console.log(produto)
         return produto;
     })
     .then(function (response) {
-    //    console.log(response.data);
         list_products = response.data;
         return response.data;
     });
@@ -99,10 +94,7 @@ async function deleteProducts(props){
     })
     .then(function (response) {
         const status = response.status;
-        console.log(status);
     });
 }
-
-console.log(getProducts())
 
 export {createProduct, getProductByName, getProductByCategory, getProducts, deleteProducts, list_products};

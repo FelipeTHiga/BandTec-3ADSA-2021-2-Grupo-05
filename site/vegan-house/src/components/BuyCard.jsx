@@ -46,13 +46,14 @@ export function BuyCard(props) {
     let user = loginService.getSession();
     var isLogged = (user == null) ? false : true;
     const [isModalVisible, setIsModalVisible] = useState(false);
-    let authenticatedUser = {
-        authenticated: false
-    }
+    let authenticatedUser = null;
     let userLogged = loginService.getSession() ?? authenticatedUser;
 
     function postCartItem(e){
-         api.post(`/cartItems/${userLogged.id}`, {
+        if (!userLogged) {
+            history.push("/login")
+        } else {
+            api.post(`/cartItems/${userLogged.id}`, {
                 product: {
                     id: props.product.id,
                     price:props.product.price
@@ -71,6 +72,8 @@ export function BuyCard(props) {
                 console.log(err);
             
             })
+        }
+
     }
 
 
@@ -102,9 +105,14 @@ export function BuyCard(props) {
 
                             <div className="container-buy-btn" onclick={postCartItem}>
                                 <button className="buy-btn" onclick={postCartItem}>
-
                                     <img src={shoppingCart} alt="" />
-                                    <h2 onClick={() => { postCartItem() }}>Comprar</h2>
+                                    {
+                                        isLogged ? (
+                                            <h2 onClick={() => { postCartItem() }}>Comprar</h2>
+                                        ) : (
+                                            <h2 onClick={() => { setIsModalVisible(true) }}>Comprar</h2>
+                                        )
+                                    }
                                 </button>
                             </div>
                         ) : (
@@ -126,12 +134,12 @@ export function BuyCard(props) {
             </div>
             {
                 isModalVisible ?
-                    <Modal 
-                    onClose={() => setIsModalVisible(false)} 
-                    height={document.body.scrollHeight}
-                    title="Atenção" 
-                    message="Para acessar a funcionalidade, você precisa estar logado"
-                    btnTitle="Ir para Login!" />
+                    <Modal
+                        onClose={() => setIsModalVisible(false)}
+                        height={document.body.scrollHeight}
+                        title="Atenção"
+                        message="Para acessar a funcionalidade, você precisa estar logado"
+                        btnTitle="Ir para Login!" />
                     : null
             }
         </>
