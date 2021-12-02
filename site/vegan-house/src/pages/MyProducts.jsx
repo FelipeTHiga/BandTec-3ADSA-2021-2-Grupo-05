@@ -33,6 +33,10 @@ export function MyProducts() {
     const [fkSeller, setFkSeller] = useState(0);
     const [searchName, setSearchName] = useState("");
     const [acao, setAcao] = useState("Cadastrar produto");
+    const [errorName, setErrorName] = useState("");
+    const [errorPrice, setErrorPrice] = useState("");
+    const [errorDescription, setErrorDescription] = useState("");
+    const [errorInventory, setErrorInventory] = useState("");
     const [erro, setErro] = useState("");
     const [sucess, setSucess] = useState("");
 

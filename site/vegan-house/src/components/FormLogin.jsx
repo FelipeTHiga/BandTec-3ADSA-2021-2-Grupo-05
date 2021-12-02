@@ -68,7 +68,6 @@ export function FormLogin() {
                                 onChange={e => setPassword( e.target.value)}
                             />
                         </div>
-                        <label><u>Esqueceu sua senha?</u></label>
 
                     </div>
 
