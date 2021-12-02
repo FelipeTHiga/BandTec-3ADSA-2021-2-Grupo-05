@@ -450,11 +450,11 @@ export function MyProducts() {
                                         <label htmlFor="">Subcategoria</label>
                                         <select name="" onChange={e => setSubCategory(e.target.value)} value={subCategory} id="sub_category">
                                             <option value="">Selecione uma Subcategoria</option>
-                                            <option value="Acessórios">Acessórios</option>
-                                            <option value="Alimentos">Alimentos</option>
-                                            <option value="Cosméticos">Cosméticos</option>
-                                            <option value="Saúde">Saúde</option>
-                                            <option value="Vestimenta">Vestimenta</option>
+                                            <option value="Bolsa/Mochila">Bolsa/Mochila</option>
+                                            <option value="Sobremesa">Sobremesa</option>
+                                            <option value="Creme">Creme</option>
+                                            <option value="Pomadas">Pomadas</option>
+                                            <option value="Calçados">Calçados</option>
                                             <i class="fas fa-arrow-down"></i>
                                         </select>
                                     </div>
