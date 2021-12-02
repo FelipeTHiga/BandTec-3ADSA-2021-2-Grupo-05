@@ -108,9 +108,9 @@ export function MyProducts() {
                     setSucess("O produto foi criado!");
                     getAllProducts();
                     window.location.href = '#section-products'
-                    //pacthImage(res.data.id);
+                    pacthImage(res.data.id);
                 }
-                //window.location.href = '#section-my-products'
+                window.location.href = '#section-my-products'
             }).catch((err) => {
                 warmings(err.response.data.errors);
                 console.log(err.response.data);
@@ -299,7 +299,7 @@ export function MyProducts() {
         api.post(`products/exportTxt/${fileName}/${idSeller}`)
             .then((res) => {
                 if (res.status === 200) {
-                    alert("Arquivo txt exportado com sucesso!\nC:/Users/laris/Desktop/PROJETO-3ºS/BandTec-3ADSA-2021-2-Grupo-05/java/veganhouse/veganhouse")
+                    alert("Arquivo txt exportado com sucesso!")
                 } else if (res.status === 204) {
                     alert("Não foi possível exportar o arquivo txt!\nVendedor sem produtos cadastrados.")
                 }
@@ -316,7 +316,7 @@ export function MyProducts() {
         api.post(`products/exportCsv/${fileName}/${idSeller}`)
             .then((res) => {
                 if (res.status === 200) {
-                    alert("Arquivo csv exportado com sucesso!\nC:/Users/laris/Desktop/PROJETO-3ºS/BandTec-3ADSA-2021-2-Grupo-05/java/veganhouse/veganhouse")
+                    alert("Arquivo csv exportado com sucesso!")
                 } else if (res.status === 204) {
                     alert("Não foi possível exportar o arquivo csv!\nVendedor sem produtos cadastrados.")
                 }
