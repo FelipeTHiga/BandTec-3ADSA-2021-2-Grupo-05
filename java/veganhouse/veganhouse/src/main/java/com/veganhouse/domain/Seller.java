@@ -38,8 +38,6 @@ public class Seller {
 
     private String instagramAccount;
     private String facebookAccount;
-    //private List<Certification> listCertifications;
-    //private String descriptionSeller;
     private Integer fkUser;
     //endregion
 

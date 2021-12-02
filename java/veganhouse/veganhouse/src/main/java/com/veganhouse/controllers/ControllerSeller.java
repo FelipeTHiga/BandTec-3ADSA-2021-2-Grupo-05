@@ -1,7 +1,9 @@
 package com.veganhouse.controllers;
 
 import com.veganhouse.domain.Seller;
+import com.veganhouse.domain.SellerCertified;
 import com.veganhouse.domain.User;
+import com.veganhouse.repository.ISellerCertified;
 import com.veganhouse.repository.ISellerRepository;
 import com.veganhouse.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +21,15 @@ public class ControllerSeller {
     private ISellerRepository sellerRepository;
     @Autowired
     private IUserRepository userRepository;
+    @Autowired
+    private ISellerCertified sellerCertifiedRepository;
 
-    @PostMapping
-    public ResponseEntity createSeller(@RequestBody @Valid Seller newSeller) {
 
+    @PostMapping("/{idUser}")
+    public ResponseEntity createSeller(@RequestBody @Valid Seller newSeller, @PathVariable Integer idUser) {
         try {
-            // Pegando o usário logado
-            User userLogged = ControllerSession.session.getUser();
+            // Pegando o usário
+            User userLogged = userRepository.findById(idUser).get();
 
             if (userLogged.getIsSeller()) {
                 return ResponseEntity.status(409).build();
@@ -38,6 +42,10 @@ public class ControllerSeller {
                 userRepository.save(userLogged); // Update do user
                 sellerRepository.save(newSeller); // Add novo seller
 
+                for (int i = 1; i <= 5; i++) {
+                    // Para cada novo seller, são inseridos 5 registros na sellerCertified, por default como false
+                    sellerCertifiedRepository.save(new SellerCertified(i, userId, false));
+                }
                 return ResponseEntity.status(201).body(userLogged);
             }
         } catch (NullPointerException erro) {
@@ -45,12 +53,21 @@ public class ControllerSeller {
         }
     }
 
-    @GetMapping("/{idSeller}")
-    public ResponseEntity getSeller(@PathVariable int idSeller){
-        if(sellerRepository.existsById(idSeller)) {
-            return ResponseEntity.of(sellerRepository.findById(idSeller));
+    @GetMapping("/{idUser}")
+    public ResponseEntity getSeller(@PathVariable int idUser) {
+        // Adicionar validação
+        return ResponseEntity.status(200).body(sellerRepository.findByFkUser(idUser));
+
+    }
+
+    @PutMapping("/{idSeller}")
+    public ResponseEntity updateSeller(@PathVariable int idSeller, @RequestBody Seller sellerUpdate) {
+        if (sellerRepository.existsById(idSeller)) {
+            sellerUpdate.setIdSeller(idSeller);
+            sellerRepository.save(sellerUpdate);
+            return ResponseEntity.status(200).build();
         }
-        return ResponseEntity.status(404).build();
+        return ResponseEntity.status(204).build();
     }
 
 }

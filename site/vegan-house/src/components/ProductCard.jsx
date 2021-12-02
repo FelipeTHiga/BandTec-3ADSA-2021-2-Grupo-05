@@ -7,8 +7,9 @@ import { ShowStars } from "../scripts/showScore";
 import { newsProducts } from "../scripts/vetor";
 import '../styles/card.scss'
 import productService from '../services/crud-product';
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
+import api from '../services/api';
 
 
 export function ProductCard(props) {
@@ -23,9 +24,8 @@ export function ProductCard(props) {
         <>
             <div className="card-product line-up" key={props.id}>
                 <div className="div-product-image">
-                    <img src={props.image_url1} />
+                    <img className="card-img" src={`http://localhost:8080/products/image/${props.id}/1`} />
                 </div>
-
                 <div className="container-evaluation-card line-up">
                     <div className="container-stars line-up">
                         {ShowStars(3.5)}

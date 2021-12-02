@@ -1,4 +1,13 @@
 .text-description{
-    width: 95%;
+    width: 100%;
     padding: 30px;
+    display: flex;
+    justify-content: center;
+    height: 365px;
+}
+
+.text-description textarea{
+    resize: none;
+    border: none;
+    width: 100%;
 }

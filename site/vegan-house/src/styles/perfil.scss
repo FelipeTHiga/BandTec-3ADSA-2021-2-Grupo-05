@@ -199,6 +199,8 @@
     border-radius: 10px;
 }
 .container-data-user .container-button-update-user {
+    display: flex;
+    flex-direction: column;
     width: 100%;
 }
 .container-data-user button {

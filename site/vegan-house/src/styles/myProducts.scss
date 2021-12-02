@@ -1,9 +1,9 @@
 *:before,
 *:after {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
 }
 
 .width-100 {
@@ -113,9 +113,7 @@
 
 .a-download {
     margin-top: 2px;
-    text-decoration: underline;
-    cursor: pointer;
-    color: #0400E0;
+    color: #0400e0;
 }
 
 .search-bar button {
@@ -134,14 +132,12 @@
     padding: 0 !important;
 }
 
-.btn-txt {
+.btn-export {
     height: 30px;
     border: 1px solid black !important;
     justify-content: center;
-    border-top-left-radius: 8px !important;
-    border-bottom-left-radius: 8px !important;
     width: 70px !important;
-    background-color: #F5F5F5 !important;
+    background-color: #f5f5f5 !important;
     color: #604d4d;
     cursor: pointer;
     font-family: Roboto;
@@ -149,20 +145,19 @@
     font-weight: bold;
     font-size: 16px;
 }
-.btn-csv {
-    height: 30px;
-    border: 1px solid black !important;
-    justify-content: center;
+
+.left{
+    border-top-left-radius: 8px !important;
+    border-bottom-left-radius: 8px !important;
+}
+
+.right{
     border-top-right-radius: 8px !important;
     border-bottom-right-radius: 8px !important;
-    width: 70px !important;
+}
+
+.export-active {
     background-color: #c9e891 !important;
-    color: #604d4d;
-    cursor: pointer;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 16px;
 }
 
 .btn-import {
@@ -183,6 +178,19 @@
     border-radius: 8px;
     text-align: center;
     color: #604d4d;
+}
+
+.btn-send{
+    width: 49px;
+    height: 27px;
+    color: #604d4d;
+    background-color: #c9e891 !important;
+    border: #c8c7c7 solid 1px;
+    border-top-left-radius: 8px !important;
+    border-bottom-left-radius: 8px !important;
+    cursor: pointer;
+    font-family: Roboto;
+    font-weight: bold;
 }
 
 .all-product {
@@ -357,3 +365,29 @@
     cursor: pointer;
     width: 150px;
 }
+
+
+// .btn-export {
+//     height: 30px;
+//     border: 1px solid black !important;
+//     justify-content: center;
+//     width: 70px !important;
+//     background-color: #f5f5f5 !important;
+//     color: #604d4d;
+//     cursor: pointer;
+//     font-family: Roboto;
+//     font-style: normal;
+//     font-weight: bold;
+//     font-size: 16px;
+//     .left{
+//         border-top-left-radius: 8px !important;
+//         border-bottom-left-radius: 8px !important;
+//     }
+//     .right{
+//         border-top-right-radius: 8px !important;
+//         border-bottom-right-radius: 8px !important;
+//     }
+//     .export-active {
+//         background-color: #c9e891 !important;
+//     }
+// }

@@ -1,70 +1,53 @@
-import { Footer } from "../components/Footer";
-import { Navbar } from "../components/Navbar";
-import { Submenu } from "../components/Submenu";
-import { Title2 } from "../components/Title2";
-import { SectionTitle } from "../components/SectionTitle";
-import { SubTitle } from "../components/SubTitle";
-import { SocialMidia } from "../components/SocialMidia";
-import { Certification } from "../components/Certification";
-import { ProductTextDescription } from "../components/ProductTextDescription";
-import shoppingCart from "../assets/images/shopping-cart.png";
-import logoInstagram from "../assets/images/social-midias/logo-instagram.png";
-import logoFacebook from "../assets/images/social-midias/logo-facebook.png";
-import logoWhatsapp from "../assets/images/social-midias/logo-whatsapp.png";
+import { Footer } from '../components/Footer';
+import { Navbar } from '../components/Navbar';
+import { Submenu } from '../components/Submenu';
+import { Title2 } from '../components/Title2';
+import { SectionTitle } from '../components/SectionTitle';
+import { SubTitle } from '../components/SubTitle';
+import { SocialMidia } from '../components/SocialMidia';
+import { Certification } from '../components/Certification';
+import { ProductTextDescription } from '../components/ProductTextDescription';
+import { useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router';
+import { BuyCard } from '../components/BuyCard';
+
+import api from '../services/api';
+import loginService from '../services/login';
+import logoInstagram from '../assets/images/social-midias/logo-instagram.png';
+import logoFacebook from '../assets/images/social-midias/logo-facebook.png';
+import logoWhatsapp from '../assets/images/social-midias/logo-whatsapp.png';
+
 import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/productPage.scss';
-import image1 from "../assets/images/pants-1.svg";
-import image2 from "../assets/images/pants-2.svg";
-import image3 from "../assets/images/pants-3.svg";
-import React, { Component, useEffect, useState } from 'react';
-import { useParams } from "react-router";
-import { BuyCard } from "../components/BuyCard";
-import api from "../services/api";
 
 
-function selectImage(e) {
-
-    document.getElementById('selected-image').src = e.target.src
-
-    if (document.querySelector('.img-active') !== null) {
-        document.querySelector('.img-active').classList.remove('img-active');
-    }
-    document.getElementById(e.target.id).classList.add('img-active');
-
-}
 
 export function ProductPage() {
 
-    let { category, id, fkSeller} = useParams();
+    let { category, id, fkSeller } = useParams();
     const [product, setProduct] = useState({});
     const [seller, setSeller] = useState({});
     const [sellerCertification, setSellerCertification] = useState([]);
+    const history = useHistory();
+    let user = null;
+    let userLogged = loginService.getSession() ?? user;
 
     useEffect(() => {
+
         async function productById() {
             const res = await api.get(`/products/${id}`);
             setProduct(res.data);
-            console.log(res.data);
         }
 
-        // async function sellerById() {
-        //     const res = await api.get(`/users/${1}`);
-        //     setSeller(res.data);
-        //     console.log(res.data);
-        // }
-
         async function sellerById() {
-            console.log("TESTE" + fkSeller)
             const res = await api.get(`/sellers/${fkSeller}`);
             setSeller(res.data);
-            console.log(res.data);
         }
 
         async function sellerCertification() {
             const res = await api.get(`/certifieds/${fkSeller}`);
             setSellerCertification(res.data);
-            console.log(res.data);
         }
 
         productById();
@@ -72,38 +55,37 @@ export function ProductPage() {
         sellerCertification();
     }, [], {}, [])
 
-    // useEffect(() => {
+    function selectImage(e) {
 
-    //     async function payload() {
-    //         await api({
-    //             method: 'get',
-    //             url: `/products/${id}`,
-    //         })
-    //             .then(function (res) {
-    //                 setProduct(res.data)
-    //                 console.log("Products " + res.data)
-    //                 api({
-    //                     method: 'get',
-    //                     url: `/sellers/${product.fkUser}`,
-    //                 })
-    //                     .then(function (res) {
-    //                         setSeller(res.data)
-    //                         console.log("Seller " + res.data)
-    //                         api({
-    //                             method: 'get',
-    //                             url: `/certifieds/${seller.id}`,
-    //                         })
-    //                             .then(function (res) {
-    //                                 setSeller(res.data)
-    //                                 console.log("Certifieds " +res.data)
-    //                             });
-    //                     })
-    //             })
+        document.getElementById('selected-image').src = e.target.src
 
-    //     }
+        if (document.querySelector('.img-active') !== null) {
+            document.querySelector('.img-active').classList.remove('img-active');
+        }
+        document.getElementById(e.target.id).classList.add('img-active');
 
-    //     payload();
-    // }, [])
+    }
+
+    function postCartItem(e) {
+        e.preventDefault();
+        
+        api.post(`/cartItems/${userLogged.id}`, {
+            product: {
+                id: product.id
+            },
+            quantity: 1,
+            fkUser: userLogged.id
+        })
+            .then((res) => {
+                if (res.status === 201) {
+                    alert("Sucesso")
+                    history.push(``);
+                } else {
+
+                }
+            }).catch((err) => {
+            })
+    }
 
     return (
         <>
@@ -123,19 +105,19 @@ export function ProductPage() {
                         <section className="section-product-info">
                             <div className="div-images">
                                 <div className="small-images">
-                                    <img id="img-1" src={image1}
+                                    <img id="img-1" src={`http://localhost:8080/products/image/${id}/1`}
                                         onClick={selectImage}
-                                        alt="product-img-1" className="image img-active" />
-                                    <img id="img-2" src={image2}
+                                        className="image img-active" />
+                                    <img id="img-2" src={`http://localhost:8080/products/image/${id}/2`}
                                         onClick={selectImage}
-                                        alt="product-img-2" className="image" />
-                                    <img id="img-3" src={image3}
+                                        className="image" />
+                                    <img id="img-3" src={`http://localhost:8080/products/image/${id}/3`}
                                         onClick={selectImage}
-                                        alt="product-img-3" className="image" />
+                                        className="image" />
                                 </div>
-                                <img id="selected-image" src={image1} alt="product-img-selected" className="big-image" />
+                                <img id="selected-image" src={`http://localhost:8080/products/image/${id}/1`} className="big-image" />
                             </div>
-                            <BuyCard product={product} seller={seller} />
+                            <BuyCard product={product} seller={seller} addCartItem={postCartItem} />
                         </section>
 
                         <section className="section-product-description">
@@ -163,10 +145,14 @@ export function ProductPage() {
                                     <SectionTitle text="Certificações" />
 
                                     <div className="certifications">
-                                        {sellerCertification.map(certification => (
-                                            <Certification name={certification[0]}
-                                                src={certification[1]} />
-                                        ))}
+                                        {sellerCertification.length > 0 ?
+
+                                            sellerCertification.map(certification => (
+                                                <Certification name={certification[0]}
+                                                    src={certification[1]} />
+                                            ))
+                                            : null
+                                        }
                                     </div>
                                 </div>
                             </div>

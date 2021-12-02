@@ -25,25 +25,31 @@ public class ProductCommander {
 
     public void undo(){
         Command lastAction = (Command) commands.pop();
+        Product product = lastAction.getChangedProduct();
 
-        if("delete".equals(lastAction.getAction()))
-            productRepository.save(lastAction.getChangedProduct());
+        if("delete".equals(lastAction.getAction())) {
+            product.setAvaliable(true);
+            productRepository.save(product);
+        } else {
+            product.setAvaliable(false);
+            productRepository.save(product);
+        }
 
-		else
-            productRepository.deleteById(lastAction.getChangedProduct().getId());
 
         undoneCommands.push(lastAction);
     }
 
     public void redo(){
         Command lastAction = (Command) undoneCommands.pop();
+        Product product = lastAction.getChangedProduct();
 
-        if("create".equals(lastAction.getAction()))
-            productRepository.save(lastAction.getChangedProduct());
-
-        else
-            productRepository.deleteById(lastAction.getChangedProduct().getId());
-
+        if("create".equals(lastAction.getAction())) {
+            product.setAvaliable(true);
+            productRepository.save(product);
+        } else {
+            product.setAvaliable(false);
+            productRepository.save(product);
+        }
         commands.push(lastAction);
     }
 

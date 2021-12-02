@@ -1,56 +1,51 @@
-import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
-import { Redirect } from "react-router-dom";
-import { user_logged } from "../services/crud-user";
-import loginService from "../services/login"
+import React, { Component, useState } from "react";
+import { useHistory } from "react-router";
+import api from "../services/api";
+import loginService from "../services/login";
 
 
-class SignIn extends Component {
-    
-    constructor(props){
-        super(props)
-        this.state = {
-            email: "",
-            passwordUser: "",
-            error: "",
-            sucess: "",
-            redirectTo: null
-        };
-    }
 
-    handleSignIn = async e => {
+export function FormLogin() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [erro, setErro] = useState("");
+    const [sucess, setSucess] = useState(sessionStorage.getItem("sucess"));
+    const history = useHistory();
+
+    function login(e) {
         e.preventDefault();
-        const { email, passwordUser } = this.state;
-        if (!email || !passwordUser) {
-            this.setState({ error: "Preencha e-mail e senha para continuar." });
+        if(!email || !password) {
+            setErro("Os campos não estão preenchidos!");
+            sessionStorage.setItem("sucess", "");
+            setSucess(null);
         } else {
-            try {
-                let res = await loginService.login({email, passwordUser});
-                loginService.setSession(res.data);
-                this.setState({ redirectTo : "/" })
-
-            } catch (err) {
-                this.setState({
-                    error:
-                        "Sua senha ou email estão incorretos."
-                });
-            }
+            api.post(`/session/login`, {
+                email: email,
+                passwordUser: password 
+            })
+                .then((res) => {
+                    if (res.status === 200) {
+                        sessionStorage.setItem("sucess", "");
+                        loginService.setSession(res.data)
+                        setSucess(null)
+                        history.push("");
+                    } else {
+                        setErro("A senha ou o email estão incorretos!");
+                        sessionStorage.setItem("sucess", "");
+                        setSucess(null);
+                    }
+                }).catch((res) => {
+                    sessionStorage.setItem("sucess", "");
+                    setErro("Ocorreu um erro ao tentar realizar login!");
+                    setSucess(null);
+                })
         }
     }
-
-    render() {
-
-        // Redireciona caso redirectTo não esteja com o valor nulo
-        if (this.state.redirectTo){
-            return (
-                <Redirect to={this.state.redirectTo}/>
-            )
-        }
-
         return (
             <div className="login-content">
                 <h2>Olá, digite o seu e-mail e a <br /> senha utilizados no cadastro</h2>
-                <form onSubmit={this.handleSignIn}>
+                {sucess && <p className="sucess">{sucess}</p>}
+                <form onSubmit={login}>
                     <div className="email">
                         <label>E-mail</label>
                         <div className="email-content">
@@ -58,7 +53,7 @@ class SignIn extends Component {
                             <input
                                 type="email"
                                 placeholder="Endereço de e-mail"
-                                onChange={e => this.setState({ email: e.target.value })}
+                                onChange={e => setEmail(e.target.value)}
                                 placeholder="Ex. joao.silva@email.com"
                             />
                         </div>
@@ -70,26 +65,17 @@ class SignIn extends Component {
                             <input
                                 type="password"
                                 placeholder="Senha"
-                                onChange={e => this.setState({ passwordUser: e.target.value })}
+                                onChange={e => setPassword( e.target.value)}
                             />
                         </div>
 
                     </div>
 
                     <button type="submit">Entrar</button>
-
-                    {this.state.error && <p className="error">{this.state.error}</p>}
-                    {this.state.sucess && <p className="sucess">{this.state.sucess}</p>}
+                    {erro && <p className="error">{erro}</p>}
                     <hr />
                 </form>
             </div>
         );
     }
-}
-
-export function FormLogin() {
-    return (
-        new SignIn()
-    )
-}
 

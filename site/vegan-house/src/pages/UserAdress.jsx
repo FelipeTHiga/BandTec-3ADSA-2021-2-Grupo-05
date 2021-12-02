@@ -5,14 +5,18 @@ import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { UserGreeting } from '../components/UserGreeting';
-import loginService from '../services/login'
-import api from '../scripts/api'
+import { submitAdress } from '../scripts/crud-user';
+import { useState, useEffect } from 'react';
+
+import loginService from '../services/login';
+import api from '../scripts/api';
+import axios from 'axios';
+import InputMask from 'react-input-mask';
+
+
 import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/userAdress.scss';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import InputMask from 'react-input-mask'
 
 export function UserAdress() {
 
@@ -131,10 +135,11 @@ export function UserAdress() {
 
     useEffect(() => {
         let user = loginService.getSession();
-        async function pegaDados() {
+
+        async function payload() {
+
             const res = await api.get(`users/adress/${user.id}`);
             setAdress(res.data);
-            console.log(res.data);
 
             if (res.status === 200) {
                 setCep(res.data.cep);
@@ -151,9 +156,8 @@ export function UserAdress() {
             }
         }
 
-        pegaDados();
+        payload();
     }, {})
-
 
 
     function pullCep() {
@@ -167,8 +171,6 @@ export function UserAdress() {
             setComplement('')
         })
     }
-
-
 
     return (
         <>

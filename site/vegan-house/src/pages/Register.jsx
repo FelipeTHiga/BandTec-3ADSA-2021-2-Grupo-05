@@ -2,14 +2,14 @@ import { Title } from '../components/Title';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
-import { Button } from '../components/Button';
+import { useState } from 'react';
+import { useHistory } from 'react-router';
+
+import InputMask from 'react-input-mask';
+import api from '../services/api';
+
 import '../styles/register.scss';
 import '../styles/global.scss';
-import { getUser, submit } from '../services/crud-user';
-import InputMask from 'react-input-mask'
-import React, { Component, useState, useEffect } from "react";
-import { useHistory } from "react-router";
-import api from '../services/api';
 
 export function Register() {
     const [nameUser, setNameUser] = useState("");
@@ -25,7 +25,6 @@ export function Register() {
     const [errorEmail, setErrorEmail] = useState("");
     const [errorPassword, setErrorPassword] = useState("");
     const history = useHistory();
-    const [user, setUser] = useState({});
 
     
     function warmings(errors) {
@@ -48,14 +47,17 @@ export function Register() {
 
     function singin(e) {
         e.preventDefault();
+
         setErrorName("");
         setErrorSurName("");
         setErrorCpf("");
         setErrorEmail("");
         setErrorPassword("");
 
-        if (passwordUser != passwordUserConfirm) {
-            setError("As senhas informadas não conhecidem!")
+        if (passwordUser.length < 6 || passwordUser.length > 20) {
+            setError("A senha possui um número de caracteres inválido!")
+        } else if ((passwordUser != passwordUserConfirm)) {
+            setError("As senhas informadas não coincidem!")
         } else {
             api.post(`/users`, {
                 nameUser: nameUser,
@@ -66,7 +68,8 @@ export function Register() {
             })
                 .then((res) => {
                     if (res.status === 201) {
-                        console.log("Cadastro realizado - " + res.statusText);
+                       
+                        sessionStorage.setItem("sucess", "Seu cadastro foi realizado com sucesso!")
                         history.push(`/login`);
                     } else {
                         warmings(res.data.errors);
@@ -76,6 +79,7 @@ export function Register() {
                     var errorC = [];
                     err.response.data.errors.forEach(erro => errorC.push(erro.defaultMessage))
                     warmings(err.response.data.errors);
+
                 })
         }
 
@@ -157,7 +161,7 @@ export function Register() {
 
                             <button type="submit" >Enviar</button>
 
-                            {/* <Button path="/home" text="Enviar" type="submit"/> */}
+
                         </form>
                     </div>
                 </div>
@@ -165,7 +169,5 @@ export function Register() {
             </section>
             <Footer />
         </>
-
-
     )
 }
