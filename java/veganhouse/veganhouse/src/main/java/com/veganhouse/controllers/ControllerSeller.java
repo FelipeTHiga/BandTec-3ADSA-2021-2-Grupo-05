@@ -61,7 +61,7 @@ public class ControllerSeller {
     }
 
     @PutMapping("/{idSeller}")
-    public ResponseEntity updateSeller(@PathVariable int idSeller, @RequestBody Seller sellerUpdate) {
+    public ResponseEntity updateSeller(@PathVariable int idSeller, @RequestBody @Valid Seller sellerUpdate) {
         if (sellerRepository.existsById(idSeller)) {
             sellerUpdate.setIdSeller(idSeller);
             sellerRepository.save(sellerUpdate);

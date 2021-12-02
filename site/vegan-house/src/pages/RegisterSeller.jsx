@@ -25,21 +25,22 @@ export function RegisterSeller() {
     const [errorCommercialName, setErrorCommercialName] = useState("");
     const [errorCnpj, setErrorCnpj] = useState("");
     const [errorCommercialEmail, setErrorCommercialEmail] = useState("");
-   
+
 
     function warmings(errors) {
         console.log(errors)
-        for(var i = 0; i < errors.length; i++) {
-           if(errors[i].field == 'commercialEmail') {
+        for (var i = 0; i < errors.length; i++) {
+            if (errors[i].field == 'commercialEmail') {
                 setErrorCommercialEmail(errors[i].defaultMessage)
-            } else if(errors[i].field == 'commercialName') {
+            } else if (errors[i].field == 'commercialName') {
                 setErrorCommercialName(errors[i].defaultMessage)
-            } else if(errors[i].field == 'cnpj') {
+            } else if (errors[i].field == 'cnpj') {
                 setErrorCnpj(errors[i].defaultMessage)
-            } 
+            }
         }
 
     }
+
 
     function submitSeller(e) {
 
@@ -68,10 +69,15 @@ export function RegisterSeller() {
                 console.log(response.statusText);
                 history.push('/');
             })
-
+    }
 
     function registerSeller(e) {
         e.preventDefault();
+
+        setErrorCommercialName("");
+        setErrorCnpj("");
+        setErrorCommercialEmail("");
+      
         if (!document.getElementById("checkbox").checked) {
             setError("Você precisa aceitar nossos termos para poder continuar.")
         } else {
@@ -89,12 +95,15 @@ export function RegisterSeller() {
                         setError("Ocorreu um erro no cadastro!" + res.statusText);
                     }
                 }).catch((err) => {
-                var errC = err.response.data.errors;
-                if (errC != undefined) {
-                    warmings(err.response.data.errors);
-                }
-        }
+                    var errC = err.response.data.errors;
+                    if (errC != undefined) {
+                        warmings(err.response.data.errors);
 
+                    }
+
+                })
+
+        }
     }
 
 

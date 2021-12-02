@@ -3,10 +3,7 @@ package com.veganhouse.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Arrays;
 
 
@@ -21,8 +18,8 @@ public class Product {
     @NotBlank(message = "O campo NOME deve ser preenchido")
     protected String name;
 
-    @NotBlank(message = "O campo PREÇO deve ser preenchido")
-    @Pattern(regexp = "/^[\\d,.?!]+$/g", message = "O campo PREÇO aceita apenas números")
+    @NotNull(message = "O campo PREÇO deve ser preenchido")
+    //@Pattern(regexp = "/^[\\d,.?!]+$/g", message = "O campo PREÇO aceita apenas números")
     protected Double price;
 
     protected String category;
@@ -33,8 +30,7 @@ public class Product {
     @Basic(fetch = FetchType.LAZY)
     protected String description;
 
-    @NotBlank(message = "O campo QUANTIDADE deve ser preenchido")
-    @Pattern(regexp = "^\\d+$", message = "O campo QUANTIDADE aceita apenas números inteiros")
+    @NotNull(message = "O campo QUANTIDADE deve ser preenchido")
     protected Integer inventory;
 
     protected Integer fkSeller;
