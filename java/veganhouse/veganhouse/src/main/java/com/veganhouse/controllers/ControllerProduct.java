@@ -93,8 +93,8 @@ public class ControllerProduct {
                     && product.getInventory() > 0
                     && productRepository.getById(id).getInventory() == 0)
                 eventManagerRestock.notify(id);
-
             product.setId(id);
+            product.setAvaliable(true);
             productRepository.save(product);
             return ResponseEntity.status(200).build();
         }
