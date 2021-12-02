@@ -73,6 +73,11 @@ export function RegisterSeller() {
 
     function registerSeller(e) {
         e.preventDefault();
+
+        setErrorCommercialName("");
+        setErrorCnpj("");
+        setErrorCommercialEmail("");
+      
         if (!document.getElementById("checkbox").checked) {
             setError("VocÃª precisa aceitar nossos termos para poder continuar.")
         } else {
@@ -94,9 +99,11 @@ export function RegisterSeller() {
                     if (errC != undefined) {
                         warmings(err.response.data.errors);
 
+
                     }
 
                 })
+
 
         }
     }
