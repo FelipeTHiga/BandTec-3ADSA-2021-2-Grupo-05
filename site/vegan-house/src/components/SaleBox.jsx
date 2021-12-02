@@ -4,13 +4,14 @@ import { SaleUnit } from "./SaleUnit"
 export function SaleBox(props) {
     return (
         <>
+        <input type="hidden" id="mercado-pago-public-key" value="TEST-622fb91c-f16d-4a94-a027-1feaaa7fb422" />
             <div className="sale-box" key={props.idOrder}>
                 <div className="sale-box-container">
                     <div className="props-sale">
                         <div className="sale-desc">
-                            <h1>Pedido <span>{props.id}</span></h1>
-                            <h4 className="h4-customer">Cliente: {props.user.nameUser}</h4>
-                            <h4>Endereço: {props.adress}</h4>
+                            <h1><b>Pedido</b> <span>{props.id}</span></h1>
+                            <h4 className="h4-customer"><b>Cliente:</b> {props.user.nameUser}</h4>
+                            <h4><b>Endereço:</b> {props.adress}</h4>
                         </div>
                         <div className="date-sale">
                             <h2>Data</h2>

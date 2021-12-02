@@ -13,13 +13,12 @@ export function ShoppingCart(props) {
 
     const history = useHistory();
     const [cartItems, setCartItems] = React.useState([]);
-    let [totalAmount, setNumber] = React.useState({ total: total });
     let total = 0;
     let userLogged = loginService.getSession();
 
-    function getTotal(cartItemsL) {
-        for (var i = 0; i < cartItemsL.length; i++) {
-            total += parseFloat(cartItemsL[i].subTotal);
+    function getTotal(cartItemsL){
+        for(var i = 0; i< cartItemsL.length; i++){
+           total += parseFloat(cartItemsL[i].subTotal);
         }
     }
 
@@ -43,15 +42,21 @@ export function ShoppingCart(props) {
             history.push(`/login`);
         }
     }, [])
+    
 
-    function finishOrder() {
+    
+    let [totalAmount, setNumber] = React.useState({ total: total });
+
+    function finishOrder(){
         api.post(`/orders/`, userLogged)
-            .then((res) => {
-                if (res.status === 201) {
-                    history.push("/checkout")
-                }
-            }).catch((err) => {
-            })
+                    .then((res) => {
+                        if (res.status === 201) {
+                            history.push("/checkout")
+                            sessionStorage.setItem("amountOrder", totalAmount.total)
+
+                        }
+                    }).catch((err) => {
+                    })
     }
 
     return (
