@@ -1,5 +1,6 @@
 package com.veganhouse.checkout.controller;
 
+import com.veganhouse.checkout.domain.OrderVh;
 import com.veganhouse.checkout.dto.OrderDTO;
 import com.veganhouse.checkout.service.OrderService;
 import com.veganhouse.domain.User;
@@ -33,5 +34,11 @@ public class ControllerOrder {
     @GetMapping("seller/{idUser}")
     public ResponseEntity getSellerOrder(@PathVariable int idUser){
         return ResponseEntity.status(200).body(orderService.getSellerOrders(idUser));
+    }
+
+    @PatchMapping("update-status/{status}/{idOrder}")
+    public ResponseEntity updateOrderStatus(@PathVariable String status, @PathVariable int idOrder){
+        orderService.updateStatus(status,idOrder);
+        return ResponseEntity.status(200).build();
     }
 }
