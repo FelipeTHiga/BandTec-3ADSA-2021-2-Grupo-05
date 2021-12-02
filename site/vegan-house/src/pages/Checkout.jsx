@@ -7,6 +7,7 @@ import loginService from '../services/login';
 import api from "../services/api";
 import { useParams, useHistory } from "react-router";
 import React, { Component, useEffect, useState } from 'react';
+import { useMercadopago } from 'react-sdk-mercadopago';
 
 import "../styles/checkout.css";
 
@@ -16,8 +17,10 @@ export function Checkout(props) {
     const [order, setOrder] = React.useState({});
     let userLogged = loginService.getSession();
     const [orderItems, setOrderItem] = React.useState([]);
+    const mercadopago = useMercadopago.v2('TEST-622fb91c-f16d-4a94-a027-1feaaa7fb422')
 
     useEffect(() => {
+
         if (userLogged) {
             function getOrder() {
                 api.get(`orders/checkout/lastOrder/${userLogged.id}`)
@@ -26,6 +29,9 @@ export function Checkout(props) {
                             console.log(res);
                             setOrder(res.data);
                             setOrderItem(res.data.orderItems)
+                            
+                            let parseDados = JSON.stringify(res.data)
+                            sessionStorage.setItem("order", parseDados)                            
                         }
 
                     }).catch((err) => {
@@ -38,17 +44,187 @@ export function Checkout(props) {
         else {
             history.push(`/login`);
         }
-    }, [])
 
-    function finishOrder(){
-        history.push("/perfil/meus-pedidos");
+        loadForm()
+
+    }, [mercadopago])
+
+
+    function loadForm() {
+        if (mercadopago) {
+            const cardForm = mercadopago.cardForm({
+                amount: sessionStorage.getItem("amountOrder"),
+                autoMount: true,
+                processingMode: 'aggregator',
+                form: {
+                    id: 'form-checkout',
+                    cardholderName: {
+                        id: 'form-checkout__cardholderName',
+                        placeholder: 'Nome no cartão',
+                    },
+                    cardholderEmail: {
+                        id: 'form-checkout__cardholderEmail',
+                        placeholder: 'Email',
+                    },
+                    cardNumber: {
+                        id: 'form-checkout__cardNumber',
+                        placeholder: 'Número do cartão',
+                    },
+                    cardExpirationMonth: {
+                        id: 'form-checkout__cardExpirationMonth',
+                        placeholder: 'MM'
+                    },
+                    cardExpirationYear: {
+                        id: 'form-checkout__cardExpirationYear',
+                        placeholder: 'AA'
+                    },
+                    securityCode: {
+                        id: 'form-checkout__securityCode',
+                        placeholder: 'CVV',
+                    },
+                    installments: {
+                        id: 'form-checkout__installments',
+                        placeholder: 'Total de parcelas'
+                    },
+                    identificationType: {
+                        id: 'form-checkout__identificationType',
+                        placeholder: 'Document type'
+                    },
+                    identificationNumber: {
+                        id: 'form-checkout__identificationNumber',
+                        placeholder: 'CPF'
+                    },
+                    issuer: {
+                        id: 'form-checkout__issuer',
+                        placeholder: 'Bandeira'
+                    }
+                },
+                callbacks: {
+                    onFormMounted: error => {
+                        if (error) return console.warn('Form Mounted handling error: ', error)
+                        console.log('Form mounted')
+                    },
+                    onFormUnmounted: error => {
+                        if (error) return console.warn('Form Unmounted handling error: ', error)
+                        console.log('Form unmounted')
+                    },
+                    onIdentificationTypesReceived: (error, identificationTypes) => {
+                        if (error) return console.warn('identificationTypes handling error: ', error)
+                        console.log('Identification types available: ', identificationTypes)
+                    },
+                    onPaymentMethodsReceived: (error, paymentMethods) => {
+                        if (error) return console.warn('paymentMethods handling error: ', error)
+                        console.log('Payment Methods available: ', paymentMethods)
+                    },
+                    onIssuersReceived: (error, issuers) => {
+                        if (error) return console.warn('issuers handling error: ', error)
+                        console.log('Issuers available: ', issuers)
+                    },
+                    onInstallmentsReceived: (error, installments) => {
+                        if (error) return console.warn('installments handling error: ', error)
+                        console.log('Installments available: ', installments)
+                    },
+                    onCardTokenReceived: (error, token) => {
+                        if (error) return console.warn('Token handling error: ', error)
+                        console.log('Token available: ', token)
+                    },
+                    onSubmit: (event) => {
+                        event.preventDefault();
+                        // const cardData = cardForm.getCardFormData();
+                        // console.log('CardForm data available: ', cardData)
+
+                        const {
+                            paymentMethodId,
+                            issuerId,
+                            cardholderEmail,
+                            amount,
+                            token,
+                            installments,
+                            identificationNumber,
+                            identificationType
+                        } = cardForm.getCardFormData();
+
+                        console.log(paymentMethodId,
+                            issuerId,
+                            cardholderEmail,
+                            amount,
+                            token,
+                            installments,
+                            identificationNumber,
+                            identificationType)
+
+                        api.post("/process_payment", {
+                            token: token,
+                            paymentMethodId: paymentMethodId,
+                            transactionAmount: Number(amount),
+                            installments: Number(installments),
+                            description: "productDescription",
+                            payer: {
+                                email: cardholderEmail,
+                                identification: {
+                                    type: identificationType,
+                                    number: identificationNumber,
+                                },
+                            },
+                        }).then(response => {
+                            if (response.status === 201) {
+                                history.push(`/payment-response/${response.data.id}/${response.data.status}/${response.data.detail}`);
+                                updateStatus(response.data.status)
+                            }
+                            console.log(response.data)
+                            return response.json();
+                        }).catch(error => {
+                        });
+
+
+                    },
+                    onFetching: (resource) => {
+                        console.log('Fetching resource: ', resource)
+
+
+
+                        return () => {
+
+                        }
+                    },
+                }
+            })
+        }
     }
+
+    function updateStatus(status) {
+        var newStatus;
+        var updatedOrder = JSON.parse(sessionStorage.getItem("order"));
+
+        switch (status) {
+            case "approved":
+                newStatus = "Pagamento aprovado";
+                break;
+
+            case "in_process":
+                newStatus = "Pagamento em processamento";
+                break;
+
+            case "rejected":
+                newStatus = "Pagamento rejeitado";
+                break;
+        }
+
+        console.log(updatedOrder.idOrder)
+
+        api.patch(`orders/update-status/${newStatus}/${updatedOrder.idOrder}`)
+            .then(response => {
+                console.log(response)
+                return response.json();
+            }).catch(error => {
+                console.log("Unexpected error\n" + JSON.stringify(error));
+            });
+    }
+
+
 
     return (
         <>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-            <script src="https://sdk.mercadopago.com/js/v2"></script>
-            <script type="text/javascript" src="@{/js/index.js}" defer></script>
             <Navbar />
             <Submenu />
 
@@ -66,19 +242,19 @@ export function Checkout(props) {
                         <label><b>Itens do pedido:</b></label>
 
                         <div className="order-itens-container">
-                            {orderItems.map(orderItem => <OrderItem productName={orderItem.product.name} quantity={orderItem.quantity} subTotal={orderItem.subTotal}/>)}
+                            {orderItems.map(orderItem => <OrderItem productName={orderItem.product.name} quantity={orderItem.quantity} subTotal={orderItem.subTotal} />)}
                         </div>
 
                         <SectionTitle text=" " />
 
-                        <h3 className="margin-top-20">Total: R${order.total}</h3>
+                        <h3 className="margin-top-20">Total: R${Number(order.total).toFixed(2)}</h3>
                     </div>
 
 
                     <div className="payment-options">
                         <SectionTitle text="Forma de pagamento" />
 
-                        <div className="payment-form">
+                        <form id="form-checkout" className="payment-form">
 
                             <div className="payment-data-container">
                                 <div className="payment-form-data">
@@ -116,13 +292,18 @@ export function Checkout(props) {
                                     <input placeholder="PIN" id="form-checkout__securityCode" name="securityCode" type="text" class="form-control" />
                                 </div>
 
-                                <input type="hidden" id="amount" />
+                                <input type="hidden" id="amount" value={order.total} />
+                                <select type="hidden" id="form-checkout__installments" name="installments" value={1} />
+                                <select type="hidden" id="form-checkout__issuer" name="issuer" />
+                                <select type="hidden" id="form-checkout__identificationType" name="identificationType" value="CPF" className="display-none" />
+                                <input id="MPHiddenInputToken" name="MPHiddenInputToken" type="hidden" />
+
                                 <input type="hidden" id="description" />
                                 <div className="container-button">
-                                    <button id="form-checkout__submit" type="submit" class="btn btn-primary btn-block" onClick={finishOrder}>Finalizar compra</button>
+                                    <button id="form-checkout__submit" type="submit" class="btn btn-primary btn-block" >Finalizar compra</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
 
                         {/* 
                         <div className="payment-buttons-container">
