@@ -49,7 +49,8 @@ public class EventManagerRestock {
 
         for (User u : usersNotified){
 //            u.sendEmail(productUpdated);
-            emailSenderService.sendMailWithAttachment("felipetsibana@gmail.com","oi","teste");
+            String body = String.format("Olá, %s, o produto %s está disponível novamente!", u.getNameUser(), productUpdated.getName());
+            emailSenderService.sendMailWithAttachment(u.getEmail(),body,"Novos produtos em estoque!");
         }
     }
 
