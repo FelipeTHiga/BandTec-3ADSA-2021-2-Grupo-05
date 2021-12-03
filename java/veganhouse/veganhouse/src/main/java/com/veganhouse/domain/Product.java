@@ -25,7 +25,7 @@ public class Product {
     protected String category;
     protected String subCategory;
 
-    @Size(min = 0, max = 1000, message = "A DESCRIÇÃO deve ter no máximo 1000 caracteres")
+    //@Size(min = 0, max = 1000, message = "A DESCRIÇÃO deve ter no máximo 1000 caracteres")
     @Lob
     @Basic(fetch = FetchType.LAZY)
     protected String description;

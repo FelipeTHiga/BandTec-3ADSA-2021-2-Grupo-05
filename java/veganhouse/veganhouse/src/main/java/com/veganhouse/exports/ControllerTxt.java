@@ -104,7 +104,7 @@ public class ControllerTxt {
         try {
             entrada = new BufferedReader(new FileReader(fileName));
         } catch (IOException erro) {
-            System.out.println("Erro ao abrir o arquivo" + erro.getMessage());
+            System.out.println("Erro ao abrir o arquivo " + erro.getMessage());
         }
 
         try {
