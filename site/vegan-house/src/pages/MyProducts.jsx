@@ -112,8 +112,8 @@ export function MyProducts() {
                 }
                 window.location.href = '#section-my-products'
             }).catch((err) => {
-                warmings(err.response.data.errors);
-                console.log(err.response.data);
+                // warmings(err.response.data.errors);
+                // console.log(err.response.data);
                 setSucess("");
             })
     }
@@ -135,6 +135,7 @@ export function MyProducts() {
             fkSeller: fkSeller
         }).then((res) => {
             if (res.status === 200) {
+                pacthImage(id);
                 setName("");
                 setCategory("");
                 setSubCategory("");
@@ -152,7 +153,7 @@ export function MyProducts() {
                 
             }
         }).catch((err) => {
-            warmings(err.response.data.errors);
+            // warmings(err.response.data.errors);
         })
     }
 
@@ -450,11 +451,11 @@ export function MyProducts() {
                                         <label htmlFor="">Subcategoria</label>
                                         <select name="" onChange={e => setSubCategory(e.target.value)} value={subCategory} id="sub_category">
                                             <option value="">Selecione uma Subcategoria</option>
-                                            <option value="Bolsa/Mochila">Bolsa/Mochila</option>
-                                            <option value="Sobremesa">Sobremesa</option>
-                                            <option value="Creme">Creme</option>
-                                            <option value="Pomadas">Pomadas</option>
-                                            <option value="Calçados">Calçados</option>
+                                            <option value="Acessórios">Acessórios</option>
+                                            <option value="Alimentos">Alimentos</option>
+                                            <option value="Cosméticos">Cosméticos</option>
+                                            <option value="Saúde">Saúde</option>
+                                            <option value="Vestimenta">Vestimenta</option>
                                             <i class="fas fa-arrow-down"></i>
                                         </select>
                                     </div>
@@ -488,7 +489,7 @@ export function MyProducts() {
 
                                 <div className="align-column margin-top-20 margin-bottom-25">
                                     <button id="create-btn" className="create-product-btn" onClick={createProduct}>Cadastrar</button>
-                                    <button id="edit-btn" className="edit-product-btn" onClick={patch}>Editar</button>
+                                    <button id="edit-btn" className="edit-product-btn" onClick={patch}>Salvar</button>
 
                                 </div>
 

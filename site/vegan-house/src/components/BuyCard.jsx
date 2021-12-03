@@ -95,8 +95,7 @@ export function BuyCard(props) {
                 </div>
                 <hr />
                 <div className="product-price">
-                    <h1>R${(props.product.price)}</h1>
-                    {/* .toFixed(2) */}
+                    <h1>R${Number(props.product.price).toFixed(2) }</h1>
                 </div>
 
                 <div className="btn">

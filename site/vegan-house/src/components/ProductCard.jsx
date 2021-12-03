@@ -36,12 +36,10 @@ export function ProductCard(props) {
                 </div>
                 <div className="container-description-product">
                     <p className="description">{props.name}</p>
-                    <p className="price">R${(props.price)}</p>
+                    <p className="price">R${Number(props.price).toFixed(2)}</p>
                     <button onClick={buyProduct}><i className="fa fa-shopping-cart"></i>Comprar</button>
                 </div>
             </div>
         </>
     );
 }
-
-// toFixed(2)
