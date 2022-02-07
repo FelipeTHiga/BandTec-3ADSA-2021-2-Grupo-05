@@ -16,7 +16,7 @@ function Modal(props, { id = 'modal' }) {
                     <div className="modal-content">
                         <h2 className="modal-title">{props.title}</h2>
                         <p className="modal-text">{props.message}</p>
-                        <Link to="/login">
+                        <Link to={props.link}>
                             <button className="modal-btn">{props.btnTitle}</button>
                         </Link>
                     </div>

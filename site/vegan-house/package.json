@@ -14,7 +14,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-input-mask": "^3.0.1",
     "axios": "^0.22.0",
-    "node-sass": "4.14.1",
+    "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-input-mask": "^2.0.4",

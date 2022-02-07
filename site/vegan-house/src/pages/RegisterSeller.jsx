@@ -79,7 +79,7 @@ export function RegisterSeller() {
         setErrorCommercialEmail("");
       
         if (!document.getElementById("checkbox").checked) {
-            setError("VocÃª precisa aceitar nossos termos para poder continuar.")
+            setError("Você precisa aceitar nossos termos para poder continuar.")
         } else {
             api.post(`/sellers/${user.id}`, {
                 commercialName: commercialName,

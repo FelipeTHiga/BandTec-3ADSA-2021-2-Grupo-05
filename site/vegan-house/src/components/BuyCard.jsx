@@ -138,6 +138,7 @@ export function BuyCard(props) {
                         height={document.body.scrollHeight}
                         title="Atenção"
                         message="Para acessar a funcionalidade, você precisa estar logado"
+                        link="/login"
                         btnTitle="Ir para Login!" />
                     : null
             }
