@@ -22,15 +22,14 @@ public class User {
     @NotBlank(message = "Erro no cadastro preencha todos os campos obrigatorios (*)")
     protected String surName;
 
-    @NotBlank(message = "Erro no cadastro preencha todos os campos obrigatorios (*)")
     @CPF(message = "Insira um CPF válido")
     protected String cpf;
 
+    @NotBlank(message = "Erro no cadastro preencha todos os campos obrigatorios (*)")
     @Email(message = "Insira um email válido")
     protected String email;
 
     @NotBlank(message = "Erro no cadastro preencha todos os campos obrigatorios (*)")
-    @Size(min = 6, max = 20, message = "A senha deve ter entre 6 e 20 caracteres")
     protected String passwordUser;
 
     protected Boolean isSeller;

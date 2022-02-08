@@ -5,10 +5,9 @@ import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { UserGreeting } from '../components/UserGreeting';
-import { updateUser } from '../scripts/crud-user';
-
+import { useState } from 'react';
 import loginService from '../services/login'
-
+import api from '../services/api';
 import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/userProfile.scss';
@@ -16,6 +15,58 @@ import '../styles/userProfile.scss';
 
 export function UserProfile() {
     let user = loginService.getSession();
+    const [email, setEmail] = useState(user.email);
+    const [error, setError] = useState("");
+    const [status, setStatus] = useState("");
+    var isEmail = false;
+
+    function updateUser(e) {
+        e.preventDefault();
+
+        setError("");
+        setStatus("");
+
+
+
+        if (email.length === 0) {
+            setError("Erro no cadastro preencha todos os campos obrigatorios (*)")
+        }
+
+        for(var i = 0; i < email.length; i++) {
+            if(email[i] === "@") {
+               isEmail = true;
+            }
+        }
+
+        if(!isEmail) {
+            setError("Digite um email válido")
+        }
+
+        const userUpdate = {
+            id: user.id,
+            nameUser: user.nameUser,
+            surName: user.surName,
+            cpf: user.cpf,
+            email: document.getElementById("emailUserUpdate").value,
+            passwordUser: user.passwordUser
+        }
+
+        api({
+            method: 'put',
+            url: '/users',
+            params: {
+                idUser: user.id
+            },
+            data: userUpdate,
+        })
+            .then((res) => {
+                if (res.status === 200) {
+                    loginService.setSession(res.data)
+                    setStatus("Email atualizado com sucesso")
+                }
+            });
+    }
+
     return (
         <>
             <Navbar />
@@ -69,12 +120,21 @@ export function UserProfile() {
                                         <label for="email">E-mail</label>
                                         <div>
                                             <i className="far fa-envelope line-up icon-left-radius"></i>
-                                            <input id="emailUserUpdate" placeholder={user.email} className="input-default " type="text" name="" />
+                                            <input
+                                                type="email"
+                                                value={email}
+                                                className="input-default"
+                                                id="emailUserUpdate"
+                                                onChange={e => setEmail(e.target.value)}
+
+                                            />
                                             <i className="fas fa-lock line-up lock"></i>
                                         </div>
+                                        {error && <p className="error err-userP p-name">{error}</p>}
+                                        {status && <p className="sucess">{status}</p>}
                                     </div>
                                     <div className="button-form-profile">
-                                    <button onClick={updateUser}>Atualizar</button>
+                                        <button onClick={updateUser}>Atualizar</button>
                                     </div>
                                 </form>
                             </div>

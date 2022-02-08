@@ -45,7 +45,7 @@ public class ControllerUser {
     public ResponseEntity putUser(@RequestBody @Valid User newUpdate){
         if (userRepository.existsById(newUpdate.getId())) {
             userRepository.save(newUpdate);
-            return ResponseEntity.status(200).build();
+            return ResponseEntity.status(200).body(newUpdate);
         } else {
             return ResponseEntity.status(204).build();
         }

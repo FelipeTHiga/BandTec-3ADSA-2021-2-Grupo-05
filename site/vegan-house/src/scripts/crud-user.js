@@ -76,28 +76,6 @@ async function getUser(){
     
 }
 
-async function updateUser(props) {
-    let userUpdate = loginService.getSession();
-    const user = {
-        id: userUpdate.id,
-        nameUser: userUpdate.nameUser,
-        surName: userUpdate.surName,
-        cpf: userUpdate.cpf,
-        email: document.getElementById("emailUserUpdate").value,
-        passwordUser: userUpdate.passwordUser
-    }
 
-    await api({
-        method: 'put',
-        url: '/users',
-        params: {
-            idUser: userUpdate.id
-        },
-        data: user,
-    })
-    .then(function (response) {
-        console.log(response.status);
-    });
-}
 
-export {submit, getUser, login, user_logged, updateUser, getAdress};
+export {submit, getUser, login, user_logged, getAdress};
