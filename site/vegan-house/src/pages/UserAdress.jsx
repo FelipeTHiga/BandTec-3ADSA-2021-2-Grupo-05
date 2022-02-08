@@ -92,7 +92,7 @@ export function UserAdress() {
         })
         .then(function (response) {
             console.log(response.status);
-            alert('Endereço cadastrado com sucesso :)')
+            alert('Endereço cadastrado com sucesso')
             window.location.reload();
         }).catch((err) => {
             warmings(err.response.data);
@@ -127,7 +127,7 @@ export function UserAdress() {
         })
             .then(function (response) {
                 console.log(response.status);
-                alert('Endereço atualizado com sucesso :)')
+                alert('Endereço atualizado com sucesso')
                 window.location.reload();
 
             }).catch((err) => {

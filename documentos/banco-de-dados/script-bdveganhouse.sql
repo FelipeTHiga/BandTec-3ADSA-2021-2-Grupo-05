@@ -2,6 +2,13 @@ create database bdveganhouse;
 drop database bdveganhouse;
 use bdveganhouse;
 
+insert into certification values
+(null, "Selo Escolha sem Crueldade", "https://veganhousestorageblobs.blob.core.windows.net/images/Selo-1.png"),
+(null, "Selo da Sociedade Vegetariana Brasileira", "https://veganhousestorageblobs.blob.core.windows.net/images/Selo-2.png"),
+(null, "Selo da Vegan Societ", "https://veganhousestorageblobs.blob.core.windows.net/images/Selo-3.png"),
+(null, "Selo The Leaping Bunny", "https://veganhousestorageblobs.blob.core.windows.net/images/Selo-4.png"),
+(null, "Certificado Vegano da Organização Veganismo Brasil", "https://veganhousestorageblobs.blob.core.windows.net/images/Selo-5.png");
+
 insert into user values 
 (null, 0, "11122233345", "dino@hotmail.com", 0, "Dino", "sonho", "Sauro", null),
 (null, 0, "10978253419", "flavia@hotmail.com", 0, "Flávia", "compaixao", "Silva", null),
@@ -13,13 +20,6 @@ insert into seller values
 (null, 82627153753643, "kerai_dino@gmail.com", "Kerai",  "kerai_sustentavel", 1, "@kerai_sustentavel", "(11) 94913-1006"),
 (null, 76234158891300, "vegSeed@gmail.com", "VegSeed",  "vegSeed", 2, "@vegSeed", "(83) 95886-7231"),
 (null, 80002536749211, "larVegan@gmail.com", "Lar Vegan",  "larVegan", 3, "@larVegan", "(16) 96623-2008");
-
-insert into certification values
-(null, "Selo Escolha sem Crueldade", "https://veganhousestorageblobs.blob.core.windows.net/images/Selo-1.png"),
-(null, "Selo da Sociedade Vegetariana Brasileira", "https://veganhousestorageblobs.blob.core.windows.net/images/Selo-2.png"),
-(null, "Selo da Vegan Societ", "https://veganhousestorageblobs.blob.core.windows.net/images/Selo-3.png"),
-(null, "Selo The Leaping Bunny", "https://veganhousestorageblobs.blob.core.windows.net/images/Selo-4.png"),
-(null, "Certificado Vegano da Organização Veganismo Brasil", "https://veganhousestorageblobs.blob.core.windows.net/images/Selo-5.png");
 
 insert into product values 
 (null, "Acessórios", "Mochila diferenciada, confeccionada com lona de caminhão reaproveitada, várias divisorias: 1 bolso externo lateral, 1 bolso externo frontal com ziper,2 bolsos internos,1 alça de mão de 9cm,2 alças regulaveis de ombro,largura 37 cm,altura 24 cm profundidade 15cm.",
@@ -112,11 +112,20 @@ Não contém quantidades significativas de proteínas, gorduras trans e fibras a
  3, 50, "Requeijão em Pó", 16.99, "Alimentos"),
  (null, "Saúde", "(coco) Cocos nucifera oil, (bacuri) Platonia insignis butter, (cupuaçu) Theobroma grandiflorum butter, (cacau) Theobroma cacao butter, (carnaúba) Copernicia prurifera wax, (fácula de araruta) Maranta arundinacea root powder, (camomila) Matricaria chamomilla flower extract, (confrey) Symphytum officinale leaf extract, (calêndula) Calendula officinalis flower extract, Melaleuca alternifólia oil**, (lavanda) Lavandula officinalis essencial oil, zinc oxide, (vitE) Tocopheryl Acetate and Rosmarinus Officinalis Oleoresin Extract.",
  3, 25, "Pomada - Basalsamo", 22.50, "Saúde"),
- (null, "Saúde", "Óleo Essencial de Hortelã – Mentha piperita Atenção e Frescor 100% Natural Produto Vegano 12 mL Benefícios psicoemocionais: Faz parte do grupo de óleos essenciais estimulantes, sendo indicado para pessoas tímidas e desanimadas. O aroma intenso da hortelã ajuda a revigorar a alma, dando suporte para que a realização de transformação de emoções como raiva, medo, trauma e histeria; isto porque elas são desbloqueadas e liberadas. O óleo essencial de hortelã purifica a mente, ajuda a clarear as idéias e deixa a pessoa mais proativa, mais dinâmica. Há também estimulo da concentração, melhora da memória, diminui o estresse e a fadiga, melhora a agilidade da mente e a organiza. É indicado para estudantes, para pessoas necessitam de foco na vida e no trabalho, sendo interessante o seu uso para aromatizar ambientes como salas de aulas e escritórios. Benefícios Corporais e Estéticos: indicado para os males do aparelho digestivo como: difícil digestão, enjôos, náuseas, cólicas intestinais e vômitos, ao revigorar o sistema digestivo. Graças a ação refrescante do hálito, combate o mau hálito e também ajuda a diminuir o apetite. No aparelho respiratório é usado para vários problemas, tosse seca, congestão nasal, asma, bronquite, resfriados e sinusite. Além de proporcionar frescor às vias respiratórias, a ação bactericida e antiviral do óleo ajudar a prevenir as doenças que atingem esse sistema. Por possuir ação analgésica, o óleo essencial de hortelã pode ser usado para massagear hematomas, lesões, locais doloridos do corpo; ajuda a aliviar dores reumáticas, de tendinite, nevralgia, artrite e dores musculares. Sua ação estética abrange mais cuidados capilares, realizando controle de oleosidade e estímulo do crescimento dos fios. Contudo, por aumentar a rigidez do local em que é aplicado e a circulação sanguínea é indicado para varizes e prevenção de celulites. Usado na pele, atua como amaciante, ajuda a remover cravos e diminui algumas irritações cutâneas (dermatites, sarna e pruridos). Contraindicações: evitar durante a gravidez e amamentação. Sempre usá-lo diluído. Não utilizar em crianças menores de 2 anos.",
+ (null, "Saúde", "Óleo Essencial de Hortelã – Mentha piperita Atenção e Frescor 100% Natural Produto Vegano 12 mL Benefícios psicoemocionais: 
+ Faz parte do grupo de óleos essenciais estimulantes, sendo indicado para pessoas tímidas e desanimadas. O aroma intenso da hortelã ajuda a revigorar 
+ a alma, dando suporte para que a realização de transformação de emoções como raiva, medo, trauma e histeria; isto porque elas são desbloqueadas e 
+ liberadas. O óleo essencial de hortelã purifica a mente, ajuda a clarear as idéias e deixa a pessoa mais proativa, mais dinâmica. Há também estimulo 
+ da concentração, melhora da memória, diminui o estresse e a fadiga, melhora a agilidade da mente e a organiza. É indicado para estudantes, 
+ para pessoas necessitam de foco na vida e no trabalho, sendo interessante o seu uso para aromatizar ambientes como salas de aulas e escritórios. 
+ Benefícios Corporais e Estéticos: indicado para os males do aparelho digestivo como: difícil digestão, enjôos, náuseas, cólicas intestinais e vômitos, 
+ ao revigorar o sistema digestivo. Graças a ação refrescante do hálito, combate o mau hálito e também ajuda a diminuir o apetite. No aparelho respiratório 
+ é usado para vários problemas, tosse seca, congestão nasal, asma, bronquite, resfriados e sinusite. Além de proporcionar frescor às vias respiratórias, a ação bactericida e antiviral do óleo ajudar a prevenir as doenças que atingem esse sistema. Por possuir ação analgésica, o óleo essencial de hortelã pode ser usado para massagear hematomas, lesões, locais doloridos do corpo; ajuda a aliviar dores reumáticas, de tendinite, nevralgia, artrite e dores musculares. Sua ação estética abrange mais cuidados capilares, realizando controle de oleosidade e estímulo do crescimento dos fios. Contudo, por aumentar a rigidez do local em que é aplicado e a circulação sanguínea é indicado para varizes e prevenção de celulites. Usado na pele, atua como amaciante, ajuda a remover cravos e diminui algumas irritações cutâneas (dermatites, sarna e pruridos). Contraindicações: evitar durante a gravidez e amamentação. Sempre usá-lo diluído. Não utilizar em crianças menores de 2 anos.",
  3, 200, "Óleo de Hortelã", 70.50, "Saúde");
  
 
 select * from user;
+select * from adress;
 select * from seller;
 select * from product;
 select * from certification;
@@ -131,5 +140,7 @@ where fk_seller = 1 and has_certification = 1;
 
 drop table users;
 
+update product set is_avaliable = 1 where id in(1,2,3);
 
 
+delete from restock_notification where id_restock_notification = 1;

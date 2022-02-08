@@ -105,19 +105,18 @@ export function MyProducts() {
             subCategory: subCategory,
             description: description,
             inventory: parseInt(inventory),
-            fkSeller: user.id,
+            fkSeller: user.id
         })
             .then((res) => {
                 if (res.status === 201) {
                     setSucess("O produto foi criado!");
                     getAllProducts();
                     window.location.href = '#section-products'
-                    //pacthImage(res.data.id);
+                    pacthImage(res.data.id);
                 }
-                //window.location.href = '#section-my-products'
+                window.location.href = '#section-my-products'
             }).catch((err) => {
                 warmings(err.response.data);
-                console.log(err.response.data);
                 setSucess("");
             })
     }
@@ -136,9 +135,10 @@ export function MyProducts() {
             inventory: inventory,
             price: parseFloat(price),
             description: description,
-            fkSeller: user.id
+            fkSeller: fkSeller
         }).then((res) => {
             if (res.status === 200) {
+                pacthImage(id);
                 setName("");
                 setCategory("");
                 setSubCategory("");
@@ -303,7 +303,7 @@ export function MyProducts() {
         api.post(`products/exportTxt/${fileName}/${idSeller}`)
             .then((res) => {
                 if (res.status === 200) {
-                    alert("Arquivo txt exportado com sucesso!\nC:/Users/laris/Desktop/PROJETO-3ºS/BandTec-3ADSA-2021-2-Grupo-05/java/veganhouse/veganhouse")
+                    alert("Arquivo txt exportado com sucesso!")
                 } else if (res.status === 204) {
                     alert("Não foi possível exportar o arquivo txt!\nVendedor sem produtos cadastrados.")
                 }
@@ -320,7 +320,7 @@ export function MyProducts() {
         api.post(`products/exportCsv/${fileName}/${idSeller}`)
             .then((res) => {
                 if (res.status === 200) {
-                    alert("Arquivo csv exportado com sucesso!\nC:/Users/laris/Desktop/PROJETO-3ºS/BandTec-3ADSA-2021-2-Grupo-05/java/veganhouse/veganhouse")
+                    alert("Arquivo csv exportado com sucesso!")
                 } else if (res.status === 204) {
                     alert("Não foi possível exportar o arquivo csv!\nVendedor sem produtos cadastrados.")
                 }
@@ -492,7 +492,7 @@ export function MyProducts() {
 
                                 <div className="align-column margin-top-20 margin-bottom-25">
                                     <button id="create-btn" className="create-product-btn" onClick={createProduct}>Cadastrar</button>
-                                    <button id="edit-btn" className="edit-product-btn" onClick={patch}>Editar</button>
+                                    <button id="edit-btn" className="edit-product-btn" onClick={patch}>Salvar</button>
 
                                 </div>
 

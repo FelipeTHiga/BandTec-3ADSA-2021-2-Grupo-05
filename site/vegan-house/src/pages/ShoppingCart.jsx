@@ -1,13 +1,14 @@
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
-import { OrderCart } from '../components/OrderCart';
-import { useHistory } from "react-router";
-import React, { useEffect } from 'react';
-
+import { Submenu } from '../components/Submenu';
+import "../styles/shoppingCart.scss"
+import { OrderCart, totalAmount } from '../components/OrderCart';
 import loginService from '../services/login';
-import api from '../services/api';
+import api from "../services/api";
+import { useParams, useHistory } from "react-router";
+import React, { Component, useEffect, useState } from 'react';
 
-import '../styles/shoppingCart.scss'
+
 
 export function ShoppingCart(props) {
 
@@ -42,9 +43,9 @@ export function ShoppingCart(props) {
             history.push(`/login`);
         }
     }, [])
-    
 
-    
+
+
     let [totalAmount, setNumber] = React.useState({ total: total });
 
     function finishOrder(){
@@ -58,6 +59,7 @@ export function ShoppingCart(props) {
                     }).catch((err) => {
                     })
     }
+
 
     return (
         <>
@@ -79,7 +81,7 @@ export function ShoppingCart(props) {
                                 <h3>Remover</h3>
                             </div>
                         </div>
-                        {cartItems.map(cartItem => (<OrderCart price={cartItem.product.price} setTotal={setNumber} cardId={cartItem.idCartItem} productName={cartItem.product.name} productId={cartItem.product.id} quantity={cartItem.quantity} />))}
+                        {cartItems.map(cartItem => (<OrderCart price={cartItem.product.price} setTotal={setNumber} cardId={cartItem.idCartItem} productName={cartItem.product.name} productId={cartItem.product.id} quantity={cartItem.quantity}  />))}
 
                     </div>
                     <div className="cart-final">

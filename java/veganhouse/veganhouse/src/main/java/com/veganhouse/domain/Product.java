@@ -25,7 +25,7 @@ public class Product {
     protected String category;
     protected String subCategory;
 
-    @Size(min = 0, max = 1000, message = "A DESCRIÇÃO deve ter no máximo 1000 caracteres")
+    //@Size(min = 0, max = 1000, message = "A DESCRIÇÃO deve ter no máximo 1000 caracteres")
     @Lob
     @Basic(fetch = FetchType.LAZY)
     protected String description;
@@ -53,7 +53,7 @@ public class Product {
 
     }
 
-    public Product(String name, Double price, String category, String subCategory, String description, Integer inventory, Integer fkSeller) {
+    public Product(String name, Double price, String category, String subCategory, String description, Integer inventory, Integer fkSeller, Boolean isAvaliable) {
         this.name = name;
         this.price = price;
         this.category = category;
@@ -61,6 +61,7 @@ public class Product {
         this.description = description;
         this.inventory = inventory;
         this.fkSeller = fkSeller;
+        this.isAvaliable = isAvaliable;
     }
 
     public Product(Integer id, String name, Double price, String category, String subCategory, String description, Integer inventory, Integer fkSeller) {

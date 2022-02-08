@@ -91,10 +91,11 @@ public class ControllerProduct {
         if (productRepository.existsById(id)) {
             if (restockNotificationRepository.existsByFkProduct(id)
                     && product.getInventory() > 0
-                    && productRepository.getById(id).getInventory() == 0)
+                    && productRepository.findById(id).get().getInventory() == 0)
                 eventManagerRestock.notify(id);
 
             product.setId(id);
+            product.setAvaliable(true);
             productRepository.save(product);
             return ResponseEntity.status(200).build();
         }

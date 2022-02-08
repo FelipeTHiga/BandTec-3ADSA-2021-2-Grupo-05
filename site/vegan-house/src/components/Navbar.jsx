@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom';
 import '../styles/navbar.scss'
 import logo from '../assets/images/logo.png';
 import loginService from '../services/login'
+import { useState } from 'react';
+import { useHistory } from 'react-router';
+import api from '../services/api';
 
 
 export function Navbar(props) {
@@ -9,9 +12,40 @@ export function Navbar(props) {
         authenticated: false
     }
     let userLogged = loginService.getSession() ?? authenticatedUser;
-    
+
     function logout() {
         sessionStorage.setItem("user", null)
+    }
+
+    const [searchProduct, setSearchProduct] = useState("");
+
+    const history = useHistory();
+    function search() {
+        sessionStorage.setItem("nameProd", searchProduct);
+        if (searchProduct == "" && props.isCatalog != true) {
+            history.push(`/todos-os-resultados/Todos`);
+        } else if (props.isCatalog == true) {
+            var name = sessionStorage.getItem("nameProd");
+            if (name != "") {
+                api.get(`/products/name/${name}`)
+                    .then((res) => {
+                        if (res.status === 200) {
+                            props.setProducts(res.data);
+                            sessionStorage.setItem("nameProd", "");
+                        }
+                    }).catch((err) => {
+                    })
+            } else {
+                api({
+                    method: 'get',
+                    url: `/products/all`,
+                }).then((res) => {
+                    props.setProducts(res.data);
+                }) 
+            }
+        } else {
+            history.push(`/todos-os-resultados/name`);
+        }
     }
 
     return (
@@ -24,12 +58,10 @@ export function Navbar(props) {
                 </div>
 
                 <section className="container-search-bar line-up">
-                    <input placeholder="Busque seus produtos aqui" type="text" />
+                    <input placeholder="Busque seus produtos aqui" type="text" onChange={e => setSearchProduct(e.target.value)} />
                     <div className="container-search-icon">
-                        <button className="search-button">
-                            <Link to="/todos-os-resultados/Todos">
-                                <i className="fas fa-search"></i>
-                            </Link>
+                        <button className="search-button" onClick={search}>
+                            <i className="fas fa-search" onClick={search}></i>
                         </button>
 
                     </div>

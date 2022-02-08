@@ -1,0 +1,31 @@
+USER
+Flávia
+Silva
+48475304893
+flavia@hotmail.com
+compaixao2021
+compaixao2021
+
+SELLER
+VegSeed
+34584347000140 
+vegSeed@gmail.com
+@vegSeed
+VegSeed
+(21) 3490-9030
+
+
+
+
+APRO: Pagamento aprovado.
+CONT: Pagamento pendente.
+OTHE: Recusado por erro geral.
+CALL: Recusado com validação para autorizar.
+FUND: Recusado por quantia insuficiente.
+SECU: Recusado por código de segurança inválido.
+EXPI: Recusado por problema com a data de vencimento.
+FORM: Recusado por erro no formulário.
+
+
+Mastercard    5031 4332 1540 6351    123    11/25
+Visa    4235 6477 2802 5682    123    11/25
