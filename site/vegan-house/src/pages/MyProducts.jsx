@@ -37,7 +37,7 @@ export function MyProducts() {
     const [errorPrice, setErrorPrice] = useState("");
     const [errorDescription, setErrorDescription] = useState("");
     const [errorInventory, setErrorInventory] = useState("");
-    const [error, setError] = useState([]);
+    const [error, setError] = useState("");
     const [sucess, setSucess] = useState("");
 
     const [image_url1, setImageUrl1] = useState("");
@@ -56,17 +56,20 @@ export function MyProducts() {
 
     function warmings(errors) {
         
-        for (var i = 0; i < errors.length; i++) {
-            if (errors[i].field == 'name') {
-                setErrorName(errors[i].defaultMessage)
-            } else if (errors[i].field == 'price') {
-                setErrorPrice(errors[i].defaultMessage)
-            } else if (errors[i].field == 'description') {
-                setErrorDescription(errors[i].defaultMessage)
-            } else if (errors[i].field == 'inventory') {
-                setErrorInventory(errors[i].defaultMessage)
-            }
+        if (errors.name) {
+            setErrorName(errors.name)
         }
+        if (errors.price) {
+            setErrorPrice(errors.price)
+        }
+        if (errors.description) {
+            setErrorDescription(errors.description)
+        }
+        if (errors.inventory) {
+            setErrorInventory(errors.inventory)
+        }
+      
+        
 
     }
 
@@ -90,6 +93,7 @@ export function MyProducts() {
 
     function createProduct(e) {
         e.preventDefault();
+        setError("");
         setErrorName("");
         setErrorPrice("");
         setErrorDescription("");
@@ -112,8 +116,7 @@ export function MyProducts() {
                 }
                 window.location.href = '#section-my-products'
             }).catch((err) => {
-                // warmings(err.response.data.errors);
-                // console.log(err.response.data);
+                warmings(err.response.data);
                 setSucess("");
             })
     }
@@ -153,7 +156,7 @@ export function MyProducts() {
                 
             }
         }).catch((err) => {
-            // warmings(err.response.data.errors);
+            warmings(err.response.data);
         })
     }
 
@@ -470,7 +473,7 @@ export function MyProducts() {
 
                                     <div className="product-edit-camp">
                                         <label htmlFor="">Qtd. estoque</label>
-                                        <input id="inventory" onChange={e => setInvetory(e.target.value)} value={inventory} className="input" type="text" placeholder="100" />
+                                        <input id="inventory" onChange={e => setInvetory(e.target.value.replace(/[^0-9]/g,''))} value={inventory} className="input" type="text" placeholder="100" />
                                         {errorInventory && <p className="error">{errorInventory}</p>}
                                     </div>
                                 </div>

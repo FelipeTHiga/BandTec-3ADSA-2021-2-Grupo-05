@@ -50,16 +50,17 @@ export function SellerProfile() {
     let certificationAr = [certification1, certification2, certification3, certification4, certification5];
 
     function warmings(errors) {
-        console.log(errors)
-        for (var i = 0; i < errors.length; i++) {
-            if (errors[i].field == 'commercialEmail') {
-                setErrorCommercialEmail(errors[i].defaultMessage)
-            } else if (errors[i].field == 'commercialName') {
-                setErrorCommercialName(errors[i].defaultMessage)
-            } else if (errors[i].field == 'cnpj') {
-                setErrorCnpj(errors[i].defaultMessage)
-            }
+
+        if (errors.commercialEmail) {
+            setErrorCommercialEmail(errors.commercialEmail)
         }
+        if (errors.commercialName) {
+            setErrorCommercialName(errors.commercialName)
+        }
+        if (errors.cnpj) {
+            setErrorCnpj(errors.cnpj)
+        }
+
 
     }
 
@@ -156,7 +157,7 @@ export function SellerProfile() {
                 //setErro("Ocorreu um erro ao tentar atualizar seus dados! Por favor, tente novamente.");
                 setSucess(null);
             
-                warmings(err.response.data.errors);
+                warmings(err.response.data);
                 console.log(err.response.data)
               
               

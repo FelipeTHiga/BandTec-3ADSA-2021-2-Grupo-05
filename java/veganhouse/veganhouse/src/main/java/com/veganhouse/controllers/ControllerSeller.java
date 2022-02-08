@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Objects;
 
 // Classe responsável pelos endpoints de criação e edição de sellers
 @RestController
@@ -31,7 +32,7 @@ public class ControllerSeller {
             // Pegando o usário
             User userLogged = userRepository.findById(idUser).get();
 
-            if (userLogged.getIsSeller()) {
+            if (!Objects.isNull(userLogged.getIsSeller())) {
                 return ResponseEntity.status(409).build();
             } else {
                 // Setando o id do usuário logado como fk do seller cadastrado

@@ -14,8 +14,16 @@ export function FormLogin() {
 
     function login(e) {
         e.preventDefault();
-        if(!email || !password) {
-            setErro("Os campos não estão preenchidos!");
+        if(!email && !password) {
+            setErro("Os campos email e senha não estão preechidos!");
+            sessionStorage.setItem("sucess", "");
+            setSucess(null);
+        } else if(!email) {
+            setErro("O email não está preechido");
+            sessionStorage.setItem("sucess", "");
+            setSucess(null);
+        } else if(!password) {
+            setErro("A senha não está preenchida");
             sessionStorage.setItem("sucess", "");
             setSucess(null);
         } else {

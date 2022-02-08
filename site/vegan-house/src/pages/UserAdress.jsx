@@ -31,7 +31,7 @@ export function UserAdress() {
     const [state, setState] = useState('')
     const [adress, setAdress] = useState({})
     const [idAdress, setIdAdress] = useState(0)
-    const [error, setError] = useState([]);
+    const [error, setError] = useState("");
     const [errorCep, setErrorCep] = useState("");
     const [errorStreet, setErrorStreet] = useState("");
     const [errorDistrict, setErrorDistrict] = useState("");
@@ -41,22 +41,27 @@ export function UserAdress() {
     const [errorComplement, setErrorComplement] = useState("");
     
     function warmings(errors) {
-        console.log(errors)
-        for(var i = 0; i < errors.length; i++) {
-           if(errors[i].field == 'cep') {
-                setErrorCep(errors[i].defaultMessage)
-            } else if(errors[i].field == 'street') {
-                setErrorStreet(errors[i].defaultMessage)
-            } else if(errors[i].field == 'district') {
-                setErrorDistrict(errors[i].defaultMessage)
-            } else if(errors[i].field == 'city') {
-                setErrorCity(errors[i].defaultMessage)
-            } else if(errors[i].field == 'state') {
-                setErrorState(errors[i].defaultMessage)
-            } else if(errors[i].field == 'number') {
-                setErrorNumber(errors[i].defaultMessage)
-            } 
+
+        if (errors.cep) {
+            setErrorCep(errors.cep)
         }
+       
+        if (errors.street) {
+            setErrorStreet(errors.street)
+        }
+        if (errors.district) {
+            setErrorDistrict(errors.district)
+        }
+        if (errors.city) {
+            setErrorCity(errors.city)
+        }
+        if (errors.state) {
+            setErrorState(errors.state)
+        }
+        if (errors.number) {
+            setErrorNumber(errors.number)
+        }
+      
 
     }
 
@@ -90,7 +95,7 @@ export function UserAdress() {
             alert('Endereço cadastrado com sucesso')
             window.location.reload();
         }).catch((err) => {
-            warmings(err.response.data.errors);
+            warmings(err.response.data);
 
         });
     }
@@ -126,7 +131,7 @@ export function UserAdress() {
                 window.location.reload();
 
             }).catch((err) => {
-                warmings(err.response.data.errors);
+                warmings(err.response.data);
 
                 });
     }
