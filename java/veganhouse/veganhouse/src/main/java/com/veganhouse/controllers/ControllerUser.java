@@ -44,8 +44,10 @@ public class ControllerUser {
     @PutMapping()
     public ResponseEntity putUser(@RequestBody @Valid User newUpdate){
         if (userRepository.existsById(newUpdate.getId())) {
-            userRepository.save(newUpdate);
-            return ResponseEntity.status(200).body(newUpdate);
+            User update = userRepository.findById(newUpdate.getId()).get();
+            update.setEmail(newUpdate.getEmail());
+            userRepository.save(update);
+            return ResponseEntity.status(200).body(update);
         } else {
             return ResponseEntity.status(204).build();
         }

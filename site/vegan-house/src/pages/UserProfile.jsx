@@ -6,65 +6,59 @@ import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { UserGreeting } from '../components/UserGreeting';
 import { useState } from 'react';
+import api from '../scripts/api';
+
 import loginService from '../services/login'
-import api from '../services/api';
+
 import '../styles/global.scss';
 import '../styles/reset.css';
 import '../styles/userProfile.scss';
 
 
-export function UserProfile() {
-    let user = loginService.getSession();
-    const [email, setEmail] = useState(user.email);
-    const [error, setError] = useState("");
-    const [status, setStatus] = useState("");
-    var isEmail = false;
+export function UserProfile(e) {
+    
+    let user = loginService.getSession()
+    const [status, setStatus] = useState("")
+    const [emailError, setEmailError] = useState("");
 
     function updateUser(e) {
         e.preventDefault();
-
-        setError("");
         setStatus("");
-
-
-
-        if (email.length === 0) {
-            setError("Erro no cadastro preencha todos os campos obrigatorios (*)")
+        setEmailError("");
+        let userUpdate = loginService.getSession();
+        let email;
+        if (document.getElementById("emailUserUpdate").value == "" || document.getElementById("emailUserUpdate").value == " ") {
+            email = userUpdate.email;
+        } else {
+            email = document.getElementById("emailUserUpdate").value;
         }
-
-        for(var i = 0; i < email.length; i++) {
-            if(email[i] === "@") {
-               isEmail = true;
-            }
+        const user = {
+            id: userUpdate.id,
+            nameUser: userUpdate.nameUser,
+            surName: userUpdate.surName,
+            cpf: userUpdate.cpf,
+            email: email,
+            passwordUser: userUpdate.passwordUser
         }
-
-        if(!isEmail) {
-            setError("Digite um email válido")
-        }
-
-        const userUpdate = {
-            id: user.id,
-            nameUser: user.nameUser,
-            surName: user.surName,
-            cpf: user.cpf,
-            email: document.getElementById("emailUserUpdate").value,
-            passwordUser: user.passwordUser
-        }
-
+    
         api({
             method: 'put',
             url: '/users',
             params: {
-                idUser: user.id
+                idUser: userUpdate.id
             },
-            data: userUpdate,
+            data: user,
         })
-            .then((res) => {
-                if (res.status === 200) {
-                    loginService.setSession(res.data)
-                    setStatus("Email atualizado com sucesso")
-                }
-            });
+        .then(function (response) {
+            if(response.status === 200) {
+                loginService.setSession(response.data);
+                setStatus("Seu perfil foi atualizado com sucesso.")
+            } else {
+                setStatus("Ocorreu um erro ao tentar atualizar seu perfil.")
+            }
+        }).catch((err) => {
+            setEmailError("Insira um email válido.");
+        });
     }
 
     return (
@@ -88,7 +82,7 @@ export function UserProfile() {
                         <div className="container-profile">
                             <SectionTitle text="Dados pessoais" />
                             <div className="container-profile-data">
-                                <form>
+                                <form onSubmit={updateUser}>
                                     <div className="container-input">
                                         <label for="name">Nome</label>
                                         <div>
@@ -120,22 +114,15 @@ export function UserProfile() {
                                         <label for="email">E-mail</label>
                                         <div>
                                             <i className="far fa-envelope line-up icon-left-radius"></i>
-                                            <input
-                                                type="email"
-                                                value={email}
-                                                className="input-default"
-                                                id="emailUserUpdate"
-                                                onChange={e => setEmail(e.target.value)}
-
-                                            />
+                                            <input id="emailUserUpdate" placeholder={user.email} className="input-default " type="text" name="" />
                                             <i className="fas fa-lock line-up lock"></i>
                                         </div>
-                                        {error && <p className="error err-userP p-name">{error}</p>}
-                                        {status && <p className="sucess">{status}</p>}
+                                        {emailError && <p className='erro'>{emailError}</p>}
                                     </div>
                                     <div className="button-form-profile">
-                                        <button onClick={updateUser}>Atualizar</button>
+                                    <button type='submit'>Atualizar</button>
                                     </div>
+                                    {status && <p>{status}</p>}
                                 </form>
                             </div>
 

@@ -88,6 +88,8 @@ export function MyProducts() {
             setImageUrl1(res.data.image_url1);
             setImageUrl2(res.data.image_url2);
             setImageUrl3(res.data.image_url3);
+        }).catch((err) => {
+            setError("As imagens não foram cadastradas.")
         })
     }
 
@@ -107,18 +109,20 @@ export function MyProducts() {
             inventory: parseInt(inventory),
             fkSeller: user.id
         })
-            .then((res) => {
-                if (res.status === 201) {
-                    setSucess("O produto foi criado!");
-                    getAllProducts();
-                    window.location.href = '#section-products'
-                    pacthImage(res.data.id);
-                }
-                window.location.href = '#section-my-products'
-            }).catch((err) => {
+        .then((res) => {
+            if (res.status === 201) {
+                setSucess("O produto foi criado!");
+                getAllProducts();
+                window.location.href = '#section-products'
+                pacthImage(res.data.id);
+            }
+            window.location.href = '#section-my-products'
+        }).catch((err) => {
+            if (err.response) {
                 warmings(err.response.data);
-                setSucess("");
-            })
+            }
+            setSucess("");
+        })
     }
 
     function patch(e) {
@@ -156,7 +160,10 @@ export function MyProducts() {
                 
             }
         }).catch((err) => {
-            warmings(err.response.data);
+            if (err.response) {
+                warmings(err.response.data);
+            }
+            setSucess("");
         })
     }
 
@@ -495,7 +502,7 @@ export function MyProducts() {
                                     <button id="edit-btn" className="edit-product-btn" onClick={patch}>Salvar</button>
 
                                 </div>
-
+                                {error && <p>{error}</p>}
                             </div>
                         </div>
                     </div>
