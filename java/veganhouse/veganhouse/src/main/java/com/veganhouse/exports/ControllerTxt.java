@@ -66,7 +66,6 @@ public class ControllerTxt {
             body += String.format("%07.2f", p.getPrice());
             body += String.format("%03d", p.getInventory());
             body += String.format("%-15.15s", p.getCategory());
-            body += String.format("%-15.15s", p.getSubCategory());
             body += String.format("%-1500.1500s ", p.getDescription());
             recordRegister(fileName, body);
             countRegister++;
@@ -91,7 +90,6 @@ public class ControllerTxt {
         Double price;
         Integer inventory;
         String category;
-        String subCategory;
         String description;
         ListaObj<Product> readList = new ListaObj<Product>(10);
         QueueCircularObj productQueue = new QueueCircularObj(10);
@@ -127,11 +125,10 @@ public class ControllerTxt {
                         price = Double.valueOf(register.substring(32, 39).replace(',', '.'));
                         inventory = Integer.valueOf(register.substring(39, 42));
                         category = register.substring(42, 57).trim();
-                        subCategory = register.substring(57, 72).trim();
-                        description = register.substring(72, 157).trim();
+                        description = register.substring(57, 142).trim();
                         Integer fkSeller = seller.getIdSeller();
                         Boolean isAvaliable = true;
-                        Product p = new Product(name, price, category, subCategory, description, inventory, fkSeller, isAvaliable);
+                        Product p = new Product(name, price, category, description, inventory, fkSeller, isAvaliable);
                         productQueue.insert(p);
                         readList.adiciona(p);
                         countDataRegister++;
@@ -172,7 +169,7 @@ public class ControllerTxt {
             }
             System.out.println("Quantidade de registros lidos incompatível com a quantidade de registros gravados");
             return ("Não foi possível realizar o cadastro dos produtos!\nQuantidade de registros lidos incompatível com a quantidade de registros presentes no arquivo txt.");
-        } else if (!commercialName.equals(seller.getCommercialName()) || !cnpj.equals(seller.getCnpj())) {
+        } else if (!commercialName.equalsIgnoreCase(seller.getCommercialName()) || !cnpj.equals(seller.getCnpj())) {
             while (!productQueue.isEmpty()) {
                 productQueue.poll();
             }

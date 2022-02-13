@@ -23,11 +23,10 @@ public class Product {
     protected Double price;
 
     protected String category;
-    protected String subCategory;
 
-    //@Size(min = 0, max = 1000, message = "A DESCRIÇÃO deve ter no máximo 1000 caracteres")
     @Lob
     @Basic(fetch = FetchType.LAZY)
+    @Size(min = 0, max = 1500, message = "A DESCRIÇÃO deve ter no máximo 1500 caracteres")
     protected String description;
 
     @NotNull(message = "O campo QUANTIDADE deve ser preenchido")
@@ -53,23 +52,21 @@ public class Product {
 
     }
 
-    public Product(String name, Double price, String category, String subCategory, String description, Integer inventory, Integer fkSeller, Boolean isAvaliable) {
+    public Product(String name, Double price, String category, String description, Integer inventory, Integer fkSeller, Boolean isAvaliable) {
         this.name = name;
         this.price = price;
         this.category = category;
-        this.subCategory = subCategory;
         this.description = description;
         this.inventory = inventory;
         this.fkSeller = fkSeller;
         this.isAvaliable = isAvaliable;
     }
 
-    public Product(Integer id, String name, Double price, String category, String subCategory, String description, Integer inventory, Integer fkSeller) {
+    public Product(Integer id, String name, Double price, String category, String description, Integer inventory, Integer fkSeller) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
-        this.subCategory = subCategory;
         this.description = description;
         this.inventory = inventory;
         this.fkSeller = fkSeller;
@@ -82,10 +79,9 @@ public class Product {
                         "Nome: %s\n" +
                         "Preço: R$%.2f\n" +
                         "Categoria: %s\n" +
-                        "Subcategoria: %s\n" +
                         "Descrição: %s\n" +
                         "Estoque: %d",
-                name, price, category, subCategory, description, inventory);
+                name, price, category, description, inventory);
     }
 
     //region Getters and Setters
@@ -127,14 +123,6 @@ public class Product {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public String getSubCategory() {
-        return subCategory;
-    }
-
-    public void setSubCategory(String subCategory) {
-        this.subCategory = subCategory;
     }
 
     public String getDescription() {
