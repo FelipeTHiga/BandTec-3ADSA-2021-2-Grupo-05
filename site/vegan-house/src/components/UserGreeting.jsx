@@ -1,4 +1,4 @@
-import "../styles/UserGreeting.scss";
+import "../styles/userGreeting.scss";
 import '../styles/reset.css';
 
 export function UserGreeting(props) {
