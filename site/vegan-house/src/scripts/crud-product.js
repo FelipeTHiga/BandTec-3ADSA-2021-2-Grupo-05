@@ -7,7 +7,6 @@ var list_products = [{
         name: "",
         price: 0.0,
         category: "",
-        subCategory: "",
         description: "",
         inventory: 0,
         fkUser: 1
@@ -20,7 +19,6 @@ async function createProduct(){
         name: document.getElementById("name_product").value,
         price: parseFloat(document.getElementById("price").value),
         category: document.getElementById("category").value,
-        subCategory: document.getElementById("sub_category").value,
         description: document.getElementById("description").value,
         inventory: parseInt(document.getElementById("inventory").value),
         fkUser: user_logged.id

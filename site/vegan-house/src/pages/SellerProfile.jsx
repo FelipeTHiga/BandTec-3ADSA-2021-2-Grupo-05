@@ -20,7 +20,7 @@ import Selo_5 from '../assets/images/certifications/Selo-5.png';
 import '../styles/sellerProfile.scss';
 import '../styles/perfil.scss';
 import '../styles/global.scss';
-import '../styles/reset.css';
+import '../styles/reset.scss';
 
 export function SellerProfile() {
 

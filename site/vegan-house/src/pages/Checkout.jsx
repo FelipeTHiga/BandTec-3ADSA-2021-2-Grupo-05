@@ -9,7 +9,7 @@ import { useParams, useHistory } from "react-router";
 import React, { Component, useEffect, useState } from 'react';
 import { useMercadopago } from 'react-sdk-mercadopago';
 
-import "../styles/checkout.css";
+import "../styles/checkout.scss";
 
 
 export function Checkout(props) {

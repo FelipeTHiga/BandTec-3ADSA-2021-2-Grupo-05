@@ -14,7 +14,6 @@ const productService = {
                 name: document.getElementById("name_product").value,
                 price: parseFloat(document.getElementById("price").value),
                 category: document.getElementById("category").value,
-                subCategory: document.getElementById("sub_category").value,
                 description: document.getElementById("description").value,
                 inventory: parseInt(document.getElementById("inventory").value),
                 fkUser: user.id

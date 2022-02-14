@@ -11,7 +11,7 @@ import api from '../scripts/api';
 import loginService from '../services/login'
 
 import '../styles/global.scss';
-import '../styles/reset.css';
+import '../styles/reset.scss';
 import '../styles/userProfile.scss';
 
 

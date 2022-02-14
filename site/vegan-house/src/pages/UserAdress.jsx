@@ -15,7 +15,7 @@ import InputMask from 'react-input-mask';
 
 
 import '../styles/global.scss';
-import '../styles/reset.css';
+import '../styles/reset.scss';
 import '../styles/userAdress.scss';
 
 export function UserAdress() {

@@ -8,6 +8,7 @@ import { DragDropUpload } from '../components/DragDropUpload';
 import { UserGreeting } from '../components/UserGreeting';
 import { useState, useEffect } from 'react';
 
+import ChoiceModal from '../components/ChoiceModal';
 import ProductTableRow from '../components/ProductTableRow';
 import loginService from '../services/login';
 import api from '../services/api';
@@ -16,7 +17,7 @@ import redo from '../assets/images/redo.png'
 import file from '../files/Documento-de-layout-importação.pdf';
 
 import '../styles/global.scss';
-import '../styles/reset.css';
+import '../styles/reset.scss';
 import '../styles/myProducts.scss';
 
 export function MyProducts() {
@@ -26,7 +27,6 @@ export function MyProducts() {
     const [id, setId] = useState(0);
     const [name, setName] = useState("");
     const [category, setCategory] = useState("");
-    const [subCategory, setSubCategory] = useState("");
     const [inventory, setInvetory] = useState("");
     const [price, setPrice] = useState(0.0);
     const [description, setDescription] = useState("");
@@ -44,6 +44,9 @@ export function MyProducts() {
     const [image_url2, setImageUrl2] = useState("");
     const [image_url3, setImageUrl3] = useState("");
 
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [modalIdProduct, setModalIdProduct] = useState();
+
     useEffect(() => {
 
         async function productsAll() {
@@ -55,7 +58,7 @@ export function MyProducts() {
     }, [])
 
     function warmings(errors) {
-        
+
         if (errors.name) {
             setErrorName(errors.name)
         }
@@ -68,8 +71,8 @@ export function MyProducts() {
         if (errors.inventory) {
             setErrorInventory(errors.inventory)
         }
-      
-        
+
+
 
     }
 
@@ -104,25 +107,24 @@ export function MyProducts() {
             name: name,
             price: parseFloat(price),
             category: category,
-            subCategory: subCategory,
             description: description,
             inventory: parseInt(inventory),
             fkSeller: user.id
         })
-        .then((res) => {
-            if (res.status === 201) {
-                setSucess("O produto foi criado!");
-                getAllProducts();
-                window.location.href = '#section-products'
-                pacthImage(res.data.id);
-            }
-            window.location.href = '#section-my-products'
-        }).catch((err) => {
-            if (err.response) {
-                warmings(err.response.data);
-            }
-            setSucess("");
-        })
+            .then((res) => {
+                if (res.status === 201) {
+                    setSucess("O produto foi criado!");
+                    getAllProducts();
+                    window.location.href = '#section-products'
+                    pacthImage(res.data.id);
+                }
+                window.location.href = '#section-my-products'
+            }).catch((err) => {
+                if (err.response) {
+                    warmings(err.response.data);
+                }
+                setSucess("");
+            })
     }
 
     function patch(e) {
@@ -135,7 +137,6 @@ export function MyProducts() {
         api.patch(`/products/${id}`, {
             name: name,
             category: category,
-            subCategory: subCategory,
             inventory: inventory,
             price: parseFloat(price),
             description: description,
@@ -145,7 +146,6 @@ export function MyProducts() {
                 pacthImage(id);
                 setName("");
                 setCategory("");
-                setSubCategory("");
                 setInvetory("");
                 setPrice("");
                 setDescription("");
@@ -157,7 +157,7 @@ export function MyProducts() {
                 getAllProducts();
                 window.location.href = '#section-products'
             } else {
-                
+
             }
         }).catch((err) => {
             if (err.response) {
@@ -178,7 +178,6 @@ export function MyProducts() {
                     setId(res.data.id);
                     setName(res.data.name);
                     setCategory(res.data.category);
-                    setSubCategory(res.data.subCategory);
                     setInvetory(res.data.inventory);
                     setPrice(res.data.price);
                     setDescription(res.data.description);
@@ -189,7 +188,7 @@ export function MyProducts() {
                     getAllProducts();
                 }
             }).catch((err) => {
-                
+
             })
     }
 
@@ -217,15 +216,21 @@ export function MyProducts() {
             })
     }
 
-    function remove(e) {
+    function removeModal(e) {
         let productId = e.target.id;
+        setModalIdProduct(productId);
+        setIsModalVisible(true);
+    }
+
+    function remove() {
+        let productId = modalIdProduct;
         api.delete(`/products/${productId}`)
             .then((res) => {
                 if (res.status === 200) {
                     getAllProducts();
                     setSucess("O produto foi removido!");
+                    setIsModalVisible(false);
                 }
-
             }).catch((err) => {
             })
     }
@@ -262,7 +267,6 @@ export function MyProducts() {
         setAcao("Cadastrar produtos");
         setName("")
         setCategory("")
-        setSubCategory("")
         setInvetory("")
         setPrice("")
         setDescription("")
@@ -275,14 +279,26 @@ export function MyProducts() {
 
     function getSearchCategory(e) {
         let category = e.target.value;
-        api.get(`/products/tag/${category}/${user.id}`)
-            .then((res) => {
-                if (res.status === 200) {
-                    setProducts(res.data)
-                    setSucess("");
-                }
-            }).catch((err) => {
-            })
+        if (category === "Todos") {
+            api.get(`/products/all/${user.id}`)
+                .then((res) => {
+                    if (res.status === 200) {
+                        setProducts(res.data)
+                        setSucess("");
+                    }
+                }).catch((err) => {
+                })
+        } else {
+            api.get(`/products/tag/${category}/${user.id}`)
+                .then((res) => {
+                    if (res.status === 200) {
+                        setProducts(res.data)
+                        setSucess("");
+                    }
+                }).catch((err) => {
+                })
+        }
+
     }
 
     function sendTxtFile() {
@@ -376,7 +392,7 @@ export function MyProducts() {
                                     <div className="product-option" >
                                         <label htmlFor="">Ordenar por</label>
                                         <select name="" id="state" onChange={getSearchCategory}>
-                                            <option value="">-- Categoria -- </option>
+                                            <option value="Todos">-- Categoria -- </option>
                                             <option value="Alimentos">Alimentos</option>
                                             <option value="Vestimenta">Vestimenta</option>
                                             <option value="Acessórios">Acessórios</option>
@@ -424,12 +440,11 @@ export function MyProducts() {
                             <div className="products-table-header" id="section-products">
                                 <label htmlFor="">Nome do produto</label>
                                 <label htmlFor="">Categoria</label>
-                                <label htmlFor="">Subcategoria</label>
                                 <label htmlFor="">Qtd. estoque</label>
                             </div>
                             <div className="products-table-body">
                                 {products.map(product => (
-                                    <ProductTableRow id={product.id} name={product.name} category={product.category} subCategory={product.subCategory} inventory={product.inventory} edit={edit} remove={remove} pro={product} />
+                                    <ProductTableRow id={product.id} name={product.name} category={product.category} inventory={product.inventory} edit={edit} removeModal={removeModal} pro={product} />
                                 ))}
                             </div>
                         </div>
@@ -445,22 +460,10 @@ export function MyProducts() {
                                 </div>
 
                                 <div className="line-up width-100">
-                                    <div className="product-edit-camp margin-right-50">
+                                    <div className="product-edit-camp">
                                         <label htmlFor="">Categoria</label>
                                         <select name="" onChange={e => setCategory(e.target.value)} value={category} id="category">
                                             <option value="">Selecione uma categoria</option>
-                                            <option value="Acessórios">Acessórios</option>
-                                            <option value="Alimentos">Alimentos</option>
-                                            <option value="Cosméticos">Cosméticos</option>
-                                            <option value="Saúde">Saúde</option>
-                                            <option value="Vestimenta">Vestimenta</option>
-                                            <i class="fas fa-arrow-down"></i>
-                                        </select>
-                                    </div>
-                                    <div className="product-edit-camp">
-                                        <label htmlFor="">Subcategoria</label>
-                                        <select name="" onChange={e => setSubCategory(e.target.value)} value={subCategory} id="sub_category">
-                                            <option value="">Selecione uma Subcategoria</option>
                                             <option value="Acessórios">Acessórios</option>
                                             <option value="Alimentos">Alimentos</option>
                                             <option value="Cosméticos">Cosméticos</option>
@@ -480,7 +483,7 @@ export function MyProducts() {
 
                                     <div className="product-edit-camp">
                                         <label htmlFor="">Qtd. estoque</label>
-                                        <input id="inventory" onChange={e => setInvetory(e.target.value.replace(/[^0-9]/g,''))} value={inventory} className="input" type="text" placeholder="100" />
+                                        <input id="inventory" onChange={e => setInvetory(e.target.value.replace(/[^0-9]/g, ''))} value={inventory} className="input" type="text" placeholder="100" />
                                         {errorInventory && <p className="error">{errorInventory}</p>}
                                     </div>
                                 </div>
@@ -512,6 +515,18 @@ export function MyProducts() {
             <div className="margin-top-25">
                 <Footer />
             </div>
+
+            {
+                isModalVisible ?
+                    <ChoiceModal
+                        onClose={() => setIsModalVisible(false)}
+                        height={document.body.scrollHeight}
+                        title="Confirmação"
+                        message="Você tem certeza que deseja excluir esse produto?"
+                        remove={remove}
+                    />
+                    : null
+            }
         </>
 
     );
