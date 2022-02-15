@@ -17,7 +17,7 @@ function ModalChoice(props, { id = 'modal' }) {
                         <p className="modal-text">{props.message}</p>
                         <div className='container-choice-btn'>
                             <button className="modal-btn" onClick={props.remove}><i class="fas fa-solid fa-check"></i></button>
-                            <button className="modal-btn" onClick={props.onClose}><i class="fa-solid fa-xmark"></i></button>
+                            <button className="modal-btn" onClick={props.onClose}><i class="fa-solid fa-xmark">X</i></button>
                         </div>
                     </div>
                 </div>
