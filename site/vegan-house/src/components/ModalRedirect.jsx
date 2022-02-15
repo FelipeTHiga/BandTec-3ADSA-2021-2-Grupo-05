@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import '../styles/modal.scss'
 
-function Modal(props, { id = 'modal' }) {
+function ModalRedirect(props, { id = 'modal' }) {
 
     const handleOutsideClick = (e) => {
         if (e.target.id === id) props.onClose();
@@ -26,4 +26,4 @@ function Modal(props, { id = 'modal' }) {
     );
 };
 
-export default Modal;
+export default ModalRedirect;

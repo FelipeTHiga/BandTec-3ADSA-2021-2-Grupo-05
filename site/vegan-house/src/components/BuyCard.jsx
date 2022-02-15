@@ -4,7 +4,7 @@ import { ShowStars } from '../scripts/showScore';
 import loginService from '../services/login';
 import { subscribe } from '../services/crud-user';
 import React, { useState } from 'react';
-import Modal from './Modal';
+import ModalRedirect from './ModalRedirect';
 
 import { useParams, useHistory } from "react-router";
 import api from "../services/api";
@@ -133,7 +133,7 @@ export function BuyCard(props) {
             </div>
             {
                 isModalVisible ?
-                    <Modal
+                    <ModalRedirect
                         onClose={() => setIsModalVisible(false)}
                         height={document.body.scrollHeight}
                         title="Atenção"

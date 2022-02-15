@@ -8,7 +8,8 @@ import { DragDropUpload } from '../components/DragDropUpload';
 import { UserGreeting } from '../components/UserGreeting';
 import { useState, useEffect } from 'react';
 
-import ChoiceModal from '../components/ChoiceModal';
+import ModalChoice from '../components/ModalChoice';
+import ModalMessage from '../components/ModalMessage';
 import ProductTableRow from '../components/ProductTableRow';
 import loginService from '../services/login';
 import api from '../services/api';
@@ -44,8 +45,11 @@ export function MyProducts() {
     const [image_url2, setImageUrl2] = useState("");
     const [image_url3, setImageUrl3] = useState("");
 
+    const [isModalChoiceVisible, setIsModalChoiceVisible] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalIdProduct, setModalIdProduct] = useState();
+    const [modalMessage, setModalMessage] = useState("");
+    const [modalTitle, setModalTitle] = useState("");
 
     useEffect(() => {
 
@@ -217,9 +221,10 @@ export function MyProducts() {
     }
 
     function removeModal(e) {
+        window.location.href = '#top';
         let productId = e.target.id;
         setModalIdProduct(productId);
-        setIsModalVisible(true);
+        setIsModalChoiceVisible(true);
     }
 
     function remove() {
@@ -229,7 +234,7 @@ export function MyProducts() {
                 if (res.status === 200) {
                     getAllProducts();
                     setSucess("O produto foi removido!");
-                    setIsModalVisible(false);
+                    setIsModalChoiceVisible(false);
                 }
             }).catch((err) => {
             })
@@ -315,8 +320,10 @@ export function MyProducts() {
         })
             .then((res) => {
                 if (res.status === 200) {
-                    alert(res.data)
-
+                    setModalTitle("Importação de Arquivo")
+                    setModalMessage(res.data);
+                    window.location.href = '#top';
+                    setIsModalVisible(true)
                 }
             }).catch((err) => {
             })
@@ -326,10 +333,14 @@ export function MyProducts() {
         api.post(`products/exportTxt/${fileName}/${idSeller}`)
             .then((res) => {
                 if (res.status === 200) {
-                    alert("Arquivo txt exportado com sucesso!")
+                    setModalTitle("Sucesso");
+                    setModalMessage("Arquivo txt exportado com sucesso!");
                 } else if (res.status === 204) {
-                    alert("Não foi possível exportar o arquivo txt!\nVendedor sem produtos cadastrados.")
+                    setModalTitle("Erro");
+                    setModalMessage("Não foi possível exportar o arquivo txt!\nVendedor sem produtos cadastrados.");
                 }
+                window.location.href = '#top';
+                setIsModalVisible(true)
             }).catch((err) => {
             })
 
@@ -343,10 +354,14 @@ export function MyProducts() {
         api.post(`products/exportCsv/${fileName}/${idSeller}`)
             .then((res) => {
                 if (res.status === 200) {
-                    alert("Arquivo csv exportado com sucesso!")
+                    setModalTitle("Sucesso");
+                    setModalMessage("Arquivo csv exportado com sucesso!");
                 } else if (res.status === 204) {
-                    alert("Não foi possível exportar o arquivo csv!\nVendedor sem produtos cadastrados.")
+                    setModalTitle("Erro");
+                    setModalMessage("Não foi possível exportar o arquivo csv!\nVendedor sem produtos cadastrados.");
                 }
+                window.location.href = '#top';
+                setIsModalVisible(true)
             }).catch((err) => {
             })
 
@@ -358,7 +373,7 @@ export function MyProducts() {
 
     return (
         <>
-            <Navbar />
+            <Navbar id="top" />
             <div className="page-container">
                 <UserGreeting username={user.nameUser} isSeller={user.isSeller} />
             </div>
@@ -517,13 +532,24 @@ export function MyProducts() {
             </div>
 
             {
-                isModalVisible ?
-                    <ChoiceModal
-                        onClose={() => setIsModalVisible(false)}
+                isModalChoiceVisible ?
+                    <ModalChoice
+                        onClose={() => setIsModalChoiceVisible(false)}
                         height={document.body.scrollHeight}
                         title="Confirmação"
                         message="Você tem certeza que deseja excluir esse produto?"
                         remove={remove}
+                    />
+                    : null
+            }
+
+            {
+                isModalVisible ?
+                    <ModalMessage
+                        onClose={() => setIsModalVisible(false)}
+                        height={document.body.scrollHeight}
+                        title={modalTitle}
+                        message={modalMessage}
                     />
                     : null
             }
