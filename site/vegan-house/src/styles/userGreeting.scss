@@ -1,6 +1,15 @@
 .container-name-user{
     width: 100%;
     height: 140px;
+
+    .name-user{
+        font-size: 25px;
+    }
+    
+    
+     p{
+        padding: 3px 0;
+    }
 }
 
 .container-name-user > div{
@@ -10,11 +19,4 @@
     height: 100px;
 }
 
-.container-name-user .name-user{
-    font-size: 25px;
-}
 
-
-.container-name-user  p{
-    padding: 3px 0;
-}

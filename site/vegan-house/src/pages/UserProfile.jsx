@@ -7,11 +7,12 @@ import { SectionTitle } from '../components/SectionTitle';
 import { UserGreeting } from '../components/UserGreeting';
 import { useState } from 'react';
 import api from '../scripts/api';
+import Loading from '../assets/images/loading.gif'
 
 import loginService from '../services/login'
 
 import '../styles/global.scss';
-import '../styles/reset.css';
+import '../styles/reset.scss';
 import '../styles/userProfile.scss';
 
 
@@ -20,6 +21,7 @@ export function UserProfile(e) {
     let user = loginService.getSession()
     const [status, setStatus] = useState("")
     const [emailError, setEmailError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     function updateUser(e) {
         e.preventDefault();
@@ -40,7 +42,7 @@ export function UserProfile(e) {
             email: email,
             passwordUser: userUpdate.passwordUser
         }
-    
+        setLoading(true);
         api({
             method: 'put',
             url: '/users',
@@ -50,6 +52,7 @@ export function UserProfile(e) {
             data: user,
         })
         .then(function (response) {
+            setLoading(false);
             if(response.status === 200) {
                 loginService.setSession(response.data);
                 setStatus("Seu perfil foi atualizado com sucesso.")
@@ -57,6 +60,7 @@ export function UserProfile(e) {
                 setStatus("Ocorreu um erro ao tentar atualizar seu perfil.")
             }
         }).catch((err) => {
+            setLoading(false);
             setEmailError("Insira um email válido.");
         });
     }
@@ -121,6 +125,7 @@ export function UserProfile(e) {
                                     </div>
                                     <div className="button-form-profile">
                                     <button type='submit'>Atualizar</button>
+                                    {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
                                     </div>
                                     {status && <p>{status}</p>}
                                 </form>

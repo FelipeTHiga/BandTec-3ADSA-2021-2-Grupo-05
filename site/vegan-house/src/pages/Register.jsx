@@ -4,7 +4,7 @@ import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
-
+import Loading from '../assets/images/loading.gif'
 import InputMask from 'react-input-mask';
 import api from '../services/api';
 
@@ -26,7 +26,7 @@ export function Register() {
     const [errorPasswordConfirm, setErrorPasswordConfirm] = useState("");
     const [errorPassword, setErrorPassword] = useState("");
     const history = useHistory();
-
+    const [loading, setLoading] = useState(false);
 
     function warmings(errors) {
 
@@ -61,6 +61,7 @@ export function Register() {
     }
 
     function singin(e) {
+
         e.preventDefault();
 
         setErrorName("");
@@ -70,6 +71,7 @@ export function Register() {
         setErrorPassword("");
         setErrorPasswordConfirm("");
 
+        setLoading(true);
         api.post(`/users`, {
             nameUser: nameUser,
             surName: surName,
@@ -78,6 +80,7 @@ export function Register() {
             passwordUser: passwordUser
         })
             .then((res) => {
+                setLoading(false);
                 if (res.status === 201) {
 
                     sessionStorage.setItem("sucess", "Seu cadastro foi realizado com sucesso!")
@@ -87,6 +90,7 @@ export function Register() {
                 }
                 console.log(res.status);
             }).catch((err) => {
+                setLoading(false);
                 console.log(err.response)
                 var errC = err.response.data;
                 if (errC != undefined) {
@@ -175,7 +179,7 @@ export function Register() {
                             </div>
 
                             <button type="submit" >Enviar</button>
-
+                            {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
 
                         </form>
                     </div>

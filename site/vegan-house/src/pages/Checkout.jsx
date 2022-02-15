@@ -5,11 +5,11 @@ import { OrderItem } from '../components/OrderItem';
 import { SectionTitle } from '../components/SectionTitle';
 import loginService from '../services/login';
 import api from "../services/api";
-import { useParams, useHistory } from "react-router";
-import React, { Component, useEffect, useState } from 'react';
+import { useHistory } from "react-router";
+import React, { useEffect } from 'react';
 import { useMercadopago } from 'react-sdk-mercadopago';
 
-import "../styles/checkout.css";
+import "../styles/checkout.scss";
 
 
 export function Checkout(props) {
@@ -167,6 +167,8 @@ export function Checkout(props) {
                                 },
                             },
                         }).then(response => {
+                            console.log(response)
+                            debugger
                             if (response.status === 201) {
                                 history.push(`/payment-response/${response.data.id}/${response.data.status}/${response.data.detail}`);
                                 updateStatus(response.data.status)

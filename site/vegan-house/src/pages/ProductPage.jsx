@@ -18,7 +18,7 @@ import logoFacebook from '../assets/images/social-midias/logo-facebook.png';
 import logoWhatsapp from '../assets/images/social-midias/logo-whatsapp.png';
 
 import '../styles/global.scss';
-import '../styles/reset.css';
+import '../styles/reset.scss';
 import '../styles/productPage.scss';
 
 
