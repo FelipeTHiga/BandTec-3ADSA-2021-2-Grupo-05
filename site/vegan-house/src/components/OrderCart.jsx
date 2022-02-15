@@ -1,4 +1,3 @@
-import pants from '../assets/images/product-without-image.jpg';
 import { ProductCart } from "./ProductCart";
 import "../styles/orderCart.scss";
 import api from "../services/api";

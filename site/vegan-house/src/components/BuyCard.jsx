@@ -3,10 +3,10 @@ import shoppingCart from '../assets/images/shopping-cart.png';
 import { ShowStars } from '../scripts/showScore';
 import loginService from '../services/login';
 import { subscribe } from '../services/crud-user';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Modal from './Modal';
 
-import { useParams, useHistory } from "react-router";
+import { useHistory } from "react-router";
 import api from "../services/api";
 
 

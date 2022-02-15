@@ -1,14 +1,8 @@
-import shoe from '../assets/images/shoe.png'
-import pants from '../assets/images/pants-1.png'
-import polish from '../assets/images/polish.png'
-import tea from '../assets/images/tea.png'
 import '../styles/card.scss'
 import { useRef } from 'react'
-import { newsProducts } from '../scripts/vetor.js'
-import { ShowStars } from '../scripts/showScore'
 import { ProductCard } from '../components/ProductCard'
 import api from '../services/api';
-import React, { Component, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function Card() {
     const carroussel = useRef(null);

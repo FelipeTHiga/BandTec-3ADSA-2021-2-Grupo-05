@@ -1,6 +1,5 @@
 import "../styles/orderBox.scss"
 import { ProductOrder } from "./ProductOrder"
-import pants from '../assets/images/product-without-image.jpg'
 export function OrderBox(props) {
     return (
         <>
