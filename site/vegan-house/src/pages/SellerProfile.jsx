@@ -7,6 +7,7 @@ import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { useState, useEffect } from 'react';
+import ModalMessage from '../components/ModalMessage';
 
 import api from '../services/api';
 import InputMask from 'react-input-mask';
@@ -41,6 +42,10 @@ export function SellerProfile() {
     const [errorCnpj, setErrorCnpj] = useState("");
     const [errorCommercialEmail, setErrorCommercialEmail] = useState("");
 
+    const [isModalMessageVisible, setIsModalMessageVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
+    const [modalTitle, setModalTitle] = useState("");
+
     const certification1 = document.getElementById("1")
     const certification2 = document.getElementById("2")
     const certification3 = document.getElementById("3")
@@ -60,8 +65,7 @@ export function SellerProfile() {
         if (errors.cnpj) {
             setErrorCnpj(errors.cnpj)
         }
-
-
+        window.location.href = '#page-container';
     }
 
     useEffect(() => {
@@ -144,8 +148,10 @@ export function SellerProfile() {
                 if (res.status === 200) {
                     sessionStorage.setItem("sucess", "");
                     setSucess(null)
-                    alert("Dados atualizados com sucesso!");
-                    window.location.reload();
+                    setModalTitle("Atualização");
+                    setModalMessage("Dados atualizados com sucesso!");
+                    window.location.href = '#top';
+                    setIsModalMessageVisible(true);
                 } else {
                     //setErro("Não foi possível atualizar seus dados");
                     sessionStorage.setItem("sucess", "");
@@ -196,7 +202,7 @@ export function SellerProfile() {
                 <Title title="Seu perfil" />
             </div>
             <div className="page-container">
-                <div className="container-menu-and-seller">
+                <div id="page-container" className="container-menu-and-seller">
                     <div className="section-menus">
                         <AccountMenu isSeller={true} />
                         <SellerMenu isSeller={true} />
@@ -321,6 +327,17 @@ export function SellerProfile() {
                     </div>
                 </div>
             </div>
+            {
+                isModalMessageVisible ?
+                    <ModalMessage
+                        onClose={() => setIsModalMessageVisible(false)}
+                        height={document.body.scrollHeight}
+                        title={modalTitle}
+                        message={modalMessage}
+                        function={() => setIsModalMessageVisible(false)}
+                    />
+                    : null
+            }
             <Footer />
         </>
     );

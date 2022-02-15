@@ -5,6 +5,7 @@ import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { UserGreeting } from '../components/UserGreeting';
+import ModalMessage from '../components/ModalMessage';
 import { submitAdress } from '../scripts/crud-user';
 import { useState, useEffect } from 'react';
 
@@ -39,13 +40,17 @@ export function UserAdress() {
     const [errorState, setErrorState] = useState("");
     const [errorCity, setErrorCity] = useState("");
     const [errorComplement, setErrorComplement] = useState("");
-    
+
+    const [isModalMessageVisible, setIsModalMessageVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
+    const [modalTitle, setModalTitle] = useState("");
+
     function warmings(errors) {
 
         if (errors.cep) {
             setErrorCep(errors.cep)
         }
-       
+
         if (errors.street) {
             setErrorStreet(errors.street)
         }
@@ -61,11 +66,10 @@ export function UserAdress() {
         if (errors.number) {
             setErrorNumber(errors.number)
         }
-      
-
+        window.location.href = '#page-container';
     }
 
- function submitAdress(e) {
+    function submitAdress(e) {
         e.preventDefault();
 
         setErrorCep("");
@@ -80,24 +84,24 @@ export function UserAdress() {
             state: state,
             city: city,
             complement: complement,
-            cep: cep.replace(/\D/g,''),
+            cep: cep.replace(/\D/g, ''),
             district: district,
             fkUser: userUpdate.id
         }
-        
-     api({
+
+        api({
             method: 'post',
             url: '/users/adress',
             data: userAdress,
         })
-        .then(function (response) {
-            console.log(response.status);
-            alert('Endereço cadastrado com sucesso')
-            window.location.reload();
-        }).catch((err) => {
-            warmings(err.response.data);
-
-        });
+            .then(function (response) {
+                setModalTitle("Cadastro");
+                setModalMessage("Endereço cadastrado com sucesso");
+                window.location.href = '#top';
+                setIsModalMessageVisible(true);
+            }).catch((err) => {
+                warmings(err.response.data);
+            });
     }
 
     function updateAdress(e) {
@@ -110,7 +114,7 @@ export function UserAdress() {
         setErrorCity("");
         const adress = {
             idAdress: idAdress,
-            cep: cep.replace(/\D/g,''),
+            cep: cep.replace(/\D/g, ''),
             street: street,
             district: district,
             city: city,
@@ -127,13 +131,13 @@ export function UserAdress() {
         })
             .then(function (response) {
                 console.log(response.status);
-                alert('Endereço atualizado com sucesso')
-                window.location.reload();
-
+                setModalTitle("Atualização");
+                setModalMessage("Endereço atualizado com sucesso");
+                window.location.href = '#top';
+                setIsModalMessageVisible(true);
             }).catch((err) => {
                 warmings(err.response.data);
-
-                });
+            });
     }
 
 
@@ -187,7 +191,7 @@ export function UserAdress() {
             <div className="line-up">
                 <Title title="Seu perfil" />
             </div>
-            <div className="page-container">
+            <div id="page-container" className="page-container">
                 <div className="container-menu-and-adress">
                     <div className="section-menus align-column">
                         <AccountMenu isSeller={userUpdate.isSeller} />
@@ -209,7 +213,7 @@ export function UserAdress() {
                                     <div className="container-city">
                                         <div className="container-state">
                                             <label for="state">Estado</label>
-                                            <select onChange={e => { setState(e.target.value.replace(/\D/g,'')) }} value={state} id="state">
+                                            <select onChange={e => { setState(e.target.value.replace(/\D/g, '')) }} value={state} id="state">
                                                 <option value="">-- Selecione --</option>
                                                 <option value="AC">Acre</option>
                                                 <option value="AL">Alagoas</option>
@@ -281,7 +285,7 @@ export function UserAdress() {
                                         <button id="btn-sign" onClick={submitAdress}>Cadastrar</button>
                                         <button id="btn-put" onClick={updateAdress}>Atualizar</button>
                                     </div>
-                                        {error.length > 0 ? error.map(erro => <p className="error">{erro}</p>) : <div />}
+                                    {error.length > 0 ? error.map(erro => <p className="error">{erro}</p>) : <div />}
                                 </form>
                             </div>
 
@@ -289,6 +293,17 @@ export function UserAdress() {
                     </div>
                 </div>
             </div>
+            {
+                isModalMessageVisible ?
+                    <ModalMessage
+                        onClose={() => setIsModalMessageVisible(false)}
+                        height={document.body.scrollHeight}
+                        title={modalTitle}
+                        message={modalMessage}
+                        function={() => window.location.reload()}
+                    />
+                    : null
+            }
             <Footer />
         </>
     )

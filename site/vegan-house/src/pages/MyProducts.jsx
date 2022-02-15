@@ -46,7 +46,7 @@ export function MyProducts() {
     const [image_url3, setImageUrl3] = useState("");
 
     const [isModalChoiceVisible, setIsModalChoiceVisible] = useState(false);
-    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isModalMessageVisible, setIsModalMessageVisible] = useState(false);
     const [modalIdProduct, setModalIdProduct] = useState();
     const [modalMessage, setModalMessage] = useState("");
     const [modalTitle, setModalTitle] = useState("");
@@ -75,9 +75,7 @@ export function MyProducts() {
         if (errors.inventory) {
             setErrorInventory(errors.inventory)
         }
-
-
-
+        window.location.href = '#section-products-edit'
     }
 
     function pacthImage(idProduto) {
@@ -119,10 +117,9 @@ export function MyProducts() {
                 if (res.status === 201) {
                     setSucess("O produto foi criado!");
                     getAllProducts();
-                    window.location.href = '#section-products'
+                    window.location.href = '#section-my-products'
                     pacthImage(res.data.id);
                 }
-                window.location.href = '#section-my-products'
             }).catch((err) => {
                 if (err.response) {
                     warmings(err.response.data);
@@ -147,6 +144,7 @@ export function MyProducts() {
             fkSeller: fkSeller
         }).then((res) => {
             if (res.status === 200) {
+                window.location.href = '#section-my-products'
                 pacthImage(id);
                 setName("");
                 setCategory("");
@@ -159,9 +157,6 @@ export function MyProducts() {
                 setAcao("Cadastrar produto");
                 setSucess("O produto foi atualizado!");
                 getAllProducts();
-                window.location.href = '#section-products'
-            } else {
-
             }
         }).catch((err) => {
             if (err.response) {
@@ -323,7 +318,7 @@ export function MyProducts() {
                     setModalTitle("Importação de Arquivo")
                     setModalMessage(res.data);
                     window.location.href = '#top';
-                    setIsModalVisible(true)
+                    setIsModalMessageVisible(true)
                 }
             }).catch((err) => {
             })
@@ -340,7 +335,7 @@ export function MyProducts() {
                     setModalMessage("Não foi possível exportar o arquivo txt!\nVendedor sem produtos cadastrados.");
                 }
                 window.location.href = '#top';
-                setIsModalVisible(true)
+                setIsModalMessageVisible(true)
             }).catch((err) => {
             })
 
@@ -361,7 +356,7 @@ export function MyProducts() {
                     setModalMessage("Não foi possível exportar o arquivo csv!\nVendedor sem produtos cadastrados.");
                 }
                 window.location.href = '#top';
-                setIsModalVisible(true)
+                setIsModalMessageVisible(true)
             }).catch((err) => {
             })
 
@@ -542,14 +537,14 @@ export function MyProducts() {
                     />
                     : null
             }
-
             {
-                isModalVisible ?
+                isModalMessageVisible ?
                     <ModalMessage
-                        onClose={() => setIsModalVisible(false)}
+                        onClose={() => setIsModalMessageVisible(false)}
                         height={document.body.scrollHeight}
                         title={modalTitle}
                         message={modalMessage}
+                        function={() => setIsModalMessageVisible(false)}
                     />
                     : null
             }

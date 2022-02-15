@@ -15,7 +15,7 @@ function ModalMessage(props, { id = 'modal' }) {
                     <div className="modal-content">
                         <h2 className="modal-title">{props.title}</h2>
                         <p className="modal-text">{props.message}</p>
-                            <button className="modal-btn" onClick={props.onClose}>Ok, entendi!</button>
+                            <button className="modal-btn" onClick={props.function}>Ok, entendi!</button>
                     </div>
                 </div>
             </div>
