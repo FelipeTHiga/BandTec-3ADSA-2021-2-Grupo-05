@@ -2,10 +2,7 @@ package com.veganhouse.exports;
 
 import com.veganhouse.domain.Product;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Formatter;
 import java.util.FormatterClosedException;
 import java.util.NoSuchElementException;
@@ -19,8 +16,11 @@ public class ControllerCsv {
 
         nomeArq += ".csv";
 
+        File file = new File("export-products\\" + nomeArq);
+        file.getParentFile().mkdirs();
+
         try {
-            arq = new FileWriter(nomeArq, true);
+            arq = new FileWriter(file, true);
             saida = new Formatter(arq);
         }
         catch (IOException erro) {

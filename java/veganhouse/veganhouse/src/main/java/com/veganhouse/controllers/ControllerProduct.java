@@ -293,15 +293,15 @@ public class ControllerProduct {
 
     @PostMapping("exportCsv/{nameArq}/{fkSeller}")
     public ResponseEntity exportCsv(@PathVariable String nameArq, @PathVariable Integer fkSeller) {
-        if (productRepository.count() > 0) {
 
-            List<Product> list = productRepository.findByFkSeller(fkSeller);
-            ListaObj listaObj = new ListaObj(((int) productRepository.count()));
+        List<Product> list = productService.getIsAvailable(productRepository.findByFkSeller(fkSeller));
+        ListaObj listaObj = new ListaObj(((int) productRepository.count()));
+
+        if (!list.isEmpty()) {
 
             for (int i = 0; i < list.size(); i++) {
                 listaObj.adiciona(list.get(i));
             }
-
             ControllerCsv.gravaArquivoCsv(listaObj, nameArq);
             return ResponseEntity.status(200).build();
         }
@@ -310,17 +310,17 @@ public class ControllerProduct {
 
     @PostMapping("exportCsv/{nameArq}/{limit}/{fkSeller}")
     public ResponseEntity exportCsvLimit(@PathVariable String nameArq, @PathVariable Integer limit, @PathVariable Integer fkSeller) {
-        if (productRepository.count() > 0) {
 
-            List<Product> list = productRepository.findByFkSeller(fkSeller);
-            ListaObj listaObj = new ListaObj(limit);
+        List<Product> list = productService.getIsAvailable(productRepository.findByFkSeller(fkSeller));
+        ListaObj listaObj = new ListaObj(limit);
+
+        if (!list.isEmpty()) {
 
             for (int i = 0; i < list.size(); i++) {
                 if (!listaObj.adiciona(list.get(i))) {
                     break;
                 }
             }
-
             ControllerCsv.gravaArquivoCsv(listaObj, nameArq);
             return ResponseEntity.status(200).build();
         }
@@ -328,16 +328,16 @@ public class ControllerProduct {
     }
 
     @PostMapping("exportTxt/{fileName}/{fkSeller}")
-    public ResponseEntity exportTxt(@PathVariable String fileName, @PathVariable Integer fkSeller) {
-        if (productRepository.count() > 0) {
+    public ResponseEntity exportTxt(@PathVariable String fileName, @PathVariable Integer fkSeller) throws IOException {
 
-            List<Product> list = productRepository.findByFkSeller(fkSeller);
-            ListaObj listaObj = new ListaObj(((int) productRepository.count()));
+        List<Product> list = productService.getIsAvailable(productRepository.findByFkSeller(fkSeller));
+        ListaObj listaObj = new ListaObj(((int) productRepository.count()));
+
+        if (!list.isEmpty()) {
 
             for (int i = 0; i < list.size(); i++) {
                 listaObj.adiciona(list.get(i));
             }
-
             controllerTxt.recordFileTxt(listaObj, fileName);
             return ResponseEntity.status(200).build();
         }
@@ -349,7 +349,7 @@ public class ControllerProduct {
 
         if (!txt.isEmpty()) {
             Seller seller = sellerRepository.findByFkUser(idUser);
-            return ResponseEntity.status(200).body(controllerTxt.readDisplayFileTxt(seller, txt.getOriginalFilename()));
+            return ResponseEntity.status(200).body(controllerTxt.readDisplayFileTxt(seller, txt.getInputStream()));
         }
 
         return ResponseEntity.status(204).build();

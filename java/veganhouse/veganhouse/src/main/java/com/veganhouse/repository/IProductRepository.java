@@ -15,8 +15,8 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
     //List<Product> findByName(String name, Integer fkUser);
     List<Product> findByFkSeller(Integer fkSeller);
 
-    @Query(value = "select count(*) as qtd, category from product group by category\n" +
-            "union select count(*) as qtd, 'Todos' as category from product", nativeQuery = true)
+    @Query(value = "select count(*) as qtd, category from product where is_avaliable = 1 group by category\n" +
+            "union select count(*) as qtd, 'Todos' as category from product where is_avaliable = 1", nativeQuery = true)
     List<Object> listCountCategory();
 
 }

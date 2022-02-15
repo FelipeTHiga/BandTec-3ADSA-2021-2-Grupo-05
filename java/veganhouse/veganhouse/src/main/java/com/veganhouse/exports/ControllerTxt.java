@@ -23,12 +23,14 @@ public class ControllerTxt {
     @Autowired
     private TxtService txtService;
 
-    public static void recordRegister(String fileName, String registro) {
+    public static void recordRegister(String fileName, String registro) throws IOException {
         BufferedWriter saida = null;
+        File file = new File("export-products\\" + fileName);
+        file.getParentFile().mkdirs();
 
         // Try-catch para abrir o arquivo
         try {
-            saida = new BufferedWriter(new FileWriter(fileName, true));
+            saida = new BufferedWriter(new FileWriter(file, true));
         } catch (IOException erro) {
             System.out.println("Erro ao abrir o arquivo" + erro.getMessage());
         }
@@ -42,7 +44,7 @@ public class ControllerTxt {
         }
     }
 
-    public static void recordFileTxt(ListaObj<Product> list, String fileName) {
+    public static void recordFileTxt(ListaObj<Product> list, String fileName) throws IOException {
         fileName += ".txt";
         int countRegister = 0;
 
@@ -78,7 +80,7 @@ public class ControllerTxt {
 
     }
 
-    public String readDisplayFileTxt(Seller seller, String fileName) {
+    public String readDisplayFileTxt(Seller seller, InputStream filePath) {
         BufferedReader entrada = null;
         String register, registerType;
         Integer countDataRegister = 0;
@@ -100,8 +102,8 @@ public class ControllerTxt {
 
         // Try-catch para abrir o arquivo
         try {
-            entrada = new BufferedReader(new FileReader(fileName));
-        } catch (IOException erro) {
+            entrada = new BufferedReader(new InputStreamReader(filePath));
+        } catch (Exception erro) {
             System.out.println("Erro ao abrir o arquivo " + erro.getMessage());
         }
 
