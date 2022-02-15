@@ -6,7 +6,7 @@ import javax.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
-//@Table(name = "Users")
+@Table(name = "Users")
 public class User {
 
     //region Attributes

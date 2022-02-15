@@ -32,7 +32,7 @@ public class ControllerSeller {
             // Pegando o usário
             User userLogged = userRepository.findById(idUser).get();
 
-            if (!Objects.isNull(userLogged.getIsSeller())) {
+            if (userLogged.getIsSeller()) {
                 return ResponseEntity.status(409).build();
             } else {
                 // Setando o id do usuário logado como fk do seller cadastrado
