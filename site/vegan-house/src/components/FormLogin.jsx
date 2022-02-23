@@ -49,7 +49,9 @@ export function FormLogin() {
                 }).catch((res) => {
                     setLoading(false);
                     sessionStorage.setItem("sucess", "");
-                    setErro("Ocorreu um erro ao tentar realizar login!");
+                    if(res.status != 200) {
+                        setErro("A senha ou o email estão incorretos!");
+                    }
                     setSucess(null);
                 })
         }

@@ -266,7 +266,7 @@ export function Checkout(props) {
 
                                 <div className="payment-form-data">
                                     <label htmlFor="">CPF</label>
-                                    <input placeholder="CPF" id="form-checkout__identificationNumber" name="docNumber" type="text" class="form-control" />
+                                    <input placeholder="CPF" maxLength={11} id="form-checkout__identificationNumber" name="docNumber" type="text" class="form-control" />
                                 </div>
 
                                 <div className="payment-form-data">
@@ -278,20 +278,20 @@ export function Checkout(props) {
                                     <label htmlFor="">Data de validade</label>
 
                                     <div className="display-row">
-                                        <input placeholder="MM" id="form-checkout__cardExpirationMonth" name="cardExpirationMonth" type="text" class="form-control" />
+                                        <input placeholder="MM" maxLength={2} id="form-checkout__cardExpirationMonth" name="cardExpirationMonth" type="text" class="form-control" />
                                         <span class="date-separator">/</span>
-                                        <input placeholder="AA" id="form-checkout__cardExpirationYear" name="cardExpirationYear" type="text" class="form-control" />
+                                        <input placeholder="AA" maxLength={2} id="form-checkout__cardExpirationYear" name="cardExpirationYear" type="text" class="form-control" />
                                     </div>
                                 </div>
 
                                 <div className="payment-form-data">
                                     <label htmlFor="">Número do cartão</label>
-                                    <input placeholder="Num cartão" id="form-checkout__cardNumber" name="cardNumber" type="text" class="form-control" />
+                                    <input placeholder="Num cartão" maxLength={16} id="form-checkout__cardNumber" name="cardNumber" type="text" class="form-control" />
                                 </div>
 
                                 <div className="payment-form-data">
                                     <label htmlFor="">Código de segurança</label>
-                                    <input placeholder="PIN" id="form-checkout__securityCode" name="securityCode" type="text" class="form-control" />
+                                    <input placeholder="PIN" maxLength={3} id="form-checkout__securityCode" name="securityCode" type="text" class="form-control" />
                                 </div>
 
                                 <input type="hidden" id="amount" value={order.total} />
