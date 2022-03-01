@@ -95,8 +95,8 @@ export function UserAdress() {
             data: userAdress,
         })
             .then(function (response) {
-                setModalTitle("Cadastro");
-                setModalMessage("Endereço cadastrado com sucesso");
+                setModalTitle("Cadastro de endereço");
+                setModalMessage("Endereço cadastrado com sucesso!");
                 window.location.href = '#top';
                 setIsModalMessageVisible(true);
             }).catch((err) => {
@@ -131,8 +131,8 @@ export function UserAdress() {
         })
             .then(function (response) {
                 console.log(response.status);
-                setModalTitle("Atualização");
-                setModalMessage("Endereço atualizado com sucesso");
+                setModalTitle("Atualização de dados");
+                setModalMessage("Endereço atualizado com sucesso!");
                 window.location.href = '#top';
                 setIsModalMessageVisible(true);
             }).catch((err) => {

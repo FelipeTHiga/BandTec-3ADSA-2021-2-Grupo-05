@@ -64,7 +64,7 @@ public class ControllerProduct {
 
     @PostMapping()
     public ResponseEntity postProduct(@RequestBody @Valid Product newProduct) {
-        newProduct.setAvaliable(true);
+        newProduct.setAvailable(true);
         productRepository.save(newProduct);
         return ResponseEntity.status(201).body(newProduct);
     }
@@ -95,7 +95,7 @@ public class ControllerProduct {
                 eventManagerRestock.notify(id);
 
             product.setId(id);
-            product.setAvaliable(true);
+            product.setAvailable(true);
             productRepository.save(product);
             return ResponseEntity.status(200).build();
         }
@@ -242,10 +242,11 @@ public class ControllerProduct {
 
     @GetMapping("all/{idSeller}")
     public ResponseEntity getAllProductsSeller(@PathVariable Integer idSeller) {
-        if (productRepository.count() > 0) {
-            return ResponseEntity.status(200).body(productService.getIsAvailable(productRepository.findByFkSeller(idSeller)));
+        List<Product> list = productService.getIsAvailable(productRepository.findByFkSeller(idSeller));
+        if (list.isEmpty()) {
+            return ResponseEntity.status(204).body(list);
         }
-        return ResponseEntity.status(404).build();
+        return ResponseEntity.status(200).body(list);
     }
 
     @GetMapping("all")
@@ -260,7 +261,7 @@ public class ControllerProduct {
     public ResponseEntity deleteProduct(@PathVariable Integer id) {
         if (productRepository.existsById(id)) {
             Product product = productRepository.findById(id).get();
-            product.setAvaliable(false);
+            product.setAvailable(false);
             productRepository.save(product);
             productCommander.pushCommand("delete", product);
             return ResponseEntity.status(200).build();

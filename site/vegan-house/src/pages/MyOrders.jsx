@@ -20,6 +20,7 @@ export function MyOrders() {
 
     const history = useHistory();
     const [orders, setOrder] = React.useState([]);
+    const [defaultMessage, setDefaultMessage] = useState("");
     let userLogged = loginService.getSession();
 
     useEffect(() => {
@@ -30,8 +31,11 @@ export function MyOrders() {
                         if (res.status === 200) {
                             console.log(res.data);
                             setOrder(res.data);
+                            setDefaultMessage("");
+                        } else if (res.status === 204) {
+                            setDefaultMessage("Você ainda não fez nenhum pedido.");
                         }
-                    
+
                     }).catch((err) => {
                         console.log(err);
                     })
@@ -65,11 +69,11 @@ export function MyOrders() {
                     <div className="section-orders">
                         <div className="container-orders">
                             <SectionTitle text="Pedidos" />
-                            
-                            {orders.map(order=><OrderBox orderId={order.idOrder} date={order.orderDate} total={order.total} status={order.orderStatus} orderItems={order.orderItems} />)}
+                            {orders.map(order => <OrderBox orderId={order.idOrder} date={order.orderDate} total={order.total} status={order.orderStatus} orderItems={order.orderItems} />)}
+                            <div className='defaultMessage card-orders-sales'>{defaultMessage}</div>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
             <Footer />
         </>

@@ -90,8 +90,8 @@ export function BuyCard(props) {
                 fkUser: fkUser
             }
         }).then((res) => {
-            setModalTitle("Atenção");
-            setModalMessage("Quando chegarem novos produtos, notificaremos via e-mail");
+            setModalTitle("Notificação via e-mail");
+            setModalMessage("Quando chegarem novos produtos, notificaremos via e-mail.");
             window.location.href = '#top';
             setIsModalMessageVisible(true);
         })

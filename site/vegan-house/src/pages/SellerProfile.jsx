@@ -131,7 +131,7 @@ export function SellerProfile() {
         const updateSeller = {
             idSeller: idSeller,
             commercialName: commercialName,
-            cnpj: cnpj.replace(/\D/g, ''),
+            cnpj: cnpj, // .replace(/\D/g, '')
             commercialEmail: commercialEmail,
             whatsappNumber: whatsappNumber,
             instagramAccount: instagramAccount,
@@ -148,7 +148,7 @@ export function SellerProfile() {
                 if (res.status === 200) {
                     sessionStorage.setItem("sucess", "");
                     setSucess(null)
-                    setModalTitle("Atualização");
+                    setModalTitle("Atualização de dados");
                     setModalMessage("Dados atualizados com sucesso!");
                     window.location.href = '#top';
                     setIsModalMessageVisible(true);

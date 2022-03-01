@@ -129,8 +129,8 @@ public class ControllerTxt {
                         category = register.substring(42, 57).trim();
                         description = register.substring(57, 142).trim();
                         Integer fkSeller = seller.getIdSeller();
-                        Boolean isAvaliable = true;
-                        Product p = new Product(name, price, category, description, inventory, fkSeller, isAvaliable);
+                        Boolean isAvailable = true;
+                        Product p = new Product(name, price, category, description, inventory, fkSeller, isAvailable);
                         productQueue.insert(p);
                         readList.adiciona(p);
                         countDataRegister++;

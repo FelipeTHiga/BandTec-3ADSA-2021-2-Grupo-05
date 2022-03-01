@@ -28,10 +28,10 @@ public class ProductCommander {
         Product product = lastAction.getChangedProduct();
 
         if("delete".equals(lastAction.getAction())) {
-            product.setAvaliable(true);
+            product.setAvailable(true);
             productRepository.save(product);
         } else {
-            product.setAvaliable(false);
+            product.setAvailable(false);
             productRepository.save(product);
         }
 
@@ -44,10 +44,10 @@ public class ProductCommander {
         Product product = lastAction.getChangedProduct();
 
         if("create".equals(lastAction.getAction())) {
-            product.setAvaliable(true);
+            product.setAvailable(true);
             productRepository.save(product);
         } else {
-            product.setAvaliable(false);
+            product.setAvailable(false);
             productRepository.save(product);
         }
         commands.push(lastAction);

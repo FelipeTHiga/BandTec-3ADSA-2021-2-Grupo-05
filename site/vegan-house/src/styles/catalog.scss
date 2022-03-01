@@ -109,7 +109,7 @@
         display: flex;
         align-items: center;
         width: 52%;
-        justify-content: space-between;
+        justify-content: flex-end;
         margin-top: 5px;
         .btn-filter {
             cursor: pointer;
@@ -122,6 +122,7 @@
             font-size: 14px;
             color: #604d4d;
             background-color: rgba(201, 232, 145, 0.6);
+            margin-left: 13px;
         }
     }
     .order {

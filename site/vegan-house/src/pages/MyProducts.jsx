@@ -35,6 +35,7 @@ export function MyProducts() {
     const [searchName, setSearchName] = useState("");
     const [acao, setAcao] = useState("Cadastrar produto");
     const [errorName, setErrorName] = useState("");
+    const [errorCategory, setErrorCategory] = useState("");
     const [errorPrice, setErrorPrice] = useState("");
     const [errorDescription, setErrorDescription] = useState("");
     const [errorInventory, setErrorInventory] = useState("");
@@ -50,12 +51,18 @@ export function MyProducts() {
     const [modalIdProduct, setModalIdProduct] = useState();
     const [modalMessage, setModalMessage] = useState("");
     const [modalTitle, setModalTitle] = useState("");
+    const [defaultMessage, setDefaultMessage] = useState("");
 
     useEffect(() => {
 
         async function productsAll() {
             const res = await api.get(`products/all/${user.id}`);
-            setProducts(res.data);
+            if (res.status === 200) {
+                setProducts(res.data);
+                setDefaultMessage("");
+            } else if (res.status === 204) {
+                setDefaultMessage("Não há nenhum produto cadastrado.")
+            }
         }
 
         productsAll();
@@ -65,6 +72,9 @@ export function MyProducts() {
 
         if (errors.name) {
             setErrorName(errors.name)
+        }
+        if (errors.category) {
+            setErrorCategory(errors.category)
         }
         if (errors.price) {
             setErrorPrice(errors.price)
@@ -102,6 +112,7 @@ export function MyProducts() {
         e.preventDefault();
         setError("");
         setErrorName("");
+        setErrorCategory("");
         setErrorPrice("");
         setErrorDescription("");
         setErrorInventory("");
@@ -130,7 +141,9 @@ export function MyProducts() {
 
     function patch(e) {
         e.preventDefault();
+        setError("");
         setErrorName("");
+        setErrorCategory("");
         setErrorPrice("");
         setErrorDescription("");
         setErrorInventory("");
@@ -230,6 +243,7 @@ export function MyProducts() {
                     getAllProducts();
                     setSucess("O produto foi removido!");
                     setIsModalChoiceVisible(false);
+                    window.location.reload();
                 }
             }).catch((err) => {
             })
@@ -240,6 +254,9 @@ export function MyProducts() {
             .then((res) => {
                 if (res.status === 200) {
                     setProducts(res.data);
+                    setDefaultMessage("");
+                } else if (res.status === 204) {
+                    setDefaultMessage("Não há nenhum produto cadastrado.")
                 }
             }).catch((err) => {
             })
@@ -285,6 +302,9 @@ export function MyProducts() {
                     if (res.status === 200) {
                         setProducts(res.data)
                         setSucess("");
+                    } else if (res.status === 204) {
+                        setDefaultMessage("");
+                        setDefaultMessage("Não há nenhum produto cadastrado.")
                     }
                 }).catch((err) => {
                 })
@@ -328,10 +348,10 @@ export function MyProducts() {
         api.post(`products/exportTxt/${fileName}/${idSeller}`)
             .then((res) => {
                 if (res.status === 200) {
-                    setModalTitle("Sucesso");
+                    setModalTitle("Exportação de arquivo");
                     setModalMessage("Arquivo txt exportado com sucesso!");
                 } else if (res.status === 204) {
-                    setModalTitle("Erro");
+                    setModalTitle("Exportação de arquivo");
                     setModalMessage("Não foi possível exportar o arquivo txt!\nVendedor sem produtos cadastrados.");
                 }
                 window.location.href = '#top';
@@ -349,10 +369,10 @@ export function MyProducts() {
         api.post(`products/exportCsv/${fileName}/${idSeller}`)
             .then((res) => {
                 if (res.status === 200) {
-                    setModalTitle("Sucesso");
+                    setModalTitle("Exportação de arquivo");
                     setModalMessage("Arquivo csv exportado com sucesso!");
                 } else if (res.status === 204) {
-                    setModalTitle("Erro");
+                    setModalTitle("Exportação de arquivo");
                     setModalMessage("Não foi possível exportar o arquivo csv!\nVendedor sem produtos cadastrados.");
                 }
                 window.location.href = '#top';
@@ -456,6 +476,7 @@ export function MyProducts() {
                                 {products.map(product => (
                                     <ProductTableRow id={product.id} name={product.name} category={product.category} inventory={product.inventory} edit={edit} removeModal={removeModal} pro={product} />
                                 ))}
+                                <div className='defaultMessage card-products'>{defaultMessage}</div>
                             </div>
                         </div>
 
@@ -481,13 +502,14 @@ export function MyProducts() {
                                             <option value="Vestimenta">Vestimenta</option>
                                             <i class="fas fa-arrow-down"></i>
                                         </select>
+                                        {errorCategory && <p className="error">{errorCategory}</p>}
                                     </div>
                                 </div>
 
                                 <div className="line-up width-100">
                                     <div className="product-edit-camp margin-right-50">
                                         <label htmlFor="">Preço</label>
-                                        <input id="price" onChange={e => setPrice(e.target.value)} value={price} className="input" type="text" placeholder="R$" />
+                                        <input id="price" onChange={e => setPrice(e.target.value.replace(/[^0-9,]/g, ''))} value={price} className="input" type="text" placeholder="R$" />
                                         {errorPrice && <p className="error">{errorPrice}</p>}
                                     </div>
 

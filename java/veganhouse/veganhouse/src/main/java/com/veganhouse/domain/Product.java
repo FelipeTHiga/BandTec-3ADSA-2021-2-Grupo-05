@@ -19,21 +19,23 @@ public class Product {
     protected String name;
 
     @NotNull(message = "O campo PREÇO deve ser preenchido")
+    @Min(value = 1, message = "Preço mínimo de 1,00 real")
     //@Pattern(regexp = "/^[\\d,.?!]+$/g", message = "O campo PREÇO aceita apenas números")
     protected Double price;
 
+    @NotBlank(message = "O campo CATEGORIA deve ser preenchido")
     protected String category;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Size(min = 0, max = 1500, message = "A DESCRIÇÃO deve ter no máximo 1500 caracteres")
+    @Size(min = 10, max = 1500, message = "A DESCRIÇÃO deve conter de 10 a 1500 caracteres")
     protected String description;
 
     @NotNull(message = "O campo QUANTIDADE deve ser preenchido")
     protected Integer inventory;
 
     protected Integer fkSeller;
-    protected Boolean isAvaliable;
+    protected Boolean isAvailable;
 
 
     @Column(length = 20_000_000)
@@ -52,14 +54,14 @@ public class Product {
 
     }
 
-    public Product(String name, Double price, String category, String description, Integer inventory, Integer fkSeller, Boolean isAvaliable) {
+    public Product(String name, Double price, String category, String description, Integer inventory, Integer fkSeller, Boolean isAvailable) {
         this.name = name;
         this.price = price;
         this.category = category;
         this.description = description;
         this.inventory = inventory;
         this.fkSeller = fkSeller;
-        this.isAvaliable = isAvaliable;
+        this.isAvailable = isAvailable;
     }
 
     public Product(Integer id, String name, Double price, String category, String description, Integer inventory, Integer fkSeller) {
@@ -89,12 +91,12 @@ public class Product {
         return id;
     }
 
-    public Boolean getAvaliable() {
-        return isAvaliable;
+    public Boolean getAvailable() {
+        return isAvailable;
     }
 
-    public void setAvaliable(Boolean avaliable) {
-        isAvaliable = avaliable;
+    public void setAvailable(Boolean available) {
+        isAvailable = available;
     }
 
     public void setId(Integer id) {

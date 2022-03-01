@@ -31,7 +31,7 @@ export function Catalog() {
         function productAll() {
             if (categoryUrl == 'name') {
                 var name = sessionStorage.getItem("nameProd");
-                categoryUrl="";
+                categoryUrl = "";
                 api.get(`/products/name/${name}`)
                     .then((res) => {
                         if (res.status === 200) {
@@ -49,10 +49,8 @@ export function Catalog() {
                         setProducts(res.data);
                     })
             }
-            
         }
         
-
         async function countCategory() {
             const res = await api.get("/products/countCategory");
             await setCategoryAll(res.data)
