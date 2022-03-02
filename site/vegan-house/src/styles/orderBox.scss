@@ -32,6 +32,18 @@
             text-justify: auto;
         }
         
+        .p-status-red {
+            color: red;
+        }
+
+        .p-status-green {
+            color: #c9e891;
+        }
+
+        .p-status-blue {
+            color: rgb(128, 128, 253);
+        }
+        
         .order-desc {
             width: 30%;
             margin-left: 20px;

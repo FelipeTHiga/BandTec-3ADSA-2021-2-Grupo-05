@@ -6,9 +6,8 @@ import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { UserGreeting } from '../components/UserGreeting';
 import ModalMessage from '../components/ModalMessage';
-import { submitAdress } from '../scripts/crud-user';
 import { useState, useEffect } from 'react';
-
+import Loading from '../assets/images/loading.gif'
 import loginService from '../services/login';
 import api from '../scripts/api';
 import axios from 'axios';
@@ -44,6 +43,7 @@ export function UserAdress() {
     const [isModalMessageVisible, setIsModalMessageVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
     const [modalTitle, setModalTitle] = useState("");
+    const [loading, setLoading] = useState(false);
 
     function warmings(errors) {
 
@@ -88,6 +88,8 @@ export function UserAdress() {
             district: district,
             fkUser: userUpdate.id
         }
+        
+        setLoading(true);
 
         api({
             method: 'post',
@@ -95,11 +97,13 @@ export function UserAdress() {
             data: userAdress,
         })
             .then(function (response) {
+                setLoading(false);  
                 setModalTitle("Cadastro de endereço");
                 setModalMessage("Endereço cadastrado com sucesso!");
                 window.location.href = '#top';
                 setIsModalMessageVisible(true);
             }).catch((err) => {
+                setLoading(false);
                 warmings(err.response.data);
             });
     }
@@ -123,19 +127,21 @@ export function UserAdress() {
             number: number,
             fkUser: userUpdate.id
         }
-
+        setLoading(true);
         api({
             method: 'put',
             url: `/users/adress/${idAdress}`,
             data: adress,
         })
             .then(function (response) {
+                setLoading(false);
                 console.log(response.status);
                 setModalTitle("Atualização de dados");
                 setModalMessage("Endereço atualizado com sucesso!");
                 window.location.href = '#top';
                 setIsModalMessageVisible(true);
             }).catch((err) => {
+                setLoading(false);
                 warmings(err.response.data);
             });
     }
@@ -284,6 +290,7 @@ export function UserAdress() {
                                     <div className="button-form-adress">
                                         <button id="btn-sign" onClick={submitAdress}>Cadastrar</button>
                                         <button id="btn-put" onClick={updateAdress}>Atualizar</button>
+                                        {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
                                     </div>
                                     {error.length > 0 ? error.map(erro => <p className="error">{erro}</p>) : <div />}
                                 </form>

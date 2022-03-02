@@ -5,8 +5,7 @@ import loginService from '../services/login';
 import React, { useState } from 'react';
 import ModalRedirect from './ModalRedirect';
 import ModalMessage from '../components/ModalMessage';
-
-import { useParams, useHistory } from "react-router";
+import { useHistory } from "react-router";
 import api from "../services/api";
 
 

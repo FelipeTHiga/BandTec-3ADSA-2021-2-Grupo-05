@@ -8,6 +8,7 @@ import { UserGreeting } from '../components/UserGreeting';
 import ModalMessage from '../components/ModalMessage';
 import { useState } from 'react';
 import api from '../scripts/api';
+import Loading from '../assets/images/loading.gif'
 
 import loginService from '../services/login'
 
@@ -19,6 +20,7 @@ export function UserProfile(e) {
 
     let user = loginService.getSession();
     const [emailError, setEmailError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const [isModalMessageVisible, setIsModalMessageVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
@@ -42,7 +44,7 @@ export function UserProfile(e) {
             email: email,
             passwordUser: userUpdate.passwordUser
         }
-
+        setLoading(true);
         api({
             method: 'put',
             url: '/users',
@@ -52,6 +54,7 @@ export function UserProfile(e) {
             data: user,
         })
             .then(function (response) {
+                setLoading(false);
                 if (response.status === 200) {
                     loginService.setSession(response.data);
                     setModalTitle("Atualização de dados");
@@ -63,6 +66,7 @@ export function UserProfile(e) {
                 window.location.href = '#top';
                 setIsModalMessageVisible(true);
             }).catch((err) => {
+                setLoading(false);
                 setEmailError("Insira um email válido.");
             });
     }
@@ -126,7 +130,8 @@ export function UserProfile(e) {
                                         {emailError && <p className='error'>{emailError}</p>}
                                     </div>
                                     <div className="button-form-profile">
-                                        <button type='submit'>Atualizar</button>
+                                    <button type='submit'>Atualizar</button>
+                                    {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
                                     </div>
                                 </form>
                             </div>

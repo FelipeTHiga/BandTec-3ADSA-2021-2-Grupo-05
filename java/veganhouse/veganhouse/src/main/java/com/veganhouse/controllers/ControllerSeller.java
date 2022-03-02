@@ -35,6 +35,9 @@ public class ControllerSeller {
 //            if (!Objects.isNull(userLogged.getIsSeller())) {
 //                return ResponseEntity.status(409).build();
 //            } else {
+            if (userLogged.getIsSeller()) {
+                return ResponseEntity.status(409).build();
+            } else {
                 // Setando o id do usuário logado como fk do seller cadastrado
                 Integer userId = userLogged.getId();
                 newSeller.setFkUser(userId);
@@ -48,11 +51,12 @@ public class ControllerSeller {
                     sellerCertifiedRepository.save(new SellerCertified(i, userId, false));
                 }
                 return ResponseEntity.status(201).body(userLogged);
-
+            }
         } catch (NullPointerException erro) {
             return ResponseEntity.status(404).build();
         }
     }
+
 
     @GetMapping("/{idUser}")
     public ResponseEntity getSeller(@PathVariable int idUser) {

@@ -1,15 +1,6 @@
-import shoe from '../assets/images/shoe.png'
-import pants from '../assets/images/pants-1.png'
-import polish from '../assets/images/polish.png'
-import tea from '../assets/images/tea.png'
-import withoutImage from '../assets/images/product-without-image.jpg'
 import { ShowStars } from "../scripts/showScore";
-import { newsProducts } from "../scripts/vetor";
 import '../styles/card.scss'
-import productService from '../services/crud-product';
-import React, { Component, useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
-import api from '../services/api';
 
 
 export function ProductCard(props) {

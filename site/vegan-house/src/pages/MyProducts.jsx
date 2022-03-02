@@ -7,9 +7,9 @@ import { SectionTitle } from '../components/SectionTitle';
 import { DragDropUpload } from '../components/DragDropUpload';
 import { UserGreeting } from '../components/UserGreeting';
 import { useState, useEffect } from 'react';
-
 import ModalChoice from '../components/ModalChoice';
 import ModalMessage from '../components/ModalMessage';
+import Loading from '../assets/images/loading.gif'
 import ProductTableRow from '../components/ProductTableRow';
 import loginService from '../services/login';
 import api from '../services/api';
@@ -41,6 +41,7 @@ export function MyProducts() {
     const [errorInventory, setErrorInventory] = useState("");
     const [error, setError] = useState("");
     const [sucess, setSucess] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const [image_url1, setImageUrl1] = useState("");
     const [image_url2, setImageUrl2] = useState("");
@@ -116,6 +117,8 @@ export function MyProducts() {
         setErrorPrice("");
         setErrorDescription("");
         setErrorInventory("");
+
+        //setLoading(true);
         api.post(`/products`, {
             name: name,
             price: parseFloat(price),
@@ -125,6 +128,7 @@ export function MyProducts() {
             fkSeller: user.id
         })
             .then((res) => {
+                setLoading(false);
                 if (res.status === 201) {
                     setSucess("O produto foi criado!");
                     getAllProducts();
@@ -132,6 +136,7 @@ export function MyProducts() {
                     pacthImage(res.data.id);
                 }
             }).catch((err) => {
+                setLoading(false);
                 if (err.response) {
                     warmings(err.response.data);
                 }
@@ -182,8 +187,10 @@ export function MyProducts() {
     function edit(e) {
         e.preventDefault();
         let idProduct = e.target.id;
+        setLoading(true);
         api.get(`/products/${idProduct}`)
             .then((res) => {
+                setLoading(false);
                 if (res.status === 200) {
                     window.location.href = '#section-products-edit';
                     setAcao("Editar produto");
@@ -200,7 +207,11 @@ export function MyProducts() {
                     getAllProducts();
                 }
             }).catch((err) => {
-
+                setLoading(false);
+                if (err.response) {
+                    warmings(err.response.data);
+                }
+                setSucess("");
             })
     }
 
@@ -535,7 +546,7 @@ export function MyProducts() {
                                 <div className="align-column margin-top-20 margin-bottom-25">
                                     <button id="create-btn" className="create-product-btn" onClick={createProduct}>Cadastrar</button>
                                     <button id="edit-btn" className="edit-product-btn" onClick={patch}>Salvar</button>
-
+                                    {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
                                 </div>
                                 {error && <p>{error}</p>}
                             </div>

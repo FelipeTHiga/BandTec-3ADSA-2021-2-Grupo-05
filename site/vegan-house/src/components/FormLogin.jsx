@@ -1,8 +1,8 @@
-import React, { Component, useState } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router";
 import api from "../services/api";
 import loginService from "../services/login";
-
+import Loading from '../assets/images/loading.gif'
 
 
 export function FormLogin() {
@@ -11,8 +11,10 @@ export function FormLogin() {
     const [erro, setErro] = useState("");
     const [sucess, setSucess] = useState(sessionStorage.getItem("sucess"));
     const history = useHistory();
+    const [loading, setLoading] = useState(false);
 
     function login(e) {
+        
         e.preventDefault();
         if(!email && !password) {
             setErro("Os campos email e senha não estão preechidos!");
@@ -27,11 +29,13 @@ export function FormLogin() {
             sessionStorage.setItem("sucess", "");
             setSucess(null);
         } else {
+            setLoading(true);
             api.post(`/session/login`, {
                 email: email,
                 passwordUser: password 
             })
                 .then((res) => {
+                    setLoading(false);
                     if (res.status === 200) {
                         sessionStorage.setItem("sucess", "");
                         loginService.setSession(res.data)
@@ -43,8 +47,11 @@ export function FormLogin() {
                         setSucess(null);
                     }
                 }).catch((res) => {
+                    setLoading(false);
                     sessionStorage.setItem("sucess", "");
-                    setErro("Ocorreu um erro ao tentar realizar login!");
+                    if(res.status != 200) {
+                        setErro("A senha ou o email estão incorretos!");
+                    }
                     setSucess(null);
                 })
         }
@@ -81,6 +88,7 @@ export function FormLogin() {
 
                     <button type="submit">Entrar</button>
                     {erro && <p className="error">{erro}</p>}
+                    {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
                     <hr />
                 </form>
             </div>

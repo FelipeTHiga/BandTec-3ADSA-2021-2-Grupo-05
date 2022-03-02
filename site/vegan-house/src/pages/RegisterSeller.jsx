@@ -4,6 +4,7 @@ import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
+import Loading from '../assets/images/loading.gif'
 
 
 import InputMask from 'react-input-mask'
@@ -25,6 +26,7 @@ export function RegisterSeller() {
     const [errorCommercialName, setErrorCommercialName] = useState("");
     const [errorCnpj, setErrorCnpj] = useState("");
     const [errorCommercialEmail, setErrorCommercialEmail] = useState("");
+    const [loading, setLoading] = useState(false);
 
 
     function warmings(errors) {
@@ -84,12 +86,14 @@ export function RegisterSeller() {
         if (!document.getElementById("checkbox").checked) {
             setError("Você precisa aceitar nossos termos para poder continuar.")
         } else {
+            setLoading(true);
             api.post(`/sellers/${user.id}`, {
                 commercialName: commercialName,
                 cnpj: cnpj.replace(/\D/g, ''),
                 commercialEmail: commercialEmail,
             })
                 .then((res) => {
+                    setLoading(false);
                     if (res.status === 201) {
                         let parseDados = JSON.stringify(res.data);
                         sessionStorage.setItem("user", parseDados);
@@ -98,16 +102,17 @@ export function RegisterSeller() {
                     } else if (res.status === 400){
                         console.log(res)
                         setError("Ocorreu um erro no cadastro!" + res.statusText);
+
                     }
-                }).catch((err) => {
-                  
-                    if(err.response.status === 409) {
+                }, err => {
+                    setLoading(false);
+                     if(err.response.status === 409) {
                         setError("Ocorreu um erro no cadastro!");
                     } else {
                         warmings(err.response.data);
                     }
-                }) 
 
+                })
 
         }
     }
@@ -161,7 +166,7 @@ export function RegisterSeller() {
 
                             <button className="button" type="submit">Enviar</button>
                             {error && <p className="error">{error}</p>}
-
+                            {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
                         </form>
                     </div>
                 </div>

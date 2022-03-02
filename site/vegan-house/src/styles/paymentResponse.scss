@@ -20,19 +20,20 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    h3{
+        font-size: 25px;
+        padding-top: 20px;
+        font-weight: 200;
+    }
+    
+     h1{
+        padding-bottom: 40px;
+    
+    }
 }
 
 
-.container-payment-result h3{
-    font-size: 25px;
-    padding-top: 20px;
-    font-weight: 200;
-}
-
-.container-payment-result h1{
-    padding-bottom: 40px;
-
-}
 
 .margin-bottom{
     margin-bottom: 20px;

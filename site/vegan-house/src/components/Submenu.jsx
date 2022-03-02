@@ -1,6 +1,6 @@
 import '../styles/submenu.scss';
 import { useHistory } from 'react-router';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export function Submenu() {
 

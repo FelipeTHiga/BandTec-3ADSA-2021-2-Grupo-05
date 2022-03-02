@@ -1,7 +1,4 @@
 import '../styles/productTableRow.scss';
-import React, { Component, useState } from "react";
-import loginService from '../services/login';
-import productService from '../services/crud-product'
 
 function ProductTableRow(props) {
   return (
