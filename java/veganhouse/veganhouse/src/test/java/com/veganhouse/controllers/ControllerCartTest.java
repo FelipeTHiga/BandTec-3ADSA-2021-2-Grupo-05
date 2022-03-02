@@ -47,7 +47,6 @@ public class ControllerCartTest {
                 "Camisa de Algodão",
                 20.2,
                 "Vestimenta",
-                "Vestimenta",
                 "Camisa confortável ideal para dias quentes",
                 20,
                 1);
@@ -68,7 +67,6 @@ public class ControllerCartTest {
         Product product = new Product(20,
                 "Camisa de Algodão",
                 20.2,
-                "Vestimenta",
                 "Vestimenta",
                 "Camisa confortável ideal para dias quentes",
                 20,
@@ -94,7 +92,6 @@ public class ControllerCartTest {
                 "Camisa de Algodão",
                 20.2,
                 "Vestimenta",
-                "Vestimenta",
                 "Camisa confortável ideal para dias quentes",
                 20,
                 1);
@@ -116,7 +113,6 @@ public class ControllerCartTest {
         Product product = new Product(20,
                 "Camisa de Algodão",
                 20.2,
-                "Vestimenta",
                 "Vestimenta",
                 "Camisa confortável ideal para dias quentes",
                 20,

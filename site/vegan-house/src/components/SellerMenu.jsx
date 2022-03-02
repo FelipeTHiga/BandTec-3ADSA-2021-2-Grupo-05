@@ -24,9 +24,6 @@ export function SellerMenu(props) {
                                     <li className="linkSeller">
                                         <NavLink to="/perfil/minhas-vendas" activeClassName='activeSeller'>Vendas</NavLink>
                                     </li>
-                                    <li className="linkSeller" >
-                                        <NavLink to="#" /* activeClassName='activeSeller' */>Dados bancários</NavLink>
-                                    </li>
 
                                 </ul>
                             </section>

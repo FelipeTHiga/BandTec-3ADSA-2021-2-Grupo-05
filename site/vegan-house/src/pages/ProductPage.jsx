@@ -67,6 +67,7 @@ export function ProductPage() {
     }
 
     function postCartItem(e) {
+        debugger
         e.preventDefault();
         
         api.post(`/cartItems/${userLogged.id}`, {
@@ -80,8 +81,6 @@ export function ProductPage() {
                 if (res.status === 201) {
                     alert("Sucesso")
                     history.push(``);
-                } else {
-
                 }
             }).catch((err) => {
             })
