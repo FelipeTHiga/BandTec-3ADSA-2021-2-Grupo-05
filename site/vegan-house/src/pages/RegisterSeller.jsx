@@ -4,6 +4,7 @@ import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
+import Loading from '../assets/images/loading.gif'
 
 
 import InputMask from 'react-input-mask'
@@ -21,59 +22,63 @@ export function RegisterSeller() {
     const [commercialName, setCommercialName] = useState("");
     const [cnpj, setCnpj] = useState("");
     const [commercialEmail, setCommercialEmail] = useState("");
-    const [error, setError] = useState([]);
+    const [error, setError] = useState("");
     const [errorCommercialName, setErrorCommercialName] = useState("");
     const [errorCnpj, setErrorCnpj] = useState("");
     const [errorCommercialEmail, setErrorCommercialEmail] = useState("");
+    const [loading, setLoading] = useState(false);
 
 
     function warmings(errors) {
         console.log(errors)
-        for (var i = 0; i < errors.length; i++) {
-            if (errors[i].field == 'commercialEmail') {
-                setErrorCommercialEmail(errors[i].defaultMessage)
-            } else if (errors[i].field == 'commercialName') {
-                setErrorCommercialName(errors[i].defaultMessage)
-            } else if (errors[i].field == 'cnpj') {
-                setErrorCnpj(errors[i].defaultMessage)
-            }
+        if (errors.commercialEmail) {
+            setErrorCommercialEmail(errors.commercialEmail)
         }
+        if (errors.commercialName) {
+            setErrorCommercialName(errors.commercialName)
+        }
+        if (errors.cnpj) {
+            setErrorCnpj(errors.cnpj)
+        }
+
 
     }
 
 
-    function submitSeller(e) {
+    // function submitSeller(e) {
 
-        e.preventDefault();
+    //     e.preventDefault();
 
-        setErrorCommercialName("");
-        setErrorCnpj("");
-        setErrorCommercialEmail("");
+    //     setError("");
+    //     setErrorCommercialName("");
+    //     setErrorCnpj("");
+    //     setErrorCommercialEmail("");
 
-        const user = {
-            commercialName: document.getElementById("name").value,
-            cnpj: document.getElementById("cnpj").value.replace(/\D/g, ''),
-            commercialEmail: document.getElementById("email").value,
-        }
-        api({
-            method: 'post',
-            url: '/sellers',
-            data: user,
-        })
-            .then(function (response) {
-                console.log(response)
-                console.log(response.data)
-                console.log(response.config)
-                console.log(response.status);
-                console.log(response.request);
-                console.log(response.statusText);
-                history.push('/');
-            })
-    }
+    //     const user = {
+    //         commercialName: document.getElementById("name").value,
+    //         cnpj: document.getElementById("cnpj").value.replace(/\D/g, ''),
+    //         commercialEmail: document.getElementById("email").value,
+    //     }
+    //     api({
+    //         method: 'post',
+    //         url: '/sellers',
+    //         data: user,
+    //     })
+    //         .then(function (response) {
+    //             console.log(response)
+    //             console.log(response.data)
+    //             console.log(response.config)
+    //             console.log(response.status);
+    //             console.log(response.request);
+    //             console.log(response.statusText);
+    //             history.push('/');
+    //         })
+    // }
 
     function registerSeller(e) {
         e.preventDefault();
 
+        setError("");
         setErrorCommercialName("");
         setErrorCnpj("");
         setErrorCommercialEmail("");
@@ -81,29 +86,33 @@ export function RegisterSeller() {
         if (!document.getElementById("checkbox").checked) {
             setError("Você precisa aceitar nossos termos para poder continuar.")
         } else {
+            setLoading(true);
             api.post(`/sellers/${user.id}`, {
                 commercialName: commercialName,
                 cnpj: cnpj.replace(/\D/g, ''),
                 commercialEmail: commercialEmail,
             })
                 .then((res) => {
+                    setLoading(false);
                     if (res.status === 201) {
                         let parseDados = JSON.stringify(res.data);
                         sessionStorage.setItem("user", parseDados);
                         history.push(`/perfil/seller`);
-                    } else {
+                    
+                    } else if (res.status === 400){
+                        console.log(res)
                         setError("Ocorreu um erro no cadastro!" + res.statusText);
+
                     }
-                }).catch((err) => {
-                    var errC = err.response.data.errors;
-                    if (errC != undefined) {
-                        warmings(err.response.data.errors);
-
-
+                }, err => {
+                    setLoading(false);
+                     if(err.response.status === 409) {
+                        setError("Ocorreu um erro no cadastro!");
+                    } else {
+                        warmings(err.response.data);
                     }
 
                 })
-
 
         }
     }
@@ -156,7 +165,8 @@ export function RegisterSeller() {
                             </div>
 
                             <button className="button" type="submit">Enviar</button>
-
+                            {error && <p className="error">{error}</p>}
+                            {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
                         </form>
                     </div>
                 </div>

@@ -1,0 +1,22 @@
+.container-name-user{
+    width: 100%;
+    height: 140px;
+
+    .name-user{
+        font-size: 25px;
+    }
+    
+    
+     p{
+        padding: 3px 0;
+    }
+}
+
+.container-name-user > div{
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 100%;
+    height: 100px;
+}
+
+

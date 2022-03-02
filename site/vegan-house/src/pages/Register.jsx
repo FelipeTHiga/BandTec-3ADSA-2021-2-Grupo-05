@@ -4,7 +4,7 @@ import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
-
+import Loading from '../assets/images/loading.gif'
 import InputMask from 'react-input-mask';
 import api from '../services/api';
 
@@ -23,29 +23,45 @@ export function Register() {
     const [errorSurName, setErrorSurName] = useState("");
     const [errorCpf, setErrorCpf] = useState("");
     const [errorEmail, setErrorEmail] = useState("");
+    const [errorPasswordConfirm, setErrorPasswordConfirm] = useState("");
     const [errorPassword, setErrorPassword] = useState("");
     const history = useHistory();
+    const [loading, setLoading] = useState(false);
 
-    
     function warmings(errors) {
-        console.log(errors)
-        for(var i = 0; i < errors.length; i++) {
-           if(errors[i].field == 'passwordUser') {
-                setErrorPassword(errors[i].defaultMessage)
-            } else if(errors[i].field == 'cpf') {
-                setErrorCpf(errors[i].defaultMessage)
-            } else if(errors[i].field == 'surName') {
-                setErrorSurName(errors[i].defaultMessage)
-            } else if(errors[i].field == 'nameUser') {
-                setErrorName(errors[i].defaultMessage)
-            } else if(errors[i] == 'email') {
-                setErrorEmail(errors[i].defaultMessage)
-            }
+
+        if (errors.cpf) {
+            setErrorCpf(errors.cpf)
         }
+        // if(errors.passwordUser) {
+        //     setErrorPassword(errors.passwordUser)
+        // }
+        if (errors.surName) {
+            setErrorSurName(errors.surName)
+        }
+        if (errors.nameUser) {
+            setErrorName(errors.nameUser)
+        }
+        if (errors.email) {
+            setErrorEmail(errors.email)
+        }
+        if(cpf.length === 0) {
+            setErrorCpf("Erro no cadastro preencha todos os campos obrigatorios (*)")
+        }
+
+        if ((passwordUser != passwordUserConfirm)) {
+            setErrorPasswordConfirm("As senhas informadas não coincidem!")
+        } else if (passwordUser.length === 0) {
+            setErrorPassword("Erro no cadastro preencha todos os campos obrigatorios (*)")
+        } else if (passwordUser.length < 6 || passwordUser.length > 20) {
+            setErrorPassword("A senha deve ter entre 6 e 20 caracteres")
+        }
+
 
     }
 
     function singin(e) {
+
         e.preventDefault();
 
         setErrorName("");
@@ -53,35 +69,37 @@ export function Register() {
         setErrorCpf("");
         setErrorEmail("");
         setErrorPassword("");
+        setErrorPasswordConfirm("");
 
-        if (passwordUser.length < 6 || passwordUser.length > 20) {
-            setError("A senha possui um número de caracteres inválido!")
-        } else if ((passwordUser != passwordUserConfirm)) {
-            setError("As senhas informadas não coincidem!")
-        } else {
-            api.post(`/users`, {
-                nameUser: nameUser,
-                surName: surName,
-                cpf: cpf.replace(/\D/g, ''),
-                email: email,
-                passwordUser: passwordUser
+        setLoading(true);
+        api.post(`/users`, {
+            nameUser: nameUser,
+            surName: surName,
+            cpf: cpf.replace(/\D/g, ''),
+            email: email,
+            passwordUser: passwordUser
+        })
+            .then((res) => {
+                setLoading(false);
+                if (res.status === 201) {
+
+                    sessionStorage.setItem("sucess", "Seu cadastro foi realizado com sucesso!")
+                    history.push(`/login`);
+                } else {
+                    warmings(res.data);
+                }
+                console.log(res.status);
+            }).catch((err) => {
+                setLoading(false);
+                console.log(err.response)
+                var errC = err.response.data;
+                if (errC != undefined) {
+                    warmings(err.response.data);
+
+                }
+
             })
-                .then((res) => {
-                    if (res.status === 201) {
-                       
-                        sessionStorage.setItem("sucess", "Seu cadastro foi realizado com sucesso!")
-                        history.push(`/login`);
-                    } else {
-                        warmings(res.data.errors);
-                    }
-                    console.log(res.status);
-                }).catch((err) => {
-                    var errorC = [];
-                    err.response.data.errors.forEach(erro => errorC.push(erro.defaultMessage))
-                    warmings(err.response.data.errors);
 
-                })
-        }
 
     }
 
@@ -100,7 +118,7 @@ export function Register() {
                                 <label>Nome</label>
                                 <div className="name-content">
                                     <i className="fas fa-user"></i>
-                                    <input value={nameUser}  id="name" onChange={e => setNameUser(e.target.value.replace(/[^a-zA-Z áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, ""))} type="text" placeholder="Ex. João" />
+                                    <input value={nameUser} id="name" onChange={e => setNameUser(e.target.value.replace(/[^a-zA-Z áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, ""))} type="text" placeholder="Ex. João" />
                                     <p>*</p>
                                 </div>
                                 {errorName && <p className="error">{errorName}</p>}
@@ -113,7 +131,7 @@ export function Register() {
                                     <input value={surName} id="surname" onChange={e => setSurName(e.target.value.replace(/[^a-zA-Z áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, ""))} type="text" placeholder="Ex. Silva" />
                                     <p>*</p>
                                 </div>
-                               {errorSurName && <p className="error">{errorSurName}</p>}
+                                {errorSurName && <p className="error">{errorSurName}</p>}
                             </div>
 
                             <div className="cpf">
@@ -157,10 +175,11 @@ export function Register() {
                                     <input onChange={e => setPasswordUserConfirm(e.target.value)} type="password" />
                                     <p>*</p>
                                 </div>
+                                {errorPasswordConfirm && <p className="error">{errorPasswordConfirm}</p>}
                             </div>
 
                             <button type="submit" >Enviar</button>
-
+                            {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
 
                         </form>
                     </div>

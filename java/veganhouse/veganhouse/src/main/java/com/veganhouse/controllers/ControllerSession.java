@@ -37,7 +37,7 @@ public class ControllerSession {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody User user){
+    public ResponseEntity<User> login(@RequestBody User user){
         User userBD;
 
         if (!userRepository.existsByEmail(user.getEmail())){

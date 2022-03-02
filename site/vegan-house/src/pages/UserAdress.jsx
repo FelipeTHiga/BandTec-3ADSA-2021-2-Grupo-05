@@ -5,9 +5,8 @@ import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { UserGreeting } from '../components/UserGreeting';
-import { submitAdress } from '../scripts/crud-user';
 import { useState, useEffect } from 'react';
-
+import Loading from '../assets/images/loading.gif'
 import loginService from '../services/login';
 import api from '../scripts/api';
 import axios from 'axios';
@@ -15,7 +14,7 @@ import InputMask from 'react-input-mask';
 
 
 import '../styles/global.scss';
-import '../styles/reset.css';
+import '../styles/reset.scss';
 import '../styles/userAdress.scss';
 
 export function UserAdress() {
@@ -31,7 +30,7 @@ export function UserAdress() {
     const [state, setState] = useState('')
     const [adress, setAdress] = useState({})
     const [idAdress, setIdAdress] = useState(0)
-    const [error, setError] = useState([]);
+    const [error, setError] = useState("");
     const [errorCep, setErrorCep] = useState("");
     const [errorStreet, setErrorStreet] = useState("");
     const [errorDistrict, setErrorDistrict] = useState("");
@@ -39,28 +38,34 @@ export function UserAdress() {
     const [errorState, setErrorState] = useState("");
     const [errorCity, setErrorCity] = useState("");
     const [errorComplement, setErrorComplement] = useState("");
-    
+    const [loading, setLoading] = useState(false);
+
     function warmings(errors) {
-        console.log(errors)
-        for(var i = 0; i < errors.length; i++) {
-           if(errors[i].field == 'cep') {
-                setErrorCep(errors[i].defaultMessage)
-            } else if(errors[i].field == 'street') {
-                setErrorStreet(errors[i].defaultMessage)
-            } else if(errors[i].field == 'district') {
-                setErrorDistrict(errors[i].defaultMessage)
-            } else if(errors[i].field == 'city') {
-                setErrorCity(errors[i].defaultMessage)
-            } else if(errors[i].field == 'state') {
-                setErrorState(errors[i].defaultMessage)
-            } else if(errors[i].field == 'number') {
-                setErrorNumber(errors[i].defaultMessage)
-            } 
+
+        if (errors.cep) {
+            setErrorCep(errors.cep)
         }
+
+        if (errors.street) {
+            setErrorStreet(errors.street)
+        }
+        if (errors.district) {
+            setErrorDistrict(errors.district)
+        }
+        if (errors.city) {
+            setErrorCity(errors.city)
+        }
+        if (errors.state) {
+            setErrorState(errors.state)
+        }
+        if (errors.number) {
+            setErrorNumber(errors.number)
+        }
+
 
     }
 
- function submitAdress(e) {
+    function submitAdress(e) {
         e.preventDefault();
 
         setErrorCep("");
@@ -75,24 +80,28 @@ export function UserAdress() {
             state: state,
             city: city,
             complement: complement,
-            cep: cep.replace(/\D/g,''),
+            cep: cep.replace(/\D/g, ''),
             district: district,
             fkUser: userUpdate.id
         }
         
-     api({
+        setLoading(true);
+
+        api({
             method: 'post',
             url: '/users/adress',
             data: userAdress,
         })
-        .then(function (response) {
-            console.log(response.status);
-            alert('Endereço cadastrado com sucesso')
-            window.location.reload();
-        }).catch((err) => {
-            warmings(err.response.data.errors);
+            .then(function (response) {
+                setLoading(false);
+                console.log(response.status);
+                alert('Endereço cadastrado com sucesso')
+                window.location.reload();
+            }).catch((err) => {
+                setLoading(false);
+                warmings(err.response.data);
 
-        });
+            });
     }
 
     function updateAdress(e) {
@@ -105,7 +114,7 @@ export function UserAdress() {
         setErrorCity("");
         const adress = {
             idAdress: idAdress,
-            cep: cep.replace(/\D/g,''),
+            cep: cep.replace(/\D/g, ''),
             street: street,
             district: district,
             city: city,
@@ -114,21 +123,23 @@ export function UserAdress() {
             number: number,
             fkUser: userUpdate.id
         }
-
+        setLoading(true);
         api({
             method: 'put',
             url: `/users/adress/${idAdress}`,
             data: adress,
         })
             .then(function (response) {
+                setLoading(false);
                 console.log(response.status);
                 alert('Endereço atualizado com sucesso')
                 window.location.reload();
 
             }).catch((err) => {
-                warmings(err.response.data.errors);
+                setLoading(false);
+                warmings(err.response.data);
 
-                });
+            });
     }
 
 
@@ -204,7 +215,7 @@ export function UserAdress() {
                                     <div className="container-city">
                                         <div className="container-state">
                                             <label for="state">Estado</label>
-                                            <select onChange={e => { setState(e.target.value.replace(/\D/g,'')) }} value={state} id="state">
+                                            <select onChange={e => { setState(e.target.value.replace(/\D/g, '')) }} value={state} id="state">
                                                 <option value="">-- Selecione --</option>
                                                 <option value="AC">Acre</option>
                                                 <option value="AL">Alagoas</option>
@@ -275,8 +286,9 @@ export function UserAdress() {
                                     <div className="button-form-adress">
                                         <button id="btn-sign" onClick={submitAdress}>Cadastrar</button>
                                         <button id="btn-put" onClick={updateAdress}>Atualizar</button>
+                                        {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
                                     </div>
-                                        {error.length > 0 ? error.map(erro => <p className="error">{erro}</p>) : <div />}
+                                    {error.length > 0 ? error.map(erro => <p className="error">{erro}</p>) : <div />}
                                 </form>
                             </div>
 

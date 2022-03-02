@@ -1,4 +1,4 @@
-import "../styles/dragDropUpload.css";
+import "../styles/dragDropUpload.scss";
 // import "../scripts/dragDropUpload";
 
 let file;

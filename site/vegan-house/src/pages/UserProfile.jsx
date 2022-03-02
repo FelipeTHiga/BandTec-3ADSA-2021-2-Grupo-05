@@ -5,17 +5,66 @@ import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { UserGreeting } from '../components/UserGreeting';
-import { updateUser } from '../scripts/crud-user';
+import { useState } from 'react';
+import api from '../scripts/api';
+import Loading from '../assets/images/loading.gif'
 
 import loginService from '../services/login'
 
 import '../styles/global.scss';
-import '../styles/reset.css';
+import '../styles/reset.scss';
 import '../styles/userProfile.scss';
 
 
-export function UserProfile() {
-    let user = loginService.getSession();
+export function UserProfile(e) {
+    
+    let user = loginService.getSession()
+    const [status, setStatus] = useState("")
+    const [emailError, setEmailError] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    function updateUser(e) {
+        e.preventDefault();
+        setStatus("");
+        setEmailError("");
+        let userUpdate = loginService.getSession();
+        let email;
+        if (document.getElementById("emailUserUpdate").value == "" || document.getElementById("emailUserUpdate").value == " ") {
+            email = userUpdate.email;
+        } else {
+            email = document.getElementById("emailUserUpdate").value;
+        }
+        const user = {
+            id: userUpdate.id,
+            nameUser: userUpdate.nameUser,
+            surName: userUpdate.surName,
+            cpf: userUpdate.cpf,
+            email: email,
+            passwordUser: userUpdate.passwordUser
+        }
+        setLoading(true);
+        api({
+            method: 'put',
+            url: '/users',
+            params: {
+                idUser: userUpdate.id
+            },
+            data: user,
+        })
+        .then(function (response) {
+            setLoading(false);
+            if(response.status === 200) {
+                loginService.setSession(response.data);
+                setStatus("Seu perfil foi atualizado com sucesso.")
+            } else {
+                setStatus("Ocorreu um erro ao tentar atualizar seu perfil.")
+            }
+        }).catch((err) => {
+            setLoading(false);
+            setEmailError("Insira um email válido.");
+        });
+    }
+
     return (
         <>
             <Navbar />
@@ -37,7 +86,7 @@ export function UserProfile() {
                         <div className="container-profile">
                             <SectionTitle text="Dados pessoais" />
                             <div className="container-profile-data">
-                                <form>
+                                <form onSubmit={updateUser}>
                                     <div className="container-input">
                                         <label for="name">Nome</label>
                                         <div>
@@ -72,10 +121,13 @@ export function UserProfile() {
                                             <input id="emailUserUpdate" placeholder={user.email} className="input-default " type="text" name="" />
                                             <i className="fas fa-lock line-up lock"></i>
                                         </div>
+                                        {emailError && <p className='erro'>{emailError}</p>}
                                     </div>
                                     <div className="button-form-profile">
-                                    <button onClick={updateUser}>Atualizar</button>
+                                    <button type='submit'>Atualizar</button>
+                                    {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
                                     </div>
+                                    {status && <p>{status}</p>}
                                 </form>
                             </div>
 

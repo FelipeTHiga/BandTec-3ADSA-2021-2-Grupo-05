@@ -17,9 +17,8 @@ import { PaymentResponse } from "./pages/PaymentResponse";
 
 
 
-// import { NewRoom } from "./pages/NewRoom";
-
 function App() {
+
   return (
     <BrowserRouter>
       <Switch>

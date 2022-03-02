@@ -54,7 +54,7 @@ public class CartManager {
     public boolean incrementItemQuantity(int cartItemId){
         boolean success = false;
         if (cartItemsRepository.existsById(cartItemId)){
-            CartItem cartItem =  cartItemsRepository.getById(cartItemId);
+            CartItem cartItem =  cartItemsRepository.findById(cartItemId).get();
             double productPrice = cartItem.getProduct().getPrice();
 
             cartItem.setQuantity(cartItem.getQuantity()+1);

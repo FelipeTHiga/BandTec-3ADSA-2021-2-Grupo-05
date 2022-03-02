@@ -47,7 +47,8 @@ input {
         .button-form-profile {
             width: 100%;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             padding-top: 15px;
 
             button {
@@ -74,7 +75,7 @@ input {
     height: 100px;
     /* background: red; */
     color: #604d4d;
-
+   
     .input-default {
         width: 100%;
         height: 45px;
@@ -114,6 +115,14 @@ input {
 
     p {
         color: #604d4d;
+    }
+
+    .err-userP {
+        color: red;
+    }
+
+    .sucess {
+        color: green;
     }
 }
 

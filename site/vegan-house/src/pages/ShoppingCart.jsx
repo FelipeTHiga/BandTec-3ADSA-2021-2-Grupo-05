@@ -1,12 +1,11 @@
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
-import { Submenu } from '../components/Submenu';
 import "../styles/shoppingCart.scss"
-import { OrderCart, totalAmount } from '../components/OrderCart';
+import { OrderCart } from '../components/OrderCart';
 import loginService from '../services/login';
 import api from "../services/api";
-import { useParams, useHistory } from "react-router";
-import React, { Component, useEffect, useState } from 'react';
+import { useHistory } from "react-router";
+import React, { useEffect } from 'react';
 
 
 

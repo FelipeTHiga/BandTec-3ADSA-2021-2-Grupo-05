@@ -7,7 +7,7 @@ import { SectionTitle } from '../components/SectionTitle';
 import { DragDropUpload } from '../components/DragDropUpload';
 import { UserGreeting } from '../components/UserGreeting';
 import { useState, useEffect } from 'react';
-
+import Loading from '../assets/images/loading.gif'
 import ProductTableRow from '../components/ProductTableRow';
 import loginService from '../services/login';
 import api from '../services/api';
@@ -16,7 +16,7 @@ import redo from '../assets/images/redo.png'
 import file from '../files/Documento-de-layout-importação.pdf';
 
 import '../styles/global.scss';
-import '../styles/reset.css';
+import '../styles/reset.scss';
 import '../styles/myProducts.scss';
 
 export function MyProducts() {
@@ -37,8 +37,9 @@ export function MyProducts() {
     const [errorPrice, setErrorPrice] = useState("");
     const [errorDescription, setErrorDescription] = useState("");
     const [errorInventory, setErrorInventory] = useState("");
-    const [error, setError] = useState([]);
+    const [error, setError] = useState("");
     const [sucess, setSucess] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const [image_url1, setImageUrl1] = useState("");
     const [image_url2, setImageUrl2] = useState("");
@@ -56,17 +57,20 @@ export function MyProducts() {
 
     function warmings(errors) {
         
-        for (var i = 0; i < errors.length; i++) {
-            if (errors[i].field == 'name') {
-                setErrorName(errors[i].defaultMessage)
-            } else if (errors[i].field == 'price') {
-                setErrorPrice(errors[i].defaultMessage)
-            } else if (errors[i].field == 'description') {
-                setErrorDescription(errors[i].defaultMessage)
-            } else if (errors[i].field == 'inventory') {
-                setErrorInventory(errors[i].defaultMessage)
-            }
+        if (errors.name) {
+            setErrorName(errors.name)
         }
+        if (errors.price) {
+            setErrorPrice(errors.price)
+        }
+        if (errors.description) {
+            setErrorDescription(errors.description)
+        }
+        if (errors.inventory) {
+            setErrorInventory(errors.inventory)
+        }
+      
+        
 
     }
 
@@ -85,15 +89,20 @@ export function MyProducts() {
             setImageUrl1(res.data.image_url1);
             setImageUrl2(res.data.image_url2);
             setImageUrl3(res.data.image_url3);
+        }).catch((err) => {
+            setError("As imagens não foram cadastradas.")
         })
     }
 
     function createProduct(e) {
         e.preventDefault();
+        setError("");
         setErrorName("");
         setErrorPrice("");
         setErrorDescription("");
         setErrorInventory("");
+
+        //setLoading(true);
         api.post(`/products`, {
             name: name,
             price: parseFloat(price),
@@ -103,19 +112,22 @@ export function MyProducts() {
             inventory: parseInt(inventory),
             fkSeller: user.id
         })
-            .then((res) => {
-                if (res.status === 201) {
-                    setSucess("O produto foi criado!");
-                    getAllProducts();
-                    window.location.href = '#section-products'
-                    pacthImage(res.data.id);
-                }
-                window.location.href = '#section-my-products'
-            }).catch((err) => {
-                // warmings(err.response.data.errors);
-                // console.log(err.response.data);
-                setSucess("");
-            })
+        .then((res) => {
+            setLoading(false);
+            if (res.status === 201) {
+                setSucess("O produto foi criado!");
+                getAllProducts();
+                window.location.href = '#section-products'
+                pacthImage(res.data.id);
+            }
+            window.location.href = '#section-my-products'
+        }).catch((err) => {
+            setLoading(false);
+            if (err.response) {
+                warmings(err.response.data);
+            }
+            setSucess("");
+        })
     }
 
     function patch(e) {
@@ -153,15 +165,20 @@ export function MyProducts() {
                 
             }
         }).catch((err) => {
-            // warmings(err.response.data.errors);
+            if (err.response) {
+                warmings(err.response.data);
+            }
+            setSucess("");
         })
     }
 
     function edit(e) {
         e.preventDefault();
         let idProduct = e.target.id;
+        setLoading(true);
         api.get(`/products/${idProduct}`)
             .then((res) => {
+                setLoading(false);
                 if (res.status === 200) {
                     window.location.href = '#section-products-edit';
                     setAcao("Editar produto");
@@ -179,7 +196,11 @@ export function MyProducts() {
                     getAllProducts();
                 }
             }).catch((err) => {
-                
+                setLoading(false);
+                if (err.response) {
+                    warmings(err.response.data);
+                }
+                setSucess("");
             })
     }
 
@@ -470,7 +491,7 @@ export function MyProducts() {
 
                                     <div className="product-edit-camp">
                                         <label htmlFor="">Qtd. estoque</label>
-                                        <input id="inventory" onChange={e => setInvetory(e.target.value)} value={inventory} className="input" type="text" placeholder="100" />
+                                        <input id="inventory" onChange={e => setInvetory(e.target.value.replace(/[^0-9]/g,''))} value={inventory} className="input" type="text" placeholder="100" />
                                         {errorInventory && <p className="error">{errorInventory}</p>}
                                     </div>
                                 </div>
@@ -490,9 +511,9 @@ export function MyProducts() {
                                 <div className="align-column margin-top-20 margin-bottom-25">
                                     <button id="create-btn" className="create-product-btn" onClick={createProduct}>Cadastrar</button>
                                     <button id="edit-btn" className="edit-product-btn" onClick={patch}>Salvar</button>
-
+                                    {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
                                 </div>
-
+                                {error && <p>{error}</p>}
                             </div>
                         </div>
                     </div>
