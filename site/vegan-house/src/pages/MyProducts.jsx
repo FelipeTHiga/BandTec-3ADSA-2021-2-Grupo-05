@@ -62,6 +62,7 @@ export function MyProducts() {
                 setProducts(res.data);
                 setDefaultMessage("");
             } else if (res.status === 204) {
+                setProducts([]);
                 setDefaultMessage("Não há nenhum produto cadastrado.")
             }
         }
@@ -267,6 +268,7 @@ export function MyProducts() {
                     setProducts(res.data);
                     setDefaultMessage("");
                 } else if (res.status === 204) {
+                    setProducts([]);
                     setDefaultMessage("Não há nenhum produto cadastrado.")
                 }
             }).catch((err) => {
@@ -280,7 +282,11 @@ export function MyProducts() {
                 .then((res) => {
                     if (res.status === 200) {
                         setProducts(res.data);
+                        setDefaultMessage("")
                         setSucess("");
+                    } else if (res.status === 204) {
+                        setProducts([]);
+                        setDefaultMessage(`Nenhum resultado encontrado para "${searchName}"`)
                     }
                     setSearchName("");
                 }).catch((err) => {
@@ -313,8 +319,9 @@ export function MyProducts() {
                     if (res.status === 200) {
                         setProducts(res.data)
                         setSucess("");
-                    } else if (res.status === 204) {
                         setDefaultMessage("");
+                    } else if (res.status === 204) {
+                        setProducts([])
                         setDefaultMessage("Não há nenhum produto cadastrado.")
                     }
                 }).catch((err) => {
@@ -325,6 +332,10 @@ export function MyProducts() {
                     if (res.status === 200) {
                         setProducts(res.data)
                         setSucess("");
+                        setDefaultMessage("");
+                    } else if (res.status === 204) {
+                        setProducts([]);
+                        setDefaultMessage("Sua busca não teve resultados.");
                     }
                 }).catch((err) => {
                 })

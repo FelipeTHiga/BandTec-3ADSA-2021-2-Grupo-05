@@ -79,7 +79,6 @@ export function ProductPage() {
         })
             .then((res) => {
                 if (res.status === 201) {
-                    alert("Sucesso")
                     history.push(``);
                 }
             }).catch((err) => {
