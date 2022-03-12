@@ -2,11 +2,10 @@ import '../styles/buyCard.scss';
 import shoppingCart from '../assets/images/shopping-cart.png';
 import { ShowStars } from '../scripts/showScore';
 import loginService from '../services/login';
-import { subscribe } from '../services/crud-user';
 import React, { useState } from 'react';
-import Modal from './Modal';
-
-import { useParams, useHistory } from "react-router";
+import ModalRedirect from './ModalRedirect';
+import ModalMessage from '../components/ModalMessage';
+import { useHistory } from "react-router";
 import api from "../services/api";
 
 
@@ -42,6 +41,10 @@ export function BuyCard(props) {
         history.push(`/carrinho/`);
     }
 
+    const [isModalMessageVisible, setIsModalMessageVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
+    const [modalTitle, setModalTitle] = useState("");
+
     var isAvailable = (props.product.inventory <= 0) ? false : true;
     let user = loginService.getSession();
     var isLogged = (user == null) ? false : true;
@@ -74,6 +77,23 @@ export function BuyCard(props) {
             })
         }
 
+    }
+
+    async function subscribe(fkProduct, fkUser) {
+
+        await api({
+            method: 'post',
+            url: '/restock-subscribe',
+            data: {
+                fkProduct: fkProduct,
+                fkUser: fkUser
+            }
+        }).then((res) => {
+            setModalTitle("Notificação via e-mail");
+            setModalMessage("Quando chegarem novos produtos, notificaremos via e-mail.");
+            window.location.href = '#top';
+            setIsModalMessageVisible(true);
+        })
     }
 
 
@@ -133,13 +153,24 @@ export function BuyCard(props) {
             </div>
             {
                 isModalVisible ?
-                    <Modal
+                    <ModalRedirect
                         onClose={() => setIsModalVisible(false)}
                         height={document.body.scrollHeight}
                         title="Atenção"
                         message="Para acessar a funcionalidade, você precisa estar logado"
                         link="/login"
                         btnTitle="Ir para Login!" />
+                    : null
+            }
+             {
+                isModalMessageVisible ?
+                    <ModalMessage
+                        onClose={() => setIsModalMessageVisible(false)}
+                        height={document.body.scrollHeight}
+                        title={modalTitle}
+                        message={modalMessage}
+                        function={() => setIsModalMessageVisible(false)}
+                    />
                     : null
             }
         </>

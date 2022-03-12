@@ -11,21 +11,24 @@ import '../styles/mySales.scss';
 import '../styles/myOrders.scss';
 import api from '../services/api';
 import { useHistory } from 'react-router';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export function MySales() {
     let userUpdate = loginService.getSession();
 
     const history = useHistory();
     const [sales, setSales] = React.useState([]);
+    const [defaultMessage, setDefaultMessage] = useState("");
 
     useEffect(() => {
         function getOrder() {
             api.get(`orders/seller/${userUpdate.id}`)
                 .then((res) => {
                     if (res.status === 200) {
-                        console.log(res.data);
                         setSales(res.data);
+                        setDefaultMessage("");
+                    } else if (res.status === 204) {
+                        setDefaultMessage("Você ainda não fez nenhuma venda.");
                     }
 
                 }).catch((err) => {
@@ -55,8 +58,9 @@ export function MySales() {
 
                     <div className="section-orders">
                         <div className="container-orders">
-                            <SectionTitle text="Pedidos" />
+                            <SectionTitle text="Vendas" />
                             {sales.map(sale => (<SaleBox total={sale.total} date={sale.orderDate} adress={sale.adress} user={sale.user} idOrder={sale.id} orderItems={sale.orderItems} status={sale.orderStatus} />))}
+                            <div className='defaultMessage card-orders-sales'>{defaultMessage}</div>
                         </div>
                     </div>
                 </div>

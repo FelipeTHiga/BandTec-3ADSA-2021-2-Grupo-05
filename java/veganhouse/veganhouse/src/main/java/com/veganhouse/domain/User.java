@@ -27,6 +27,8 @@ public class User {
     @Email(message = "Insira um email válido")
     protected String email;
 
+    //@Min(value = 6, message = "Mínimo de 6 caracteres")
+    //@Max(value = 10, message = "Maxímo de 10 caracteres")
     @NotBlank(message = "Erro no cadastro preencha todos os campos obrigatorios (*)")
     protected String passwordUser;
 

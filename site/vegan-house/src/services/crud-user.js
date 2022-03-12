@@ -30,22 +30,6 @@ async function submit(props) {
         });
 }
 
-async function subscribe(fkProduct, fkUser) {
-    console.log(fkProduct)
-    console.log(fkUser)
-
-    await api({
-        method: 'post',
-        url: '/restock-subscribe',
-        data: {
-            fkProduct: fkProduct,
-            fkUser: fkUser
-        }
-    }).then((res) => {
-        alert("Quando chegarem novos produtos, notificaremos via e-mail");
-    })
-}
-
 async function getAdress() {
             let userLogged = loginService.getSession();
             await api({
@@ -146,5 +130,5 @@ async function updateUser(props) {
                 });
         }
 
-export { submit, getUser, login, user_logged, updateUser, submitAdress, getAdress, subscribe, getUserById };
+export { submit, getUser, login, user_logged, updateUser, submitAdress, getAdress, getUserById };
 

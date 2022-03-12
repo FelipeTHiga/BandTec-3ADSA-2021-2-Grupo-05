@@ -18,7 +18,7 @@ import logoFacebook from '../assets/images/social-midias/logo-facebook.png';
 import logoWhatsapp from '../assets/images/social-midias/logo-whatsapp.png';
 
 import '../styles/global.scss';
-import '../styles/reset.css';
+import '../styles/reset.scss';
 import '../styles/productPage.scss';
 
 
@@ -67,6 +67,7 @@ export function ProductPage() {
     }
 
     function postCartItem(e) {
+        debugger
         e.preventDefault();
         
         api.post(`/cartItems/${userLogged.id}`, {
@@ -78,10 +79,7 @@ export function ProductPage() {
         })
             .then((res) => {
                 if (res.status === 201) {
-                    alert("Sucesso")
                     history.push(``);
-                } else {
-
                 }
             }).catch((err) => {
             })

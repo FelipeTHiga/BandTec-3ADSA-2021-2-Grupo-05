@@ -7,7 +7,8 @@ import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { useState, useEffect } from 'react';
-
+import ModalMessage from '../components/ModalMessage';
+import Loading from '../assets/images/loading.gif'
 import api from '../services/api';
 import InputMask from 'react-input-mask';
 import loginService from '../services/login';
@@ -20,7 +21,7 @@ import Selo_5 from '../assets/images/certifications/Selo-5.png';
 import '../styles/sellerProfile.scss';
 import '../styles/perfil.scss';
 import '../styles/global.scss';
-import '../styles/reset.css';
+import '../styles/reset.scss';
 
 export function SellerProfile() {
 
@@ -33,6 +34,7 @@ export function SellerProfile() {
     const [whatsappNumber, setWhatsappNumber] = useState('');
     const [instagramAccount, setInstagramAccount] = useState('');
     const [facebookAccount, setFacebookAccount] = useState('');
+    const [loading, setLoading] = useState(false);
     //const [erro, setErro] = useState("");
     const [sucess, setSucess] = useState(sessionStorage.getItem("sucess"));
 
@@ -40,6 +42,10 @@ export function SellerProfile() {
     const [errorCommercialName, setErrorCommercialName] = useState("");
     const [errorCnpj, setErrorCnpj] = useState("");
     const [errorCommercialEmail, setErrorCommercialEmail] = useState("");
+
+    const [isModalMessageVisible, setIsModalMessageVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
+    const [modalTitle, setModalTitle] = useState("");
 
     const certification1 = document.getElementById("1")
     const certification2 = document.getElementById("2")
@@ -60,8 +66,7 @@ export function SellerProfile() {
         if (errors.cnpj) {
             setErrorCnpj(errors.cnpj)
         }
-
-
+        window.location.href = '#page-container';
     }
 
     useEffect(() => {
@@ -127,7 +132,7 @@ export function SellerProfile() {
         const updateSeller = {
             idSeller: idSeller,
             commercialName: commercialName,
-            cnpj: cnpj.replace(/\D/g, ''),
+            cnpj: cnpj, // .replace(/\D/g, '')
             commercialEmail: commercialEmail,
             whatsappNumber: whatsappNumber,
             instagramAccount: instagramAccount,
@@ -135,17 +140,21 @@ export function SellerProfile() {
             fkUser: user.id
         }
 
+        setLoading(true);
         api({
             method: 'put',
             url: `/sellers/${idSeller}`,
             data: updateSeller,
         })
             .then((res) => {
+                setLoading(false);
                 if (res.status === 200) {
                     sessionStorage.setItem("sucess", "");
                     setSucess(null)
-                    alert("Dados atualizados com sucesso!");
-                    window.location.reload();
+                    setModalTitle("Atualização de dados");
+                    setModalMessage("Dados atualizados com sucesso!");
+                    window.location.href = '#top';
+                    setIsModalMessageVisible(true);
                 } else {
                     //setErro("Não foi possível atualizar seus dados");
                     sessionStorage.setItem("sucess", "");
@@ -153,6 +162,7 @@ export function SellerProfile() {
                     console.log(res)
                 }
             }).catch((err) => {
+                setLoading(false);
                 sessionStorage.setItem("sucess", "");
                 //setErro("Ocorreu um erro ao tentar atualizar seus dados! Por favor, tente novamente.");
                 setSucess(null);
@@ -196,7 +206,7 @@ export function SellerProfile() {
                 <Title title="Seu perfil" />
             </div>
             <div className="page-container">
-                <div className="container-menu-and-seller">
+                <div id="page-container" className="container-menu-and-seller">
                     <div className="section-menus">
                         <AccountMenu isSeller={true} />
                         <SellerMenu isSeller={true} />
@@ -208,7 +218,7 @@ export function SellerProfile() {
                                 <label for="nameCommercial">Nome Comercial</label>
                                 <div>
                                     <i className="fas fa-user line-up icon-left-radius"></i>
-                                    <input className="input-default " type="text" placeholder="" name="" id="nameCommercial" value={commercialName} onChange={e => { setCommercialName(e.target.value) }} />
+                                    <input className="input-default " type="text" placeholder="" name="" id="nameCommercial" value={commercialName} onChange={e => { setCommercialName(e.target.value.replace(/[^a-zA-Z áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]/g, "")) }} />
                                 </div>
                                 {errorCommercialName && <p className="error err-sellerP p-name">{errorCommercialName}</p>}
                             </div>
@@ -316,11 +326,23 @@ export function SellerProfile() {
                         </form>
                         <div className="container-button-update-user line-up">
                             <button onClick={updateCommercialData}>Atualizar</button>
+                            {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
                         </div>
 
                     </div>
                 </div>
             </div>
+            {
+                isModalMessageVisible ?
+                    <ModalMessage
+                        onClose={() => setIsModalMessageVisible(false)}
+                        height={document.body.scrollHeight}
+                        title={modalTitle}
+                        message={modalMessage}
+                        function={() => setIsModalMessageVisible(false)}
+                    />
+                    : null
+            }
             <Footer />
         </>
     );

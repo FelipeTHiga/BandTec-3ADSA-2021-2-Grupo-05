@@ -1,4 +1,4 @@
-import "../styles/dragDropUpload.css";
+import "../styles/dragDropUpload.scss";
 // import "../scripts/dragDropUpload";
 
 let file;
@@ -30,27 +30,21 @@ function DragDropUpload(props) {
                     input.click();
                 }
             }
-
             if (img2) {
 
                 img2.onclick = () => {
                     input.click();
                 }
             }
-
-
             if (img3) {
 
                 img3.onclick = () => {
                     input.click();
                 }
             }
-
         }
 
-
         console.log(dropArea);
-
 
         if (button) {
 

@@ -2,6 +2,18 @@ import "../styles/saleBox.scss"
 import { SaleUnit } from "./SaleUnit"
 
 export function SaleBox(props) {
+
+    function color() {
+        if(props.status === "Pagamento aprovado") {
+            return "p-status-green"
+        } else if(props.status === "Pagamento rejeitado") {
+            return "p-status-red"
+        } else {
+            return "p-status-blue"
+        }
+    }
+
+
     return (
         <>
         <input type="hidden" id="mercado-pago-public-key" value="TEST-622fb91c-f16d-4a94-a027-1feaaa7fb422" />
@@ -23,7 +35,7 @@ export function SaleBox(props) {
                         </div>
                         <div className="status-sale">
                             <h2>Status</h2>
-                            <p className="p-status">{props.status}</p>
+                            <p className={`p-status ${color()}`}>{props.status}</p>
                         </div>
                         </div>
 

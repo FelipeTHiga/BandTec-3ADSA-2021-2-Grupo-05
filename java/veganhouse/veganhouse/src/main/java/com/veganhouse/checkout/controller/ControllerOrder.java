@@ -24,6 +24,9 @@ public class ControllerOrder {
 
     @GetMapping("user/{idUser}")
     public ResponseEntity getUserOrder(@PathVariable int idUser){
+        if(orderService.getUserOrders(idUser).isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
         return ResponseEntity.status(200).body(orderService.getUserOrders(idUser));
     }
 
@@ -45,6 +48,9 @@ public class ControllerOrder {
 
     @GetMapping("seller/{idUser}")
     public ResponseEntity getSellerOrder(@PathVariable int idUser){
+        if(orderService.getSellerOrders(idUser).isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
         return ResponseEntity.status(200).body(orderService.getSellerOrders(idUser));
     }
 

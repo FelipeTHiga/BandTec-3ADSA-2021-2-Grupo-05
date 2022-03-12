@@ -1,4 +1,4 @@
-import '../styles/sectionTitle.css';
+import '../styles/sectionTitle.scss';
 
 export function SectionTitle (props){
     return(

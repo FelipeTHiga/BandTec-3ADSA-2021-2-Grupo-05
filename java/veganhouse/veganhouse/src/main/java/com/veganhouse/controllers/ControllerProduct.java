@@ -12,6 +12,7 @@ import com.veganhouse.productsCommander.ProductCommander;
 import com.veganhouse.repository.IProductRepository;
 import com.veganhouse.repository.ISellerRepository;
 import com.veganhouse.services.ProductService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -64,7 +65,7 @@ public class ControllerProduct {
 
     @PostMapping()
     public ResponseEntity postProduct(@RequestBody @Valid Product newProduct) {
-        newProduct.setAvaliable(true);
+        newProduct.setAvailable(true);
         productRepository.save(newProduct);
         return ResponseEntity.status(201).body(newProduct);
     }
@@ -84,26 +85,12 @@ public class ControllerProduct {
                 eventManagerRestock.notify(id);
 
             product.setId(id);
-            product.setAvaliable(true);
+            product.setAvailable(true);
             productRepository.save(product);
             return ResponseEntity.status(200).build();
         }
         return ResponseEntity.status(404).build();
     }
-
-//    @PatchMapping("/image/{id}")
-//    public ResponseEntity patchImageProduct1(@PathVariable Integer id,
-//                                            @RequestParam MultipartFile foto1) throws IOException  {
-//
-//        Product product = productRepository.findById(id).get();
-//
-//        byte[] novaFoto1 = foto1.getBytes();
-//
-//        product.setImage_url1(novaFoto1);
-//
-//        productRepository.save(product);
-//        return ResponseEntity.status(200).build();
-//    }
 
     @PatchMapping("/image/{id}")
     public ResponseEntity patchImageProduct(@PathVariable Integer id,
@@ -165,17 +152,27 @@ public class ControllerProduct {
     @GetMapping("/tag/{category}")
     public ResponseEntity getProductByCategory(@PathVariable String category) {
 
-        if (productRepository.count() > 0) {
-            if ("Todos".equals(category)) {
-                return ResponseEntity.status(200).body(productService.getIsAvailable(productRepository.findAll()));
+        if ("Todos".equals(category)) {
+            List<Product> listAll = productService.getIsAvailable(productRepository.findAll());
+            if(!listAll.isEmpty()) {
+                return ResponseEntity.status(200).body(listAll);
+            } else {
+                return ResponseEntity.status(204).build();
             }
-            return ResponseEntity.status(200).body(productService.getIsAvailable(productRepository.findByCategory(category)));
+        } else {
+            List<Product> listByCategory = productService.getIsAvailable(productRepository.findByCategory(category));
+            if(!listByCategory.isEmpty()) {
+                return ResponseEntity.status(200).body(listByCategory);
+            } else {
+                return ResponseEntity.status(204).build();
+            }
         }
-        return ResponseEntity.status(204).build();
+
     }
 
     @GetMapping("/tag/{category}/{idSeller}")
     public ResponseEntity getProductByCategoryIdSeller(@PathVariable String category, @PathVariable Integer idSeller) {
+
         List<Product> listSearch = new ArrayList<>();
         if (!productRepository.findAll().isEmpty()) {
             List<Product> list = productRepository.findByCategory(category);
@@ -184,7 +181,11 @@ public class ControllerProduct {
                     listSearch.add(p);
                 }
             }
-            return ResponseEntity.status(200).body(productService.getIsAvailable(listSearch));
+            if (!listSearch.isEmpty()) {
+                return ResponseEntity.status(200).body(productService.getIsAvailable(listSearch));
+            } else {
+                return ResponseEntity.status(204).build();
+            }
         }
         return ResponseEntity.status(204).build();
     }
@@ -192,31 +193,31 @@ public class ControllerProduct {
     @GetMapping("/filter/{filter}/{category}")
     public ResponseEntity getProductByFilter(@PathVariable String filter, @PathVariable String category) {
 
-        if (!(productRepository.count() > 0)) {
-            return ResponseEntity.status(404).build();
-        }
-
         List<Product> products;
 
         if ("Todos".equals(category)) {
-            products = productRepository.findAll();
+            products = productService.getIsAvailable(productRepository.findAll());
         } else {
-            products = productRepository.findByCategory(category);
+            products = productService.getIsAvailable((productRepository.findByCategory(category)));
+        }
+
+        if(products.isEmpty()) {
+            return ResponseEntity.status(204).body(products);
         }
 
         if ("name".equals(filter)) {
-            return ResponseEntity.status(200).body(productService.getIsAvailable(products.stream()
+            return ResponseEntity.status(200).body(products.stream()
                     .sorted(Comparator.comparing(Product::getName))
-                    .collect(Collectors.toList())));
+                    .collect(Collectors.toList()));
         } else if ("lowest-price".equals(filter)) {
-            return ResponseEntity.status(200).body(productService.getIsAvailable(products.stream()
+            return ResponseEntity.status(200).body(products.stream()
                     .sorted(Comparator.comparing(Product::getPrice))
-                    .collect(Collectors.toList())));
+                    .collect(Collectors.toList()));
         } else if ("highest-price".equals(filter)) {
-            return ResponseEntity.status(200).body(productService.getIsAvailable(products.stream()
+            return ResponseEntity.status(200).body(products.stream()
                     .sorted(Comparator.comparing(Product::getPrice)
                             .reversed())
-                    .collect(Collectors.toList())));
+                    .collect(Collectors.toList()));
         }
         return ResponseEntity.status(404).build();
     }
@@ -231,10 +232,11 @@ public class ControllerProduct {
 
     @GetMapping("all/{idSeller}")
     public ResponseEntity getAllProductsSeller(@PathVariable Integer idSeller) {
-        if (productRepository.count() > 0) {
-            return ResponseEntity.status(200).body(productService.getIsAvailable(productRepository.findByFkSeller(idSeller)));
+        List<Product> list = productService.getIsAvailable(productRepository.findByFkSeller(idSeller));
+        if (list.isEmpty()) {
+            return ResponseEntity.status(204).body(list);
         }
-        return ResponseEntity.status(404).build();
+        return ResponseEntity.status(200).body(list);
     }
 
     @GetMapping("all")
@@ -249,7 +251,7 @@ public class ControllerProduct {
     public ResponseEntity deleteProduct(@PathVariable Integer id) {
         if (productRepository.existsById(id)) {
             Product product = productRepository.findById(id).get();
-            product.setAvaliable(false);
+            product.setAvailable(false);
             productRepository.save(product);
             productCommander.pushCommand("delete", product);
             return ResponseEntity.status(200).build();
@@ -259,38 +261,45 @@ public class ControllerProduct {
 
     @GetMapping("/name/{name}")
     public ResponseEntity getProductsByName(@PathVariable String name) {
-        if (productRepository.count() > 0) {
-            return ResponseEntity.status(200).body(productService.getIsAvailable(productRepository.findByName(name)));
+
+        List<Product> productSearched = productService.getIsAvailable(productRepository.findByName(name));
+
+        if (productSearched.isEmpty()) {
+            return ResponseEntity.status(204).body(productSearched);
         }
-        return ResponseEntity.status(404).build();
+        return ResponseEntity.status(200).body(productSearched);
     }
 
     @GetMapping("/name/{name}/{idSeller}")
     public ResponseEntity getProductsByName(@PathVariable String name, @PathVariable Integer idSeller) {
-        List<Product> listSearch = new ArrayList<>();
-        if (productRepository.count() > 0) {
-            List<Product> list = productRepository.findByName(name);
-            for (Product p : list) {
-                if (p.getFkSeller() != null && p.getFkSeller().equals(idSeller)) {
-                    listSearch.add(p);
-                }
+
+        List<Product> listSearched = new ArrayList<>();
+        List<Product> productSearched = productService.getIsAvailable(productRepository.findByName(name));
+
+        for (Product p : productSearched) {
+            if (p.getFkSeller() != null && p.getFkSeller().equals(idSeller)) {
+                listSearched.add(p);
             }
-            return ResponseEntity.status(200).body(productService.getIsAvailable(listSearch));
         }
-        return ResponseEntity.status(404).build();
+
+        if (listSearched.isEmpty()) {
+            return ResponseEntity.status(204).body(listSearched);
+        }
+        return ResponseEntity.status(200).body(listSearched);
+
     }
 
     @PostMapping("exportCsv/{nameArq}/{fkSeller}")
     public ResponseEntity exportCsv(@PathVariable String nameArq, @PathVariable Integer fkSeller) {
-        if (productRepository.count() > 0) {
 
-            List<Product> list = productRepository.findByFkSeller(fkSeller);
-            ListaObj listaObj = new ListaObj(((int) productRepository.count()));
+        List<Product> list = productService.getIsAvailable(productRepository.findByFkSeller(fkSeller));
+        ListaObj listaObj = new ListaObj(((int) productRepository.count()));
+
+        if (!list.isEmpty()) {
 
             for (int i = 0; i < list.size(); i++) {
                 listaObj.adiciona(list.get(i));
             }
-
             ControllerCsv.gravaArquivoCsv(listaObj, nameArq);
             return ResponseEntity.status(200).build();
         }
@@ -299,17 +308,17 @@ public class ControllerProduct {
 
     @PostMapping("exportCsv/{nameArq}/{limit}/{fkSeller}")
     public ResponseEntity exportCsvLimit(@PathVariable String nameArq, @PathVariable Integer limit, @PathVariable Integer fkSeller) {
-        if (productRepository.count() > 0) {
 
-            List<Product> list = productRepository.findByFkSeller(fkSeller);
-            ListaObj listaObj = new ListaObj(limit);
+        List<Product> list = productService.getIsAvailable(productRepository.findByFkSeller(fkSeller));
+        ListaObj listaObj = new ListaObj(limit);
+
+        if (!list.isEmpty()) {
 
             for (int i = 0; i < list.size(); i++) {
                 if (!listaObj.adiciona(list.get(i))) {
                     break;
                 }
             }
-
             ControllerCsv.gravaArquivoCsv(listaObj, nameArq);
             return ResponseEntity.status(200).build();
         }
@@ -317,16 +326,16 @@ public class ControllerProduct {
     }
 
     @PostMapping("exportTxt/{fileName}/{fkSeller}")
-    public ResponseEntity exportTxt(@PathVariable String fileName, @PathVariable Integer fkSeller) {
-        if (productRepository.count() > 0) {
+    public ResponseEntity exportTxt(@PathVariable String fileName, @PathVariable Integer fkSeller) throws IOException {
 
-            List<Product> list = productRepository.findByFkSeller(fkSeller);
-            ListaObj listaObj = new ListaObj(((int) productRepository.count()));
+        List<Product> list = productService.getIsAvailable(productRepository.findByFkSeller(fkSeller));
+        ListaObj listaObj = new ListaObj(((int) productRepository.count()));
+
+        if (!list.isEmpty()) {
 
             for (int i = 0; i < list.size(); i++) {
                 listaObj.adiciona(list.get(i));
             }
-
             controllerTxt.recordFileTxt(listaObj, fileName);
             return ResponseEntity.status(200).build();
         }
@@ -338,7 +347,7 @@ public class ControllerProduct {
 
         if (!txt.isEmpty()) {
             Seller seller = sellerRepository.findByFkUser(idUser);
-            return ResponseEntity.status(200).body(controllerTxt.readDisplayFileTxt(seller, txt.getOriginalFilename()));
+            return ResponseEntity.status(200).body(controllerTxt.readDisplayFileTxt(seller, txt.getInputStream()));
         }
 
         return ResponseEntity.status(204).build();

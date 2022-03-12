@@ -2,10 +2,7 @@ package com.veganhouse.exports;
 
 import com.veganhouse.domain.Product;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Formatter;
 import java.util.FormatterClosedException;
 import java.util.NoSuchElementException;
@@ -19,8 +16,11 @@ public class ControllerCsv {
 
         nomeArq += ".csv";
 
+        File file = new File("export-products\\" + nomeArq);
+        file.getParentFile().mkdirs();
+
         try {
-            arq = new FileWriter(nomeArq, true);
+            arq = new FileWriter(file, true);
             saida = new Formatter(arq);
         }
         catch (IOException erro) {
@@ -32,13 +32,12 @@ public class ControllerCsv {
             for (int i = 0; i < lista.getTamanho(); i++) {
                 Product product = lista.getElemento(i);
                 // Separando cada campo por um ;
-                saida.format("%d;%s;%.2f;%d;%s;%s;%s;%d\n",
+                saida.format("%d;%s;%.2f;%d;%s;%s;%d\n",
                         product.getId(),
                         product.getName(),
                         product.getPrice(),
                         product.getInventory(),
                         product.getCategory(),
-                        product.getSubCategory(),
                         product.getDescription(),
                         product.getFkSeller());
             }
@@ -82,17 +81,16 @@ public class ControllerCsv {
 
         // Bloco try-catch para ler do arquivo
         try {
-            System.out.printf("%5s %10s %5s %5s %10s %10s %20s %5s\n", "ID", "NOME", "PREÇO", "ESTOQUE", "CATEGORIA", "SUBCATEGORIA", "DESCRIÇÃO", "ID USER");
+            System.out.printf("%5s %10s %5s %5s %10s %20s %5s\n", "ID", "NOME", "PREÇO", "ESTOQUE", "CATEGORIA", "DESCRIÇÃO", "ID USER");
             while (entrada.hasNext()) {
                 Integer id = entrada.nextInt();
                 String name = entrada.next();
                 Double price = entrada.nextDouble();
                 Integer inventory = entrada.nextInt();
                 String category = entrada.next();
-                String subCategory = entrada.next();
                 String description = entrada.next();
                 Integer idUser = entrada.nextInt();
-                System.out.printf("%05d %10s %5.2f %5d %10s %10s %20s %05d\n", id, name, price, inventory, category, subCategory, description, idUser);
+                System.out.printf("%05d %10s %5.2f %5d %10s %20s %05d\n", id, name, price, inventory, category, description, idUser);
             }
         }
         catch (NoSuchElementException erro) {

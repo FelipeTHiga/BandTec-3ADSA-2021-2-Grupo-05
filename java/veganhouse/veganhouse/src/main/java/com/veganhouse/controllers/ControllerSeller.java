@@ -54,6 +54,7 @@ public class ControllerSeller {
         }
     }
 
+
     @GetMapping("/{idUser}")
     public ResponseEntity getSeller(@PathVariable int idUser) {
         // Adicionar validação

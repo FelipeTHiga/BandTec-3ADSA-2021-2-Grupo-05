@@ -2,7 +2,7 @@ import { Title } from '../components/Title';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Button } from '../components/Button';
-import '../styles/paymentResponse.css';
+import '../styles/paymentResponse.scss';
 import { useParams } from "react-router";
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';

@@ -24,7 +24,7 @@ public class ProductService {
     public List<Product> getIsAvailable(List<Product> list) {
         List<Product> listAvailable = new ArrayList<>();
         for (Product p : list) {
-            if (p.getAvaliable() != null && p.getAvaliable().equals(true)) {
+            if (p.getAvailable() != null && p.getAvailable().equals(true)) {
                 listAvailable.add(p);
             }
         }

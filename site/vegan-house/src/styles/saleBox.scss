@@ -8,7 +8,7 @@
     margin-top: 30px;
     border: 1px solid #c4c4c4;
     border-radius: 5px;
-    overflow-y: auto;
+    overflow-y: scroll;
 
 
     .sale-box-container {
@@ -35,6 +35,19 @@
                 font-weight: 500;
                 color: #b3dc68;
             }
+            
+            .p-status-red {
+                color: red;
+            }
+    
+            .p-status-green {
+                color: #c9e891;
+            }
+    
+            .p-status-blue {
+                color: rgb(128, 128, 253);
+            }
+            
     
             .sale-desc {
                 width: 30%;
@@ -76,13 +89,30 @@
 }
 
 // Style sale-unit
-
 .sale-desc-order-unit {
     margin-top: 20px;
     width: 100%;
     display: flex;
     justify-content: space-around;
 
+}
+
+.sale-box::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+.sale-box::-webkit-scrollbar-thumb {
+    background: #ffe0de;
+    border: 0.4px solid #d1cdcd;
+    border-radius: 30px;
+}
+.sale-box::-webkit-scrollbar-thumb:hover {
+    background: #edbcb9;
+}
+.sale-box::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 30px;
+    box-shadow: inset 0px 0px 0px 0px #f0f0f0;
 }
 
 

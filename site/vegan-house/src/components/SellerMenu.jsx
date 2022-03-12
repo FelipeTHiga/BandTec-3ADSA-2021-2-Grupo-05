@@ -1,6 +1,6 @@
-import "../styles/accountMenu.css";
+import "../styles/accountMenu.scss";
 import { NavLink } from 'react-router-dom';
-import React from 'react';
+
 
 
 export function SellerMenu(props) {
@@ -23,9 +23,6 @@ export function SellerMenu(props) {
                                     </li>
                                     <li className="linkSeller">
                                         <NavLink to="/perfil/minhas-vendas" activeClassName='activeSeller'>Vendas</NavLink>
-                                    </li>
-                                    <li className="linkSeller" >
-                                        <NavLink to="#" /* activeClassName='activeSeller' */>Dados bancários</NavLink>
                                     </li>
 
                                 </ul>

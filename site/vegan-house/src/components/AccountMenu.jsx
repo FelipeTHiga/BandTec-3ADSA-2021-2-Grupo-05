@@ -1,6 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
-import React from 'react';
-import "../styles/accountMenu.css";
+import '../styles/accountMenu.scss';
 
 
 export function AccountMenu(props) {

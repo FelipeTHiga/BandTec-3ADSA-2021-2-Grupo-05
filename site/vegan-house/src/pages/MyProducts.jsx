@@ -7,7 +7,9 @@ import { SectionTitle } from '../components/SectionTitle';
 import { DragDropUpload } from '../components/DragDropUpload';
 import { UserGreeting } from '../components/UserGreeting';
 import { useState, useEffect } from 'react';
-
+import ModalChoice from '../components/ModalChoice';
+import ModalMessage from '../components/ModalMessage';
+import Loading from '../assets/images/loading.gif'
 import ProductTableRow from '../components/ProductTableRow';
 import loginService from '../services/login';
 import api from '../services/api';
@@ -16,7 +18,7 @@ import redo from '../assets/images/redo.png'
 import file from '../files/Documento-de-layout-importação.pdf';
 
 import '../styles/global.scss';
-import '../styles/reset.css';
+import '../styles/reset.scss';
 import '../styles/myProducts.scss';
 
 export function MyProducts() {
@@ -26,7 +28,6 @@ export function MyProducts() {
     const [id, setId] = useState(0);
     const [name, setName] = useState("");
     const [category, setCategory] = useState("");
-    const [subCategory, setSubCategory] = useState("");
     const [inventory, setInvetory] = useState("");
     const [price, setPrice] = useState(0.0);
     const [description, setDescription] = useState("");
@@ -34,30 +35,48 @@ export function MyProducts() {
     const [searchName, setSearchName] = useState("");
     const [acao, setAcao] = useState("Cadastrar produto");
     const [errorName, setErrorName] = useState("");
+    const [errorCategory, setErrorCategory] = useState("");
     const [errorPrice, setErrorPrice] = useState("");
     const [errorDescription, setErrorDescription] = useState("");
     const [errorInventory, setErrorInventory] = useState("");
     const [error, setError] = useState("");
     const [sucess, setSucess] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const [image_url1, setImageUrl1] = useState("");
     const [image_url2, setImageUrl2] = useState("");
     const [image_url3, setImageUrl3] = useState("");
 
+    const [isModalChoiceVisible, setIsModalChoiceVisible] = useState(false);
+    const [isModalMessageVisible, setIsModalMessageVisible] = useState(false);
+    const [modalIdProduct, setModalIdProduct] = useState();
+    const [modalMessage, setModalMessage] = useState("");
+    const [modalTitle, setModalTitle] = useState("");
+    const [defaultMessage, setDefaultMessage] = useState("");
+
     useEffect(() => {
 
         async function productsAll() {
             const res = await api.get(`products/all/${user.id}`);
-            setProducts(res.data);
+            if (res.status === 200) {
+                setProducts(res.data);
+                setDefaultMessage("");
+            } else if (res.status === 204) {
+                setProducts([]);
+                setDefaultMessage("Não há nenhum produto cadastrado.")
+            }
         }
 
         productsAll();
     }, [])
 
     function warmings(errors) {
-        
+
         if (errors.name) {
             setErrorName(errors.name)
+        }
+        if (errors.category) {
+            setErrorCategory(errors.category)
         }
         if (errors.price) {
             setErrorPrice(errors.price)
@@ -68,9 +87,7 @@ export function MyProducts() {
         if (errors.inventory) {
             setErrorInventory(errors.inventory)
         }
-      
-        
-
+        window.location.href = '#section-products-edit'
     }
 
     function pacthImage(idProduto) {
@@ -97,37 +114,42 @@ export function MyProducts() {
         e.preventDefault();
         setError("");
         setErrorName("");
+        setErrorCategory("");
         setErrorPrice("");
         setErrorDescription("");
         setErrorInventory("");
+
+        //setLoading(true);
         api.post(`/products`, {
             name: name,
             price: parseFloat(price),
             category: category,
-            subCategory: subCategory,
             description: description,
             inventory: parseInt(inventory),
             fkSeller: user.id
         })
-        .then((res) => {
-            if (res.status === 201) {
-                setSucess("O produto foi criado!");
-                getAllProducts();
-                window.location.href = '#section-products'
-                pacthImage(res.data.id);
-            }
-            window.location.href = '#section-my-products'
-        }).catch((err) => {
-            if (err.response) {
-                warmings(err.response.data);
-            }
-            setSucess("");
-        })
+            .then((res) => {
+                setLoading(false);
+                if (res.status === 201) {
+                    setSucess("O produto foi criado!");
+                    getAllProducts();
+                    window.location.href = '#section-my-products'
+                    pacthImage(res.data.id);
+                }
+            }).catch((err) => {
+                setLoading(false);
+                if (err.response) {
+                    warmings(err.response.data);
+                }
+                setSucess("");
+            })
     }
 
     function patch(e) {
         e.preventDefault();
+        setError("");
         setErrorName("");
+        setErrorCategory("");
         setErrorPrice("");
         setErrorDescription("");
         setErrorInventory("");
@@ -135,17 +157,16 @@ export function MyProducts() {
         api.patch(`/products/${id}`, {
             name: name,
             category: category,
-            subCategory: subCategory,
             inventory: inventory,
             price: parseFloat(price),
             description: description,
             fkSeller: fkSeller
         }).then((res) => {
             if (res.status === 200) {
+                window.location.href = '#section-my-products'
                 pacthImage(id);
                 setName("");
                 setCategory("");
-                setSubCategory("");
                 setInvetory("");
                 setPrice("");
                 setDescription("");
@@ -155,9 +176,6 @@ export function MyProducts() {
                 setAcao("Cadastrar produto");
                 setSucess("O produto foi atualizado!");
                 getAllProducts();
-                window.location.href = '#section-products'
-            } else {
-                
             }
         }).catch((err) => {
             if (err.response) {
@@ -170,15 +188,16 @@ export function MyProducts() {
     function edit(e) {
         e.preventDefault();
         let idProduct = e.target.id;
+        setLoading(true);
         api.get(`/products/${idProduct}`)
             .then((res) => {
+                setLoading(false);
                 if (res.status === 200) {
                     window.location.href = '#section-products-edit';
                     setAcao("Editar produto");
                     setId(res.data.id);
                     setName(res.data.name);
                     setCategory(res.data.category);
-                    setSubCategory(res.data.subCategory);
                     setInvetory(res.data.inventory);
                     setPrice(res.data.price);
                     setDescription(res.data.description);
@@ -189,7 +208,11 @@ export function MyProducts() {
                     getAllProducts();
                 }
             }).catch((err) => {
-                
+                setLoading(false);
+                if (err.response) {
+                    warmings(err.response.data);
+                }
+                setSucess("");
             })
     }
 
@@ -217,15 +240,23 @@ export function MyProducts() {
             })
     }
 
-    function remove(e) {
+    function removeModal(e) {
+        window.location.href = '#top';
         let productId = e.target.id;
+        setModalIdProduct(productId);
+        setIsModalChoiceVisible(true);
+    }
+
+    function remove() {
+        let productId = modalIdProduct;
         api.delete(`/products/${productId}`)
             .then((res) => {
                 if (res.status === 200) {
                     getAllProducts();
                     setSucess("O produto foi removido!");
+                    setIsModalChoiceVisible(false);
+                    window.location.reload();
                 }
-
             }).catch((err) => {
             })
     }
@@ -235,6 +266,10 @@ export function MyProducts() {
             .then((res) => {
                 if (res.status === 200) {
                     setProducts(res.data);
+                    setDefaultMessage("");
+                } else if (res.status === 204) {
+                    setProducts([]);
+                    setDefaultMessage("Não há nenhum produto cadastrado.")
                 }
             }).catch((err) => {
             })
@@ -247,7 +282,11 @@ export function MyProducts() {
                 .then((res) => {
                     if (res.status === 200) {
                         setProducts(res.data);
+                        setDefaultMessage("")
                         setSucess("");
+                    } else if (res.status === 204) {
+                        setProducts([]);
+                        setDefaultMessage(`Nenhum resultado encontrado para "${searchName}"`)
                     }
                     setSearchName("");
                 }).catch((err) => {
@@ -262,7 +301,6 @@ export function MyProducts() {
         setAcao("Cadastrar produtos");
         setName("")
         setCategory("")
-        setSubCategory("")
         setInvetory("")
         setPrice("")
         setDescription("")
@@ -275,14 +313,34 @@ export function MyProducts() {
 
     function getSearchCategory(e) {
         let category = e.target.value;
-        api.get(`/products/tag/${category}/${user.id}`)
-            .then((res) => {
-                if (res.status === 200) {
-                    setProducts(res.data)
-                    setSucess("");
-                }
-            }).catch((err) => {
-            })
+        if (category === "Todos") {
+            api.get(`/products/all/${user.id}`)
+                .then((res) => {
+                    if (res.status === 200) {
+                        setProducts(res.data)
+                        setSucess("");
+                        setDefaultMessage("");
+                    } else if (res.status === 204) {
+                        setProducts([])
+                        setDefaultMessage("Não há nenhum produto cadastrado.")
+                    }
+                }).catch((err) => {
+                })
+        } else {
+            api.get(`/products/tag/${category}/${user.id}`)
+                .then((res) => {
+                    if (res.status === 200) {
+                        setProducts(res.data)
+                        setSucess("");
+                        setDefaultMessage("");
+                    } else if (res.status === 204) {
+                        setProducts([]);
+                        setDefaultMessage("Sua busca não teve resultados.");
+                    }
+                }).catch((err) => {
+                })
+        }
+
     }
 
     function sendTxtFile() {
@@ -299,8 +357,10 @@ export function MyProducts() {
         })
             .then((res) => {
                 if (res.status === 200) {
-                    alert(res.data)
-
+                    setModalTitle("Importação de Arquivo")
+                    setModalMessage(res.data);
+                    window.location.href = '#top';
+                    setIsModalMessageVisible(true)
                 }
             }).catch((err) => {
             })
@@ -310,10 +370,14 @@ export function MyProducts() {
         api.post(`products/exportTxt/${fileName}/${idSeller}`)
             .then((res) => {
                 if (res.status === 200) {
-                    alert("Arquivo txt exportado com sucesso!")
+                    setModalTitle("Exportação de arquivo");
+                    setModalMessage("Arquivo txt exportado com sucesso!");
                 } else if (res.status === 204) {
-                    alert("Não foi possível exportar o arquivo txt!\nVendedor sem produtos cadastrados.")
+                    setModalTitle("Exportação de arquivo");
+                    setModalMessage("Não foi possível exportar o arquivo txt!\nVendedor sem produtos cadastrados.");
                 }
+                window.location.href = '#top';
+                setIsModalMessageVisible(true)
             }).catch((err) => {
             })
 
@@ -327,10 +391,14 @@ export function MyProducts() {
         api.post(`products/exportCsv/${fileName}/${idSeller}`)
             .then((res) => {
                 if (res.status === 200) {
-                    alert("Arquivo csv exportado com sucesso!")
+                    setModalTitle("Exportação de arquivo");
+                    setModalMessage("Arquivo csv exportado com sucesso!");
                 } else if (res.status === 204) {
-                    alert("Não foi possível exportar o arquivo csv!\nVendedor sem produtos cadastrados.")
+                    setModalTitle("Exportação de arquivo");
+                    setModalMessage("Não foi possível exportar o arquivo csv!\nVendedor sem produtos cadastrados.");
                 }
+                window.location.href = '#top';
+                setIsModalMessageVisible(true)
             }).catch((err) => {
             })
 
@@ -342,7 +410,7 @@ export function MyProducts() {
 
     return (
         <>
-            <Navbar />
+            <Navbar id="top" />
             <div className="page-container">
                 <UserGreeting username={user.nameUser} isSeller={user.isSeller} />
             </div>
@@ -376,7 +444,7 @@ export function MyProducts() {
                                     <div className="product-option" >
                                         <label htmlFor="">Ordenar por</label>
                                         <select name="" id="state" onChange={getSearchCategory}>
-                                            <option value="">-- Categoria -- </option>
+                                            <option value="Todos">-- Categoria -- </option>
                                             <option value="Alimentos">Alimentos</option>
                                             <option value="Vestimenta">Vestimenta</option>
                                             <option value="Acessórios">Acessórios</option>
@@ -424,13 +492,13 @@ export function MyProducts() {
                             <div className="products-table-header" id="section-products">
                                 <label htmlFor="">Nome do produto</label>
                                 <label htmlFor="">Categoria</label>
-                                <label htmlFor="">Subcategoria</label>
                                 <label htmlFor="">Qtd. estoque</label>
                             </div>
                             <div className="products-table-body">
                                 {products.map(product => (
-                                    <ProductTableRow id={product.id} name={product.name} category={product.category} subCategory={product.subCategory} inventory={product.inventory} edit={edit} remove={remove} pro={product} />
+                                    <ProductTableRow id={product.id} name={product.name} category={product.category} inventory={product.inventory} edit={edit} removeModal={removeModal} pro={product} />
                                 ))}
+                                <div className='defaultMessage card-products'>{defaultMessage}</div>
                             </div>
                         </div>
 
@@ -445,7 +513,7 @@ export function MyProducts() {
                                 </div>
 
                                 <div className="line-up width-100">
-                                    <div className="product-edit-camp margin-right-50">
+                                    <div className="product-edit-camp">
                                         <label htmlFor="">Categoria</label>
                                         <select name="" onChange={e => setCategory(e.target.value)} value={category} id="category">
                                             <option value="">Selecione uma categoria</option>
@@ -456,31 +524,20 @@ export function MyProducts() {
                                             <option value="Vestimenta">Vestimenta</option>
                                             <i class="fas fa-arrow-down"></i>
                                         </select>
-                                    </div>
-                                    <div className="product-edit-camp">
-                                        <label htmlFor="">Subcategoria</label>
-                                        <select name="" onChange={e => setSubCategory(e.target.value)} value={subCategory} id="sub_category">
-                                            <option value="">Selecione uma Subcategoria</option>
-                                            <option value="Acessórios">Acessórios</option>
-                                            <option value="Alimentos">Alimentos</option>
-                                            <option value="Cosméticos">Cosméticos</option>
-                                            <option value="Saúde">Saúde</option>
-                                            <option value="Vestimenta">Vestimenta</option>
-                                            <i class="fas fa-arrow-down"></i>
-                                        </select>
+                                        {errorCategory && <p className="error">{errorCategory}</p>}
                                     </div>
                                 </div>
 
                                 <div className="line-up width-100">
                                     <div className="product-edit-camp margin-right-50">
                                         <label htmlFor="">Preço</label>
-                                        <input id="price" onChange={e => setPrice(e.target.value)} value={price} className="input" type="text" placeholder="R$" />
+                                        <input id="price" onChange={e => setPrice(e.target.value.replace(/[^0-9,]/g, ''))} value={price} className="input" type="text" placeholder="R$" />
                                         {errorPrice && <p className="error">{errorPrice}</p>}
                                     </div>
 
                                     <div className="product-edit-camp">
                                         <label htmlFor="">Qtd. estoque</label>
-                                        <input id="inventory" onChange={e => setInvetory(e.target.value.replace(/[^0-9]/g,''))} value={inventory} className="input" type="text" placeholder="100" />
+                                        <input id="inventory" onChange={e => setInvetory(e.target.value.replace(/[^0-9]/g, ''))} value={inventory} className="input" type="text" placeholder="100" />
                                         {errorInventory && <p className="error">{errorInventory}</p>}
                                     </div>
                                 </div>
@@ -500,7 +557,7 @@ export function MyProducts() {
                                 <div className="align-column margin-top-20 margin-bottom-25">
                                     <button id="create-btn" className="create-product-btn" onClick={createProduct}>Cadastrar</button>
                                     <button id="edit-btn" className="edit-product-btn" onClick={patch}>Salvar</button>
-
+                                    {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
                                 </div>
                                 {error && <p>{error}</p>}
                             </div>
@@ -512,6 +569,29 @@ export function MyProducts() {
             <div className="margin-top-25">
                 <Footer />
             </div>
+
+            {
+                isModalChoiceVisible ?
+                    <ModalChoice
+                        onClose={() => setIsModalChoiceVisible(false)}
+                        height={document.body.scrollHeight}
+                        title="Confirmação"
+                        message="Você tem certeza que deseja excluir esse produto?"
+                        remove={remove}
+                    />
+                    : null
+            }
+            {
+                isModalMessageVisible ?
+                    <ModalMessage
+                        onClose={() => setIsModalMessageVisible(false)}
+                        height={document.body.scrollHeight}
+                        title={modalTitle}
+                        message={modalMessage}
+                        function={() => setIsModalMessageVisible(false)}
+                    />
+                    : null
+            }
         </>
 
     );

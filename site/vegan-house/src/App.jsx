@@ -1,48 +1,43 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Home } from './pages/Home';
-import { Login } from './pages/Login';
-import { MyProducts } from "./pages/MyProducts";
 import { Register } from "./pages/Register";
-import { RegisterSeller } from "./pages/RegisterSeller";
-import { ProductPage } from "./pages/ProductPage";
-import { ShoppingCart } from "./pages/ShoppingCart";
+import { Login } from './pages/Login';
 import { UserProfile } from "./pages/UserProfile";
 import { UserAdress } from "./pages/UserAdress";
-import { Catalog } from "./pages/Catalog";
-import  { Checkout } from "./pages/Checkout";
-import { SellerProfile } from "./pages/SellerProfile";
 import { MyOrders } from "./pages/MyOrders";
+import { RegisterSeller } from "./pages/RegisterSeller";
+import { SellerProfile } from "./pages/SellerProfile";
+import { MyProducts } from "./pages/MyProducts";
 import { MySales } from "./pages/MySales";
+import { Catalog } from "./pages/Catalog";
+import { ProductPage } from "./pages/ProductPage";
+import { ShoppingCart } from "./pages/ShoppingCart";
+import { Checkout } from "./pages/Checkout";
 import { PaymentResponse } from "./pages/PaymentResponse";
-
-
-
-// import { NewRoom } from "./pages/NewRoom";
+import { PageNotFound } from './pages/PageNotFound';
 
 function App() {
+
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact={true} component={Home} />
-        <Route path="/cadastro" component={Register} />
-        <Route path="/login" component={Login} />
-        <Route path="/perfil/cadastro-seller" component={RegisterSeller} />
-        <Route path="/perfil/dados-pessoais" component={UserProfile} />
-        <Route path="/perfil/endereco" component={UserAdress} />
-        <Route path="/perfil/seller" component={SellerProfile} />
-        <Route path="/perfil/meus-pedidos" component={MyOrders} />
-        <Route path="/perfil/meus-produtos" component={MyProducts} />
-        <Route path="/todos-os-resultados/:categoryUrl" exact={true} component={Catalog} />
-        <Route path="/todos-os-resultados/:category/:id/:fkSeller" exact={true} component={ProductPage} />
-        <Route path="/payment-response/:id/:status/:desc" exact={true} component={PaymentResponse} />
-        {/* <Route path="/produto" component={ProductPage} /> */}
-        <Route path="/carrinho" component={ShoppingCart} />
-        <Route path="/checkout" component={Checkout} />
-        <Route path="/todos-os-resultados/" exact={true} component={Catalog}/>
-        {/* <Route path="/todos-os-resultados/..." component={ProductPage} />           */}
-        <Route path="/perfil/minhas-vendas" component={MySales} />
-        {/* na url colocar um parametro :id*/}
-        {/* /todos os resultados/{props.categoria}/{props.subcategoria}/{props.nomeDoProduto} */}
+        <Route path="/" exact component={Home} />
+        <Route path="/cadastro" exact component={Register} />
+        <Route path="/login" exact component={Login} />
+        <Route path="/perfil/dados-pessoais" exact component={UserProfile} />
+        <Route path="/perfil/endereco" exact component={UserAdress} />
+        <Route path="/perfil/meus-pedidos" exact component={MyOrders} />
+        <Route path="/perfil/cadastro-seller" exact component={RegisterSeller} />
+        <Route path="/perfil/seller" exact component={SellerProfile} />
+        <Route path="/perfil/meus-produtos" exact component={MyProducts} />
+        <Route path="/perfil/minhas-vendas" exact component={MySales} />
+        <Route path="/todos-os-resultados/" exact component={Catalog}/>
+        <Route path="/todos-os-resultados/:categoryUrl" exact component={Catalog} />
+        <Route path="/todos-os-resultados/:category/:id/:fkSeller" exact component={ProductPage} />
+        <Route path="/carrinho" exact component={ShoppingCart} />
+        <Route path="/checkout" exact component={Checkout} />
+        <Route path="/payment-response/:id/:status/:desc" exact component={PaymentResponse} />
+        <Route path="*" exact component={PageNotFound} />
       </Switch>
     </BrowserRouter>
   );
