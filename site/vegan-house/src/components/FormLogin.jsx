@@ -31,22 +31,22 @@ export function FormLogin() {
                 email: email,
                 passwordUser: password 
             })
-                .then((res) => {
-                    if (res.status === 200) {
-                        sessionStorage.setItem("sucess", "");
-                        loginService.setSession(res.data)
-                        setSucess(null)
-                        history.push("");
-                    } else {
-                        setErro("A senha ou o email estão incorretos!");
-                        sessionStorage.setItem("sucess", "");
-                        setSucess(null);
-                    }
-                }).catch((res) => {
+            .then((res) => {
+                if (res.status === 200) {
                     sessionStorage.setItem("sucess", "");
-                    setErro("Ocorreu um erro ao tentar realizar login!");
+                    loginService.setSession(res.data)
+                    setSucess(null)
+                    history.push("");
+                } else {
+                    setErro("A senha ou o email estão incorretos!");
+                    sessionStorage.setItem("sucess", "");
                     setSucess(null);
-                })
+                }
+            }).catch((res) => {
+                sessionStorage.setItem("sucess", "");
+                setErro("Ocorreu um erro ao tentar realizar login!");
+                setSucess(null);
+            })
         }
     }
         return (

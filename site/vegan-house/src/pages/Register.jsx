@@ -49,13 +49,13 @@ export function Register() {
             setErrorCpf("Erro no cadastro preencha todos os campos obrigatorios (*)")
         }
 
-        if ((passwordUser != passwordUserConfirm)) {
-            setErrorPasswordConfirm("As senhas informadas não coincidem!")
-        } else if (passwordUser.length === 0) {
-            setErrorPassword("Erro no cadastro preencha todos os campos obrigatorios (*)")
-        } else if (passwordUser.length < 6 || passwordUser.length > 20) {
-            setErrorPassword("A senha deve ter entre 6 e 20 caracteres")
-        }
+        // if ((passwordUser != passwordUserConfirm)) {
+        //     setErrorPasswordConfirm("As senhas informadas não coincidem!")
+        // } else if (passwordUser.length === 0) {
+        //     setErrorPassword("Erro no cadastro preencha todos os campos obrigatorios (*)")
+        // } else if (passwordUser.length < 6 || passwordUser.length > 20) {
+        //     setErrorPassword("A senha deve ter entre 6 e 20 caracteres")
+        // }
 
 
     }
@@ -69,32 +69,41 @@ export function Register() {
         setErrorEmail("");
         setErrorPassword("");
         setErrorPasswordConfirm("");
-
-        api.post(`/users`, {
-            nameUser: nameUser,
-            surName: surName,
-            cpf: cpf.replace(/\D/g, ''),
-            email: email,
-            passwordUser: passwordUser
-        })
-            .then((res) => {
-                if (res.status === 201) {
-
-                    sessionStorage.setItem("sucess", "Seu cadastro foi realizado com sucesso!")
-                    history.push(`/login`);
-                } else {
-                    warmings(res.data);
-                }
-                console.log(res.status);
-            }).catch((err) => {
-                console.log(err.response)
-                var errC = err.response.data;
-                if (errC != undefined) {
-                    warmings(err.response.data);
-
-                }
-
+        
+        if (passwordUser.length === 0) {
+            setErrorPassword("Erro no cadastro preencha todos os campos obrigatorios (*)")
+        } else if (passwordUser.length < 6 || passwordUser.length > 20) {
+            setErrorPassword("A senha deve ter entre 6 e 20 caracteres")
+        } else if ((passwordUser != passwordUserConfirm) ) {
+            setErrorPasswordConfirm("As senhas informadas não coincidem!")
+        } else {
+            api.post(`/users`, {
+                nameUser: nameUser,
+                surName: surName,
+                cpf: cpf.replace(/\D/g, ''),
+                email: email,
+                passwordUser: passwordUser
             })
+                .then((res) => {
+                    if (res.status === 201) {
+    
+                        sessionStorage.setItem("sucess", "Seu cadastro foi realizado com sucesso!")
+                        history.push(`/login`);
+                    } else {
+                        warmings(res.data);
+                    }
+                    console.log(res.status);
+                }).catch((err) => {
+                    console.log(err.response)
+                    var errC = err.response.data;
+                    if (errC != undefined) {
+                        warmings(err.response.data);
+    
+                    }
+    
+                })
+        }
+        
 
 
     }

@@ -27,6 +27,10 @@ public class CartItem {
         this.subTotal = product.getPrice() * quantity;
     }
 
+    public Integer getFkSellerCartItem() {
+        return product.getFkSeller();
+    }
+
     public int getIdCartItem() {
         return idCartItem;
     }
