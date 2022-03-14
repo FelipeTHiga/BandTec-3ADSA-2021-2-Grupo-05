@@ -5,9 +5,11 @@ import com.veganhouse.checkout.domain.OrderVh;
 import com.veganhouse.checkout.dto.OrderDTO;
 import com.veganhouse.checkout.repository.IOrderRepository;
 import com.veganhouse.domain.Adress;
+import com.veganhouse.domain.Product;
 import com.veganhouse.domain.User;
 import com.veganhouse.repository.IAdressRepository;
 import com.veganhouse.repository.IUserRepository;
+import com.veganhouse.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,8 @@ public class OrderService {
     IUserRepository userRepository;
     @Autowired
     IAdressRepository adressRepository;
+    @Autowired
+    private ProductService productService;
 
 
     //Atulizar status do pedido
@@ -37,25 +41,34 @@ public class OrderService {
     }
 
     // Criar pedidos
-    public OrderVh orderBuilder(User user) {
+    public OrderVh orderBuilder(User user, Integer fkSeller) {
         OrderVh orderVh = new OrderVh();
-        List<CartItem> cartItemList = cartManager.getAllUserCartItemsWithoutOrder(user.getId());
+        List<CartItem> cartItemListBySeller = cartManager.getAllUserCartItemsWithoutOrder(user.getId());
+        List<Product> productList = cartManager.getSellersProductsFromCart(cartItemListBySeller,fkSeller);
         orderVh.setUser(user);
         orderVh.setAdress(user.getAdress());
         orderVh.setOrderDate(LocalDate.now());
         orderVh.setOrderStatus("Pendente");
-        orderVh.setTotal(cartItemList.stream().mapToDouble(CartItem::getSubTotal).sum());
+        orderVh.setTotal(cartItemListBySeller.stream().mapToDouble(CartItem::getSubTotal).sum());
         return orderVh;
     }
 
     public void createOrder(User user) {
-        orderRepository.save(orderBuilder(user));
-        int lastOrderId = orderRepository.findAll().stream().skip(orderRepository.count()-1).findFirst().get().getIdOrder();
+        List<CartItem> cartItemList = cartManager.getAllUserCartItemsWithoutOrder(user.getId());
 
-        for (CartItem c : cartManager.getAllUserCartItemsWithoutOrder(user.getId())){
-                c.setFkOrder(lastOrderId);
-                cartManager.updateOrderId(c);
+        // criar um order diferente para cada seller
+        for(Integer i : getSellersId(cartItemList)){
+            orderRepository.save(orderBuilder(user, i));
+            int lastOrderId = orderRepository.findAll().stream().skip(orderRepository.count()-1).findFirst().get().getIdOrder();
+
+            for (CartItem c : cartManager.getAllUserCartItemsWithoutOrder(user.getId())){
+                if (c.getFkSellerCartItem() == i) {
+                    c.setFkOrder(lastOrderId);
+                    cartManager.updateOrderId(c);
+                }
+            }
         }
+
     }
 
     // Selecionar pedidos de um usuário
@@ -68,12 +81,56 @@ public class OrderService {
 //            if(order.getUser().getId()==userId)
 //                userOrders.add(order);
 //        }
+
         for(OrderVh o : orderVhList.stream()
                 .filter(orderVh -> orderVh.getUser().getId() == userId)
                 .collect(Collectors.toList())){
             userOrderDTO.add(mapOrderDTO(o));
         }
         return userOrderDTO;
+    }
+
+    // Mapeia os pedidos que estão marcados como pendentes
+    public List<OrderDTO> getOrdersPending(int idUser){
+        List<OrderDTO> mappedOrders = new ArrayList<>();
+        List<OrderDTO> userOrderDTO = getUserOrders(idUser);
+
+        for (OrderDTO o : userOrderDTO) {
+            if (o.getOrderStatus().equals("Pendente")) {
+                mappedOrders.add(o);
+            }
+        }
+
+        return mappedOrders;
+    }
+
+    // Agrupa os order itens dos orders que estão marcados como pendente
+    public List<CartItem> getOrderItensByUser(int idUser){
+        List<OrderDTO> ordersPending = getOrdersPending(idUser);
+        List<CartItem> cartItemList = new ArrayList<>();
+
+        // Percorre os orders e o array de cartItens de cada order
+        for (OrderDTO o : ordersPending) {
+            for (int i = 0; i < o.getOrderItems().size(); i++) {
+                cartItemList.add(o.getOrderItems().get(i));
+            }
+        }
+
+        return cartItemList;
+    }
+
+    // Atualiza o estoque dos produtos
+    public void updateOrderItensByUser(int idUser) {
+        List<CartItem> cartItemList = getOrderItensByUser(idUser);
+        for (CartItem c : cartItemList) {
+            productService.updateProduct(c.getProduct(), c.getQuantity());
+        }
+    }
+
+    public void updateOrderItensByUser(List<CartItem> cartItemList) {
+        for (CartItem c : cartItemList) {
+            productService.updateProduct(c.getProduct(), c.getQuantity());
+        }
     }
 
 
@@ -126,6 +183,21 @@ public class OrderService {
        orderDTO.setTotal(orderVh.getTotal());
 
         return orderDTO;
+    }
+
+    public List<Integer> getSellersId(List<CartItem> cartItemList){
+        List<Integer> sellersList = new ArrayList();
+
+        for(CartItem c : cartItemList){
+            if(!sellersList.contains(c.getProduct().getFkSeller()))
+                sellersList.add(c.getProduct().getFkSeller());
+        }
+
+        return sellersList;
+    }
+
+    public void deleteOrderByUser(Integer id) {
+        orderRepository.deleteByOrderStatusAndUserId("Pendente", id);
     }
 
 }

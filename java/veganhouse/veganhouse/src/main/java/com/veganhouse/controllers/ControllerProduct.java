@@ -72,18 +72,7 @@ public class ControllerProduct {
 
     @PutMapping("{id}")
     public ResponseEntity putProduct(@PathVariable Integer id, @RequestBody @Valid Product product) {
-
-        if (productRepository.existsById(id)) {
-            if (restockNotificationRepository.existsByFkProduct(id)
-                    && product.getInventory() > 0
-                    && productRepository.getById(id).getInventory() == 0)
-                eventManagerRestock.notify(id);
-
-            product.setId(id);
-            productRepository.save(product);
-            return ResponseEntity.status(200).build();
-        }
-        return ResponseEntity.status(404).build();
+        return productService.updateProduct(id, product) ? ResponseEntity.ok().body(product) : ResponseEntity.status(400).build();
     }
 
     @PatchMapping("{id}")

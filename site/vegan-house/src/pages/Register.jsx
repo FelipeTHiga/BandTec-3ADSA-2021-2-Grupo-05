@@ -49,13 +49,13 @@ export function Register() {
             setErrorCpf("Erro no cadastro preencha todos os campos obrigatorios (*)")
         }
 
-        if ((passwordUser != passwordUserConfirm)) {
-            setErrorPasswordConfirm("As senhas informadas não coincidem!")
-        } else if (passwordUser.length === 0) {
-            setErrorPassword("Erro no cadastro preencha todos os campos obrigatorios (*)")
-        } else if (passwordUser.length < 6 || passwordUser.length > 20) {
-            setErrorPassword("A senha deve ter entre 6 e 20 caracteres")
-        }
+        // if ((passwordUser != passwordUserConfirm)) {
+        //     setErrorPasswordConfirm("As senhas informadas não coincidem!")
+        // } else if (passwordUser.length === 0) {
+        //     setErrorPassword("Erro no cadastro preencha todos os campos obrigatorios (*)")
+        // } else if (passwordUser.length < 6 || passwordUser.length > 20) {
+        //     setErrorPassword("A senha deve ter entre 6 e 20 caracteres")
+        // }
 
 
     }
@@ -71,6 +71,13 @@ export function Register() {
         setErrorPassword("");
         setErrorPasswordConfirm("");
 
+		if (passwordUser.length === 0) {
+            setErrorPassword("Erro no cadastro preencha todos os campos obrigatorios (*)")
+        } else if (passwordUser.length < 6 || passwordUser.length > 20) {
+            setErrorPassword("A senha deve ter entre 6 e 20 caracteres")
+        } else if ((passwordUser != passwordUserConfirm) ) {
+            setErrorPasswordConfirm("As senhas informadas não coincidem!")
+        } else {
         setLoading(true);
         api.post(`/users`, {
             nameUser: nameUser,
@@ -98,10 +105,13 @@ export function Register() {
 
                 }
 
-            })
+            })}
+                
+        }
+        
 
 
-    }
+    
 
     return (
         <>

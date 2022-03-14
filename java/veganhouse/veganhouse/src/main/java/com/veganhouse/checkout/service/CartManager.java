@@ -2,10 +2,12 @@ package com.veganhouse.checkout.service;
 
 import com.veganhouse.checkout.domain.CartItem;
 import com.veganhouse.checkout.repository.ICartItemRepository;
+import com.veganhouse.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PatchMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -83,5 +85,16 @@ public class CartManager {
             success = true;
         }
         return success;
+    }
+
+    public List<Product> getSellersProductsFromCart(List<CartItem> cartItemList, Integer fkSeller){
+        List<Product> productList = new ArrayList();
+
+        for(CartItem c : cartItemList){
+            if(c.getProduct().getFkSeller().equals(fkSeller))
+                productList.add(c.getProduct());
+        }
+
+        return productList;
     }
 }
