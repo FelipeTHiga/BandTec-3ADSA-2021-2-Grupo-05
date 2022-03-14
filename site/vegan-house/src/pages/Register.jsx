@@ -4,6 +4,9 @@ import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 import Loading from '../assets/images/loading.gif'
 import InputMask from 'react-input-mask';
 import api from '../services/api';
@@ -12,6 +15,30 @@ import '../styles/register.scss';
 import '../styles/global.scss';
 
 export function Register() {
+
+    function showPassword() {
+        var typeInput = document.getElementById("password");
+
+        if (typeInput.type === "password") {
+            typeInput.type = "text"
+            setIcon(faEyeSlash)
+        } else {
+            typeInput.type = "password"
+            setIcon(faEye)
+        }
+    }
+    function showPasswordConfirm() {
+        var typeInputConfirm = document.getElementById("password-confirm");
+
+        if (typeInputConfirm.type === "password") {
+            typeInputConfirm.type = "text"
+            setIcon2(faEyeSlash)
+        } else {
+            typeInputConfirm.type = "password"
+            setIcon2(faEye)
+        }
+    }
+
     const [nameUser, setNameUser] = useState("");
     const [surName, setSurName] = useState("");
     const [cpf, setCpf] = useState("");
@@ -27,6 +54,8 @@ export function Register() {
     const [errorPassword, setErrorPassword] = useState("");
     const history = useHistory();
     const [loading, setLoading] = useState(false);
+    const [icon, setIcon] = useState(faEye)
+    const [icon2, setIcon2] = useState(faEye)
 
     function warmings(errors) {
 
@@ -45,7 +74,7 @@ export function Register() {
         if (errors.email) {
             setErrorEmail(errors.email)
         }
-        if(cpf.length === 0) {
+        if (cpf.length === 0) {
             setErrorCpf("Erro no cadastro preencha todos os campos obrigatorios (*)")
         }
 
@@ -162,6 +191,10 @@ export function Register() {
                                 <div className="password-content">
                                     <i className="fas fa-lock"></i>
                                     <input id="password" onChange={e => setPasswordUser(e.target.value)} type="password" />
+                                    <button id="btn-show-password" type="button" onClick={showPassword}>
+                                        <FontAwesomeIcon className="passwordVisible" icon={icon} />
+                                    </button>
+
                                     <p>*</p>
                                 </div>
                                 <label className="instructions">Use de 6 a 20 caracteres</label>
@@ -172,13 +205,16 @@ export function Register() {
                                 <label>Confirme a senha</label>
                                 <div className="password-content">
                                     <i className="fas fa-lock"></i>
-                                    <input onChange={e => setPasswordUserConfirm(e.target.value)} type="password" />
+                                    <input id="password-confirm" onChange={e => setPasswordUserConfirm(e.target.value)} type="password" />
+                                    <button id="btn-show-password" type="button" onClick={showPasswordConfirm}>
+                                        <FontAwesomeIcon className="passwordVisible" icon={icon2} />
+                                    </button>
                                     <p>*</p>
                                 </div>
                                 {errorPasswordConfirm && <p className="error">{errorPasswordConfirm}</p>}
                             </div>
 
-                            <button type="submit" >Enviar</button>
+                            <button className="btn-submit-register" type="submit" >Enviar</button>
                             {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
 
                         </form>
