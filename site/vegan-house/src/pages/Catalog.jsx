@@ -3,7 +3,7 @@ import { Footer } from '../components/Footer';
 import { Submenu } from '../components/Submenu';
 import { ProductCard } from '../components/ProductCard';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams, useHistory } from 'react-router';
 
 import api from '../services/api';
 
@@ -13,6 +13,8 @@ import '../styles/global.scss';
 export function Catalog() {
 
     let { categoryUrl } = useParams();
+    const history = useHistory();
+
     const [products, setProducts] = useState([]);
     const [filter, setFilter] = useState("lowest-price");
     const [category, setCategory] = useState(categoryUrl);
@@ -25,15 +27,18 @@ export function Catalog() {
     const [defaultMessage, setDefaultMessage] = useState("");
     const [defaultMessageAll, setDefaultMessageAll] = useState("");
 
-    var isCategoryAll = category == "Todos" ? "" : category;
-
+    var isCategoryAll = category === "Todos" ? "" : category;
 
     useEffect(() => {
 
         function productAll() {
-            if (categoryUrl == 'name') {
-                var name = sessionStorage.getItem("nameProd");
+            var name = sessionStorage.getItem("nameProd");
+            if (categoryUrl === name) {
                 categoryUrl = "";
+                setCategory(name);
+                if (document.querySelector('.iten-active') !== null) {
+                    document.querySelector('.iten-active').classList.remove('iten-active');
+                }
                 api.get(`/products/name/${name}`)
                     .then((res) => {
                         if (res.status === 200) {
@@ -52,6 +57,14 @@ export function Catalog() {
                     url: `/products/filter/lowest-price/${categoryUrl}`,
                 })
                     .then((res) => {
+                        if (document.querySelector('.iten-active') !== null) {
+                            document.querySelector('.iten-active').classList.remove('iten-active');
+                        }
+                        //document.getElementById(`${categoryUrl}`).className = "iten-active";
+                        var category = `${categoryUrl}`
+                        var query = '.teste#' + category
+                        document.querySelector(query).className = "iten-active";
+
                         if (res.status === 200) {
                             setProducts(res.data);
                             setDefaultMessage("");
@@ -62,7 +75,7 @@ export function Catalog() {
                     })
             }
         }
-        
+
         async function countCategory() {
             const res = await api.get("/products/countCategory");
             await setCategoryAll(res.data)
@@ -96,6 +109,8 @@ export function Catalog() {
                 case "Vestimenta":
                     setCountClothing(data[i][0]);
                     break;
+                default:
+                    break;
             }
         }
     }
@@ -104,6 +119,7 @@ export function Catalog() {
 
         e.preventDefault();
         setCategory(e.target.id);
+        history.push(`/todos-os-resultados/${e.target.id}`);
 
         api.get(`/products/tag/${e.target.id}`)
             .then((res) => {
@@ -148,7 +164,7 @@ export function Catalog() {
 
     return (
         <>
-            <Navbar isCatalog={true} setProducts={setProducts}/>
+            <Navbar isCatalog={true} setProducts={setProducts} />
             <Submenu />
             <section className="container-search-result">
                 <div className="title-catalog">
@@ -163,20 +179,20 @@ export function Catalog() {
                         <div className="categories">
                             <h3 className="category-title">Categorias</h3>
                             <ul className="category-list">
-                                <li id="Todos" className="iten-active"
+                                <li id="Todos" className="iten-active teste"
                                     onClick={getProductByCategory}>Todos ({countAll})</li>
-                                <li id="Acessórios"
+                                <li id="Acessórios" className="teste"
                                     onClick={getProductByCategory}>Acessórios ({countAcessories})</li>
-                                <li id="Alimentos"
+                                <li id="Alimentos" className="teste"
                                     onClick={getProductByCategory}>Alimentos
                                     ({countFood})</li>
-                                <li id="Cosméticos"
+                                <li id="Cosméticos" className="teste"
                                     onClick={getProductByCategory}>Cosméticos
                                     ({countCosmetics})</li>
-                                <li id="Saúde"
+                                <li id="Saúde" className="teste"
                                     onClick={getProductByCategory}>Saúde
                                     ({countHealth})</li>
-                                <li id="Vestimenta"
+                                <li id="Vestimenta" className="teste"
                                     onClick={getProductByCategory}>Vestimenta
                                     ({countClothing})</li>
                             </ul>

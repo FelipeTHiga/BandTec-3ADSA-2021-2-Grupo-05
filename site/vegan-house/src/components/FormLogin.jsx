@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 import api from "../services/api";
 import loginService from "../services/login";
+import { Link } from 'react-router-dom';
 import Loading from '../assets/images/loading.gif'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -9,16 +10,17 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 export function FormLogin() {
 
     function showPassword() {
-       var typeInput = document.getElementById("passwordLogin");
-  
-        if(typeInput.type === "password") {
+        var typeInput = document.getElementById("passwordLogin");
+
+        if (typeInput.type === "password") {
             typeInput.type = "text"
             setIcon(faEyeSlash)
         } else {
             typeInput.type = "password"
-            setIcon(faEye)         
+            setIcon(faEye)
         }
     }
+
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -65,12 +67,12 @@ export function FormLogin() {
                 }).catch((res) => {
                     setLoading(false);
                     sessionStorage.setItem("sucess", "");
-                    if (res.status != 200) {
+                    if (res.status !== 200) {
                         setErro("A senha ou o email estão incorretos!");
                     }
                     setSucess(null);
                 })
-            
+
         }
     }
     return (
@@ -100,11 +102,14 @@ export function FormLogin() {
                             onChange={e => setPassword(e.target.value)}
                             id="passwordLogin"
                         />
-                        
+
                         <button id="btn-show-password" type="button" onClick={showPassword}>
                             <FontAwesomeIcon className="passwordVisible" icon={icon} />
-                            </button>
-
+                        </button>
+                    </div>
+                    <div>
+                        <span>Ainda não tem uma conta? </span>
+                        <Link to="/cadastro"><span className="linkToRegister">Cadastre-se.</span></Link>
                     </div>
                     <a href="">Esqueceu a senha?</a>
                 </div>

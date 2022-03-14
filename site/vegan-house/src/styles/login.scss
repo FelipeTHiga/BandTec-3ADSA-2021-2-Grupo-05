@@ -1,7 +1,7 @@
 .login-section {
     display: flex;
     justify-content: center;
-    background: #F9F9F9;
+    background: #f9f9f9;
     height: 90vh;
     width: 100%;
 }
@@ -34,13 +34,13 @@
         right: 13px;
     }
     h2 {
-        color: #604D4D;
-        font-family: 'Roboto', sans-serif;
+        color: #604d4d;
+        font-family: "Roboto", sans-serif;
         font-style: normal;
         font-weight: 500;
         font-size: 32px;
         line-height: 47px;
-        color: #604D4D;
+        color: #604d4d;
         text-align: center;
     }
     form {
@@ -57,14 +57,14 @@
         }
         .instructions {
             width: 36%;
-            font-family: 'Roboto', sans-serif;
+            font-family: "Roboto", sans-serif;
             font-size: 14px;
         }
         .fa-lock, .fa-envelope {
             background-color: #AEABAB;
             color: white;
             padding: 8px 14px;
-            border: 1px solid #AEABAB;
+            border: 1px solid #aeabab;
             border-top-left-radius: 2px;
             border-bottom-left-radius: 2px;
         }
@@ -75,7 +75,7 @@
             outline: none;
             height: 100%;
             width: 100%;
-            border: 1px solid #AEABAB;
+            border: 1px solid #aeabab;
         }
         .btn-submit-login {
             font-family: Roboto;
@@ -84,8 +84,8 @@
             font-size: 16px;
             line-height: 26px;
             text-align: center;
-            color: #604D4D;
-            background-color: #C9E891;
+            color: #604d4d;
+            background-color: #c9e891;
             padding: 5px 36px;
             border: none;
             border-radius: 6px;
@@ -103,8 +103,6 @@
     color: green;
 }
 
-
-
 .email-login,
 .password-login {
     display: flex;
@@ -114,17 +112,16 @@
     margin-bottom: 25px;
 
     u {
-        color: #A7A7A7;
+        color: #a7a7a7;
         font-size: 14px;
         margin-top: 2%;
         cursor: pointer;
     }
 }
 
- 
 .email-content,
 .password-content {
-    display: flex;   
+    display: flex;
     align-items: center;
     width: 36%;
     i {
@@ -132,13 +129,17 @@
     }
 
     p {
-    font-size: 21px;
-    color: #AEABAB;
-    margin-left: 3px;
-    height: 50%;
+        font-size: 21px;
+        color: #aeabab;
+        margin-left: 3px;
+        height: 50%;
     }
 }
 
 .password-content {
     position: relative;
+}
+.linkToRegister {
+    text-decoration: underline;
+    color: #0000ee;
 }

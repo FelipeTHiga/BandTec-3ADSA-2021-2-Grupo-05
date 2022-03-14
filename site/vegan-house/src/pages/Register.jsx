@@ -10,6 +10,7 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import Loading from '../assets/images/loading.gif'
 import InputMask from 'react-input-mask';
 import api from '../services/api';
+import { Link } from 'react-router-dom';
 
 import '../styles/register.scss';
 import '../styles/global.scss';
@@ -224,7 +225,12 @@ export function Register() {
                                 {errorPasswordConfirm && <p className="error">{errorPasswordConfirm}</p>}
                             </div>
 
-                            <button className="btn-submit-register" type="submit" >Enviar</button>
+                            <div>
+                                <span>Já tem uma conta? </span>
+                                <Link to="/login"><span className="linkToRegister">Logar.</span></Link>
+                            </div>
+
+                            <button type="submit" >Enviar</button>
                             {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
 
                         </form>
