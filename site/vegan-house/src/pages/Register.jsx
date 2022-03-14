@@ -111,7 +111,7 @@ export function Register() {
         
 
 
-    }
+    
 
     return (
         <>
