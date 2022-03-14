@@ -43,6 +43,15 @@
         justify-content: space-evenly;
         height: 85%;
         width: 100%;
+        #btn-show-password {
+            padding: 0 0;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            background-color: white;
+            position: absolute;
+            right: 21px;
+        }
         label {
             width: 36%;
             font-family: 'Roboto', sans-serif;
@@ -69,7 +78,7 @@
             width: 100%;
             border: 1px solid #AEABAB;
         }
-        button {
+        .btn-submit-register {
             font-family: Roboto;
             font-style: normal;
             font-weight: bold;
@@ -117,4 +126,7 @@
     margin-left: 3px;
     height: 50%;
     }
+}
+.password-content {
+    position: relative;
 }
