@@ -32,6 +32,9 @@ public class ControllerSeller {
             // Pegando o usário
             User userLogged = userRepository.findById(idUser).get();
 
+//            if (!Objects.isNull(userLogged.getIsSeller())) {
+//                return ResponseEntity.status(409).build();
+//            } else {
             if (userLogged.getIsSeller()) {
                 return ResponseEntity.status(409).build();
             } else {
@@ -53,6 +56,7 @@ public class ControllerSeller {
             return ResponseEntity.status(404).build();
         }
     }
+
 
     @GetMapping("/{idUser}")
     public ResponseEntity getSeller(@PathVariable int idUser) {

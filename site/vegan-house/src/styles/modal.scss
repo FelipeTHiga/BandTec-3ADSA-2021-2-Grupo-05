@@ -20,7 +20,7 @@
             .btn-close {
                 width: 32px;
                 height: 32px;
-                right: calc(-100% + 64px);
+                right: calc(-104% + 64px);
                 top: 16px;
                 outline: none;
                 border: none;
@@ -55,9 +55,16 @@
                 }
 
                 .modal-text {
-                    width: 185px;
+                    width: auto;
                     height: auto;
                     text-align: center;
+                    padding: 20px;
+                }
+
+                .container-choice-btn {
+                    width: 50%;
+                    display: flex;
+                    justify-content: space-evenly;
                 }
 
                 .modal-btn {

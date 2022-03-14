@@ -5,6 +5,7 @@ import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { UserGreeting } from '../components/UserGreeting';
+import ModalMessage from '../components/ModalMessage';
 import { useState, useEffect } from 'react';
 import Loading from '../assets/images/loading.gif'
 import loginService from '../services/login';
@@ -38,6 +39,10 @@ export function UserAdress() {
     const [errorState, setErrorState] = useState("");
     const [errorCity, setErrorCity] = useState("");
     const [errorComplement, setErrorComplement] = useState("");
+
+    const [isModalMessageVisible, setIsModalMessageVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
+    const [modalTitle, setModalTitle] = useState("");
     const [loading, setLoading] = useState(false);
 
     function warmings(errors) {
@@ -61,8 +66,7 @@ export function UserAdress() {
         if (errors.number) {
             setErrorNumber(errors.number)
         }
-
-
+        window.location.href = '#page-container';
     }
 
     function submitAdress(e) {
@@ -93,14 +97,14 @@ export function UserAdress() {
             data: userAdress,
         })
             .then(function (response) {
-                setLoading(false);
-                console.log(response.status);
-                alert('Endereço cadastrado com sucesso')
-                window.location.reload();
+                setLoading(false);  
+                setModalTitle("Cadastro de endereço");
+                setModalMessage("Endereço cadastrado com sucesso!");
+                window.location.href = '#top';
+                setIsModalMessageVisible(true);
             }).catch((err) => {
                 setLoading(false);
                 warmings(err.response.data);
-
             });
     }
 
@@ -132,13 +136,13 @@ export function UserAdress() {
             .then(function (response) {
                 setLoading(false);
                 console.log(response.status);
-                alert('Endereço atualizado com sucesso')
-                window.location.reload();
-
+                setModalTitle("Atualização de dados");
+                setModalMessage("Endereço atualizado com sucesso!");
+                window.location.href = '#top';
+                setIsModalMessageVisible(true);
             }).catch((err) => {
                 setLoading(false);
                 warmings(err.response.data);
-
             });
     }
 
@@ -193,7 +197,7 @@ export function UserAdress() {
             <div className="line-up">
                 <Title title="Seu perfil" />
             </div>
-            <div className="page-container">
+            <div id="page-container" className="page-container">
                 <div className="container-menu-and-adress">
                     <div className="section-menus align-column">
                         <AccountMenu isSeller={userUpdate.isSeller} />
@@ -296,6 +300,17 @@ export function UserAdress() {
                     </div>
                 </div>
             </div>
+            {
+                isModalMessageVisible ?
+                    <ModalMessage
+                        onClose={() => setIsModalMessageVisible(false)}
+                        height={document.body.scrollHeight}
+                        title={modalTitle}
+                        message={modalMessage}
+                        function={() => window.location.reload()}
+                    />
+                    : null
+            }
             <Footer />
         </>
     )

@@ -5,6 +5,7 @@ import { AccountMenu } from '../components/AccountMenu';
 import { SellerMenu } from '../components/SellerMenu';
 import { SectionTitle } from '../components/SectionTitle';
 import { UserGreeting } from '../components/UserGreeting';
+import ModalMessage from '../components/ModalMessage';
 import { useState } from 'react';
 import api from '../scripts/api';
 import Loading from '../assets/images/loading.gif'
@@ -15,17 +16,18 @@ import '../styles/global.scss';
 import '../styles/reset.scss';
 import '../styles/userProfile.scss';
 
-
 export function UserProfile(e) {
-    
-    let user = loginService.getSession()
-    const [status, setStatus] = useState("")
+
+    let user = loginService.getSession();
     const [emailError, setEmailError] = useState("");
     const [loading, setLoading] = useState(false);
 
+    const [isModalMessageVisible, setIsModalMessageVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
+    const [modalTitle, setModalTitle] = useState("");
+
     function updateUser(e) {
         e.preventDefault();
-        setStatus("");
         setEmailError("");
         let userUpdate = loginService.getSession();
         let email;
@@ -51,18 +53,22 @@ export function UserProfile(e) {
             },
             data: user,
         })
-        .then(function (response) {
-            setLoading(false);
-            if(response.status === 200) {
-                loginService.setSession(response.data);
-                setStatus("Seu perfil foi atualizado com sucesso.")
-            } else {
-                setStatus("Ocorreu um erro ao tentar atualizar seu perfil.")
-            }
-        }).catch((err) => {
-            setLoading(false);
-            setEmailError("Insira um email válido.");
-        });
+            .then(function (response) {
+                setLoading(false);
+                if (response.status === 200) {
+                    loginService.setSession(response.data);
+                    setModalTitle("Atualização de dados");
+                    setModalMessage("Dados do perfil atualizados com sucesso!");
+                } else {
+                    setModalTitle("Atualização de dados");
+                    setModalMessage("Ocorreu um erro ao tentar atualizar os dados do perfil.");
+                }
+                window.location.href = '#top';
+                setIsModalMessageVisible(true);
+            }).catch((err) => {
+                setLoading(false);
+                setEmailError("Insira um email válido.");
+            });
     }
 
     return (
@@ -121,13 +127,12 @@ export function UserProfile(e) {
                                             <input id="emailUserUpdate" placeholder={user.email} className="input-default " type="text" name="" />
                                             <i className="fas fa-lock line-up lock"></i>
                                         </div>
-                                        {emailError && <p className='erro'>{emailError}</p>}
+                                        {emailError && <p className='error'>{emailError}</p>}
                                     </div>
                                     <div className="button-form-profile">
                                     <button type='submit'>Atualizar</button>
                                     {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
                                     </div>
-                                    {status && <p>{status}</p>}
                                 </form>
                             </div>
 
@@ -135,6 +140,17 @@ export function UserProfile(e) {
                     </div>
                 </div>
             </div>
+            {
+                isModalMessageVisible ?
+                    <ModalMessage
+                        onClose={() => setIsModalMessageVisible(false)}
+                        height={document.body.scrollHeight}
+                        title={modalTitle}
+                        message={modalMessage}
+                        function={() => setIsModalMessageVisible(false)}
+                    />
+                    : null
+            }
             <Footer />
         </>
     )

@@ -19,22 +19,23 @@ public class Product {
     protected String name;
 
     @NotNull(message = "O campo PREÇO deve ser preenchido")
+    @Min(value = 1, message = "Preço mínimo de 1,00 real")
     //@Pattern(regexp = "/^[\\d,.?!]+$/g", message = "O campo PREÇO aceita apenas números")
     protected Double price;
 
+    @NotBlank(message = "O campo CATEGORIA deve ser preenchido")
     protected String category;
-    protected String subCategory;
 
-    //@Size(min = 0, max = 1000, message = "A DESCRIÇÃO deve ter no máximo 1000 caracteres")
     @Lob
     @Basic(fetch = FetchType.LAZY)
+    @Size(min = 10, max = 1500, message = "A DESCRIÇÃO deve conter de 10 a 1500 caracteres")
     protected String description;
 
     @NotNull(message = "O campo QUANTIDADE deve ser preenchido")
     protected Integer inventory;
 
     protected Integer fkSeller;
-    protected Boolean isAvaliable;
+    protected Boolean isAvailable;
 
 
     @Column(length = 20_000_000)
@@ -53,23 +54,21 @@ public class Product {
 
     }
 
-    public Product(String name, Double price, String category, String subCategory, String description, Integer inventory, Integer fkSeller, Boolean isAvaliable) {
+    public Product(String name, Double price, String category, String description, Integer inventory, Integer fkSeller, Boolean isAvailable) {
         this.name = name;
         this.price = price;
         this.category = category;
-        this.subCategory = subCategory;
         this.description = description;
         this.inventory = inventory;
         this.fkSeller = fkSeller;
-        this.isAvaliable = isAvaliable;
+        this.isAvailable = isAvailable;
     }
 
-    public Product(Integer id, String name, Double price, String category, String subCategory, String description, Integer inventory, Integer fkSeller) {
+    public Product(Integer id, String name, Double price, String category, String description, Integer inventory, Integer fkSeller) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
-        this.subCategory = subCategory;
         this.description = description;
         this.inventory = inventory;
         this.fkSeller = fkSeller;
@@ -82,10 +81,9 @@ public class Product {
                         "Nome: %s\n" +
                         "Preço: R$%.2f\n" +
                         "Categoria: %s\n" +
-                        "Subcategoria: %s\n" +
                         "Descrição: %s\n" +
                         "Estoque: %d",
-                name, price, category, subCategory, description, inventory);
+                name, price, category, description, inventory);
     }
 
     //region Getters and Setters
@@ -93,12 +91,12 @@ public class Product {
         return id;
     }
 
-    public Boolean getAvaliable() {
-        return isAvaliable;
+    public Boolean getAvailable() {
+        return isAvailable;
     }
 
-    public void setAvaliable(Boolean avaliable) {
-        isAvaliable = avaliable;
+    public void setAvailable(Boolean available) {
+        isAvailable = available;
     }
 
     public void setId(Integer id) {
@@ -127,14 +125,6 @@ public class Product {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public String getSubCategory() {
-        return subCategory;
-    }
-
-    public void setSubCategory(String subCategory) {
-        this.subCategory = subCategory;
     }
 
     public String getDescription() {

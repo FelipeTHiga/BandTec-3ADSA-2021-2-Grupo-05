@@ -22,6 +22,8 @@ export function Catalog() {
     const [countHealth, setCountHealth] = useState(0);
     const [countClothing, setCountClothing] = useState(0);
     const [countAll, setCountAll] = useState(0);
+    const [defaultMessage, setDefaultMessage] = useState("");
+    const [defaultMessageAll, setDefaultMessageAll] = useState("");
 
     var isCategoryAll = category == "Todos" ? "" : category;
 
@@ -31,12 +33,16 @@ export function Catalog() {
         function productAll() {
             if (categoryUrl == 'name') {
                 var name = sessionStorage.getItem("nameProd");
-                categoryUrl="";
+                categoryUrl = "";
                 api.get(`/products/name/${name}`)
                     .then((res) => {
                         if (res.status === 200) {
                             setProducts(res.data);
+                            setDefaultMessage("");
                             sessionStorage.setItem("nameProd", "");
+                        } else if (res.status === 204) {
+                            setProducts([]);
+                            setDefaultMessage(`Nenhum resultado encontrado para "${name}"`);
                         }
                     }).catch((err) => {
                     })
@@ -46,13 +52,17 @@ export function Catalog() {
                     url: `/products/filter/lowest-price/${categoryUrl}`,
                 })
                     .then((res) => {
-                        setProducts(res.data);
+                        if (res.status === 200) {
+                            setProducts(res.data);
+                            setDefaultMessage("");
+                        } else if (res.status === 204) {
+                            setProducts([]);
+                            setDefaultMessage("Sua busca não teve resultados.");
+                        }
                     })
             }
-            
         }
         
-
         async function countCategory() {
             const res = await api.get("/products/countCategory");
             await setCategoryAll(res.data)
@@ -98,7 +108,11 @@ export function Catalog() {
         api.get(`/products/tag/${e.target.id}`)
             .then((res) => {
                 if (res.status === 200) {
-                    setProducts(res.data)
+                    setProducts(res.data);
+                    setDefaultMessage("");
+                } else if (res.status === 204) {
+                    setProducts([]);
+                    setDefaultMessage("Sua busca não teve resultados.");
                 }
             }).catch((err) => {
             })
@@ -118,6 +132,10 @@ export function Catalog() {
         }).then((res) => {
             if (res.status === 200) {
                 setProducts(res.data)
+                setDefaultMessageAll("")
+            } else if (res.status === 204) {
+                setProducts([])
+                setDefaultMessageAll("Sua busca não teve resultados.")
             }
         }).catch((err) => {
         })
@@ -185,6 +203,8 @@ export function Catalog() {
                                 <ProductCard id={product.id} name={product.name}
                                     price={product.price} category={product.category} fkSeller={product.fkSeller} />
                             ))}
+                            <div className='defaultMessage catalog-products'>{defaultMessage}</div>
+                            <div className='defaultMessage catalog-products'>{defaultMessageAll}</div>
                         </div>
                     </div>
                 </div>
