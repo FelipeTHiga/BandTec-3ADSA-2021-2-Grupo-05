@@ -6,14 +6,14 @@ import loginService from '../services/login';
 import api from "../services/api";
 import { useHistory } from "react-router";
 import React, { useState, useEffect } from 'react';
-
-
+import ModalRedirect from '../components/ModalRedirect';
 
 export function ShoppingCart(props) {
 
     const history = useHistory();
     const [cartItems, setCartItems] = React.useState([]);
     const [defaultMessage, setDefaultMessage] = useState("");
+    const [isModalVisible, setIsModalVisible] = useState(false);
     let total = 0;
     let userLogged = loginService.getSession();
 
@@ -42,11 +42,9 @@ export function ShoppingCart(props) {
             getCartItems();
         }
         else {
-            history.push(`/login`);
+            setIsModalVisible(true);
         }
     }, [])
-
-
 
     let [totalAmount, setNumber] = React.useState({ total: total });
 
@@ -92,6 +90,17 @@ export function ShoppingCart(props) {
                     </div>
                 </div>
             </section>
+            {
+                isModalVisible ?
+                    <ModalRedirect
+                        onClose={() => history.push(`/login`)}
+                        height={document.body.scrollHeight}
+                        title="Atenção"
+                        message="Para acessar a funcionalidade, você precisa estar logado"
+                        link="/login"
+                        btnTitle="Ir para Login!" />
+                    : null
+            }
             <Footer />
         </>
     )

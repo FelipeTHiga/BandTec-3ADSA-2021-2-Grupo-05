@@ -7,6 +7,7 @@ import { useHistory } from 'react-router';
 import Loading from '../assets/images/loading.gif'
 import InputMask from 'react-input-mask';
 import api from '../services/api';
+import { Link } from 'react-router-dom';
 
 import '../styles/register.scss';
 import '../styles/global.scss';
@@ -45,7 +46,7 @@ export function Register() {
         if (errors.email) {
             setErrorEmail(errors.email)
         }
-        if(cpf.length === 0) {
+        if (cpf.length === 0) {
             setErrorCpf("Erro no cadastro preencha todos os campos obrigatorios (*)")
         }
 
@@ -176,6 +177,11 @@ export function Register() {
                                     <p>*</p>
                                 </div>
                                 {errorPasswordConfirm && <p className="error">{errorPasswordConfirm}</p>}
+                            </div>
+
+                            <div>
+                                <span>Já tem uma conta? </span>
+                                <Link to="/login"><span className="linkToRegister">Logar.</span></Link>
                             </div>
 
                             <button type="submit" >Enviar</button>

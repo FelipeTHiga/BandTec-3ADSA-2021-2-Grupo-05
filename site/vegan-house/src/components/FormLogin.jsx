@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import api from "../services/api";
 import loginService from "../services/login";
 import Loading from '../assets/images/loading.gif'
-
+import { Link } from 'react-router-dom';
 
 export function FormLogin() {
     const [email, setEmail] = useState("");
@@ -49,7 +49,7 @@ export function FormLogin() {
                 }).catch((res) => {
                     setLoading(false);
                     sessionStorage.setItem("sucess", "");
-                    if(res.status != 200) {
+                    if(res.status !== 200) {
                         setErro("A senha ou o email estão incorretos!");
                     }
                     setSucess(null);
@@ -80,10 +80,14 @@ export function FormLogin() {
                             <input
                                 type="password"
                                 placeholder="Senha"
-                                onChange={e => setPassword( e.target.value)}
+                                onChange={e     => setPassword( e.target.value)}
                             />
                         </div>
+                    </div>
 
+                    <div>
+                        <span>Ainda não tem uma conta? </span>
+                        <Link to="/cadastro"><span className="linkToRegister">Cadastre-se.</span></Link>
                     </div>
 
                     <button type="submit">Entrar</button>

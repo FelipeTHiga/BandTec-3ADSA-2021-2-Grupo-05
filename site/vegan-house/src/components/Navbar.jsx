@@ -22,11 +22,11 @@ export function Navbar(props) {
     const history = useHistory();
     function search() {
         sessionStorage.setItem("nameProd", searchProduct);
-        if (searchProduct == "" && props.isCatalog != true) {
+        var name = sessionStorage.getItem("nameProd");
+        if (searchProduct === "" && props.isCatalog !== true) {
             history.push(`/todos-os-resultados/Todos`);
-        } else if (props.isCatalog == true) {
-            var name = sessionStorage.getItem("nameProd");
-            if (name != "") {
+        } else if (props.isCatalog === true) {
+            if (name !== "") {
                 api.get(`/products/name/${name}`)
                     .then((res) => {
                         if (res.status === 200) {
@@ -44,7 +44,7 @@ export function Navbar(props) {
                 }) 
             }
         } else {
-            history.push(`/todos-os-resultados/name`);
+            history.push(`/todos-os-resultados/${name}`);
         }
     }
 

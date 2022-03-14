@@ -8,8 +8,9 @@ export function Submenu() {
     const [categoryUrl, setCategoryUrl] = useState("");   
     
     const redirectTo = (event) => {
-        setCategoryUrl(event.target.id)
+        setCategoryUrl(event.target.id);
         history.push(`/todos-os-resultados/${event.target.id}`);
+        window.location.reload();
     }
 
     return (
@@ -21,15 +22,15 @@ export function Submenu() {
                 </li>
                 <li className="cosmetics ">
                     <i className="fas fa-air-freshener"></i>
-                    <div id={"Cosmeticos"} className="a-category" onClick={redirectTo}>Cosméticos</div>
+                    <div id={"Cosméticos"} className="a-category" onClick={redirectTo}>Cosméticos</div>
                 </li>
                 <li className="health ">
                     <i className="fas fa-first-aid"></i>
-                    <div id={"Saude"} className="a-category" onClick={redirectTo}>Saúde</div>                 
+                    <div id={"Saúde"} className="a-category" onClick={redirectTo}>Saúde</div>                 
                 </li>
                 <li className="accessories ">
                     <i className="fas fa-suitcase"></i>
-                    <div id={"Acessorios"} className="a-category" onClick={redirectTo}>Acessórios</div>                   
+                    <div id={"Acessórios"} className="a-category" onClick={redirectTo}>Acessórios</div>                   
                 </li>
                 <li className="dress ">
                     <i className="fas fa-tshirt"></i>
