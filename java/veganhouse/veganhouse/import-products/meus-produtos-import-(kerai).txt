@@ -1,6 +1,5 @@
-00PRODUTO11-202129-11-2021 11:12:3901
-03Requeijão em Pó               0016,99050Alimentos      O QUE É?O Requeijão Vegano em pó 100g WVegan é um produto único, tem sabor e textura.      
+00PRODUTO11-202129-11-2021 11:12:3901  
 03Creme Dental                  0013,86050Cosméticos     CREME DENTAL EPIORGANIC 90g - Natural - Vegano - Sem Flúor da BIOZENTHI                   
 03Repelente Natural             0045,90025Saúde          Sua fórmula simples, segura e eficaz garante proteção e hidratação por até 3 horas.        
-02kerai                         42591651000143   
-010000000003
+02kerai moda ecologica          42092159000123   
+010000000002

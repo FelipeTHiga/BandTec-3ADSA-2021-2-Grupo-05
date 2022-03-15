@@ -62,7 +62,7 @@ export function Home() {
 
                 <div class="container-cards-sellers line-up">
                     <img src={kerai} />
-                    <img src={vegSeed} />
+                    <img src={vegSeed} style={{width: '210px'}}/>
                     <img src={larVegan} />
                 </div>
 

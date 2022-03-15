@@ -60,7 +60,7 @@ export function FormLogin() {
                         setSucess(null)
                         history.push("");
                     } else {
-                        setErro("A senha ou o email estão incorretos!");
+                        setErro("Senha e/ou e-mail incorreto(s)!");
                         sessionStorage.setItem("sucess", "");
                         setSucess(null);
                     }
@@ -68,7 +68,7 @@ export function FormLogin() {
                     setLoading(false);
                     sessionStorage.setItem("sucess", "");
                     if (res.status !== 200) {
-                        setErro("A senha ou o email estão incorretos!");
+                        setErro("Senha e/ou e-mail incorreto(s)!");
                     }
                     setSucess(null);
                 })

@@ -588,7 +588,7 @@ export function MyProducts() {
                         height={document.body.scrollHeight}
                         title={modalTitle}
                         message={modalMessage}
-                        function={() => setIsModalMessageVisible(false)}
+                        function={() => window.location.reload()}
                     />
                     : null
             }

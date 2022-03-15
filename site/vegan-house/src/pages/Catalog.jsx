@@ -43,10 +43,12 @@ export function Catalog() {
                     .then((res) => {
                         if (res.status === 200) {
                             setProducts(res.data);
+                            // setCountAll(res.data.length);
                             setDefaultMessage("");
                             sessionStorage.setItem("nameProd", "");
                         } else if (res.status === 204) {
                             setProducts([]);
+                            // setCountAll(0);
                             setDefaultMessage(`Nenhum resultado encontrado para "${name}"`);
                         }
                     }).catch((err) => {
