@@ -230,7 +230,7 @@ export function Register() {
                                 <Link to="/login"><span className="linkToRegister">Logar.</span></Link>
                             </div>
 
-                            <button type="submit" >Enviar</button>
+                            <button type="submit" className="btn-submit-register">Enviar</button>
                             {loading && <img className="loading-gif" src={Loading} alt="loading..." />}
 
                         </form>

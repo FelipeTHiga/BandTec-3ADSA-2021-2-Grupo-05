@@ -107,12 +107,14 @@ export function FormLogin() {
                             <FontAwesomeIcon className="passwordVisible" icon={icon} />
                         </button>
                     </div>
-                    <div>
-                        <span>Ainda não tem uma conta? </span>
-                        <Link to="/cadastro"><span className="linkToRegister">Cadastre-se.</span></Link>
-                    </div>
-                    <a href="">Esqueceu a senha?</a>
                 </div>
+
+                <div>
+                    <span>Ainda não tem uma conta? </span>
+                    <Link to="/cadastro"><span className="linkToRegister">Cadastre-se.</span></Link>
+                </div>
+                
+                {/* <a href="">Esqueceu a senha?</a> */}
 
                 <button className="btn-submit-login" type="submit">Entrar</button>
                 {erro && <p className="error">{erro}</p>}
