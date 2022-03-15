@@ -18,6 +18,7 @@ export function Checkout(props) {
     let userLogged = loginService.getSession();
     const [orderItems, setOrderItem] = React.useState([]);
     const mercadopago = useMercadopago.v2('TEST-622fb91c-f16d-4a94-a027-1feaaa7fb422')
+    const [total, setTotal] = React.useState(0.0)
 
     useEffect(() => {
 
@@ -28,7 +29,6 @@ export function Checkout(props) {
                         if (res.status === 200) {
                             console.log(res);
                             setOrder(res.data);
-                            setOrderItem(res.data.orderItems)
                             
                             let parseDados = JSON.stringify(res.data)
                             sessionStorage.setItem("order", parseDados)                            
@@ -39,7 +39,44 @@ export function Checkout(props) {
                     })
             }
 
+            // Marcar orders como aprovado ou recusado
+            function getOrdersPending(){
+                api.get(`orders/checkout/pendingOrders/${userLogged.id}`)
+                    .then((res) => {
+                        if (res.status === 200) {
+                            console.log(res);
+                            setOrder(res.data);
+                            
+                            let parseDados = JSON.stringify(res.data)
+                            sessionStorage.setItem("orders", parseDados)                            
+                        }
+
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+            }
+
+            function getCardItens(){
+                api.get(`orders/checkout/orderItens/${userLogged.id}`)
+                    .then((res) => {
+                        if (res.status === 200) {
+                            setOrderItem(res.data) 
+                            var t = 0;
+                            debugger
+                            for (var i = 0; i < res.data.length; i++){
+                                t+=res.data[i].subTotal;
+                            }  
+                            setTotal(t);
+                        }
+
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+            }
+
             getOrder();
+            getCardItens();
+            getOrdersPending();
         }
         else {
             history.push(`/login`);
@@ -170,6 +207,7 @@ export function Checkout(props) {
                             console.log(response)
                             debugger
                             if (response.status === 201) {
+                                checkStatus(response.data.status)
                                 history.push(`/payment-response/${response.data.id}/${response.data.status}/${response.data.detail}`);
                                 updateStatus(response.data.status)
                             }
@@ -194,10 +232,23 @@ export function Checkout(props) {
         }
     }
 
+    function checkStatus(status) {
+        if(status == "approved") {
+            api.put(`orders/checkout/orderItens/${userLogged.id}`)
+            .then((res) => {
+                if (res.status === 200) {
+                    console.log(res.status);
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
+    }
+
     function updateStatus(status) {
         var newStatus;
-        var updatedOrder = JSON.parse(sessionStorage.getItem("order"));
-
+        var updatedOrder = JSON.parse(sessionStorage.getItem("orders"));
+        
         switch (status) {
             case "approved":
                 newStatus = "Pagamento aprovado";
@@ -213,14 +264,16 @@ export function Checkout(props) {
         }
 
         console.log(updatedOrder.idOrder)
-
-        api.patch(`orders/update-status/${newStatus}/${updatedOrder.idOrder}`)
+        for (var i = 0; i < updatedOrder.length; i++) {
+            api.patch(`orders/update-status/${newStatus}/${updatedOrder[i].idOrder}`)
             .then(response => {
                 console.log(response)
                 return response.json();
             }).catch(error => {
                 console.log("Unexpected error\n" + JSON.stringify(error));
             });
+        }
+        
     }
 
 
@@ -249,7 +302,7 @@ export function Checkout(props) {
 
                         <SectionTitle text=" " />
 
-                        <h3 className="margin-top-20">Total: R${Number(order.total).toFixed(2)}</h3>
+                        <h3 className="margin-top-20">Total: R${Number(total).toFixed(2)}</h3>
                     </div>
 
 
