@@ -27,7 +27,10 @@ export function PaymentResponse(props) {
                 return setStat("Pagamento em processamento");
 
             case "rejected":
-                return setStat("Pagamento rejeitado")
+                return setStat("Pagamento rejeitado");
+            
+            default:
+                return setStat("Erro no processamento");
         }
     }
 
@@ -86,7 +89,9 @@ export function PaymentResponse(props) {
 
             case "cc_rejected_card_type_not_allowed":
                 return setDesc("O pagamento foi rejeitado porque o usuário não tem a função crédito habilitada em seu cartão multiplo (débito e crédito).");
-
+                
+            default:
+                return setStat("Ocorreu um erro no processamento do pagamento.");
         }
     }
 

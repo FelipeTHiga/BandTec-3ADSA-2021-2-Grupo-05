@@ -208,7 +208,7 @@ export function Checkout(props) {
                             debugger
                             if (response.status === 201) {
                                 checkStatus(response.data.status)
-                                history.push(`/payment-response/${response.data.id}/${response.data.status}/${response.data.detail}`);
+                                history.push(`/payment-response/${response.data.id}/${response.data.status ?? "Erro no processamento"}/${response.data.detail}`);
                                 updateStatus(response.data.status)
                             }
                             console.log(response.data)
@@ -248,7 +248,6 @@ export function Checkout(props) {
     function updateStatus(status) {
         var newStatus;
         var updatedOrder = JSON.parse(sessionStorage.getItem("orders"));
-        
         switch (status) {
             case "approved":
                 newStatus = "Pagamento aprovado";
@@ -261,6 +260,8 @@ export function Checkout(props) {
             case "rejected":
                 newStatus = "Pagamento rejeitado";
                 break;
+            default:
+                newStatus = "Erro no processamento"
         }
 
         console.log(updatedOrder.idOrder)
