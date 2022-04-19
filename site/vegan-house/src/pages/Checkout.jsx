@@ -261,6 +261,10 @@ export function Checkout(props) {
             case "rejected":
                 newStatus = "Pagamento rejeitado";
                 break;
+
+            default:
+                newStatus = "Erro no processamento"
+                break;
         }
 
         console.log(updatedOrder.idOrder)
