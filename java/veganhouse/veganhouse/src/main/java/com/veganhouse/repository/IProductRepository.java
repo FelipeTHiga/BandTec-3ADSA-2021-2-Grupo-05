@@ -19,4 +19,10 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
             "union select count(*) as qtd, 'Todos' as category from product where is_available = 1", nativeQuery = true)
     List<Object> listCountCategory();
 
+    @Query(value = "select top 3 * from product where is_available = 1 order by id desc", nativeQuery = true)
+    List<Product> listLastNewProducts();
+
+    @Query(value = "select top 1 * from product where is_available = 1 order by inventory desc", nativeQuery = true)
+    Product featuredProduct();
+
 }
