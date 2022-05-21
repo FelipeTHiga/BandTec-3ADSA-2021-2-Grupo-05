@@ -27,7 +27,6 @@ function Card() {
         async function productAll() {
             const res = await api.get("/products/all");
             setProducts(res.data);
-            console.log(res.data);
         }
 
         productAll();
@@ -45,7 +44,7 @@ function Card() {
                 </div>
                 <div className="carroussel" ref={carroussel}>
                     {products.map(product => (
-                        <ProductCard id={product.id} src={"data:image/jpeg;base64," + product.image_url1} name={product.name} price={product.price} />
+                        <ProductCard id={product.id} name={product.name} price={product.price} />
 
                     ))}
                 </div>

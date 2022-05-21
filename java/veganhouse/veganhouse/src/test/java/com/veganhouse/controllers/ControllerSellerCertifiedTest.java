@@ -24,29 +24,29 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(classes = {ControllerSellerCertified.class, ISellerCertified.class})
 public class ControllerSellerCertifiedTest {
 
-    @MockBean
-    private ISellerCertified sellerCertifiedRepository;
-
-    @Autowired
-    private ControllerSellerCertified controller;
-
-    @Test
-    void submitSellerCertifiedDeveRetornarStatus201SemCorpo(){
-
-        Integer idTeste =10;
-        Integer fkTeste = 20;
-        Boolean hasCertification = true;
-        List<SellerCertified> listCertificcation = List.of(mock(SellerCertified.class), mock(SellerCertified.class));
-
-        SellerCertified certification = new SellerCertified(idTeste, fkTeste, hasCertification);
-
-        sellerCertifiedRepository.save(certification);
-
-       ResponseEntity resposta = controller.updateSellerCertified(listCertificcation);
-
-       assertEquals(201, resposta.getStatusCodeValue());
-
-    }
+//    @MockBean
+//    private ISellerCertified sellerCertifiedRepository;
+//
+//    @Autowired
+//    private ControllerSellerCertified controller;
+//
+//    @Test
+//    void submitSellerCertifiedDeveRetornarStatus201SemCorpo(){
+//
+//        Integer idTeste =10;
+//        Integer fkTeste = 20;
+//        Boolean hasCertification = true;
+//        List<SellerCertified> listCertificcation = List.of(mock(SellerCertified.class), mock(SellerCertified.class));
+//
+//        SellerCertified certification = new SellerCertified(idTeste, fkTeste, hasCertification);
+//
+//        sellerCertifiedRepository.save(certification);
+//
+//       ResponseEntity resposta = controller.updateSellerCertified(listCertificcation);
+//
+//       assertEquals(201, resposta.getStatusCodeValue());
+//
+//    }
 
 //    @Test
 //    void getSellerCertifiedDeveRetornarStatus200SemCorpo(){

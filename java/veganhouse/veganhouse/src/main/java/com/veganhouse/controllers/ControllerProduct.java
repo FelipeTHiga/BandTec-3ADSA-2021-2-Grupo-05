@@ -1,5 +1,6 @@
 package com.veganhouse.controllers;
 
+import com.veganhouse.domain.Image;
 import com.veganhouse.domain.Product;
 import com.veganhouse.domain.Seller;
 import com.veganhouse.exports.ControllerCsv;
@@ -9,25 +10,19 @@ import com.veganhouse.observer.EventManagerRestock;
 import com.veganhouse.observer.IRestockNotificationRepository;
 
 import com.veganhouse.productsCommander.ProductCommander;
+import com.veganhouse.repository.IImageRepository;
 import com.veganhouse.repository.IProductRepository;
 import com.veganhouse.repository.ISellerRepository;
 import com.veganhouse.services.ProductService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -38,6 +33,9 @@ import java.util.stream.Collectors;
 public class ControllerProduct {
     @Autowired
     private IProductRepository productRepository;
+
+    @Autowired
+    private IImageRepository imageRepository;
 
     @Autowired
     private IRestockNotificationRepository restockNotificationRepository;
@@ -92,53 +90,25 @@ public class ControllerProduct {
         return ResponseEntity.status(404).build();
     }
 
-    @PatchMapping("/image/{id}")
-    public ResponseEntity patchImageProduct(@PathVariable Integer id,
+    @PostMapping("/image/{id}")
+    public ResponseEntity postImageProduct(@PathVariable Integer id,
                                             @RequestParam MultipartFile foto1,
                                             @RequestParam MultipartFile foto2,
                                             @RequestParam MultipartFile foto3) throws IOException {
 
-        Product product = productRepository.findById(id).get();
+        Image images = new Image();
 
         byte[] novaFoto1 = foto1.getBytes();
         byte[] novaFoto2 = foto2.getBytes();
         byte[] novaFoto3 = foto3.getBytes();
 
-        product.setImage_url1(novaFoto1);
-        product.setImage_url2(novaFoto2);
-        product.setImage_url3(novaFoto3);
+        images.setImage_url1(novaFoto1);
+        images.setImage_url2(novaFoto2);
+        images.setImage_url3(novaFoto3);
+        images.setFkProduct(id);
 
-        productRepository.save(product);
+        imageRepository.save(images);
         return ResponseEntity.status(200).build();
-    }
-
-    @GetMapping("/image/{id}/{idImage}")
-    public ResponseEntity getFoto(@PathVariable int id, @PathVariable int idImage) throws IOException {
-        Product product = productRepository.findById(id).get();
-
-        byte[] foto;
-
-        if (idImage == 1) {
-            foto = product.getImage_url1();
-        } else if (idImage == 2) {
-            foto = product.getImage_url2();
-        } else {
-            foto = product.getImage_url3();
-        }
-
-        if (foto == null) {
-            File imgPath = new File("src/main/resources/static/product-without-image.jpg");
-            byte[] withoutImage = Files.readAllBytes(imgPath.toPath());
-            return ResponseEntity
-                    .status(200)
-                    .header("content-type", "image/jpeg")
-                    .body(withoutImage);
-        }
-
-        return ResponseEntity
-                .status(200)
-                .header("content-type", "image/jpeg")
-                .body(foto);
     }
 
     @GetMapping("{id}")
@@ -241,10 +211,8 @@ public class ControllerProduct {
 
     @GetMapping("all")
     public ResponseEntity getAllProducts() {
-        if (productRepository.count() > 0) {
-            return ResponseEntity.status(200).body(productService.getIsAvailable(productRepository.findAll()));
-        }
-        return ResponseEntity.status(404).build();
+        List<Product> list = productRepository.findAllByIsAvailableTrue();
+        return ResponseEntity.status(200).body(list);
     }
 
     @DeleteMapping("{id}")
@@ -366,4 +334,38 @@ public class ControllerProduct {
         return ResponseEntity.status(200).build();
     }
 
+    @GetMapping("/images/{id}/{idImage}")
+    public ResponseEntity getPhoto(@PathVariable int id, @PathVariable int idImage) throws IOException {
+
+        if (idImage == 1) {
+            byte[] foto = imageRepository.findImage1(id);
+            return ResponseEntity
+                    .status(200)
+                    .header("content-type", "image/jpeg")
+                    .body(foto);
+        }
+
+        if (idImage == 2) {
+            byte[] foto = imageRepository.findImage2(id);
+            return ResponseEntity
+                    .status(200)
+                    .header("content-type", "image/jpeg")
+                    .body(foto);
+        }
+
+        if (idImage == 3) {
+            byte[] foto = imageRepository.findImage3(id);
+            return ResponseEntity
+                    .status(200)
+                    .header("content-type", "image/jpeg")
+                    .body(foto);
+        }
+
+        File imgPath = new File("src/main/resources/static/product-without-image.jpg");
+        byte[] withoutImage = Files.readAllBytes(imgPath.toPath());
+        return ResponseEntity
+                .status(200)
+                .header("content-type", "image/jpeg")
+                .body(withoutImage);
+    }
 }

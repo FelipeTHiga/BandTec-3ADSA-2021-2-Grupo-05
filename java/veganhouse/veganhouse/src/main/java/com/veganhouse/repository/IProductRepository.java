@@ -1,7 +1,7 @@
 package com.veganhouse.repository;
 
 import com.veganhouse.domain.Product;
-import com.veganhouse.domain.Seller;
+import com.veganhouse.dto.ProductImage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,6 +10,7 @@ import java.util.List;
 public interface IProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findByCategory(String category);
+    List<Product> findAllByIsAvailableTrue();
     //List<Product> findByCategory(String category, Integer fkUser);
     List<Product> findByName(String name);
     //List<Product> findByName(String name, Integer fkUser);
