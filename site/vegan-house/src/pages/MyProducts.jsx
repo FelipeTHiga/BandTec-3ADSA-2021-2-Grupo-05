@@ -97,7 +97,7 @@ export function MyProducts() {
         form.append("foto2", image_url2.files[0])
         form.append("foto3", image_url3.files[0])
 
-        api.patch(`/products/image/${idProduto}`, form, {
+        api.post(`/products/image/${idProduto}`, form, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
