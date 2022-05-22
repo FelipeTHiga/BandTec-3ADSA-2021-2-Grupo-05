@@ -247,6 +247,23 @@ public class ControllerProduct {
         return ResponseEntity.status(404).build();
     }
 
+    @GetMapping("last-new-products")
+    public ResponseEntity getLastThreeNewProducts() {
+        if (productRepository.count() > 0) {
+            return ResponseEntity.status(200).body((productRepository.listLastNewProducts()));
+        }
+        return ResponseEntity.status(404).build();
+    }
+
+    @GetMapping("featured-product")
+    public ResponseEntity getFeaturedProduct() {
+        if (productRepository.count() > 0) {
+            return ResponseEntity.status(200).body(productRepository.featuredProduct());
+        }
+        return ResponseEntity.status(404).build();
+
+    }
+
     @DeleteMapping("{id}")
     public ResponseEntity deleteProduct(@PathVariable Integer id) {
         if (productRepository.existsById(id)) {
