@@ -23,6 +23,9 @@ public class SellerCertified {
         this.hasCertification = hasCertification;
     }
 
+    public SellerCertified() {
+    }
+
     //region Getters and Setters
     public int getFkCertification() {
         return fkCertification;

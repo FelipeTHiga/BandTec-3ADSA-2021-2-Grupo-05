@@ -89,8 +89,6 @@ export function PaymentResponse(props) {
             case "cc_rejected_card_type_not_allowed":
                 return setDesc("O pagamento foi rejeitado porque o usuário não tem a função crédito habilitada em seu cartão multiplo (débito e crédito).");
 
-            default:
-                return setDesc("Ocorreu um erro no processamento do pagamento")
         }
     }
 
