@@ -12,22 +12,16 @@ import com.veganhouse.productsCommander.ProductCommander;
 import com.veganhouse.repository.IProductRepository;
 import com.veganhouse.repository.ISellerRepository;
 import com.veganhouse.services.ProductService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDate;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -113,7 +107,7 @@ public class ControllerProduct {
     }
 
     @GetMapping("/image/{id}/{idImage}")
-    public ResponseEntity getFoto(@PathVariable int id, @PathVariable int idImage) throws IOException {
+    public ResponseEntity getFoto(@PathVariable int id, @PathVariable int idImage) throws IOException, URISyntaxException {
         Product product = productRepository.findById(id).get();
 
         byte[] foto;
@@ -127,8 +121,7 @@ public class ControllerProduct {
         }
 
         if (foto == null) {
-            File imgPath = new File("src/main/resources/static/product-without-image.jpg");
-            byte[] withoutImage = Files.readAllBytes(imgPath.toPath());
+            byte[] withoutImage = Files.readAllBytes(Path.of(getClass().getResource("/product-without-image.jpg").toURI()));
             return ResponseEntity
                     .status(200)
                     .header("content-type", "image/jpeg")
