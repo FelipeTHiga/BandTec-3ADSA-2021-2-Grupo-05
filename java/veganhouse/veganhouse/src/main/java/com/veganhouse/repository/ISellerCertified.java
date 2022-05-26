@@ -23,4 +23,6 @@ public interface ISellerCertified extends JpaRepository<SellerCertified, Integer
             nativeQuery = true)
     void updateCertified(Boolean hasCertification, int fkCertification, int fkSeller);
 
+    List<SellerCertified> findAllByFkSellerAndHasCertificationIsTrue(Integer fkSeller);
+
 }

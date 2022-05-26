@@ -17,6 +17,9 @@ public class SellerCertified {
     private Boolean hasCertification;
     //endregion
 
+    public SellerCertified() {
+    }
+
     public SellerCertified(int fkCertification, int fkSeller, Boolean hasCertification) {
         this.fkCertification = fkCertification;
         this.fkSeller = fkSeller;

@@ -14,6 +14,9 @@ public class Certification {
     private String name;
     private String url;
 
+    public Certification() {
+    }
+
     //region Getters and Setters
     public int getIdCertification() {
         return idCertification;
