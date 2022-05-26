@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -407,7 +408,7 @@ public class ControllerProduct {
                     .body(foto);
         }
 
-        File imgPath = new File("src/main/resources/static/product-without-image.jpg");
+        File imgPath = new File("src/main/resources/product-without-image.jpg");
         byte[] withoutImage = Files.readAllBytes(imgPath.toPath());
         return ResponseEntity
                 .status(200)
