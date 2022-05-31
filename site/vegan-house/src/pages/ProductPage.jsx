@@ -20,6 +20,7 @@ import logoWhatsapp from '../assets/images/social-midias/logo-whatsapp.png';
 import '../styles/global.scss';
 import '../styles/reset.scss';
 import '../styles/productPage.scss';
+import imgBaseUrl from '../scripts/img-base-url';
 
 
 
@@ -103,17 +104,17 @@ export function ProductPage() {
                         <section className="section-product-info">
                             <div className="div-images">
                                 <div className="small-images">
-                                    <img id="img-1" src={`http://34.205.210.155:8080/products/image/${id}/1`}
+                                    <img id="img-1" src={`${imgBaseUrl.baseUrlDev}${id}/1`}
                                         onClick={selectImage}
                                         className="image img-active" />
-                                    <img id="img-2" src={`http://34.205.210.155:8080/products/image/${id}/2`}
+                                    <img id="img-2" src={`${imgBaseUrl.baseUrlDev}${id}/2`}
                                         onClick={selectImage}
                                         className="image" />
-                                    <img id="img-3" src={`http://34.205.210.155:8080/products/image/${id}/3`}
+                                    <img id="img-3" src={`${imgBaseUrl.baseUrlDev}${id}/3`}
                                         onClick={selectImage}
                                         className="image" />
                                 </div>
-                                <img id="selected-image" src={`http://34.205.210.155:8080/products/image/${id}/1`} className="big-image" />
+                                <img id="selected-image" src={`${imgBaseUrl.baseUrlDev}${id}/1`} className="big-image" />
                             </div>
                             <BuyCard product={product} seller={seller} addCartItem={postCartItem} />
                         </section>
