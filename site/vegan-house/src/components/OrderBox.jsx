@@ -1,3 +1,4 @@
+import imgBaseUrl from "../scripts/img-base-url"
 import "../styles/orderBox.scss"
 import { ProductOrder } from "./ProductOrder"
 export function OrderBox(props) {
@@ -16,7 +17,7 @@ export function OrderBox(props) {
                 <div className="order-box-container">
                     <div className="order-desc">
                         <h1>Pedido <span>#{props.orderId}</span></h1>
-                        {props.orderItems.map(orderItems=><ProductOrder text={orderItems.product.name} src={`http://34.205.210.155:8080/products/image/${orderItems.product.id}/1`}/>)}
+                        {props.orderItems.map(orderItems=><ProductOrder text={orderItems.product.name} src={`${imgBaseUrl.baseUrlDev}${orderItems.product.id}/1`}/>)}
                     </div>
                     <div className="date-order">
                         <h2>Data</h2>

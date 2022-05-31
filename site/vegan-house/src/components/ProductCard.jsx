@@ -1,6 +1,7 @@
 import { ShowStars } from "../scripts/showScore";
 import '../styles/card.scss'
 import { useHistory } from 'react-router';
+import imgBaseUrl from "../scripts/img-base-url";
 
 
 export function ProductCard(props) {
@@ -15,7 +16,7 @@ export function ProductCard(props) {
         <>
             <div className="card-product line-up" key={props.id}>
                 <div className="div-product-image">
-                    <img className="card-img" src={`http://34.205.210.155:8080/products/image/${props.id}/1`} />
+                    <img className="card-img" src={`${imgBaseUrl.baseUrlDev}${props.id}/1`} />
                 </div>
                 <div className="container-evaluation-card line-up">
                     <div className="container-stars line-up">
