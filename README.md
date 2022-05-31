@@ -12,5 +12,5 @@
 #
 
 Link do Drive: https://drive.google.com/drive/folders/1pJaF2F1tBdH6I8vO1QlzekuAEaweUnqh?usp=sharing <br>
-Link do SharePoint: https://bandteccom.sharepoint.com/sites/VeganHouse
+Link do SharePoint: https://bandteccom.sharepoint.com/sites/VeganHouse <br>
 Link do site: https://veganhouse3.ddns.net
