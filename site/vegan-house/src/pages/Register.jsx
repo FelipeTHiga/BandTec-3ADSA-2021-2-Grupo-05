@@ -139,10 +139,6 @@ export function Register() {
                 
         }
         
-
-
-    
-
     return (
         <>
             <Navbar />

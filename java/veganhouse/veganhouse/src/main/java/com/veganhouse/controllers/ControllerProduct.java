@@ -22,7 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -109,6 +111,34 @@ public class ControllerProduct {
 
         imageRepository.save(images);
         return ResponseEntity.status(200).build();
+    }
+
+    @GetMapping("/image/{id}/{idImage}")
+    public ResponseEntity getFoto(@PathVariable int id, @PathVariable int idImage) throws IOException, URISyntaxException {
+        Product product = productRepository.findById(id).get();
+
+        byte[] foto;
+
+        if (idImage == 1) {
+            foto = product.getImage_url1();
+        } else if (idImage == 2) {
+            foto = product.getImage_url2();
+        } else {
+            foto = product.getImage_url3();
+        }
+
+        if (foto == null) {
+            byte[] withoutImage = Files.readAllBytes(Path.of(getClass().getResource("/product-without-image.jpg").toURI()));
+            return ResponseEntity
+                    .status(200)
+                    .header("content-type", "image/jpeg")
+                    .body(withoutImage);
+        }
+
+        return ResponseEntity
+                .status(200)
+                .header("content-type", "image/jpeg")
+                .body(foto);
     }
 
     @GetMapping("{id}")
@@ -213,6 +243,23 @@ public class ControllerProduct {
     public ResponseEntity getAllProducts() {
         List<Product> list = productRepository.findAllByIsAvailableTrue();
         return ResponseEntity.status(200).body(list);
+    }
+
+    @GetMapping("last-new-products")
+    public ResponseEntity getLastThreeNewProducts() {
+        if (productRepository.count() > 0) {
+            return ResponseEntity.status(200).body((productRepository.listLastNewProducts()));
+        }
+        return ResponseEntity.status(404).build();
+    }
+
+    @GetMapping("featured-product")
+    public ResponseEntity getFeaturedProduct() {
+        if (productRepository.count() > 0) {
+            return ResponseEntity.status(200).body(productRepository.featuredProduct());
+        }
+        return ResponseEntity.status(404).build();
+
     }
 
     @DeleteMapping("{id}")
@@ -361,7 +408,7 @@ public class ControllerProduct {
                     .body(foto);
         }
 
-        File imgPath = new File("src/main/resources/static/product-without-image.jpg");
+        File imgPath = new File("src/main/resources/product-without-image.jpg");
         byte[] withoutImage = Files.readAllBytes(imgPath.toPath());
         return ResponseEntity
                 .status(200)
