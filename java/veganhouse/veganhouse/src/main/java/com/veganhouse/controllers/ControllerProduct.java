@@ -382,13 +382,12 @@ public class ControllerProduct {
     }
 
     @GetMapping("/images/{id}/{idImage}")
-    public ResponseEntity getPhoto(@PathVariable int id, @PathVariable int idImage) throws IOException {
+    public ResponseEntity getPhoto(@PathVariable int id, @PathVariable int idImage) throws IOException, URISyntaxException {
 
         if (idImage == 1) {
             byte[] foto = imageRepository.findImage1(id);
             if (foto == null) {
-                File imgPath = new File("src/main/resources/product-without-image.jpg");
-                foto = Files.readAllBytes(imgPath.toPath());
+                foto = Files.readAllBytes(Path.of(getClass().getResource("/product-without-image.jpg").toURI()));
             }
             return ResponseEntity
                     .status(200)
@@ -399,8 +398,7 @@ public class ControllerProduct {
         if (idImage == 2) {
             byte[] foto = imageRepository.findImage2(id);
             if (foto == null) {
-                File imgPath = new File("src/main/resources/product-without-image.jpg");
-                foto = Files.readAllBytes(imgPath.toPath());
+                foto = Files.readAllBytes(Path.of(getClass().getResource("/product-without-image.jpg").toURI()));
             }
             return ResponseEntity
                     .status(200)
@@ -411,8 +409,7 @@ public class ControllerProduct {
         if (idImage == 3) {
             byte[] foto = imageRepository.findImage3(id);
             if (foto == null) {
-                File imgPath = new File("src/main/resources/product-without-image.jpg");
-                foto = Files.readAllBytes(imgPath.toPath());
+                foto = Files.readAllBytes(Path.of(getClass().getResource("/product-without-image.jpg").toURI()));
             }
             return ResponseEntity
                     .status(200)
