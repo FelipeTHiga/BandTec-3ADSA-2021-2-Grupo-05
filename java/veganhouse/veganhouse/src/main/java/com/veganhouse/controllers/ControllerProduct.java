@@ -386,6 +386,10 @@ public class ControllerProduct {
 
         if (idImage == 1) {
             byte[] foto = imageRepository.findImage1(id);
+            if (foto == null) {
+                File imgPath = new File("src/main/resources/product-without-image.jpg");
+                foto = Files.readAllBytes(imgPath.toPath());
+            }
             return ResponseEntity
                     .status(200)
                     .header("content-type", "image/jpeg")
@@ -394,6 +398,10 @@ public class ControllerProduct {
 
         if (idImage == 2) {
             byte[] foto = imageRepository.findImage2(id);
+            if (foto == null) {
+                File imgPath = new File("src/main/resources/product-without-image.jpg");
+                foto = Files.readAllBytes(imgPath.toPath());
+            }
             return ResponseEntity
                     .status(200)
                     .header("content-type", "image/jpeg")
@@ -402,6 +410,10 @@ public class ControllerProduct {
 
         if (idImage == 3) {
             byte[] foto = imageRepository.findImage3(id);
+            if (foto == null) {
+                File imgPath = new File("src/main/resources/product-without-image.jpg");
+                foto = Files.readAllBytes(imgPath.toPath());
+            }
             return ResponseEntity
                     .status(200)
                     .header("content-type", "image/jpeg")
