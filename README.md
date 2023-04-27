@@ -21,10 +21,10 @@ A solução é composta por uma aplicação web desenvolvida em React e uma apli
 
 ## Links
 
-Link do repositório da App mobile: https://github.com/FelipeTHiga/VeganHouse.MobileApp <br>
-Link do site: https://veganhouse3.ddns.net <br>
-White Paper: <br>
-Apresentação final: 
+Site: https://veganhouse3.ddns.net <br>
+Repositório da App mobile: https://github.com/FelipeTHiga/VeganHouse.MobileApp <br>
+[White Paper](documentos/White Paper.pdf) <br>
+[Apresentação final](documentos/Sprint 3 - Apresentação Final.pdf)
 
 ## Sobre os desenvolvedores
 
@@ -33,6 +33,7 @@ Apresentação final:
 [![Linkedin Badge](https://img.shields.io/badge/-Miguel%20Nunes-0282d0?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/miguel-nunes-a36417199/)](https://www.linkedin.com/in/miguel-nunes-a36417199/) - [Miguel Nunes](https://github.com/MiguelNunesA) <br/>
 [![Linkedin Badge](https://img.shields.io/badge/-Rafael%20Rocha-0282d0?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/rafa-rocha-almeida/)](https://www.linkedin.com/in/rafa-rocha-almeida/) - [Rafael Rocha](https://github.com/rafael-rochaalmeida) <br/>
 [![Linkedin Badge](https://img.shields.io/badge/-Vitoria%20Souza-0282d0?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/vitoria-souza-351008173/)](https://www.linkedin.com/in/vitoria-souza-351008173/) - [Vitória Souza](https://github.com/vitoriadesouzasantos)
+
 
 
 
