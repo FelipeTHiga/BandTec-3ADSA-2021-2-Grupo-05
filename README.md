@@ -13,7 +13,7 @@ O problema identificado consiste na pouca visibilidade por parte dos microempree
 
 Assim, propomos como solução a criação de um marketplace de produtos veganos, voltado a atender o microempreendedor. Dessa forma, espera-se que com nossa plataforma os microempreendedores tenham uma maior abertura ao mercado e os consumidores veganos passem a ter melhores experiências em suas compras.
 
-VIDEO
+[![Watch the video](https://media.discordapp.net/attachments/875512266991206410/1101154125703544892/image.png?width=1116&height=630)](https://s3-us-west-2.amazonaws.com/converterpoint-22/encodings/48394288eaba331af31fc18f70cf1fb6.mp4)
 
 ## Tecnologias
 
@@ -33,10 +33,6 @@ Apresentação final:
 [![Linkedin Badge](https://img.shields.io/badge/-Miguel%20Nunes-0282d0?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/miguel-nunes-a36417199/)](https://www.linkedin.com/in/miguel-nunes-a36417199/) - [Miguel Nunes](https://github.com/MiguelNunesA) <br/>
 [![Linkedin Badge](https://img.shields.io/badge/-Rafael%20Rocha-0282d0?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/rafa-rocha-almeida/)](https://www.linkedin.com/in/rafa-rocha-almeida/) - [Rafael Rocha](https://github.com/rafael-rochaalmeida) <br/>
 [![Linkedin Badge](https://img.shields.io/badge/-Vitoria%20Souza-0282d0?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/vitoria-souza-351008173/)](https://www.linkedin.com/in/vitoria-souza-351008173/) - [Vitória Souza](https://github.com/vitoriadesouzasantos)
-  
-  <video width="320" height="240" controls>
-  <source src="https://s3-us-west-2.amazonaws.com/converterpoint-22/encodings/48394288eaba331af31fc18f70cf1fb6.mp4" type="video/mp4">
-</video>
 
-[![Watch the video](https://media.discordapp.net/attachments/875496723651362841/1100990659474771978/image.png?width=1324&height=629)](https://s3-us-west-2.amazonaws.com/converterpoint-22/encodings/48394288eaba331af31fc18f70cf1fb6.mp4)
-[![Watch the video](https://media.discordapp.net/attachments/875496723651362841/1100990659474771978/image.png?width=1324&height=629)](https://discord.com/channels/875496723651362836/875496723651362841/1100991506757722152)
+
+
